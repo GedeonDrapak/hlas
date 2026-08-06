@@ -2,11 +2,16 @@ import CoreText
 import Foundation
 
 enum FontRegistrar {
-    private static let names = ["Satoshi-Regular", "Satoshi-Medium", "Satoshi-Bold"]
+    private static let names = [
+        ("Satoshi-Regular", "otf"),
+        ("Satoshi-Medium", "otf"),
+        ("Satoshi-Bold", "otf"),
+        ("KonectDemo-Regular", "ttf"),
+    ]
 
     static func register() {
-        for name in names {
-            guard let url = Bundle.main.url(forResource: name, withExtension: "otf") else {
+        for (name, ext) in names {
+            guard let url = Bundle.main.url(forResource: name, withExtension: ext) else {
                 Log.write("bundled font missing: \(name)")
                 continue
             }

@@ -66,6 +66,10 @@ Apple SpeechAnalyzer: **no Czech** - ruled out. Parakeet TDT v3 via FluidAudio: 
    on the final notarized build.
 7. **Distribution credentials.** Install a Developer ID Application certificate, store the
    `HlasNotary` credentials, run `make release`, and test the notarized DMG on a clean M-series Mac.
+8. **Konect font license.** `KonectDemo-Regular.ttf` (brand wordmark + display labels) is
+   licensed FREE FOR PERSONAL USE ONLY (Ragam Kata Studio, ragamkata.team@gmail.com). Before any
+   public distribution: buy the full commercial license or swap the display font. The demo has
+   52 glyphs (letters only) — never use `DS.display` for text containing digits or punctuation.
 
 ## Risky areas - touch with care
 

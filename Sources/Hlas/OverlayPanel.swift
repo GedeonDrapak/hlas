@@ -148,7 +148,7 @@ struct OverlayView: View {
             case .transcribing:
                 ProgressView().controlSize(.small).tint(DS.fg2)
                 Text("TRANSCRIBING")
-                    .font(DS.label())
+                    .font(DS.display(11))
                     .tracking(3)
                     .foregroundStyle(DS.fg2)
             case .cancelled:

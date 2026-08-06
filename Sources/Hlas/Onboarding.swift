@@ -159,8 +159,8 @@ struct OnboardingView: View {
                         .fill(DS.brand)
                         .frame(width: 28, height: 28)
                     Text("HLAS")
-                        .font(DS.text(34, weight: .bold))
-                        .tracking(12)
+                        .font(DS.display(36))
+                        .tracking(10)
                         .foregroundStyle(DS.fg)
                 }
                 Text("DICTATION. NOT TYPING.")

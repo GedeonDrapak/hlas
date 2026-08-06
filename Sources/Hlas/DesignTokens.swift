@@ -47,6 +47,14 @@ enum DS {
     static func label(_ size: CGFloat = 11) -> Font {
         .custom("Satoshi-Medium", size: size, relativeTo: .caption).monospacedDigit()
     }
+
+    /// Konect Demo — display font for brand moments (wordmark, pure-letter
+    /// uppercase labels ONLY: the demo has 52 glyphs, no digits/punctuation).
+    /// License: free for personal use; buy from Ragam Kata before any public
+    /// distribution (see docs/HANDOFF.md).
+    static func display(_ size: CGFloat) -> Font {
+        .custom("KonectDemo-Regular", size: size, relativeTo: .title)
+    }
 }
 
 extension Color {
