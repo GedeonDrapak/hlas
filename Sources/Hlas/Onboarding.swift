@@ -3,9 +3,8 @@ import SwiftUI
 import AVFoundation
 import ServiceManagement
 
-/// First-run onboarding: brand moment → permissions with LIVE status →
-/// engine + language → try it. Shown when onboarding was never finished
-/// or a required permission is missing.
+/// First-run onboarding: split layout — Unsplash gradient + brand + step list
+/// on the left, setup content on the right. Frosted-glass window.
 @MainActor
 final class OnboardingWindow {
     static let shared = OnboardingWindow()
@@ -21,7 +20,7 @@ final class OnboardingWindow {
     func show() {
         if window == nil {
             let window = NSWindow(
-                contentRect: NSRect(x: 0, y: 0, width: 520, height: 620),
+                contentRect: NSRect(x: 0, y: 0, width: 860, height: 600),
                 styleMask: [.titled, .closable, .fullSizeContentView],
                 backing: .buffered,
                 defer: false
@@ -98,63 +97,147 @@ struct OnboardingView: View {
     @ObservedObject private var history = History.shared
     @State private var launchAtLogin = false
 
+    private static let stepTitles = ["Welcome", "Permissions", "Engine & language", "Try it"]
+    /// One Unsplash gradient per step, crossfaded.
+    private static let gradients = ["gradient-dark", "gradient-purple", "gradient-blue", "gradient-dark"]
+
     var body: some View {
-        VStack(spacing: 0) {
-            content
+        HStack(spacing: 0) {
+            leftPanel
+                .frame(width: 330)
+                .padding(14)
+            rightPanel
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .padding(36)
-            footer
         }
-        .frame(width: 520, height: 620)
+        .frame(width: 860, height: 600)
         .background(
             ZStack {
                 VisualEffectBlur(material: .underWindowBackground)
-                DS.bg.opacity(0.72)
-                // Faint Eden-green glow, top center — brand signature
-                RadialGradient(
-                    colors: [DS.brand.opacity(step == 0 ? 0.16 : 0.07), .clear],
-                    center: .init(x: 0.5, y: 0.05), startRadius: 0, endRadius: 420
-                )
+                DS.bg.opacity(0.45) // slightly transparent — desktop shows through
             }
             .ignoresSafeArea()
         )
         .preferredColorScheme(.dark)
         .onAppear { permissions.startPolling() }
         .onDisappear { permissions.stopPolling() }
-        .animation(.easeOut(duration: 0.25), value: step)
+        .animation(.easeOut(duration: 0.3), value: step)
     }
 
-    @ViewBuilder
-    private var content: some View {
-        switch step {
-        case 0: welcome
-        case 1: permissionsStep
-        case 2: engineStep
-        default: tryItStep
+    // MARK: left — gradient, brand, step list
+
+    private var leftPanel: some View {
+        ZStack {
+            // Crossfading Unsplash gradient
+            ZStack {
+                ForEach(Array(Self.gradients.enumerated()), id: \.offset) { i, name in
+                    if i == step, let url = Bundle.main.url(forResource: name, withExtension: "jpg"),
+                       let img = NSImage(contentsOf: url) {
+                        Image(nsImage: img)
+                            .resizable()
+                            .scaledToFill()
+                            .transition(.opacity)
+                    }
+                }
+            }
+            // Legibility scrim, Eden-dark from the bottom
+            LinearGradient(
+                colors: [Color(hex: 0x0F0F0F).opacity(0.85), .clear, Color(hex: 0x0F0F0F).opacity(0.25)],
+                startPoint: .bottom, endPoint: .top
+            )
+
+            VStack(alignment: .leading, spacing: 0) {
+                Spacer()
+                Text("HLAS")
+                    .font(.system(size: 34, weight: .bold))
+                    .tracking(12)
+                    .foregroundStyle(.white.opacity(0.96))
+                Text("DICTATION. NOT TYPING.")
+                    .font(DS.label(10))
+                    .tracking(4)
+                    .foregroundStyle(DS.brand)
+                    .padding(.top, 6)
+                Text("Hold a key, speak, release.\nYour words land wherever your cursor is.")
+                    .font(.system(size: 12))
+                    .foregroundStyle(.white.opacity(0.75))
+                    .padding(.top, 14)
+
+                VStack(spacing: 8) {
+                    ForEach(0..<Self.stepTitles.count, id: \.self) { i in
+                        stepChip(i)
+                    }
+                }
+                .padding(.top, 26)
+            }
+            .padding(24)
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .clipShape(RoundedRectangle(cornerRadius: DS.radius))
+        .overlay(
+            RoundedRectangle(cornerRadius: DS.radius)
+                .strokeBorder(Color.white.opacity(0.10), lineWidth: 1)
+        )
+    }
+
+    private func stepChip(_ i: Int) -> some View {
+        Button { if i < step { step = i } } label: {
+            HStack(spacing: 10) {
+                ZStack {
+                    Circle()
+                        .fill(i == step ? Color(hex: 0x0F0F0F) : Color.white.opacity(0.15))
+                        .frame(width: 20, height: 20)
+                    if i < step {
+                        Image(systemName: "checkmark")
+                            .font(.system(size: 9, weight: .bold))
+                            .foregroundStyle(i == step ? DS.brand : .white.opacity(0.9))
+                    } else {
+                        Text("\(i + 1)")
+                            .font(.system(size: 10, weight: .semibold))
+                            .foregroundStyle(i == step ? .white : .white.opacity(0.8))
+                    }
+                }
+                Text(Self.stepTitles[i])
+                    .font(.system(size: 12, weight: i == step ? .semibold : .regular))
+                    .foregroundStyle(i == step ? Color(hex: 0x0F0F0F) : .white.opacity(0.85))
+                Spacer()
+            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 10)
+            .background(
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(i == step ? Color.white.opacity(0.92) : Color.white.opacity(0.10))
+            )
+        }
+        .buttonStyle(.plain)
+    }
+
+    // MARK: right — step content
+
+    private var rightPanel: some View {
+        VStack(spacing: 0) {
+            Group {
+                switch step {
+                case 0: welcome
+                case 1: permissionsStep
+                case 2: engineStep
+                default: tryItStep
+                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .padding(.horizontal, 34)
+            .padding(.top, 40)
+            footer
         }
     }
 
     // MARK: step 0 — welcome
 
     private var welcome: some View {
-        VStack(spacing: 20) {
-            Spacer()
-            Text("HLAS")
-                .font(.system(size: 44, weight: .bold))
-                .tracking(20)
-                .foregroundStyle(DS.fg)
-                .padding(.leading, 20) // optically recenter the tracking
-            Text("DICTATION. NOT TYPING.")
-                .font(DS.label(11))
-                .tracking(4)
-                .foregroundStyle(DS.brand)
-            Spacer().frame(height: 8)
-            VStack(spacing: 10) {
-                featureRow("waveform", "Hold **Fn**, speak Czech or English, release — text appears where your cursor is.")
-                featureRow("lock", "Runs 100% locally by default. Nothing leaves your Mac.")
-                featureRow("bolt", "2 MB app. Model loads only while transcribing.")
-            }
-            Spacer()
+        VStack(alignment: .leading, spacing: 16) {
+            stepHeader("Welcome to Hlas", "Your own dictation app. No subscription, no account, no cloud unless you ask for it.")
+            featureRow("waveform", "**Hold Fn** and speak Czech or English. Release — the text pastes at your cursor, in any app.")
+            featureRow("hand.tap", "**Quick-tap Fn** to latch hands-free mode. Tap again to stop.")
+            featureRow("lock", "Local by default — audio never leaves this Mac. Cloud engines are opt-in.")
+            featureRow("bolt", "A 2 MB app that idles at ~40 MB RAM. The model loads only while transcribing.")
         }
     }
 
@@ -171,14 +254,14 @@ struct OnboardingView: View {
             Spacer()
         }
         .padding(14)
-        .background(RoundedRectangle(cornerRadius: DS.radiusSm).fill(Color.white.opacity(0.04)))
+        .background(RoundedRectangle(cornerRadius: DS.radiusSm).fill(Color.white.opacity(0.05)))
     }
 
     // MARK: step 1 — permissions
 
     private var permissionsStep: some View {
-        VStack(alignment: .leading, spacing: 18) {
-            stepHeader("PERMISSIONS", "Hlas needs two system permissions. Both stay on this Mac.")
+        VStack(alignment: .leading, spacing: 16) {
+            stepHeader("Two permissions", "Both are checked live — the card turns green the moment macOS registers it.")
             permissionCard(
                 granted: permissions.mic,
                 icon: "mic",
@@ -194,11 +277,10 @@ struct OnboardingView: View {
                 action: permissions.requestAccessibility
             )
             if !permissions.accessibility {
-                Text("System Settings opens → find Hlas in the list → switch it on. The checkmark here goes green the moment it works.")
+                Text("System Settings opens on the right page — find Hlas in the list and switch it on.")
                     .font(.system(size: 11))
                     .foregroundStyle(DS.fg3)
             }
-            Spacer()
         }
     }
 
@@ -222,7 +304,7 @@ struct OnboardingView: View {
         .padding(16)
         .background(
             RoundedRectangle(cornerRadius: DS.radius)
-                .fill(Color.white.opacity(0.04))
+                .fill(Color.white.opacity(0.05))
                 .overlay(
                     RoundedRectangle(cornerRadius: DS.radius)
                         .strokeBorder(granted ? DS.brand.opacity(0.35) : DS.border, lineWidth: 1)
@@ -233,15 +315,15 @@ struct OnboardingView: View {
     // MARK: step 2 — engine & language
 
     private var engineStep: some View {
-        VStack(alignment: .leading, spacing: 18) {
-            stepHeader("ENGINE", "Where should transcription run? You can switch anytime in Settings.")
+        VStack(alignment: .leading, spacing: 14) {
+            stepHeader("Engine & language", "Where transcription runs. Switch anytime from the menu bar.")
 
             engineCard(.local, "On this Mac — private & free",
-                       "Whisper large-v3-turbo. One-time 547 MB download. No internet needed.")
+                       "Whisper large-v3-turbo. One-time 547 MB download. Works offline.")
             engineCard(.groq, "Groq cloud — fastest, ~$3/month",
-                       "Full whisper-large-v3. Needs a free API key from console.groq.com.")
+                       "Full whisper-large-v3. Free API key at console.groq.com.")
             engineCard(.openai, "OpenAI cloud — best accuracy, ~$8/month",
-                       "gpt-transcribe. Needs an API key from platform.openai.com.")
+                       "gpt-transcribe. API key at platform.openai.com.")
 
             if settings.engine == .local {
                 localModelStatus
@@ -249,7 +331,7 @@ struct OnboardingView: View {
                 apiKeyEntry
             }
 
-            HStack {
+            HStack(spacing: 12) {
                 Text("LANGUAGE").font(DS.label(10)).tracking(3).foregroundStyle(DS.fg3)
                 Picker("", selection: $settings.language) {
                     Text("Čeština").tag("cs")
@@ -259,7 +341,7 @@ struct OnboardingView: View {
                 .pickerStyle(.segmented)
                 .labelsHidden()
             }
-            Spacer()
+            .padding(.top, 4)
         }
     }
 
@@ -277,10 +359,10 @@ struct OnboardingView: View {
                 }
                 Spacer()
             }
-            .padding(13)
+            .padding(12)
             .background(
                 RoundedRectangle(cornerRadius: DS.radiusSm)
-                    .fill(Color.white.opacity(settings.engine == kind ? 0.06 : 0.03))
+                    .fill(Color.white.opacity(settings.engine == kind ? 0.07 : 0.04))
                     .overlay(
                         RoundedRectangle(cornerRadius: DS.radiusSm)
                             .strokeBorder(settings.engine == kind ? DS.brand.opacity(0.4) : DS.border, lineWidth: 1)
@@ -316,7 +398,7 @@ struct OnboardingView: View {
         SecureField("Paste API key…", text: binding)
             .textFieldStyle(.plain)
             .padding(10)
-            .background(RoundedRectangle(cornerRadius: DS.radiusSm).fill(Color.white.opacity(0.05)))
+            .background(RoundedRectangle(cornerRadius: DS.radiusSm).fill(Color.white.opacity(0.06)))
             .onChange(of: settings.groqAPIKey) { (NSApp.delegate as? AppDelegate)?.rebuildTranscriber() }
             .onChange(of: settings.openaiAPIKey) { (NSApp.delegate as? AppDelegate)?.rebuildTranscriber() }
     }
@@ -324,8 +406,8 @@ struct OnboardingView: View {
     // MARK: step 3 — try it
 
     private var tryItStep: some View {
-        VStack(alignment: .leading, spacing: 18) {
-            stepHeader("TRY IT", "Click into the field below, hold Fn, say something, release.")
+        VStack(alignment: .leading, spacing: 14) {
+            stepHeader("Try it now", "Click into the field, hold Fn, say something, release.")
 
             TryItField()
 
@@ -336,7 +418,7 @@ struct OnboardingView: View {
                         .font(.system(size: 12)).foregroundStyle(DS.fg2)
                         .padding(10)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(RoundedRectangle(cornerRadius: DS.radiusSm).fill(Color.white.opacity(0.04)))
+                        .background(RoundedRectangle(cornerRadius: DS.radiusSm).fill(Color.white.opacity(0.05)))
                 }
             }
 
@@ -358,11 +440,9 @@ struct OnboardingView: View {
             }
 
             VStack(alignment: .leading, spacing: 8) {
-                tipRow("Hold **Fn** = push-to-talk. Quick **tap** = hands-free until the next tap.")
                 tipRow("Add names & jargon in **Settings → Vocabulary** — the model learns to spell them.")
-                tipRow("Menu bar **waveform icon** → Settings, history, quit.")
+                tipRow("Menu bar **waveform icon** → Settings, history, this tour.")
             }
-            Spacer()
         }
         .onAppear { launchAtLogin = SMAppService.mainApp.status == .enabled }
     }
@@ -378,28 +458,25 @@ struct OnboardingView: View {
 
     private func stepHeader(_ title: String, _ subtitle: String) -> some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text(title).font(DS.label(11)).tracking(4).foregroundStyle(DS.brand)
-            Text(subtitle).font(.system(size: 13)).foregroundStyle(DS.fg2)
+            Text(title)
+                .font(.system(size: 22, weight: .bold))
+                .foregroundStyle(DS.fg)
+            Text(subtitle)
+                .font(.system(size: 13))
+                .foregroundStyle(DS.fg2)
+                .fixedSize(horizontal: false, vertical: true)
         }
-        .padding(.top, 8)
+        .padding(.bottom, 8)
     }
 
     private var footer: some View {
         HStack {
-            // Step dots
-            HStack(spacing: 6) {
-                ForEach(0..<4, id: \.self) { i in
-                    Capsule()
-                        .fill(i == step ? DS.brand : Color.white.opacity(0.15))
-                        .frame(width: i == step ? 18 : 6, height: 6)
-                }
-            }
-            Spacer()
             if step > 0 {
                 Button("Back") { step -= 1 }
                     .buttonStyle(.borderless)
                     .foregroundStyle(DS.fg3)
             }
+            Spacer()
             Button(step == 3 ? "Start dictating" : "Continue") {
                 if step == 3 { close() } else { step += 1 }
             }
@@ -407,9 +484,8 @@ struct OnboardingView: View {
             .tint(DS.brand.opacity(0.9))
             .disabled(step == 1 && !permissions.allGranted)
         }
-        .padding(.horizontal, 28)
+        .padding(.horizontal, 34)
         .padding(.vertical, 20)
-        .background(Color.white.opacity(0.03))
     }
 }
 
@@ -422,10 +498,10 @@ private struct TryItField: View {
             .foregroundStyle(DS.fg)
             .scrollContentBackground(.hidden)
             .padding(10)
-            .frame(height: 90)
+            .frame(height: 84)
             .background(
                 RoundedRectangle(cornerRadius: DS.radiusSm)
-                    .fill(Color.white.opacity(0.05))
+                    .fill(Color.white.opacity(0.06))
                     .overlay(RoundedRectangle(cornerRadius: DS.radiusSm).strokeBorder(DS.border, lineWidth: 1))
             )
     }

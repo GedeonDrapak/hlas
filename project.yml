@@ -17,6 +17,8 @@ targets:
       - path: Sources/Hlas
       - path: Sources/CWhisper
         excludes: ["include/module.modulemap"]
+      - path: Resources/Gradients
+        buildPhase: resources
     info:
       path: Info.plist
       properties:

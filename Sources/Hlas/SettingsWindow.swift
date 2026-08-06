@@ -118,7 +118,7 @@ struct SettingsView: View {
         .background(
             ZStack {
                 VisualEffectBlur(material: .underWindowBackground)
-                DS.bg.opacity(0.72) // keep near-black identity over the blur
+                DS.bg.opacity(0.5) // slightly transparent — desktop shows through
             }
             .ignoresSafeArea()
         )
