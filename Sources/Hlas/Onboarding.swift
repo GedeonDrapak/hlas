@@ -90,7 +90,8 @@ final class PermissionModel: ObservableObject {
 struct OnboardingView: View {
     var close: () -> Void
 
-    @State private var step = 0
+    // HLAS_STEP env var jumps straight to a step — used for visual QA.
+    @State private var step = ProcessInfo.processInfo.environment["HLAS_STEP"].flatMap(Int.init) ?? 0
     @StateObject private var permissions = PermissionModel()
     @StateObject private var downloader = ModelDownloader()
     @ObservedObject private var settings = Settings.shared
@@ -141,10 +142,12 @@ struct OnboardingView: View {
                         }
                     }
                 )
-            // Legibility scrim, Eden-dark from the bottom
+            // Legibility scrim: uniform darkening + heavier bottom, so white
+            // text and chips hold contrast on ANY gradient photo.
+            Color(hex: 0x0F0F0F).opacity(0.38)
             LinearGradient(
-                colors: [Color(hex: 0x0F0F0F).opacity(0.85), .clear, Color(hex: 0x0F0F0F).opacity(0.25)],
-                startPoint: .bottom, endPoint: .top
+                colors: [Color(hex: 0x0F0F0F).opacity(0.85), .clear],
+                startPoint: .bottom, endPoint: .center
             )
 
             VStack(alignment: .leading, spacing: 0) {
@@ -199,7 +202,7 @@ struct OnboardingView: View {
             HStack(spacing: 10) {
                 ZStack {
                     Circle()
-                        .fill(i == step ? Color(hex: 0x0F0F0F) : Color.white.opacity(0.15))
+                        .fill(i == step ? Color(hex: 0x0F0F0F) : Color.white.opacity(0.18))
                         .frame(width: 20, height: 20)
                     if i < step {
                         Image(systemName: "checkmark")
@@ -220,7 +223,7 @@ struct OnboardingView: View {
             .padding(.vertical, 10)
             .background(
                 RoundedRectangle(cornerRadius: 10)
-                    .fill(i == step ? Color.white.opacity(0.92) : Color.white.opacity(0.10))
+                    .fill(i == step ? Color.white.opacity(0.92) : Color(hex: 0x0F0F0F).opacity(0.35))
             )
         }
         .buttonStyle(.plain)

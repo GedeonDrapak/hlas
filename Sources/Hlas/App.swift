@@ -23,7 +23,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         setupStatusItem()
-        if OnboardingWindow.shouldShow {
+        if OnboardingWindow.shouldShow || ProcessInfo.processInfo.environment["HLAS_STEP"] != nil {
             OnboardingWindow.shared.show()
         } else {
             Task { await requestPermissions() }
