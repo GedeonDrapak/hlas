@@ -41,6 +41,10 @@ final class Settings: ObservableObject {
     @Published var vocabulary: [String] {
         didSet { d.set(vocabulary, forKey: "vocabulary") }
     }
+    /// Quick-switch language chips ("auto" is implicit, always shown).
+    @Published var favoriteLanguages: [String] {
+        didSet { d.set(favoriteLanguages, forKey: "favoriteLanguages") }
+    }
 
     private init() {
         engine = EngineKind(rawValue: d.string(forKey: "engine") ?? "") ?? .local
@@ -49,6 +53,7 @@ final class Settings: ObservableObject {
         openaiAPIKey = d.string(forKey: "openaiAPIKey") ?? ""
         modelKeepAliveSeconds = d.object(forKey: "modelKeepAlive") as? Double ?? 180
         vocabulary = d.stringArray(forKey: "vocabulary") ?? []
+        favoriteLanguages = d.stringArray(forKey: "favoriteLanguages") ?? ["cs", "en"]
     }
 
     var vocabularyPrompt: String? {

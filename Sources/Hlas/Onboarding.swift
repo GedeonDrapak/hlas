@@ -350,15 +350,9 @@ struct OnboardingView: View {
                 apiKeyEntry
             }
 
-            HStack(spacing: 12) {
+            VStack(alignment: .leading, spacing: 8) {
                 Text("LANGUAGE").font(DS.label(10)).tracking(3).foregroundStyle(DS.fg3)
-                Picker("", selection: $settings.language) {
-                    Text("Čeština").tag("cs")
-                    Text("English").tag("en")
-                    Text("Auto").tag("auto")
-                }
-                .pickerStyle(.segmented)
-                .labelsHidden()
+                LanguagePicker()
             }
             .padding(.top, 4)
         }

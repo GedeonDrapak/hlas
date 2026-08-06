@@ -39,11 +39,6 @@ struct SettingsView: View {
     @State private var newWord = ""
     var onEngineChange: () -> Void
 
-    private static let languages: [(String, String)] = [
-        ("cs", "Čeština"), ("en", "English"), ("sk", "Slovenčina"),
-        ("de", "Deutsch"), ("auto", "Auto-detect"),
-    ]
-
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
@@ -65,11 +60,7 @@ struct SettingsView: View {
                 }
 
                 section("LANGUAGE") {
-                    Picker("", selection: $settings.language) {
-                        ForEach(Self.languages, id: \.0) { code, name in Text(name).tag(code) }
-                    }
-                    .pickerStyle(.segmented)
-                    .labelsHidden()
+                    LanguagePicker()
                 }
 
                 section("VOCABULARY") {
