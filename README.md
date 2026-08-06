@@ -1,6 +1,6 @@
 # Hlas
 
-Ultra-minimal macOS dictation. Hold **Fn**, speak (Czech or English), release - text appears at your cursor. No subscription, no account, no telemetry.
+Ultra-minimal dictation for Apple Silicon Macs. Hold **Fn**, speak (Czech or English), release - text appears at your cursor. No subscription, no account, no telemetry.
 
 Built as a personal replacement for Superwhisper / Wispr Flow / Willow ($15/mo each).
 
@@ -38,6 +38,27 @@ make install   # builds via Xcode (stable signing), installs to /Applications, l
 ```
 
 Permissions needed on first run: **Microphone** + **Accessibility** (for the Fn hotkey and paste).
+
+Hlas supports Apple Silicon Macs running macOS 15 or later. Intel Macs are intentionally not supported in this release.
+
+## Privacy
+
+- **Local:** audio stays on the Mac and is processed by the downloaded Whisper model.
+- **Groq / OpenAI:** audio is sent directly to the provider selected in Settings for transcription.
+- API keys are stored in macOS Keychain. History stays local and can be cleared in Settings.
+
+The full policy ships in the app and is available in [Privacy](docs/PRIVACY.md). See [third-party notices](THIRD_PARTY_NOTICES.md) for whisper.cpp, Whisper model, and Satoshi font licenses.
+
+## Public release
+
+`make install` is for local development. A public DMG must be signed with a Developer ID Application certificate and notarized:
+
+```bash
+xcrun notarytool store-credentials HlasNotary --apple-id <email> --team-id <team-id>
+make release
+```
+
+The release command creates an Apple Silicon DMG, notarizes it, staples the ticket, and checks Gatekeeper. It intentionally stops if the required certificate or notarization credentials are unavailable.
 
 ## Design
 

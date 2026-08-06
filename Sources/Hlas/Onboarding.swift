@@ -345,7 +345,7 @@ struct OnboardingView: View {
             engineCard(.local, "On this Mac - private & free",
                        "Whisper large-v3-turbo. One-time 547 MB download. Works offline.")
             engineCard(.groq, "Groq cloud - fastest, ~$3/month",
-                       "Full whisper-large-v3. Free API key at console.groq.com.")
+                       "Whisper large-v3-turbo. Free API key at console.groq.com.")
             engineCard(.openai, "OpenAI cloud - best accuracy, ~$8/month",
                        "gpt-transcribe. API key at platform.openai.com.")
 
@@ -402,6 +402,8 @@ struct OnboardingView: View {
                 ProgressView(value: downloader.progress).tint(DS.brand)
                 Text("Downloading model… \(Int(downloader.progress * 100)) %")
                     .font(.system(size: 11)).foregroundStyle(DS.fg3)
+                Button("Cancel", action: downloader.cancel)
+                    .buttonStyle(.borderless).foregroundStyle(DS.fg3)
             }
         } else {
             Button("Download model (547 MB)") { downloader.start() }
@@ -419,6 +421,8 @@ struct OnboardingView: View {
             .background(RoundedRectangle(cornerRadius: DS.radiusSm).fill(Color.white.opacity(0.06)))
             .onChange(of: settings.groqAPIKey) { (NSApp.delegate as? AppDelegate)?.rebuildTranscriber() }
             .onChange(of: settings.openaiAPIKey) { (NSApp.delegate as? AppDelegate)?.rebuildTranscriber() }
+        Text("Audio is sent directly to \(settings.engine == .groq ? "Groq" : "OpenAI") for transcription. Your key stays in your macOS Keychain.")
+            .font(.system(size: 10)).foregroundStyle(DS.fg3)
     }
 
     // MARK: step 3 - try it

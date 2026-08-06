@@ -1,3 +1,4 @@
+import CryptoKit
 import Foundation
 import CWhisper
 
@@ -16,8 +17,11 @@ final class LocalWhisper: Transcriber, @unchecked Sendable {
     }()
 
     static let modelName = "ggml-large-v3-turbo-q5_0.bin"
+    static let modelByteCount = 574_041_195
     static var modelURL: URL { modelDir.appendingPathComponent(modelName) }
-    static var modelExists: Bool { FileManager.default.fileExists(atPath: modelURL.path) }
+    static var modelExists: Bool {
+        (try? modelURL.resourceValues(forKeys: [.fileSizeKey]).fileSize) == modelByteCount
+    }
 
     func transcribe(samples: [Float], language: String?) async throws -> String {
         guard Self.modelExists else {
@@ -139,15 +143,32 @@ final class ModelDownloader: NSObject, ObservableObject, URLSessionDownloadDeleg
 
     static let remote = URL(string:
         "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-large-v3-turbo-q5_0.bin")!
+    nonisolated private static let expectedByteCount = LocalWhisper.modelByteCount
+    nonisolated private static let expectedSHA256 = "394221709cd5ad1f40c46e6031ca61bce88931e6e088c188294c6d5a55ffa7e2"
+    nonisolated private static var stagingURL: URL {
+        LocalWhisper.modelDir.appendingPathComponent("\(LocalWhisper.modelName).download")
+    }
 
     private var session: URLSession!
+    private var task: URLSessionDownloadTask?
 
     func start() {
         guard !downloading else { return }
         downloading = true
         error = nil
-        session = URLSession(configuration: .default, delegate: self, delegateQueue: .main)
-        session.downloadTask(with: Self.remote).resume()
+        progress = 0
+        try? FileManager.default.removeItem(at: Self.stagingURL)
+        let delegateQueue = OperationQueue()
+        delegateQueue.qualityOfService = .userInitiated
+        delegateQueue.maxConcurrentOperationCount = 1
+        session = URLSession(configuration: .default, delegate: self, delegateQueue: delegateQueue)
+        let task = session.downloadTask(with: Self.remote)
+        self.task = task
+        task.resume()
+    }
+
+    func cancel() {
+        task?.cancel()
     }
 
     nonisolated func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask,
@@ -158,19 +179,85 @@ final class ModelDownloader: NSObject, ObservableObject, URLSessionDownloadDeleg
 
     nonisolated func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask,
                                 didFinishDownloadingTo location: URL) {
-        let dest = LocalWhisper.modelURL
-        try? FileManager.default.removeItem(at: dest)
         do {
-            try FileManager.default.moveItem(at: location, to: dest)
-            Task { @MainActor in self.downloading = false; self.progress = 1 }
+            guard let response = downloadTask.response as? HTTPURLResponse,
+                  (200..<300).contains(response.statusCode) else {
+                throw ModelDownloadError.invalidResponse
+            }
+            let fileManager = FileManager.default
+            let staging = Self.stagingURL
+            try? fileManager.removeItem(at: staging)
+            try fileManager.moveItem(at: location, to: staging)
+            try Self.validate(staging)
+            try Self.install(staging, at: LocalWhisper.modelURL)
+            Task { @MainActor in
+                self.downloading = false
+                self.progress = 1
+                self.task = nil
+            }
         } catch {
-            Task { @MainActor in self.downloading = false; self.error = error.localizedDescription }
+            try? FileManager.default.removeItem(at: Self.stagingURL)
+            Task { @MainActor in
+                self.downloading = false
+                self.error = error.localizedDescription
+                self.task = nil
+            }
         }
     }
 
     nonisolated func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         if let error {
-            Task { @MainActor in self.downloading = false; self.error = error.localizedDescription }
+            let cancelled = (error as NSError).domain == NSURLErrorDomain
+                && (error as NSError).code == NSURLErrorCancelled
+            Task { @MainActor in
+                self.downloading = false
+                self.task = nil
+                self.error = cancelled ? nil : "Could not download the model. Check your connection and try again."
+            }
+        }
+    }
+
+    nonisolated private static func validate(_ url: URL) throws {
+        let values = try url.resourceValues(forKeys: [.fileSizeKey])
+        guard Int64(values.fileSize ?? 0) == expectedByteCount else {
+            throw ModelDownloadError.invalidSize
+        }
+
+        let handle = try FileHandle(forReadingFrom: url)
+        defer { try? handle.close() }
+        var hasher = SHA256()
+        while true {
+            let chunk = try handle.read(upToCount: 1_048_576) ?? Data()
+            guard !chunk.isEmpty else { break }
+            hasher.update(data: chunk)
+        }
+        let digest = hasher.finalize().map { String(format: "%02x", $0) }.joined()
+        guard digest == expectedSHA256 else {
+            throw ModelDownloadError.invalidChecksum
+        }
+    }
+
+    nonisolated private static func install(_ staging: URL, at destination: URL) throws {
+        let fileManager = FileManager.default
+        if fileManager.fileExists(atPath: destination.path) {
+            _ = try fileManager.replaceItemAt(destination, withItemAt: staging)
+        } else {
+            try fileManager.moveItem(at: staging, to: destination)
+        }
+    }
+}
+
+private enum ModelDownloadError: LocalizedError {
+    case invalidResponse
+    case invalidSize
+    case invalidChecksum
+
+    var errorDescription: String? {
+        switch self {
+        case .invalidResponse:
+            return "The model server did not return a valid download. Try again later."
+        case .invalidSize, .invalidChecksum:
+            return "The downloaded model could not be verified. Your existing model was kept safe. Try again."
         }
     }
 }

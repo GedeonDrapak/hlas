@@ -163,7 +163,7 @@ final class AudioRecorder: NSObject, AVCaptureAudioDataOutputSampleBufferDelegat
     private func observeSession(_ session: AVCaptureSession) {
         let center = NotificationCenter.default
         let runtime = center.addObserver(
-            forName: .AVCaptureSessionRuntimeError,
+            forName: AVCaptureSession.runtimeErrorNotification,
             object: session,
             queue: .main
         ) { [weak self] notification in
@@ -173,7 +173,7 @@ final class AudioRecorder: NSObject, AVCaptureAudioDataOutputSampleBufferDelegat
             self?.needsReconfiguration = true
         }
         let interrupted = center.addObserver(
-            forName: .AVCaptureSessionWasInterrupted,
+            forName: AVCaptureSession.wasInterruptedNotification,
             object: session,
             queue: .main
         ) { [weak self] _ in
@@ -185,7 +185,10 @@ final class AudioRecorder: NSObject, AVCaptureAudioDataOutputSampleBufferDelegat
 
     private static func captureDevice(matching preferred: AudioInputDevice?) -> AVCaptureDevice? {
         guard let preferred else { return nil }
-        return AVCaptureDevice.devices(for: .audio).first {
+        let devices = AVCaptureDevice.DiscoverySession(
+            deviceTypes: [.microphone], mediaType: .audio, position: .unspecified
+        ).devices
+        return devices.first {
             $0.uniqueID == preferred.uid || $0.localizedName == preferred.name
         }
     }

@@ -227,7 +227,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let appItem = NSMenuItem()
         mainMenu.addItem(appItem)
         let appMenu = NSMenu()
+        appMenu.addItem(withTitle: "About Hlas", action: #selector(showAbout), keyEquivalent: "")
+        appMenu.addItem(.separator())
         appMenu.addItem(withTitle: "Quit Hlas", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        appMenu.items.forEach { $0.target = self }
         appItem.submenu = appMenu
 
         let editItem = NSMenuItem()
@@ -257,6 +260,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(withTitle: "Settings…", action: #selector(openSettings), keyEquivalent: ",")
         menu.addItem(withTitle: "History…", action: #selector(openHistory), keyEquivalent: "")
         menu.addItem(withTitle: "Welcome Tour…", action: #selector(openOnboarding), keyEquivalent: "")
+        menu.addItem(withTitle: "Privacy", action: #selector(openPrivacy), keyEquivalent: "")
+        menu.addItem(withTitle: "Third-party notices", action: #selector(openThirdPartyNotices), keyEquivalent: "")
+        menu.addItem(.separator())
         menu.addItem(withTitle: "Quit Hlas", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         menu.items.forEach { $0.target = self }
         menu.delegate = self
@@ -280,6 +286,24 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     @objc private func openHistory() {
         HistoryWindow.shared.show()
+    }
+
+    @objc private func showAbout() {
+        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
+        NSApp.orderFrontStandardAboutPanel(options: [
+            .applicationName: "Hlas",
+            .applicationVersion: version,
+            .credits: NSAttributedString(string: "Private dictation for Apple Silicon Macs.")
+        ])
+        NSApp.activate(ignoringOtherApps: true)
+    }
+
+    @objc private func openPrivacy() {
+        LegalDocuments.open("Privacy")
+    }
+
+    @objc private func openThirdPartyNotices() {
+        LegalDocuments.open("ThirdPartyNotices")
     }
 }
 

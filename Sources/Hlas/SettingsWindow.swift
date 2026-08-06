@@ -88,6 +88,13 @@ struct SettingsView: View {
                             .font(.system(size: 10))
                             .foregroundStyle(DS.destructive)
                     }
+                    HStack(spacing: 12) {
+                        Button("Privacy") { LegalDocuments.open("Privacy") }
+                        Button("Third-party notices") { LegalDocuments.open("ThirdPartyNotices") }
+                    }
+                    .buttonStyle(.borderless)
+                    .font(.system(size: 11))
+                    .foregroundStyle(DS.fg3)
                 }
 
                 section("VOCABULARY") {
@@ -183,6 +190,8 @@ struct SettingsView: View {
                 ProgressView(value: downloader.progress).tint(DS.brand)
                 Text("Downloading model… \(Int(downloader.progress * 100))%")
                     .font(.system(size: 11)).foregroundStyle(DS.fg3)
+                Button("Cancel", action: downloader.cancel)
+                    .buttonStyle(.borderless).foregroundStyle(DS.fg3)
             }
         } else {
             VStack(alignment: .leading, spacing: 8) {
@@ -204,6 +213,8 @@ struct SettingsView: View {
                 .padding(8)
                 .background(RoundedRectangle(cornerRadius: DS.radiusSm).fill(DS.surfaceHover))
             Text(hint).font(.system(size: 10)).foregroundStyle(DS.fg3)
+            Text("Audio is sent directly to \(label.hasPrefix("Groq") ? "Groq" : "OpenAI") for transcription. Your key stays in your macOS Keychain.")
+                .font(.system(size: 10)).foregroundStyle(DS.fg3)
         }
     }
 
