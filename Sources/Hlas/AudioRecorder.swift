@@ -1,13 +1,15 @@
 import AVFoundation
 
-/// Captures microphone audio and delivers 16 kHz mono Float32 samples —
+/// Captures microphone audio and delivers 16 kHz mono Float32 samples -
 /// the native input format of every Whisper-family model.
 /// The engine is started only while recording, so idle cost is zero.
 final class AudioRecorder {
     private let engine = AVAudioEngine()
+    private let captureQueue = DispatchQueue(label: "hlas.audio-capture", qos: .userInitiated)
     private var converter: AVAudioConverter?
-    private(set) var samples: [Float] = []
+    private var samples: [Float] = []
     private var warmShutdownTimer: Timer?
+    private var tapInstalled = false
 
     /// Keep the engine running briefly after a dictation so consecutive
     /// dictations start with zero mic-spinup loss (Handy's technique).
@@ -42,7 +44,7 @@ final class AudioRecorder {
     func start() throws {
         warmShutdownTimer?.invalidate()
         warmShutdownTimer = nil
-        samples.removeAll(keepingCapacity: true)
+        captureQueue.sync { samples.removeAll(keepingCapacity: true) }
 
         let preferred = Self.preferredDevice()
         // Warm engine on the wrong device (unplugged, settings change,
@@ -91,7 +93,7 @@ final class AudioRecorder {
             }
             if out.frameLength > 0, let ch = out.floatChannelData?[0] {
                 let chunk = Array(UnsafeBufferPointer(start: ch, count: Int(out.frameLength)))
-                DispatchQueue.main.async {
+                self.captureQueue.async {
                     self.samples.append(contentsOf: chunk)
                 }
                 var peak: Float = 0
@@ -100,6 +102,7 @@ final class AudioRecorder {
                 DispatchQueue.main.async { self.onLevel?(level) }
             }
         }
+        tapInstalled = true
         if !engine.isRunning {
             engine.prepare()
             try engine.start()
@@ -110,16 +113,34 @@ final class AudioRecorder {
     /// The engine keeps running for `keepWarmSeconds` so an immediate next
     /// dictation loses zero audio to mic spin-up.
     func stop() -> [Float] {
-        engine.inputNode.removeTap(onBus: 0)
+        if tapInstalled {
+            engine.inputNode.removeTap(onBus: 0)
+            tapInstalled = false
+        }
         converter = nil
-        let result = samples
-        samples.removeAll(keepingCapacity: false)
+        let result = captureQueue.sync {
+            let result = samples
+            samples.removeAll(keepingCapacity: false)
+            return result
+        }
 
         warmShutdownTimer?.invalidate()
         warmShutdownTimer = Timer.scheduledTimer(withTimeInterval: keepWarmSeconds, repeats: false) { [weak self] _ in
             self?.engine.stop()
         }
         return result
+    }
+
+    func shutdown() {
+        warmShutdownTimer?.invalidate()
+        warmShutdownTimer = nil
+        if tapInstalled {
+            engine.inputNode.removeTap(onBus: 0)
+            tapInstalled = false
+        }
+        engine.stop()
+        converter = nil
+        captureQueue.sync { samples.removeAll(keepingCapacity: false) }
     }
 
     static func requestPermission() async -> Bool {

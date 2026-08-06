@@ -5,6 +5,7 @@ enum OverlayState: Equatable {
     case hidden
     case recording
     case transcribing
+    case cancelled
     case error(String)
 }
 
@@ -92,6 +93,13 @@ struct OverlayView: View {
             case .transcribing:
                 ProgressView().controlSize(.small).tint(DS.fg2)
                 Text("TRANSCRIBING")
+                    .font(DS.label())
+                    .tracking(3)
+                    .foregroundStyle(DS.fg2)
+            case .cancelled:
+                Image(systemName: "xmark.circle.fill")
+                    .foregroundStyle(DS.fg2)
+                Text("CANCELLED")
                     .font(DS.label())
                     .tracking(3)
                     .foregroundStyle(DS.fg2)

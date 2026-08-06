@@ -10,7 +10,7 @@ struct OpenAICompatibleTranscriber: Transcriber {
     func transcribe(samples: [Float], language: String?) async throws -> String {
         guard !apiKey.isEmpty else {
             throw NSError(domain: "Hlas", code: 401, userInfo: [
-                NSLocalizedDescriptionKey: "API key missing — open Settings"
+                NSLocalizedDescriptionKey: "API key missing - open Settings"
             ])
         }
         let wav = WAVEncoder.encode(samples: samples)

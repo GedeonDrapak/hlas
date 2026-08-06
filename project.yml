@@ -47,3 +47,4 @@ targets:
       - sdk: Accelerate.framework
       - sdk: AVFoundation.framework
       - sdk: AppKit.framework
+      - sdk: Security.framework

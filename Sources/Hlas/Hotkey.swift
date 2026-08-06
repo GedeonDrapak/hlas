@@ -1,7 +1,7 @@
 import AppKit
 
 /// Global hold-to-talk hotkey via CGEventTap.
-/// Default: hold the Fn/Globe key (keycode 63) — press starts recording,
+/// Default: hold the Fn/Globe key (keycode 63) - press starts recording,
 /// release stops. A modifier-only key never conflicts with app shortcuts.
 final class Hotkey {
     enum Trigger {
@@ -12,6 +12,7 @@ final class Hotkey {
     var trigger: Trigger = .fnKey
     var onPress: (() -> Void)?
     var onRelease: (() -> Void)?
+    var onEscape: (() -> Void)?
 
     private var tap: CFMachPort?
     private var runLoopSource: CFRunLoopSource?
@@ -61,6 +62,10 @@ final class Hotkey {
         }
 
         let keycode = event.getIntegerValueField(.keyboardEventKeycode)
+
+        if type == .keyDown, keycode == 53, event.getIntegerValueField(.keyboardEventAutorepeat) == 0 {
+            DispatchQueue.main.async { self.onEscape?() }
+        }
 
         switch trigger {
         case .fnKey:

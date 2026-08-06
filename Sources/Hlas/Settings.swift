@@ -28,10 +28,18 @@ final class Settings: ObservableObject {
         didSet { d.set(language, forKey: "language") }
     }
     @Published var groqAPIKey: String {
-        didSet { d.set(groqAPIKey, forKey: "groqAPIKey") }
+        didSet {
+            if !KeychainStore.set(groqAPIKey, for: "groq") {
+                Log.write("failed to save Groq API key to Keychain")
+            }
+        }
     }
     @Published var openaiAPIKey: String {
-        didSet { d.set(openaiAPIKey, forKey: "openaiAPIKey") }
+        didSet {
+            if !KeychainStore.set(openaiAPIKey, for: "openai") {
+                Log.write("failed to save OpenAI API key to Keychain")
+            }
+        }
     }
     /// Seconds to keep the local model in RAM after last use. 0 = unload instantly.
     @Published var modelKeepAliveSeconds: Double {
@@ -54,12 +62,21 @@ final class Settings: ObservableObject {
     private init() {
         engine = EngineKind(rawValue: d.string(forKey: "engine") ?? "") ?? .local
         language = d.string(forKey: "language") ?? "cs"
-        groqAPIKey = d.string(forKey: "groqAPIKey") ?? ""
-        openaiAPIKey = d.string(forKey: "openaiAPIKey") ?? ""
+        groqAPIKey = Self.loadAPIKey(account: "groq", legacyKey: "groqAPIKey", defaults: d)
+        openaiAPIKey = Self.loadAPIKey(account: "openai", legacyKey: "openaiAPIKey", defaults: d)
         modelKeepAliveSeconds = d.object(forKey: "modelKeepAlive") as? Double ?? 180
         vocabulary = d.stringArray(forKey: "vocabulary") ?? []
         favoriteLanguages = d.stringArray(forKey: "favoriteLanguages") ?? ["cs", "en"]
         inputDeviceUID = d.string(forKey: "inputDeviceUID") ?? ""
+    }
+
+    private static func loadAPIKey(account: String, legacyKey: String, defaults: UserDefaults) -> String {
+        if let saved = KeychainStore.string(for: account) { return saved }
+        guard let legacy = defaults.string(forKey: legacyKey), !legacy.isEmpty else { return "" }
+        if KeychainStore.set(legacy, for: account) {
+            defaults.removeObject(forKey: legacyKey)
+        }
+        return legacy
     }
 
     var vocabularyPrompt: String? {

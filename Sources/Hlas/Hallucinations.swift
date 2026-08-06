@@ -23,7 +23,7 @@ enum Hallucinations {
     static func filter(_ text: String) -> String {
         let lower = text.lowercased()
         for pattern in patterns where lower.contains(pattern) {
-            // Only drop when the hallucination dominates the output —
+            // Only drop when the hallucination dominates the output -
             // a real dictation that merely mentions YouTube must survive.
             if Double(pattern.count) / Double(max(1, lower.count)) > 0.3 {
                 Log.write("dropped hallucination: \"\(text.prefix(60))\"")

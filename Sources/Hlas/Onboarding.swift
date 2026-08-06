@@ -3,7 +3,7 @@ import SwiftUI
 import AVFoundation
 import ServiceManagement
 
-/// First-run onboarding: split layout — Unsplash gradient + brand + step list
+/// First-run onboarding: split layout - Unsplash gradient + brand + step list
 /// on the left, setup content on the right. Frosted-glass window.
 @MainActor
 final class OnboardingWindow {
@@ -90,7 +90,7 @@ final class PermissionModel: ObservableObject {
 struct OnboardingView: View {
     var close: () -> Void
 
-    // HLAS_STEP env var jumps straight to a step — used for visual QA.
+    // HLAS_STEP env var jumps straight to a step - used for visual QA.
     @State private var step = ProcessInfo.processInfo.environment["HLAS_STEP"].flatMap(Int.init) ?? 0
     @StateObject private var permissions = PermissionModel()
     @StateObject private var downloader = ModelDownloader()
@@ -113,7 +113,7 @@ struct OnboardingView: View {
         .background(
             ZStack {
                 VisualEffectBlur(material: .underWindowBackground)
-                DS.bg.opacity(0.45) // slightly transparent — desktop shows through
+                DS.bg.opacity(0.45) // slightly transparent - desktop shows through
             }
             .ignoresSafeArea()
         )
@@ -123,7 +123,7 @@ struct OnboardingView: View {
         .animation(.easeOut(duration: 0.3), value: step)
     }
 
-    // MARK: left — gradient, brand, step list
+    // MARK: left - gradient, brand, step list
 
     private var leftPanel: some View {
         ZStack {
@@ -229,7 +229,7 @@ struct OnboardingView: View {
         .buttonStyle(.plain)
     }
 
-    // MARK: right — step content
+    // MARK: right - step content
 
     private var rightPanel: some View {
         VStack(spacing: 0) {
@@ -248,15 +248,15 @@ struct OnboardingView: View {
         }
     }
 
-    // MARK: step 0 — welcome
+    // MARK: step 0 - welcome
 
     private var welcome: some View {
         VStack(alignment: .leading, spacing: 16) {
             stepHeader("Welcome to Hlas", "Your own dictation app. No subscription, no account, no cloud unless you ask for it.")
-            featureRow("waveform", "**Hold Fn** and speak Czech or English. Release — the text pastes at your cursor, in any app.")
+            featureRow("waveform", "**Hold Fn** and speak Czech or English. Release - the text pastes at your cursor, in any app.")
             featureRow("hand.tap", "**Quick-tap Fn** to latch hands-free mode. Tap again to stop.")
-            featureRow("lock", "Local by default — audio never leaves this Mac. Cloud engines are opt-in.")
-            featureRow("bolt", "A 2 MB app that idles at ~40 MB RAM. The model loads only while transcribing.")
+            featureRow("lock", "Local by default - audio never leaves this Mac. Cloud engines are opt-in.")
+            featureRow("bolt", "A ~4 MB app that idles at ~60 MB RAM. The model loads on demand and unloads after inactivity.")
         }
     }
 
@@ -276,11 +276,11 @@ struct OnboardingView: View {
         .background(RoundedRectangle(cornerRadius: DS.radiusSm).fill(Color.white.opacity(0.05)))
     }
 
-    // MARK: step 1 — permissions
+    // MARK: step 1 - permissions
 
     private var permissionsStep: some View {
         VStack(alignment: .leading, spacing: 16) {
-            stepHeader("Two permissions", "Both are checked live — the card turns green the moment macOS registers it.")
+            stepHeader("Two permissions", "Both are checked live - the card turns green the moment macOS registers it.")
             permissionCard(
                 granted: permissions.mic,
                 icon: "mic",
@@ -296,7 +296,7 @@ struct OnboardingView: View {
                 action: permissions.requestAccessibility
             )
             if !permissions.accessibility {
-                Text("System Settings opens on the right page — find Hlas in the list and switch it on.")
+                Text("System Settings opens on the right page - find Hlas in the list and switch it on.")
                     .font(.system(size: 11))
                     .foregroundStyle(DS.fg3)
             }
@@ -331,17 +331,17 @@ struct OnboardingView: View {
         )
     }
 
-    // MARK: step 2 — engine & language
+    // MARK: step 2 - engine & language
 
     private var engineStep: some View {
         VStack(alignment: .leading, spacing: 14) {
             stepHeader("Engine & language", "Where transcription runs. Switch anytime from the menu bar.")
 
-            engineCard(.local, "On this Mac — private & free",
+            engineCard(.local, "On this Mac - private & free",
                        "Whisper large-v3-turbo. One-time 547 MB download. Works offline.")
-            engineCard(.groq, "Groq cloud — fastest, ~$3/month",
+            engineCard(.groq, "Groq cloud - fastest, ~$3/month",
                        "Full whisper-large-v3. Free API key at console.groq.com.")
-            engineCard(.openai, "OpenAI cloud — best accuracy, ~$8/month",
+            engineCard(.openai, "OpenAI cloud - best accuracy, ~$8/month",
                        "gpt-transcribe. API key at platform.openai.com.")
 
             if settings.engine == .local {
@@ -416,7 +416,7 @@ struct OnboardingView: View {
             .onChange(of: settings.openaiAPIKey) { (NSApp.delegate as? AppDelegate)?.rebuildTranscriber() }
     }
 
-    // MARK: step 3 — try it
+    // MARK: step 3 - try it
 
     private var tryItStep: some View {
         VStack(alignment: .leading, spacing: 14) {
@@ -453,7 +453,7 @@ struct OnboardingView: View {
             }
 
             VStack(alignment: .leading, spacing: 8) {
-                tipRow("Add names & jargon in **Settings → Vocabulary** — the model learns to spell them.")
+                tipRow("Add names & jargon in **Settings → Vocabulary** - the model learns to spell them.")
                 tipRow("Menu bar **waveform icon** → Settings, history, this tour.")
             }
         }

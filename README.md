@@ -1,6 +1,6 @@
 # Hlas
 
-Ultra-minimal macOS dictation. Hold **Fn**, speak (Czech or English), release — text appears at your cursor. No subscription, no account, no telemetry.
+Ultra-minimal macOS dictation. Hold **Fn**, speak (Czech or English), release - text appears at your cursor. No subscription, no account, no telemetry.
 
 Built as a personal replacement for Superwhisper / Wispr Flow / Willow ($15/mo each).
 
@@ -11,8 +11,8 @@ Built as a personal replacement for Superwhisper / Wispr Flow / Willow ($15/mo e
 | Price | free / ~$3/mo API | $8.49/mo | $15/mo | $15/mo |
 | Local + private | yes | yes | no (cloud + screenshots) | partial |
 | Czech quality | whisper large-v3 class | good | uncontrollable | weak |
-| App size | 2.4 MB | ~1 GB+ | heavy | heavy |
-| Idle RAM | ~40 MB (model auto-unloads) | ~800 MB | heavy | ? |
+| App size | ~4 MB | ~1 GB+ | heavy | heavy |
+| Idle RAM | ~60 MB (model auto-unloads) | ~800 MB | heavy | ? |
 
 ## Usage
 
@@ -22,22 +22,18 @@ Built as a personal replacement for Superwhisper / Wispr Flow / Willow ($15/mo e
 
 ## Engines
 
-- **Local (default):** whisper.cpp `large-v3-turbo-q5_0` (547 MB one-time download, ~1 GB RAM only while transcribing, auto-unloads after 3 min idle). Runs on Metal.
-- **Groq API:** whisper-large-v3-turbo — ~$0.04/hr of audio (≈ $1–3/mo at heavy use). BYOK.
-- **OpenAI API:** gpt-4o-mini-transcribe — ~$0.18/hr. BYOK.
+- **Local (default):** whisper.cpp `large-v3-turbo-q5_0` (547 MB one-time download, ~1 GB while loaded, auto-unloads after 3 min idle). Runs on Metal.
+- **Groq API:** whisper-large-v3-turbo - ~$0.04/hr of audio (≈ $1–3/mo at heavy use). BYOK.
+- **OpenAI API:** gpt-transcribe - ~$0.27/hr. BYOK.
 
 ## Build
 
 ```bash
 # 1. Build whisper.cpp static libs (once)
-cd ../whisper.cpp
-cmake -B build-hlas -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF \
-  -DWHISPER_BUILD_EXAMPLES=OFF -DWHISPER_BUILD_TESTS=OFF -DGGML_METAL_EMBED_LIBRARY=ON
-cmake --build build-hlas -j
-
-# 2. Vendor + build app (xcodegen: brew install xcodegen)
 cd ../hlas
-find ../whisper.cpp/build-hlas -name "*.a" -exec cp {} Vendor/lib/ \;
+make vendor   # builds whisper.cpp for the app's real macOS 15 deployment target
+
+# 2. Build app (xcodegen: brew install xcodegen)
 make install   # builds via Xcode (stable signing), installs to /Applications, launches
 ```
 
@@ -61,7 +57,7 @@ Fn press ──► CGEventTap (Hotkey.swift, health-checked)
                                  └─ OpenAICompatibleTranscriber (Groq / OpenAI)
               │
               ▼
-        TextInjector — pasteboard swap + Cmd-V (physical keycode 9,
+        TextInjector - pasteboard swap + Cmd-V (physical keycode 9,
         Czech-QWERTZ-safe), transient-tagged, changeCount-guarded restore
 ```
 

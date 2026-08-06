@@ -17,8 +17,16 @@ final class History: ObservableObject {
     private let url: URL = {
         let dir = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
             .appendingPathComponent("Hlas", isDirectory: true)
-        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-        return dir.appendingPathComponent("history.json")
+        try? FileManager.default.createDirectory(
+            at: dir,
+            withIntermediateDirectories: true,
+            attributes: [.posixPermissions: 0o700]
+        )
+        let file = dir.appendingPathComponent("history.json")
+        if FileManager.default.fileExists(atPath: file.path) {
+            try? FileManager.default.setAttributes([.posixPermissions: 0o600], ofItemAtPath: file.path)
+        }
+        return file
     }()
 
     private init() {
@@ -32,7 +40,13 @@ final class History: ObservableObject {
         entries.insert(Entry(id: UUID(), text: text, date: Date()), at: 0)
         if entries.count > Self.maxEntries { entries.removeLast(entries.count - Self.maxEntries) }
         if let data = try? JSONEncoder().encode(entries) {
-            try? data.write(to: url)
+            try? data.write(to: url, options: .atomic)
+            try? FileManager.default.setAttributes([.posixPermissions: 0o600], ofItemAtPath: url.path)
         }
+    }
+
+    func clear() {
+        entries.removeAll()
+        try? FileManager.default.removeItem(at: url)
     }
 }

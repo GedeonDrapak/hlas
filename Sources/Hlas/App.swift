@@ -20,10 +20,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private let overlay = OverlayPanel()
     private var isRecording = false
     private var transcriber: Transcriber = EchoTranscriber()
+    private var activeSessionID = UUID()
+    private var transcriptionTask: Task<Void, Never>?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         setupMainMenu()
         setupStatusItem()
+        _ = History.shared
         if OnboardingWindow.shouldShow || ProcessInfo.processInfo.environment["HLAS_STEP"] != nil {
             OnboardingWindow.shared.show()
         } else {
@@ -35,6 +38,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
         hotkey.onPress = { [weak self] in self?.hotkeyPressed() }
         hotkey.onRelease = { [weak self] in self?.hotkeyReleased() }
+        hotkey.onEscape = { [weak self] in self?.cancelDictation() }
 
         startHotkeyWithRetry()
         rebuildTranscriber()
@@ -72,7 +76,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private func hotkeyPressed() {
         Log.write("fn PRESS (recording=\(isRecording))")
         if isRecording {
-            stopDictation() // latched session — this tap ends it
+            stopDictation() // latched session - this tap ends it
         } else {
             pressStartedAt = Date()
             startDictation()
@@ -89,6 +93,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func startDictation() {
         guard !isRecording else { return }
+        activeSessionID = UUID()
+        transcriptionTask?.cancel()
+        transcriptionTask = nil
         do {
             try recorder.start()
             isRecording = true
@@ -110,6 +117,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func stopDictation() {
         guard isRecording else { return }
+        let sessionID = activeSessionID
         isRecording = false
         let samples = recorder.stop()
         setIcon(recording: false)
@@ -137,13 +145,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
         overlay.show(.transcribing)
 
-        let engine = transcriber
+        let engine = TranscriberFactory.make()
         let language = Settings.shared.language == "auto" ? nil : Settings.shared.language
-        Task {
+        transcriptionTask = Task { [weak self] in
+            guard let self else { return }
             do {
                 let text = try await engine.transcribe(samples: padded, language: language)
-                Log.write("transcribed: \"\(text.prefix(80))\"")
+                guard !Task.isCancelled else { return }
+                Log.write("transcription completed: \(text.count) characters")
                 await MainActor.run {
+                    guard self.activeSessionID == sessionID else { return }
                     self.overlay.hide()
                     let trimmed = Hallucinations.filter(
                         text.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -154,7 +165,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                     }
                 }
             } catch {
+                guard !Task.isCancelled else { return }
                 await MainActor.run {
+                    guard self.activeSessionID == sessionID else { return }
                     self.overlay.show(.error(error.localizedDescription))
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) { self.overlay.hide() }
                 }
@@ -162,8 +175,35 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
+    private func cancelDictation() {
+        guard isRecording else { return }
+        isRecording = false
+        pressStartedAt = nil
+        activeSessionID = UUID()
+        _ = recorder.stop()
+        setIcon(recording: false)
+        Log.write("recording cancelled")
+        overlay.show(.cancelled)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self] in
+            guard self?.isRecording == false else { return }
+            self?.overlay.hide()
+        }
+    }
+
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        if !flag { SettingsWindow.shared.show(appDelegate: self) }
+        return true
+    }
+
+    func applicationWillTerminate(_ notification: Notification) {
+        transcriptionTask?.cancel()
+        if isRecording { _ = recorder.stop() }
+        recorder.shutdown()
+        transcriber.unload()
+    }
+
     /// LSUIElement apps have no menu bar, but Cmd-C/V/X/A key equivalents
-    /// route through the main menu — without one, paste doesn't work in our
+    /// route through the main menu - without one, paste doesn't work in our
     /// own windows (the "transcribes but never lands in the Try It field" bug).
     private func setupMainMenu() {
         let mainMenu = NSMenu()
@@ -195,7 +235,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         setIcon(recording: false)
         let menu = NSMenu()
-        menu.addItem(withTitle: "Hlas — hold Fn to dictate", action: nil, keyEquivalent: "")
+        menu.addItem(withTitle: "Hlas - hold Fn to dictate", action: nil, keyEquivalent: "")
         menu.addItem(.separator())
         menu.addItem(withTitle: "Settings…", action: #selector(openSettings), keyEquivalent: ",")
         menu.addItem(withTitle: "Welcome Tour…", action: #selector(openOnboarding), keyEquivalent: "")

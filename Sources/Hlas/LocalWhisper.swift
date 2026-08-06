@@ -22,7 +22,7 @@ final class LocalWhisper: Transcriber, @unchecked Sendable {
     func transcribe(samples: [Float], language: String?) async throws -> String {
         guard Self.modelExists else {
             throw NSError(domain: "Hlas", code: 404, userInfo: [
-                NSLocalizedDescriptionKey: "Model not downloaded — open Settings"
+                NSLocalizedDescriptionKey: "Model not downloaded - open Settings"
             ])
         }
         let vocabPrompt = await Settings.shared.vocabularyPrompt

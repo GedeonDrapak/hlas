@@ -125,7 +125,7 @@ struct InputDevicePicker: View {
                     row("System default", checked: settings.inputDeviceUID.isEmpty)
                 }
                 Button { settings.inputDeviceUID = "builtin" } label: {
-                    row("Built-in mic — always (ignore AirPods switch)", checked: settings.inputDeviceUID == "builtin")
+                    row("Built-in mic - always (ignore AirPods switch)", checked: settings.inputDeviceUID == "builtin")
                 }
                 if !devices.isEmpty { Divider() }
                 ForEach(devices) { device in
@@ -163,7 +163,7 @@ struct InputDevicePicker: View {
         switch settings.inputDeviceUID {
         case "": return "System default"
         case "builtin": return "Built-in mic (always)"
-        case let uid: return AudioDevices.device(uid: uid)?.name ?? "Unavailable — using default"
+        case let uid: return AudioDevices.device(uid: uid)?.name ?? "Unavailable - using default"
         }
     }
 

@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Hlas design tokens — fusion of the Fakturio premium neutral system
+/// Hlas design tokens - fusion of the Fakturio premium neutral system
 /// (Linear/Raycast near-black surfaces, hairline borders) and the
 /// Eden Makers system (bio-digital green accent, uppercase tracked labels).
 /// Rule from both systems: never pure black, never pure white.
@@ -15,7 +15,7 @@ enum DS {
     static let fg2 = Color(white: 0.62)           // muted
     static let fg3 = Color(white: 0.42)           // tertiary
 
-    // Accent — Eden bio-digital green
+    // Accent - Eden bio-digital green
     static let brand = Color(hue: 153 / 360, saturation: 1.0, brightness: 0.90)
     static let destructive = Color(hue: 0, saturation: 0.72, brightness: 0.86)
 
@@ -27,7 +27,7 @@ enum DS {
     static let radius: CGFloat = 16
     static let radiusSm: CGFloat = 8
 
-    // Type — system font stands in for Satoshi (bundled later)
+    // Type - system font stands in for Satoshi (bundled later)
     static func label(_ size: CGFloat = 11) -> Font {
         .system(size: size, weight: .medium).monospacedDigit()
     }

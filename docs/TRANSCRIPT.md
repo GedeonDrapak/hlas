@@ -1,12 +1,12 @@
-# Session transcript — Hlas v0.1 build log (2026-08-06)
+# Session transcript - Hlas v0.1 build log (2026-08-06)
 
-Reconstructed detailed log of the full build session (Gedeon ↔ Claude). Not a verbatim dump —
+Reconstructed detailed log of the full build session (Gedeon ↔ Claude). Not a verbatim dump -
 but every request, decision, bug, and fix is here in order, with reasoning. Written for the next
 agent (Codex) to absorb full context before touching code.
 
 ---
 
-## 1. Kickoff — the brief
+## 1. Kickoff - the brief
 
 Gedeon: annoyed at paying $15/mo subscriptions for Superwhisper / Wispr Flow / Willow. Wants an
 **ultra-minimalist, fast, smart, low-RAM background dictation app** with excellent **Czech**,
@@ -37,11 +37,11 @@ local models or BYOK APIs, sleek design = fusion of his **Fakturio** app design 
 - Distilled "steal this" list drove the implementation below.
 
 **STT engines for Czech (key numbers):**
-- Local sweet spot: whisper.cpp `large-v3-turbo-q5_0` — 547 MB disk, ~1 GB loaded, ~9x realtime
+- Local sweet spot: whisper.cpp `large-v3-turbo-q5_0` - 547 MB disk, ~1 GB loaded, ~9x realtime
   claim (measured ~6.7x on M1 Pro), small Czech penalty vs full large-v3.
-- Parakeet TDT v3 via FluidAudio: Czech 11 % WER FLEURS, ~66 MB ANE RAM, ~155x realtime on M1 —
+- Parakeet TDT v3 via FluidAudio: Czech 11 % WER FLEURS, ~66 MB ANE RAM, ~155x realtime on M1 -
   future upgrade, bigger integration.
-- **Apple SpeechAnalyzer (macOS 26): NO Czech** — ruled out.
+- **Apple SpeechAnalyzer (macOS 26): NO Czech** - ruled out.
 - APIs: Groq large-v3 $0.111/hr (best price/quality), ElevenLabs Scribe ≤5 % Czech WER claimed
   (best quality), OpenAI. All far under $15/mo subscriptions at 1 h/day.
 
@@ -56,10 +56,10 @@ labels, "never pure black/white" hard rule. → `DesignTokens.swift`.
 SwiftPM skeleton first, then Xcode-managed. Components: CGEventTap Fn hotkey, AVAudioEngine
 16 kHz recorder, Transcriber protocol (Local/Groq/OpenAI), pasteboard+Cmd-V injector, NSPanel
 pill overlay, settings window, history, model downloader. whisper.cpp built as static libs
-(`-DGGML_METAL_EMBED_LIBRARY=ON` — no bundle resources needed), vendored to `Vendor/lib`,
+(`-DGGML_METAL_EMBED_LIBRARY=ON` - no bundle resources needed), vendored to `Vendor/lib`,
 exposed via `Sources/CWhisper` C target. App bundle 2.4 MB, idle 38 MB RAM.
 
-Smoke tests before shipping: C harness against vendored libs — jfk.wav transcribed correctly;
+Smoke tests before shipping: C harness against vendored libs - jfk.wav transcribed correctly;
 timing: load 0.76 s, 11 s audio in 1.65 s warm.
 
 ## 5. The permission saga (read this before touching signing!)
@@ -88,34 +88,34 @@ User's first test: said "Ahoj Ahoj Ahoj, zkouším jestli tohle funguje v češt
   benchmarked ~free on Metal) + Czech priming prompt (VoiceInk technique) for diacritics.
 - **hezky→hezký**: homophone, model ceiling → future LLM cleanup pass.
 - Silence guard added (peak < 0.01 → drop) after synthetic presses produced hallucinations
-  ("Konec.", "Titulky vytvořil Jirka Kováč" — whisper's Czech YouTube-subtitle hallucinations)
+  ("Konec.", "Titulky vytvořil Jirka Kováč" - whisper's Czech YouTube-subtitle hallucinations)
   → `Hallucinations.swift` blocklist.
-Post-fix test: "Ahoj, ahoj, ten se zkúška mého nového nástroje" — first word intact, remaining
+Post-fix test: "Ahoj, ahoj, ten se zkúška mého nového nástroje" - first word intact, remaining
 errors = quantized-turbo ceiling → recommended Groq/OpenAI for A/B.
 
 ## 7. gpt-transcribe (user brought OpenAI's July 2026 announcement)
 
 Decision: **gpt-transcribe yes** (same /audio/transcriptions endpoint, $0.0045/min ≈ $8/mo,
-beats gpt-4o-transcribe, keyword/context support → vocabulary works properly) — swapped in as
-the OpenAI engine. **gpt-live-transcribe no** ($0.017/min ≈ $30/mo at 1 h/day — double the
+beats gpt-4o-transcribe, keyword/context support → vocabulary works properly) - swapped in as
+the OpenAI engine. **gpt-live-transcribe no** ($0.017/min ≈ $30/mo at 1 h/day - double the
 subscriptions being escaped; needs Realtime WebSocket stack; only cosmetic gain in push-to-talk).
 Also compared Groq vs OpenAI for the user (Groq = open whisper on LPUs, cheap/fast/known Czech;
 gpt-transcribe = newer, likely better Czech, pricier; verdict: A/B with own voice).
 User configured his OpenAI key; gpt-transcribe is the active engine at handoff.
 
-## 8. Design pass — blur + onboarding
+## 8. Design pass - blur + onboarding
 
 - Frosted glass everywhere (NSVisualEffectView wrapper): pill (hudWindow + 0.35 tint), windows
   (underWindowBackground + 0.45–0.5 tint). User wanted "Raycast/Eloquent" feel + more
-  transparency — delivered.
+  transparency - delivered.
 - Onboarding v1 (single column) → v2 **split layout** per user's reference screenshots:
-  Unsplash gradient panel left (3 photos downloaded, ~520 KB, bundled — offline-safe) with HLAS
+  Unsplash gradient panel left (3 photos downloaded, ~520 KB, bundled - offline-safe) with HLAS
   brand + numbered step chips (active = white card), content right. 4 steps: Welcome →
   Permissions (live 1 s polling, green checkmarks, Continue gated) → Engine & language → Try it
   (test field, last transcript, launch-at-login).
-- **Bug found by user (screenshot): gradient overflowed the whole window** — `scaledToFill` in
+- **Bug found by user (screenshot): gradient overflowed the whole window** - `scaledToFill` in
   ZStack blew the layout. Fix: `Color.overlay(Image…)` containment pattern + decoded-image cache.
-- **Bug found by user #2: contrast** — the "blue" Unsplash photo was actually light pastel;
+- **Bug found by user #2: contrast** - the "blue" Unsplash photo was actually light pastel;
   white text/chips unreadable. Fix: uniform 0.38 scrim + heavier bottom gradient, dark chip
   backing, swapped photo for a genuinely dark one. Lesson institutionalized: **visual QA of
   every step on every gradient** via `HLAS_STEP=N` env hook + screencapture loop (added then).
@@ -130,7 +130,7 @@ active-language fallback when removing the active chip. Wired into Settings + on
 ## 10. Paste-inside-own-app bug
 
 User: transcription showed in history but never landed in the onboarding Try-It field. Root
-cause: **LSUIElement apps have no main menu, and Cmd-V routes through menu key-equivalents** —
+cause: **LSUIElement apps have no main menu, and Cmd-V routes through menu key-equivalents** -
 so synthetic Cmd-V did nothing inside Hlas's own windows (worked everywhere else). Fix: hidden
 programmatic main menu with standard Edit items (`setupMainMenu`). Bonus: manual Cmd-C/V/A now
 work in all Hlas fields (API key entry!).
@@ -138,7 +138,7 @@ work in all Hlas fields (API key entry!).
 ## 11. Audio input routing
 
 User asked what happens with headphones/external mics. Answer: system default input. Built both
-requested features: **MICROPHONE picker in Settings** (System default / Built-in always —
+requested features: **MICROPHONE picker in Settings** (System default / Built-in always -
 recommended with Bluetooth headphones to avoid HFP quality drop / specific device via CoreAudio
 HAL enumeration, graceful fallback when unplugged, warm-engine restart on device change) and
 **source badge in the pill** (icon by transport type + device name, shown only when NOT the
@@ -147,7 +147,7 @@ built-in mic).
 ## 12. Handoff (this commit)
 
 AGENTS.md + docs/HANDOFF.md + this transcript + `tools/fakefn.swift`. Backlog for Codex in
-HANDOFF.md — headline items: Keychain for API keys, Esc-to-cancel, device hot-plug refresh,
+HANDOFF.md - headline items: Keychain for API keys, Esc-to-cancel, device hot-plug refresh,
 history window, multi-display overlay, app icon, Satoshi bundling, LLM cleanup pass, ElevenLabs
 Scribe engine, Parakeet/FluidAudio local engine.
 
@@ -161,7 +161,7 @@ Scribe engine, Parakeet/FluidAudio local engine.
 ## Owner preferences observed (keep respecting these)
 
 - Czech communication; terse, no fluff (caveman mode active in the original session).
-- Design opinions are strong and specific — reference screenshots are briefs, contrast matters,
+- Design opinions are strong and specific - reference screenshots are briefs, contrast matters,
   "sexy minimal" = Raycast/Linear/Eloquent lineage + Eden green.
 - Wants agents to visually verify UI work themselves (screenshot loop), not ask him to check.
 - Values: no subscriptions, privacy-by-default, tiny footprint, Czech quality above all.

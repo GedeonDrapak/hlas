@@ -1,4 +1,5 @@
 import AppKit
+import ServiceManagement
 import SwiftUI
 
 @MainActor
@@ -37,6 +38,8 @@ struct SettingsView: View {
     @ObservedObject var history = History.shared
     @StateObject private var downloader = ModelDownloader()
     @State private var newWord = ""
+    @State private var launchAtLogin = false
+    @State private var launchAtLoginError: String?
     var onEngineChange: () -> Void
 
     var body: some View {
@@ -54,8 +57,8 @@ struct SettingsView: View {
 
                     switch settings.engine {
                     case .local: localEngineControls
-                    case .groq: apiKeyField("Groq API key", text: $settings.groqAPIKey, hint: "console.groq.com — ~$0.04/hr of audio")
-                    case .openai: apiKeyField("OpenAI API key", text: $settings.openaiAPIKey, hint: "gpt-transcribe — ~$0.27/hr, best accuracy + vocabulary support")
+                    case .groq: apiKeyField("Groq API key", text: $settings.groqAPIKey, hint: "console.groq.com - ~$0.04/hr of audio")
+                    case .openai: apiKeyField("OpenAI API key", text: $settings.openaiAPIKey, hint: "gpt-transcribe - ~$0.27/hr, best accuracy + vocabulary support")
                     }
                 }
 
@@ -65,6 +68,26 @@ struct SettingsView: View {
 
                 section("MICROPHONE") {
                     InputDevicePicker()
+                }
+
+                section("GENERAL") {
+                    Toggle(isOn: Binding(
+                        get: { launchAtLogin },
+                        set: updateLaunchAtLogin
+                    )) {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Start Hlas at login").font(.system(size: 12)).foregroundStyle(DS.fg)
+                            Text("Keep dictation ready in the menu bar.")
+                                .font(.system(size: 10)).foregroundStyle(DS.fg3)
+                        }
+                    }
+                    .toggleStyle(.switch)
+                    .tint(DS.brand)
+                    if let launchAtLoginError {
+                        Text(launchAtLoginError)
+                            .font(.system(size: 10))
+                            .foregroundStyle(DS.destructive)
+                    }
                 }
 
                 section("VOCABULARY") {
@@ -86,9 +109,20 @@ struct SettingsView: View {
                 }
 
                 section("HISTORY") {
+                    HStack {
+                        if history.entries.isEmpty {
+                            Text("Nothing yet - hold Fn and speak.")
+                                .font(.system(size: 11)).foregroundStyle(DS.fg3)
+                        }
+                        Spacer()
+                        if !history.entries.isEmpty {
+                            Button("Clear", role: .destructive) { history.clear() }
+                                .buttonStyle(.borderless)
+                                .foregroundStyle(DS.destructive)
+                        }
+                    }
                     if history.entries.isEmpty {
-                        Text("Nothing yet — hold Fn and speak.")
-                            .font(.system(size: 11)).foregroundStyle(DS.fg3)
+                        EmptyView()
                     }
                     ForEach(history.entries.prefix(5)) { entry in
                         HStack(alignment: .top) {
@@ -113,11 +147,14 @@ struct SettingsView: View {
         .background(
             ZStack {
                 VisualEffectBlur(material: .underWindowBackground)
-                DS.bg.opacity(0.5) // slightly transparent — desktop shows through
+                DS.bg.opacity(0.5) // slightly transparent - desktop shows through
             }
             .ignoresSafeArea()
         )
         .preferredColorScheme(.dark)
+        .onAppear {
+            launchAtLogin = SMAppService.mainApp.status == .enabled
+        }
     }
 
     private var header: some View {
@@ -175,6 +212,18 @@ struct SettingsView: View {
         guard !word.isEmpty, !settings.vocabulary.contains(word) else { return }
         settings.vocabulary.append(word)
         newWord = ""
+    }
+
+    private func updateLaunchAtLogin(_ enabled: Bool) {
+        do {
+            if enabled { try SMAppService.mainApp.register() }
+            else { try SMAppService.mainApp.unregister() }
+            launchAtLogin = enabled
+            launchAtLoginError = nil
+        } catch {
+            launchAtLoginError = "Could not update login setting."
+            Log.write("launch-at-login toggle failed: \(error.localizedDescription)")
+        }
     }
 
     private func section(_ title: String, @ViewBuilder content: () -> some View) -> some View {

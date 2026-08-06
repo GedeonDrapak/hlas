@@ -15,7 +15,7 @@ extension Transcriber {
 struct EchoTranscriber: Transcriber {
     func transcribe(samples: [Float], language: String?) async throws -> String {
         let seconds = Double(samples.count) / 16_000
-        return String(format: "[hlas: %.1fs recorded — no engine configured]", seconds)
+        return String(format: "[hlas: %.1fs recorded - no engine configured]", seconds)
     }
 }
 
