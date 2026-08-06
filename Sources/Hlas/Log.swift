@@ -48,6 +48,28 @@ enum Log {
         }
     }
 
+    static func snapshot() -> String {
+        queue.sync {
+            let previous = url.appendingPathExtension("old")
+            return [previous, url]
+                .compactMap { try? String(contentsOf: $0, encoding: .utf8) }
+                .map(sanitizeLegacyTranscriptLines)
+                .joined(separator: "\n")
+        }
+    }
+
+    private static func sanitizeLegacyTranscriptLines(_ contents: String) -> String {
+        contents
+            .split(separator: "\n", omittingEmptySubsequences: false)
+            .map { line in
+                guard let marker = line.range(of: "dropped hallucination:") else {
+                    return String(line)
+                }
+                return String(line[..<marker.lowerBound]) + "dropped hallucination output"
+            }
+            .joined(separator: "\n")
+    }
+
     private static func rotateIfNeeded(adding bytes: Int) {
         guard let size = try? url.resourceValues(forKeys: [.fileSizeKey]).fileSize,
               UInt64(size + bytes) > maxBytes else { return }

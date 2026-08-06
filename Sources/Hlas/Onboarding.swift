@@ -97,6 +97,7 @@ struct OnboardingView: View {
     @ObservedObject private var settings = Settings.shared
     @ObservedObject private var history = History.shared
     @State private var launchAtLogin = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     private static let stepTitles = ["Welcome", "Permissions", "Engine & language", "Try it"]
     /// One Unsplash gradient per step, crossfaded.
@@ -120,7 +121,7 @@ struct OnboardingView: View {
         .preferredColorScheme(.dark)
         .onAppear { permissions.startPolling() }
         .onDisappear { permissions.stopPolling() }
-        .animation(.easeOut(duration: 0.3), value: step)
+        .animation(reduceMotion ? nil : .easeOut(duration: 0.3), value: step)
     }
 
     // MARK: left - gradient, brand, step list
@@ -138,6 +139,7 @@ struct OnboardingView: View {
                                     .resizable()
                                     .scaledToFill()
                                     .transition(.opacity)
+                                    .accessibilityHidden(true)
                             }
                         }
                     }
@@ -232,6 +234,10 @@ struct OnboardingView: View {
             )
         }
         .buttonStyle(.plain)
+        .disabled(i >= step)
+        .accessibilityLabel("Step \(i + 1): \(Self.stepTitles[i])")
+        .accessibilityValue(i == step ? "Current" : (i < step ? "Completed" : "Upcoming"))
+        .accessibilityHint(i < step ? "Returns to this step" : "")
     }
 
     // MARK: right - step content
@@ -388,6 +394,8 @@ struct OnboardingView: View {
             )
         }
         .buttonStyle(.plain)
+        .accessibilityElement(children: .combine)
+        .accessibilityValue(settings.engine == kind ? "Selected" : "Not selected")
     }
 
     @ViewBuilder
@@ -400,15 +408,24 @@ struct OnboardingView: View {
         } else if downloader.downloading {
             VStack(alignment: .leading, spacing: 6) {
                 ProgressView(value: downloader.progress).tint(DS.brand)
+                    .accessibilityLabel("Downloading transcription model")
+                    .accessibilityValue("\(Int(downloader.progress * 100)) percent")
                 Text("Downloading model… \(Int(downloader.progress * 100)) %")
                     .font(.system(size: 11)).foregroundStyle(DS.fg3)
                 Button("Cancel", action: downloader.cancel)
                     .buttonStyle(.borderless).foregroundStyle(DS.fg3)
             }
         } else {
-            Button("Download model (547 MB)") { downloader.start() }
-                .buttonStyle(.borderedProminent)
-                .tint(DS.brand.opacity(0.9))
+            VStack(alignment: .leading, spacing: 6) {
+                if let error = downloader.error {
+                    Text(error)
+                        .font(.caption)
+                        .foregroundStyle(DS.destructive)
+                }
+                Button("Download model (547 MB)") { downloader.start() }
+                    .buttonStyle(.borderedProminent)
+                    .tint(DS.brand.opacity(0.9))
+            }
         }
     }
 

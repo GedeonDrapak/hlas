@@ -31,10 +31,12 @@ final class OverlayPanel {
     let model = OverlayModel()
 
     func show(_ state: OverlayState) {
+        let previous = model.state
         model.state = state
         if panel == nil { makePanel() }
         position()
         panel?.orderFrontRegardless()
+        if state != previous { announce(state) }
     }
 
     func hide() {
@@ -68,6 +70,25 @@ final class OverlayPanel {
             x: f.midX - size.width / 2,
             y: f.minY + 24
         ))
+    }
+
+    private func announce(_ state: OverlayState) {
+        let message: String
+        switch state {
+        case .recording: message = "Recording started"
+        case .transcribing: message = "Transcribing"
+        case .cancelled: message = "Dictation cancelled"
+        case .error(let error): message = "Dictation failed. \(error)"
+        case .hidden: return
+        }
+        NSAccessibility.post(
+            element: NSApplication.shared,
+            notification: .announcementRequested,
+            userInfo: [
+                .announcement: message,
+                .priority: NSAccessibilityPriorityLevel.medium.rawValue,
+            ]
+        )
     }
 
     private func targetScreen() -> NSScreen? {
@@ -106,6 +127,7 @@ private extension CGRect {
 
 struct OverlayView: View {
     @ObservedObject var model: OverlayModel
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         HStack(spacing: 10) {
@@ -158,7 +180,7 @@ struct OverlayView: View {
             .shadow(color: .black.opacity(0.35), radius: 18, y: 6)
         )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .animation(.easeOut(duration: 0.18), value: model.state)
+        .animation(reduceMotion ? nil : .easeOut(duration: 0.18), value: model.state)
     }
 
     private func waveform(color: Color) -> some View {
@@ -170,6 +192,6 @@ struct OverlayView: View {
             }
         }
         .frame(height: 24)
-        .animation(.linear(duration: 0.06), value: model.levels)
+        .animation(reduceMotion ? nil : .linear(duration: 0.06), value: model.levels)
     }
 }

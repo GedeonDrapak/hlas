@@ -247,6 +247,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         edit.addItem(withTitle: "Select All", action: #selector(NSText.selectAll(_:)), keyEquivalent: "a")
         editItem.submenu = edit
 
+        let windowItem = NSMenuItem()
+        mainMenu.addItem(windowItem)
+        let windowMenu = NSMenu(title: "Window")
+        windowMenu.addItem(withTitle: "Close Window", action: #selector(NSWindow.performClose(_:)), keyEquivalent: "w")
+        windowItem.submenu = windowMenu
+
         NSApp.mainMenu = mainMenu
     }
 
@@ -264,6 +270,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(withTitle: "Welcome Tour…", action: #selector(openOnboarding), keyEquivalent: "")
         menu.addItem(withTitle: "Privacy", action: #selector(openPrivacy), keyEquivalent: "")
         menu.addItem(withTitle: "Third-party notices", action: #selector(openThirdPartyNotices), keyEquivalent: "")
+        menu.addItem(withTitle: "Export Diagnostics…", action: #selector(exportDiagnostics), keyEquivalent: "")
         menu.addItem(.separator())
         menu.addItem(withTitle: "Quit Hlas", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         menu.items.forEach { $0.target = self }
@@ -276,6 +283,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem.button?.contentTintColor = recording
             ? NSColor(red: 0, green: 0.9, blue: 0.5, alpha: 1)
             : nil
+        statusItem.button?.toolTip = recording ? "Hlas is recording" : "Hlas is ready"
+        statusItem.button?.setAccessibilityLabel("Hlas")
+        statusItem.button?.setAccessibilityValue(recording ? "Recording" : "Ready")
     }
 
     @objc private func openSettings() {
@@ -306,6 +316,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     @objc private func openThirdPartyNotices() {
         LegalDocuments.open("ThirdPartyNotices")
+    }
+
+    @objc private func exportDiagnostics() {
+        DiagnosticsExporter.present()
     }
 }
 

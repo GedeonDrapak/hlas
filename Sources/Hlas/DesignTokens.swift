@@ -13,7 +13,7 @@ enum DS {
     // Text
     static let fg = Color(white: 0.93)            // soft off-white
     static let fg2 = Color(white: 0.62)           // muted
-    static let fg3 = Color(white: 0.42)           // tertiary
+    static let fg3 = Color(white: 0.52)           // tertiary, AA contrast on bg
 
     // Accent - Eden bio-digital green
     static let brand = Color(hue: 153 / 360, saturation: 1.0, brightness: 0.90)
@@ -34,11 +34,18 @@ enum DS {
         case .medium, .semibold: family = "Satoshi-Medium"
         default: family = "Satoshi-Regular"
         }
-        return .custom(family, size: size)
+        let style: Font.TextStyle
+        switch size {
+        case 20...: style = .title2
+        case 16...: style = .headline
+        case ..<12: style = .caption
+        default: style = .body
+        }
+        return .custom(family, size: size, relativeTo: style)
     }
 
     static func label(_ size: CGFloat = 11) -> Font {
-        .custom("Satoshi-Medium", size: size).monospacedDigit()
+        .custom("Satoshi-Medium", size: size, relativeTo: .caption).monospacedDigit()
     }
 }
 

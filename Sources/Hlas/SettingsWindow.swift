@@ -97,6 +97,14 @@ struct SettingsView: View {
                     .foregroundStyle(DS.fg3)
                 }
 
+                section("SUPPORT") {
+                    Text("Export a small troubleshooting file. It contains no transcripts or API keys.")
+                        .font(.caption)
+                        .foregroundStyle(DS.fg3)
+                    Button("Export diagnostics…") { DiagnosticsExporter.present() }
+                        .buttonStyle(.bordered)
+                }
+
                 section("VOCABULARY") {
                     Text("Names and jargon the model should recognize.")
                         .font(.system(size: 11)).foregroundStyle(DS.fg3)
@@ -142,6 +150,7 @@ struct SettingsView: View {
                                 Image(systemName: "doc.on.doc").font(.system(size: 10))
                             }
                             .buttonStyle(.borderless).foregroundStyle(DS.fg3)
+                            .accessibilityLabel("Copy transcript")
                         }
                         .padding(10)
                         .background(RoundedRectangle(cornerRadius: DS.radiusSm).fill(DS.surface))
@@ -188,6 +197,8 @@ struct SettingsView: View {
         } else if downloader.downloading {
             VStack(alignment: .leading, spacing: 6) {
                 ProgressView(value: downloader.progress).tint(DS.brand)
+                    .accessibilityLabel("Downloading transcription model")
+                    .accessibilityValue("\(Int(downloader.progress * 100)) percent")
                 Text("Downloading model… \(Int(downloader.progress * 100))%")
                     .font(.system(size: 11)).foregroundStyle(DS.fg3)
                 Button("Cancel", action: downloader.cancel)
@@ -262,6 +273,7 @@ struct FlowLayoutish: View {
                         Image(systemName: "xmark").font(.system(size: 7, weight: .bold))
                     }
                     .buttonStyle(.borderless).foregroundStyle(DS.fg3)
+                    .accessibilityLabel("Remove \(word) from vocabulary")
                 }
                 .padding(.horizontal, 8).padding(.vertical, 4)
                 .background(Capsule().fill(DS.surfaceHover))

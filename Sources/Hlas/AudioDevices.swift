@@ -187,6 +187,9 @@ struct InputDevicePicker: View {
             }
             .menuStyle(.borderlessButton)
             .onAppear { monitor.refresh() }
+            .accessibilityLabel("Microphone")
+            .accessibilityValue(currentLabel)
+            .accessibilityHint("Choose which microphone Hlas records from")
 
             Text("Pin the built-in mic to keep dictation quality when Bluetooth headphones connect.")
                 .font(.system(size: 10)).foregroundStyle(DS.fg3)

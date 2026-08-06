@@ -110,6 +110,8 @@ struct LanguagePicker: View {
                     .background(Circle().fill(Color.white.opacity(0.07)))
             }
             .buttonStyle(.plain)
+            .accessibilityLabel("Add languages")
+            .accessibilityHint("Opens the searchable language list")
             .popover(isPresented: $showEditor, arrowEdge: .bottom) { editor }
         }
     }
@@ -141,6 +143,9 @@ struct LanguagePicker: View {
                             .contentShape(Rectangle())
                         }
                         .buttonStyle(.plain)
+                        .accessibilityLabel(
+                            isFav ? "Remove \(lang.name) from favorites" : "Add \(lang.name) to favorites"
+                        )
                     }
                 }
             }
@@ -172,7 +177,7 @@ struct LanguagePicker: View {
     }
 }
 
-/// One language chip: click selects, hover reveals an ✕ to remove.
+/// One language chip: select the language or remove it from favorites.
 private struct LangChip: View {
     let code: String
     let removable: Bool
@@ -180,33 +185,46 @@ private struct LangChip: View {
 
     @ObservedObject private var settings = Settings.shared
     @State private var hovering = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.accessibilityDifferentiateWithoutColor) private var differentiateWithoutColor
 
     var body: some View {
         let active = settings.language == code
-        Button { settings.language = code } label: {
-            HStack(spacing: 5) {
-                Text(Languages.name(for: code))
-                    .font(.system(size: 11, weight: active ? .semibold : .regular))
-                    .foregroundStyle(active ? Color(hex: 0x0F0F0F) : DS.fg2)
-                if removable && hovering {
-                    Button { onRemove(code) } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .font(.system(size: 11))
-                            .foregroundStyle(active ? Color(hex: 0x0F0F0F).opacity(0.65) : DS.fg3)
+        HStack(spacing: 0) {
+            Button { settings.language = code } label: {
+                HStack(spacing: 4) {
+                    if active && differentiateWithoutColor {
+                        Image(systemName: "checkmark")
+                            .font(.system(size: 8, weight: .bold))
                     }
-                    .buttonStyle(.plain)
-                    .transition(.opacity)
+                    Text(Languages.name(for: code))
+                        .font(.system(size: 11, weight: active ? .semibold : .regular))
                 }
+                .foregroundStyle(active ? Color(hex: 0x0F0F0F) : DS.fg2)
+                .padding(.leading, 11)
+                .padding(.trailing, removable ? 6 : 11)
+                .frame(height: 26)
             }
-            .padding(.horizontal, 11)
-            .frame(height: 26)
-            .background(
-                Capsule().fill(active ? DS.brand : Color.white.opacity(hovering ? 0.11 : 0.07))
-            )
+            .buttonStyle(.plain)
+            .accessibilityLabel("Use \(Languages.name(for: code))")
+            .accessibilityValue(active ? "Selected" : "Not selected")
+
+            if removable {
+                Button { onRemove(code) } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.system(size: 11))
+                        .foregroundStyle(active ? Color(hex: 0x0F0F0F).opacity(0.65) : DS.fg3)
+                        .frame(width: 22, height: 26)
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Remove \(Languages.name(for: code)) from favorites")
+            }
         }
-        .buttonStyle(.plain)
+        .background(
+            Capsule().fill(active ? DS.brand : Color.white.opacity(hovering ? 0.11 : 0.07))
+        )
         .onHover { hovering = $0 }
-        .animation(.easeOut(duration: 0.12), value: hovering)
+        .animation(reduceMotion ? nil : .easeOut(duration: 0.12), value: hovering)
     }
 }
 

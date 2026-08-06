@@ -42,6 +42,7 @@ final class AudioRecorder: NSObject, AVCaptureAudioDataOutputSampleBufferDelegat
 
     @MainActor
     func start() throws {
+        let startupBegan = ContinuousClock.now
         warmShutdownTimer?.invalidate()
         warmShutdownTimer = nil
 
@@ -79,7 +80,10 @@ final class AudioRecorder: NSObject, AVCaptureAudioDataOutputSampleBufferDelegat
         activeDevice = AudioDevices.list().first {
             $0.uid == captureDevice.uniqueID || $0.name == captureDevice.localizedName
         } ?? AudioDevices.defaultInputID().flatMap { AudioDevices.device(id: $0) }
-        Log.write("recording source: \(captureDevice.localizedName)")
+        let startup = startupBegan.duration(to: .now)
+        let milliseconds = startup.components.seconds * 1_000
+            + Int64(startup.components.attoseconds / 1_000_000_000_000_000)
+        Log.write("recording source: \(captureDevice.localizedName), startup \(milliseconds) ms")
     }
 
     /// Drop a warm session after the selected or system input changes.

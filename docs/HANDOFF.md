@@ -31,6 +31,9 @@ Git history is clean and chronological - `git log --oneline` tells the build sto
 - `make test` runs 9 Swift Testing cases for WAV encoding, hallucination filtering, cloud error
   mapping and model integrity. `make release` creates and notarizes the public arm64 DMG once a
   Developer ID Application certificate and `HlasNotary` Keychain profile are installed.
+- Settings and the menu bar can export privacy-safe diagnostics containing no transcripts or API
+  keys. Audio startup time is logged for route-change debugging. VoiceOver receives recording state
+  announcements, and custom transitions respect Reduce Motion.
 
 ## Engine economics (research-verified Aug 2026)
 
@@ -59,8 +62,8 @@ Apple SpeechAnalyzer: **no Czech** - ruled out. Parakeet TDT v3 via FluidAudio: 
     Must honor "keep original language" for Czech.
 5. **ElevenLabs Scribe engine** - best published Czech WER; same multipart pattern as existing
     API engines, different response shape.
-6. **Accessibility pass.** VoiceOver announcements, larger text, Reduce Motion and increased
-   contrast behavior for custom controls.
+6. **Accessibility QA.** Run Accessibility Inspector and a complete keyboard/VoiceOver walkthrough
+   on the final notarized build.
 7. **Distribution credentials.** Install a Developer ID Application certificate, store the
    `HlasNotary` credentials, run `make release`, and test the notarized DMG on a clean M-series Mac.
 
