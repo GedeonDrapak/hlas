@@ -23,7 +23,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         setupStatusItem()
-        Task { await requestPermissions() }
+        if OnboardingWindow.shouldShow {
+            OnboardingWindow.shared.show()
+        } else {
+            Task { await requestPermissions() }
+        }
 
         recorder.onLevel = { [weak self] level in
             Task { @MainActor in self?.overlay.model.push(level: level) }
@@ -158,6 +162,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(withTitle: "Hlas — hold Fn to dictate", action: nil, keyEquivalent: "")
         menu.addItem(.separator())
         menu.addItem(withTitle: "Settings…", action: #selector(openSettings), keyEquivalent: ",")
+        menu.addItem(withTitle: "Welcome Tour…", action: #selector(openOnboarding), keyEquivalent: "")
         menu.addItem(withTitle: "Quit Hlas", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         menu.items.forEach { $0.target = self }
         statusItem.menu = menu
@@ -175,5 +180,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     @objc private func openSettings() {
         SettingsWindow.shared.show(appDelegate: self)
+    }
+
+    @objc private func openOnboarding() {
+        OnboardingWindow.shared.show()
     }
 }

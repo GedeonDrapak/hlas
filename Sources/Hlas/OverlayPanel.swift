@@ -95,10 +95,13 @@ struct OverlayView: View {
         .padding(.horizontal, 18)
         .frame(height: 40)
         .background(
-            Capsule()
-                .fill(Color(hex: 0x0F0F0F).opacity(0.94))
-                .overlay(Capsule().strokeBorder(DS.border, lineWidth: 1))
-                .shadow(color: .black.opacity(0.35), radius: 18, y: 6)
+            ZStack {
+                VisualEffectBlur(material: .hudWindow)
+                Color(hex: 0x0F0F0F).opacity(0.35) // dark tint over the blur
+            }
+            .clipShape(Capsule())
+            .overlay(Capsule().strokeBorder(Color.white.opacity(0.12), lineWidth: 1))
+            .shadow(color: .black.opacity(0.35), radius: 18, y: 6)
         )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .animation(.easeOut(duration: 0.18), value: model.state)

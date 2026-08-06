@@ -19,7 +19,7 @@ final class SettingsWindow {
             window.titlebarAppearsTransparent = true
             window.titleVisibility = .hidden
             window.isMovableByWindowBackground = true
-            window.backgroundColor = NSColor(red: 0.047, green: 0.051, blue: 0.059, alpha: 1)
+            window.backgroundColor = .clear
             window.isReleasedWhenClosed = false
             window.contentView = NSHostingView(rootView: SettingsView(onEngineChange: { [weak self] in
                 self?.appDelegate?.rebuildTranscriber()
@@ -115,7 +115,13 @@ struct SettingsView: View {
             .padding(28)
         }
         .frame(width: 420, height: 560)
-        .background(DS.bg)
+        .background(
+            ZStack {
+                VisualEffectBlur(material: .underWindowBackground)
+                DS.bg.opacity(0.72) // keep near-black identity over the blur
+            }
+            .ignoresSafeArea()
+        )
         .preferredColorScheme(.dark)
     }
 
