@@ -272,8 +272,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(withTitle: "Third-party notices", action: #selector(openThirdPartyNotices), keyEquivalent: "")
         menu.addItem(withTitle: "Export Diagnostics…", action: #selector(exportDiagnostics), keyEquivalent: "")
         menu.addItem(.separator())
-        menu.addItem(withTitle: "Quit Hlas", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        let quit = menu.addItem(withTitle: "Quit Hlas", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         menu.items.forEach { $0.target = self }
+        // terminate(_:) lives on NSApplication, not the delegate — with
+        // target = self the item fails validation and shows up disabled.
+        quit.target = NSApp
         menu.delegate = self
         statusItem.menu = menu
     }
