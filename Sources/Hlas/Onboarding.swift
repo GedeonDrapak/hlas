@@ -104,7 +104,6 @@ struct OnboardingView: View {
     var body: some View {
         HStack(spacing: 0) {
             leftPanel
-                .frame(width: 330)
                 .padding(14)
             rightPanel
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -127,18 +126,21 @@ struct OnboardingView: View {
 
     private var leftPanel: some View {
         ZStack {
-            // Crossfading Unsplash gradient
-            ZStack {
-                ForEach(Array(Self.gradients.enumerated()), id: \.offset) { i, name in
-                    if i == step, let url = Bundle.main.url(forResource: name, withExtension: "jpg"),
-                       let img = NSImage(contentsOf: url) {
-                        Image(nsImage: img)
-                            .resizable()
-                            .scaledToFill()
-                            .transition(.opacity)
+            // Base fill + gradient image as overlay: the overlay pattern keeps
+            // scaledToFill from blowing the layout past the panel bounds.
+            Color(hex: 0x0F0F0F)
+                .overlay(
+                    ZStack {
+                        ForEach(Array(Self.gradients.enumerated()), id: \.offset) { i, name in
+                            if i == step, let img = Self.loadedImages[name] {
+                                Image(nsImage: img)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .transition(.opacity)
+                            }
+                        }
                     }
-                }
-            }
+                )
             // Legibility scrim, Eden-dark from the bottom
             LinearGradient(
                 colors: [Color(hex: 0x0F0F0F).opacity(0.85), .clear, Color(hex: 0x0F0F0F).opacity(0.25)],
@@ -169,14 +171,28 @@ struct OnboardingView: View {
                 .padding(.top, 26)
             }
             .padding(24)
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
         }
+        .frame(width: 330)
+        .frame(maxHeight: .infinity)
         .clipShape(RoundedRectangle(cornerRadius: DS.radius))
         .overlay(
             RoundedRectangle(cornerRadius: DS.radius)
                 .strokeBorder(Color.white.opacity(0.10), lineWidth: 1)
         )
     }
+
+    /// Images decoded once, not on every render.
+    private static let loadedImages: [String: NSImage] = {
+        var dict: [String: NSImage] = [:]
+        for name in Set(gradients) {
+            if let url = Bundle.main.url(forResource: name, withExtension: "jpg"),
+               let img = NSImage(contentsOf: url) {
+                dict[name] = img
+            }
+        }
+        return dict
+    }()
 
     private func stepChip(_ i: Int) -> some View {
         Button { if i < step { step = i } } label: {
