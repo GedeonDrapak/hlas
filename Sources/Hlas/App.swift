@@ -1,6 +1,7 @@
 import AppKit
 import AVFoundation
 import Combine
+import HlasCore
 import SwiftUI
 
 @main
@@ -171,13 +172,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 await MainActor.run {
                     guard self.activeSessionID == sessionID else { return }
                     self.overlay.hide()
-                    let trimmed = Hallucinations.filter(
-                        text.trimmingCharacters(in: .whitespacesAndNewlines)
-                    )
+                    let raw = text.trimmingCharacters(in: .whitespacesAndNewlines)
+                    let trimmed = Hallucinations.filter(raw)
                     if !trimmed.isEmpty {
                         TextInjector.insert(trimmed)
                         History.shared.add(trimmed)
                         Log.write("text injection posted")
+                    } else if !raw.isEmpty {
+                        Log.write("dropped hallucination output")
                     }
                 }
             } catch {

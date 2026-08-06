@@ -1,6 +1,6 @@
-import CryptoKit
 import Foundation
 import CWhisper
+import HlasCore
 
 /// whisper.cpp engine. The model loads on first use and is freed after
 /// `modelKeepAliveSeconds` of inactivity, so idle RAM stays near zero.
@@ -17,10 +17,10 @@ final class LocalWhisper: Transcriber, @unchecked Sendable {
     }()
 
     static let modelName = "ggml-large-v3-turbo-q5_0.bin"
-    static let modelByteCount = 574_041_195
+    static let modelByteCount: Int64 = 574_041_195
     static var modelURL: URL { modelDir.appendingPathComponent(modelName) }
     static var modelExists: Bool {
-        (try? modelURL.resourceValues(forKeys: [.fileSizeKey]).fileSize) == modelByteCount
+        Int64((try? modelURL.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0) == modelByteCount
     }
 
     func transcribe(samples: [Float], language: String?) async throws -> String {
@@ -188,7 +188,11 @@ final class ModelDownloader: NSObject, ObservableObject, URLSessionDownloadDeleg
             let staging = Self.stagingURL
             try? fileManager.removeItem(at: staging)
             try fileManager.moveItem(at: location, to: staging)
-            try Self.validate(staging)
+            try ModelFileValidator.validate(
+                staging,
+                expectedByteCount: Self.expectedByteCount,
+                expectedSHA256: Self.expectedSHA256
+            )
             try Self.install(staging, at: LocalWhisper.modelURL)
             Task { @MainActor in
                 self.downloading = false
@@ -217,26 +221,6 @@ final class ModelDownloader: NSObject, ObservableObject, URLSessionDownloadDeleg
         }
     }
 
-    nonisolated private static func validate(_ url: URL) throws {
-        let values = try url.resourceValues(forKeys: [.fileSizeKey])
-        guard Int64(values.fileSize ?? 0) == expectedByteCount else {
-            throw ModelDownloadError.invalidSize
-        }
-
-        let handle = try FileHandle(forReadingFrom: url)
-        defer { try? handle.close() }
-        var hasher = SHA256()
-        while true {
-            let chunk = try handle.read(upToCount: 1_048_576) ?? Data()
-            guard !chunk.isEmpty else { break }
-            hasher.update(data: chunk)
-        }
-        let digest = hasher.finalize().map { String(format: "%02x", $0) }.joined()
-        guard digest == expectedSHA256 else {
-            throw ModelDownloadError.invalidChecksum
-        }
-    }
-
     nonisolated private static func install(_ staging: URL, at destination: URL) throws {
         let fileManager = FileManager.default
         if fileManager.fileExists(atPath: destination.path) {
@@ -249,15 +233,11 @@ final class ModelDownloader: NSObject, ObservableObject, URLSessionDownloadDeleg
 
 private enum ModelDownloadError: LocalizedError {
     case invalidResponse
-    case invalidSize
-    case invalidChecksum
 
     var errorDescription: String? {
         switch self {
         case .invalidResponse:
             return "The model server did not return a valid download. Try again later."
-        case .invalidSize, .invalidChecksum:
-            return "The downloaded model could not be verified. Your existing model was kept safe. Try again."
         }
     }
 }

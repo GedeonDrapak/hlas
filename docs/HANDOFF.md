@@ -22,12 +22,15 @@ Git history is clean and chronological - `git log --oneline` tells the build sto
   audio accumulation runs on a dedicated queue so the final buffer is not lost.
 - Debug logs never contain transcript text, rotate at 1 MB, and private files use mode `0600`.
 - Launch at Login is available in onboarding and Settings. History can be cleared from Settings.
-- Version 0.2.0 adds a custom Hlas app/menu-bar mark, bundled Satoshi typography, searchable
-  History window, live microphone updates and active-window screen overlay placement.
+- Version 0.3.0 is Apple Silicon-only and adds release hardening, privacy and license documents,
+  actionable cloud errors, verified model downloads and a fast regression test suite.
 - Audio capture uses AVCaptureSession because AVAudioEngine input taps can stop delivering
   buffers with Bluetooth devices on macOS 26. The built-in microphone is the default.
 - Microphone preference and CoreAudio device changes invalidate the warm capture session so the
   next dictation cannot reuse a stale route.
+- `make test` runs 9 Swift Testing cases for WAV encoding, hallucination filtering, cloud error
+  mapping and model integrity. `make release` creates and notarizes the public arm64 DMG once a
+  Developer ID Application certificate and `HlasNotary` Keychain profile are installed.
 
 ## Engine economics (research-verified Aug 2026)
 
@@ -58,7 +61,8 @@ Apple SpeechAnalyzer: **no Czech** - ruled out. Parakeet TDT v3 via FluidAudio: 
     API engines, different response shape.
 6. **Accessibility pass.** VoiceOver announcements, larger text, Reduce Motion and increased
    contrast behavior for custom controls.
-7. **Distribution.** Developer ID signing, Hardened Runtime, notarized DMG and update path.
+7. **Distribution credentials.** Install a Developer ID Application certificate, store the
+   `HlasNotary` credentials, run `make release`, and test the notarized DMG on a clean M-series Mac.
 
 ## Risky areas - touch with care
 

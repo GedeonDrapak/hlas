@@ -20,6 +20,7 @@ if ! xcrun notarytool history --keychain-profile "$NOTARY_PROFILE" >/dev/null 2>
 fi
 
 cd "$ROOT"
+swift test
 xcodegen generate
 xcodebuild -project Hlas.xcodeproj -scheme Hlas -configuration Distribution \
   -derivedDataPath "$BUILD_DIR" -destination 'platform=macOS,arch=arm64' build

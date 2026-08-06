@@ -35,6 +35,7 @@ make vendor   # builds whisper.cpp for the app's real macOS 15 deployment target
 
 # 2. Build app (xcodegen: brew install xcodegen)
 make install   # builds via Xcode (stable signing), installs to /Applications, launches
+make test      # runs fast tests for WAV, filtering, errors, and model integrity
 ```
 
 Permissions needed on first run: **Microphone** + **Accessibility** (for the Fn hotkey and paste).

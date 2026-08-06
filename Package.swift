@@ -6,6 +6,10 @@ let package = Package(
     platforms: [.macOS(.v15)],
     targets: [
         .target(
+            name: "HlasCore",
+            path: "Sources/HlasCore"
+        ),
+        .target(
             name: "CWhisper",
             path: "Sources/CWhisper",
             cSettings: [
@@ -14,7 +18,7 @@ let package = Package(
         ),
         .executableTarget(
             name: "Hlas",
-            dependencies: ["CWhisper"],
+            dependencies: ["CWhisper", "HlasCore"],
             path: "Sources/Hlas",
             swiftSettings: [
                 .swiftLanguageMode(.v5)
@@ -30,6 +34,11 @@ let package = Package(
                 .linkedFramework("Security"),
                 .linkedFramework("CoreText")
             ]
+        ),
+        .testTarget(
+            name: "HlasCoreTests",
+            dependencies: ["HlasCore"],
+            path: "Tests/HlasCoreTests"
         )
     ]
 )

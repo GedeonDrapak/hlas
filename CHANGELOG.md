@@ -8,6 +8,7 @@
 - Keep a working local model when a replacement download is invalid or cancelled.
 - Turn cloud transcription failures into actionable messages for API keys, rate limits, connectivity, timeouts, and provider outages.
 - Add bundled privacy policy, third-party notices, and access to them from Settings and the menu bar.
+- Add fast regression tests for WAV encoding, hallucination filtering, cloud errors, and model integrity.
 
 ## 0.2.0 - 2026-08-06
 

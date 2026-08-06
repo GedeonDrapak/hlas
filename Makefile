@@ -2,7 +2,7 @@ APP = .xcbuild/Build/Products/Release/Hlas.app
 WHISPER_DIR ?= ../whisper.cpp
 DEPLOYMENT_TARGET ?= 15.0
 
-.PHONY: vendor app install release clean
+.PHONY: vendor app install test release clean
 
 vendor:
 	mkdir -p Vendor/lib
@@ -28,6 +28,9 @@ install: app
 	cp -R $(APP) /Applications/
 	open -n /Applications/Hlas.app
 	@echo "Installed + launched /Applications/Hlas.app"
+
+test:
+	swift test
 
 # Builds a signed, notarized Apple Silicon DMG. Set NOTARY_PROFILE once with
 # `xcrun notarytool store-credentials` before using this target.
