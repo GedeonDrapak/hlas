@@ -11,6 +11,8 @@ final class AudioRecorder: NSObject, AVCaptureAudioDataOutputSampleBufferDelegat
     private var isCapturing = false
     private var captureDeviceID: String?
     private var warmShutdownTimer: Timer?
+    private var needsReconfiguration = false
+    private var sessionObservers: [NSObjectProtocol] = []
 
     /// Keep the microphone session warm briefly so consecutive dictations
     /// do not pay device startup latency again.
@@ -50,9 +52,10 @@ final class AudioRecorder: NSObject, AVCaptureAudioDataOutputSampleBufferDelegat
             throw Self.error("No microphone input available")
         }
 
-        if session == nil || captureDeviceID != captureDevice.uniqueID {
+        if needsReconfiguration || session == nil || captureDeviceID != captureDevice.uniqueID {
             tearDownSession()
             try configureSession(device: captureDevice)
+            needsReconfiguration = false
         }
 
         captureQueue.sync {
@@ -76,6 +79,21 @@ final class AudioRecorder: NSObject, AVCaptureAudioDataOutputSampleBufferDelegat
         activeDevice = AudioDevices.list().first {
             $0.uid == captureDevice.uniqueID || $0.name == captureDevice.localizedName
         } ?? AudioDevices.defaultInputID().flatMap { AudioDevices.device(id: $0) }
+        Log.write("recording source: \(captureDevice.localizedName)")
+    }
+
+    /// Drop a warm session after the selected or system input changes.
+    /// If capture is active, finish it and rebuild before the next dictation.
+    @MainActor
+    func deviceSelectionDidChange() {
+        warmShutdownTimer?.invalidate()
+        warmShutdownTimer = nil
+        needsReconfiguration = true
+        let capturing = captureQueue.sync { isCapturing }
+        if !capturing {
+            tearDownSession()
+        }
+        Log.write("microphone changed: capture session invalidated")
     }
 
     func stop() -> [Float] {
@@ -126,15 +144,43 @@ final class AudioRecorder: NSObject, AVCaptureAudioDataOutputSampleBufferDelegat
         }
         session.addOutput(output)
         self.session = session
+        observeSession(session)
     }
 
     private func tearDownSession() {
+        for observer in sessionObservers {
+            NotificationCenter.default.removeObserver(observer)
+        }
+        sessionObservers.removeAll()
         if session?.isRunning == true {
             session?.stopRunning()
         }
         session = nil
         captureDeviceID = nil
         captureQueue.sync { converter = nil }
+    }
+
+    private func observeSession(_ session: AVCaptureSession) {
+        let center = NotificationCenter.default
+        let runtime = center.addObserver(
+            forName: .AVCaptureSessionRuntimeError,
+            object: session,
+            queue: .main
+        ) { [weak self] notification in
+            let message = (notification.userInfo?[AVCaptureSessionErrorKey] as? Error)?.localizedDescription
+                ?? "unknown error"
+            Log.write("capture session error: \(message)")
+            self?.needsReconfiguration = true
+        }
+        let interrupted = center.addObserver(
+            forName: .AVCaptureSessionWasInterrupted,
+            object: session,
+            queue: .main
+        ) { [weak self] _ in
+            Log.write("capture session interrupted")
+            self?.needsReconfiguration = true
+        }
+        sessionObservers = [runtime, interrupted]
     }
 
     private static func captureDevice(matching preferred: AudioInputDevice?) -> AVCaptureDevice? {

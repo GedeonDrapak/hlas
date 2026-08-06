@@ -26,6 +26,8 @@ Git history is clean and chronological - `git log --oneline` tells the build sto
   History window, live microphone updates and active-window screen overlay placement.
 - Audio capture uses AVCaptureSession because AVAudioEngine input taps can stop delivering
   buffers with Bluetooth devices on macOS 26. The built-in microphone is the default.
+- Microphone preference and CoreAudio device changes invalidate the warm capture session so the
+  next dictation cannot reuse a stale route.
 
 ## Engine economics (research-verified Aug 2026)
 

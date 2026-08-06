@@ -1,5 +1,6 @@
 import AppKit
 import AVFoundation
+import Combine
 import SwiftUI
 
 @main
@@ -24,6 +25,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var activeSessionID = UUID()
     private var transcriptionTask: Task<Void, Never>?
     private weak var statusSummaryItem: NSMenuItem?
+    private var inputDeviceCancellable: AnyCancellable?
+    private var audioEnvironmentCancellable: AnyCancellable?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         FontRegistrar.register()
@@ -42,6 +45,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         hotkey.onPress = { [weak self] in self?.hotkeyPressed() }
         hotkey.onRelease = { [weak self] in self?.hotkeyReleased() }
         hotkey.onEscape = { [weak self] in self?.cancelDictation() }
+
+        inputDeviceCancellable = Settings.shared.$inputDeviceUID
+            .dropFirst()
+            .removeDuplicates()
+            .sink { [weak self] _ in self?.recorder.deviceSelectionDidChange() }
+        audioEnvironmentCancellable = AudioDeviceMonitor.shared.$revision
+            .dropFirst()
+            .sink { [weak self] _ in self?.recorder.deviceSelectionDidChange() }
 
         startHotkeyWithRetry()
         rebuildTranscriber()
@@ -166,6 +177,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                     if !trimmed.isEmpty {
                         TextInjector.insert(trimmed)
                         History.shared.add(trimmed)
+                        Log.write("text injection posted")
                     }
                 }
             } catch {

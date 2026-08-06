@@ -9,3 +9,4 @@
 - Add custom Hlas app and menu bar icons with bundled Satoshi typography.
 - Follow the active window across displays and refresh microphone devices live.
 - Make Bluetooth audio capture reliable with AVCaptureSession and default to the built-in mic.
+- Rebuild the warm capture session immediately after microphone or system audio changes.

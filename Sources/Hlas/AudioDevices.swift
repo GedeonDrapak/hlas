@@ -118,6 +118,7 @@ final class AudioDeviceMonitor: ObservableObject {
     static let shared = AudioDeviceMonitor()
 
     @Published private(set) var devices: [AudioInputDevice] = []
+    @Published private(set) var revision = 0
     private let listenerQueue = DispatchQueue(label: "hlas.audio-device-monitor")
     private var listeners: [(AudioObjectPropertyAddress, AudioObjectPropertyListenerBlock)] = []
 
@@ -138,7 +139,10 @@ final class AudioDeviceMonitor: ObservableObject {
             mElement: kAudioObjectPropertyElementMain
         )
         let block: AudioObjectPropertyListenerBlock = { [weak self] _, _ in
-            DispatchQueue.main.async { self?.refresh() }
+            DispatchQueue.main.async {
+                self?.revision += 1
+                self?.refresh()
+            }
         }
         guard AudioObjectAddPropertyListenerBlock(
             AudioObjectID(kAudioObjectSystemObject),
