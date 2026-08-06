@@ -94,9 +94,14 @@ struct LanguagePicker: View {
         // Wrapping chip row: favorites + Auto + edit button
         FlowChips(spacing: 6) {
             ForEach(settings.favoriteLanguages, id: \.self) { code in
-                chip(code)
+                LangChip(code: code, removable: true) { removed in
+                    settings.favoriteLanguages.removeAll { $0 == removed }
+                    if settings.language == removed {
+                        settings.language = settings.favoriteLanguages.first ?? "auto"
+                    }
+                }
             }
-            chip("auto")
+            LangChip(code: "auto", removable: false, onRemove: { _ in })
             Button { showEditor.toggle() } label: {
                 Image(systemName: "plus")
                     .font(.system(size: 10, weight: .semibold))
@@ -107,21 +112,6 @@ struct LanguagePicker: View {
             .buttonStyle(.plain)
             .popover(isPresented: $showEditor, arrowEdge: .bottom) { editor }
         }
-    }
-
-    private func chip(_ code: String) -> some View {
-        let active = settings.language == code
-        return Button { settings.language = code } label: {
-            Text(Languages.name(for: code))
-                .font(.system(size: 11, weight: active ? .semibold : .regular))
-                .foregroundStyle(active ? Color(hex: 0x0F0F0F) : DS.fg2)
-                .padding(.horizontal, 11)
-                .frame(height: 26)
-                .background(
-                    Capsule().fill(active ? DS.brand : Color.white.opacity(0.07))
-                )
-        }
-        .buttonStyle(.plain)
     }
 
     private var editor: some View {
@@ -179,6 +169,44 @@ struct LanguagePicker: View {
             settings.favoriteLanguages.append(code)
             settings.language = code
         }
+    }
+}
+
+/// One language chip: click selects, hover reveals an ✕ to remove.
+private struct LangChip: View {
+    let code: String
+    let removable: Bool
+    let onRemove: (String) -> Void
+
+    @ObservedObject private var settings = Settings.shared
+    @State private var hovering = false
+
+    var body: some View {
+        let active = settings.language == code
+        Button { settings.language = code } label: {
+            HStack(spacing: 5) {
+                Text(Languages.name(for: code))
+                    .font(.system(size: 11, weight: active ? .semibold : .regular))
+                    .foregroundStyle(active ? Color(hex: 0x0F0F0F) : DS.fg2)
+                if removable && hovering {
+                    Button { onRemove(code) } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.system(size: 11))
+                            .foregroundStyle(active ? Color(hex: 0x0F0F0F).opacity(0.65) : DS.fg3)
+                    }
+                    .buttonStyle(.plain)
+                    .transition(.opacity)
+                }
+            }
+            .padding(.horizontal, 11)
+            .frame(height: 26)
+            .background(
+                Capsule().fill(active ? DS.brand : Color.white.opacity(hovering ? 0.11 : 0.07))
+            )
+        }
+        .buttonStyle(.plain)
+        .onHover { hovering = $0 }
+        .animation(.easeOut(duration: 0.12), value: hovering)
     }
 }
 
