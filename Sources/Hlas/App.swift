@@ -92,6 +92,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         do {
             try recorder.start()
             isRecording = true
+            // Source badge in the pill when not the built-in mic
+            if let device = recorder.activeDevice, !device.isBuiltIn {
+                overlay.model.sourceIcon = device.icon
+                overlay.model.sourceName = device.name
+            } else {
+                overlay.model.sourceIcon = nil
+                overlay.model.sourceName = nil
+            }
             overlay.show(.recording)
             setIcon(recording: true)
         } catch {

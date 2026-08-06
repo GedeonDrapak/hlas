@@ -45,6 +45,11 @@ final class Settings: ObservableObject {
     @Published var favoriteLanguages: [String] {
         didSet { d.set(favoriteLanguages, forKey: "favoriteLanguages") }
     }
+    /// Input device UID. "" = follow system default, "builtin" = always the
+    /// built-in mic (ignores AirPods auto-switch), else a specific device UID.
+    @Published var inputDeviceUID: String {
+        didSet { d.set(inputDeviceUID, forKey: "inputDeviceUID") }
+    }
 
     private init() {
         engine = EngineKind(rawValue: d.string(forKey: "engine") ?? "") ?? .local
@@ -54,6 +59,7 @@ final class Settings: ObservableObject {
         modelKeepAliveSeconds = d.object(forKey: "modelKeepAlive") as? Double ?? 180
         vocabulary = d.stringArray(forKey: "vocabulary") ?? []
         favoriteLanguages = d.stringArray(forKey: "favoriteLanguages") ?? ["cs", "en"]
+        inputDeviceUID = d.string(forKey: "inputDeviceUID") ?? ""
     }
 
     var vocabularyPrompt: String? {

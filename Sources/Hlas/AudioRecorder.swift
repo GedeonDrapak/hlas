@@ -23,10 +23,47 @@ final class AudioRecorder {
         interleaved: false
     )!
 
+    /// The device audio was actually captured from in the current session.
+    private(set) var activeDevice: AudioInputDevice?
+    private var appliedDeviceID: AudioDeviceID?
+
+    /// Resolve the device the user wants (Settings) → AudioDeviceID, or nil
+    /// to follow the system default.
+    @MainActor
+    private static func preferredDevice() -> AudioInputDevice? {
+        switch Settings.shared.inputDeviceUID {
+        case "": return nil
+        case "builtin": return AudioDevices.builtIn()
+        case let uid: return AudioDevices.device(uid: uid) // nil if unplugged → default
+        }
+    }
+
+    @MainActor
     func start() throws {
         warmShutdownTimer?.invalidate()
         warmShutdownTimer = nil
         samples.removeAll(keepingCapacity: true)
+
+        let preferred = Self.preferredDevice()
+        // Warm engine on the wrong device (unplugged, settings change,
+        // AirPods auto-switch while pinned) → cold restart on the right one.
+        if engine.isRunning, appliedDeviceID != preferred?.id {
+            engine.stop()
+        }
+        if let preferred, !engine.isRunning {
+            var deviceID = preferred.id
+            if let au = engine.inputNode.audioUnit {
+                AudioUnitSetProperty(
+                    au, kAudioOutputUnitProperty_CurrentDevice,
+                    kAudioUnitScope_Global, 0,
+                    &deviceID, UInt32(MemoryLayout<AudioDeviceID>.size)
+                )
+            }
+        }
+        appliedDeviceID = preferred?.id
+        activeDevice = preferred
+            ?? AudioDevices.defaultInputID().flatMap { AudioDevices.device(id: $0) }
+
         let input = engine.inputNode
         let inputFormat = input.outputFormat(forBus: 0)
         guard inputFormat.sampleRate > 0 else {

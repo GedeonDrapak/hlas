@@ -12,6 +12,9 @@ enum OverlayState: Equatable {
 final class OverlayModel: ObservableObject {
     @Published var state: OverlayState = .hidden
     @Published var levels: [Float] = Array(repeating: 0, count: 24)
+    /// Set when recording from anything other than the built-in mic.
+    @Published var sourceIcon: String?
+    @Published var sourceName: String?
 
     func push(level: Float) {
         levels.removeFirst()
@@ -76,6 +79,16 @@ struct OverlayView: View {
             case .recording:
                 Circle().fill(DS.brand).frame(width: 7, height: 7)
                 waveform(color: DS.brand)
+                if let icon = model.sourceIcon {
+                    HStack(spacing: 4) {
+                        Image(systemName: icon).font(.system(size: 10))
+                        if let name = model.sourceName {
+                            Text(name).font(.system(size: 10)).lineLimit(1)
+                        }
+                    }
+                    .foregroundStyle(DS.fg2)
+                    .frame(maxWidth: 110)
+                }
             case .transcribing:
                 ProgressView().controlSize(.small).tint(DS.fg2)
                 Text("TRANSCRIBING")

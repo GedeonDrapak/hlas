@@ -63,6 +63,10 @@ struct SettingsView: View {
                     LanguagePicker()
                 }
 
+                section("MICROPHONE") {
+                    InputDevicePicker()
+                }
+
                 section("VOCABULARY") {
                     Text("Names and jargon the model should recognize.")
                         .font(.system(size: 11)).foregroundStyle(DS.fg3)
