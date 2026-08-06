@@ -57,7 +57,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         startHotkeyWithRetry()
         rebuildTranscriber()
+
+        // First-dictation latency: warm the capture pipeline now and after
+        // every wake, so holding Fn never races a ~1.7 s cold mic start.
+        if AVCaptureDevice.authorizationStatus(for: .audio) == .authorized {
+            recorder.prewarm()
+        }
+        wakeObserver = NSWorkspace.shared.notificationCenter.addObserver(
+            forName: NSWorkspace.didWakeNotification, object: nil, queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor in self?.recorder.prewarm() }
+        }
     }
+
+    private var wakeObserver: NSObjectProtocol?
 
     /// The event tap can only be created once Accessibility is granted.
     /// If the user grants it after launch, keep retrying until it works.

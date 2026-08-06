@@ -16,7 +16,7 @@ final class AudioRecorder: NSObject, AVCaptureAudioDataOutputSampleBufferDelegat
 
     /// Keep the microphone session warm briefly so consecutive dictations
     /// do not pay device startup latency again.
-    private let keepWarmSeconds: TimeInterval = 12
+    private let keepWarmSeconds: TimeInterval = 45
 
     /// 0...1 smoothed input level, for the overlay waveform.
     var onLevel: ((Float) -> Void)?
@@ -53,10 +53,13 @@ final class AudioRecorder: NSObject, AVCaptureAudioDataOutputSampleBufferDelegat
             throw Self.error("No microphone input available")
         }
 
+        var configureMs: Int64 = 0
         if needsReconfiguration || session == nil || captureDeviceID != captureDevice.uniqueID {
+            let configureBegan = ContinuousClock.now
             tearDownSession()
             try configureSession(device: captureDevice)
             needsReconfiguration = false
+            configureMs = Self.elapsedMs(since: configureBegan)
         }
 
         captureQueue.sync {
@@ -68,8 +71,13 @@ final class AudioRecorder: NSObject, AVCaptureAudioDataOutputSampleBufferDelegat
         guard let session else {
             throw Self.error("Microphone session is unavailable")
         }
+        let runBegan = ContinuousClock.now
         if !session.isRunning {
             session.startRunning()
+        }
+        let runMs = Self.elapsedMs(since: runBegan)
+        if configureMs + runMs > 100 {
+            Log.write("capture startup breakdown: configure \(configureMs) ms, startRunning \(runMs) ms")
         }
         guard session.isRunning else {
             captureQueue.sync { isCapturing = false }
@@ -110,9 +118,59 @@ final class AudioRecorder: NSObject, AVCaptureAudioDataOutputSampleBufferDelegat
 
         warmShutdownTimer?.invalidate()
         warmShutdownTimer = Timer.scheduledTimer(withTimeInterval: keepWarmSeconds, repeats: false) { [weak self] _ in
-            self?.tearDownSession()
+            self?.suspendSession()
         }
         return result
+    }
+
+    /// Cooldown: release the microphone (indicator turns off) but KEEP the
+    /// configured session, so the next start pays only startRunning — not the
+    /// full ~1.7 s configure+open that caused lost speech on cold dictations.
+    private func suspendSession() {
+        guard let session, session.isRunning else { return }
+        DispatchQueue.global(qos: .utility).async {
+            session.stopRunning()
+            Log.write("capture session suspended (kept configured)")
+        }
+    }
+
+    /// Warm the capture pipeline before the first dictation: configure and
+    /// briefly run the session, then release the mic. Called at app launch
+    /// and on wake from sleep.
+    @MainActor
+    func prewarm() {
+        let capturing = captureQueue.sync { isCapturing }
+        guard !capturing else { return }
+        let preferred = Self.preferredDevice()
+        guard let device = Self.captureDevice(matching: preferred)
+            ?? AVCaptureDevice.default(for: .audio) else { return }
+
+        if needsReconfiguration || session == nil || captureDeviceID != device.uniqueID {
+            tearDownSession()
+            guard (try? configureSession(device: device)) != nil else { return }
+            needsReconfiguration = false
+            captureDeviceID = device.uniqueID
+        }
+        guard let session, !session.isRunning else { return }
+
+        let began = ContinuousClock.now
+        DispatchQueue.global(qos: .utility).async { [weak self] in
+            session.startRunning()
+            Log.write("prewarm: startRunning \(Self.elapsedMs(since: began)) ms")
+            DispatchQueue.global(qos: .utility).asyncAfter(deadline: .now() + 0.5) {
+                guard let self else { return }
+                // Leave it running if a real dictation began meanwhile.
+                let capturing = self.captureQueue.sync { self.isCapturing }
+                if !capturing {
+                    self.suspendSession()
+                }
+            }
+        }
+    }
+
+    private static func elapsedMs(since start: ContinuousClock.Instant) -> Int64 {
+        let d = start.duration(to: .now)
+        return d.components.seconds * 1_000 + Int64(d.components.attoseconds / 1_000_000_000_000_000)
     }
 
     func shutdown() {
