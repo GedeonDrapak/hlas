@@ -1,20 +1,20 @@
-APP = Hlas.app
-BIN = .build/release/Hlas
+APP = .xcbuild/Build/Products/Release/Hlas.app
 
-.PHONY: app debug clean run
+.PHONY: app install clean
 
+# Xcode-managed build: Apple Development signing (team 74N9VPV9D6) gives a
+# stable identity, so Accessibility/Microphone grants survive rebuilds.
 app:
-	swift build -c release
-	rm -rf $(APP)
-	mkdir -p $(APP)/Contents/MacOS
-	cp Info.plist $(APP)/Contents/
-	cp $(BIN) $(APP)/Contents/MacOS/Hlas
-	codesign --force --deep --sign - $(APP)
-	@echo "Built $(APP)"
+	xcodegen generate
+	xcodebuild -project Hlas.xcodeproj -scheme Hlas -configuration Release \
+		-derivedDataPath .xcbuild -allowProvisioningUpdates build | grep -E "error|SUCCEEDED|FAILED"
 
-run: app
-	open $(APP)
+install: app
+	pkill -x Hlas || true
+	rm -rf /Applications/Hlas.app
+	cp -R $(APP) /Applications/
+	open /Applications/Hlas.app
+	@echo "Installed + launched /Applications/Hlas.app"
 
 clean:
-	swift package clean
-	rm -rf $(APP)
+	rm -rf .xcbuild Hlas.xcodeproj .build Hlas.app

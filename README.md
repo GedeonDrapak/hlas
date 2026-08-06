@@ -35,11 +35,10 @@ cmake -B build-hlas -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF \
   -DWHISPER_BUILD_EXAMPLES=OFF -DWHISPER_BUILD_TESTS=OFF -DGGML_METAL_EMBED_LIBRARY=ON
 cmake --build build-hlas -j
 
-# 2. Vendor + build app
+# 2. Vendor + build app (xcodegen: brew install xcodegen)
 cd ../hlas
 find ../whisper.cpp/build-hlas -name "*.a" -exec cp {} Vendor/lib/ \;
-make app
-open Hlas.app
+make install   # builds via Xcode (stable signing), installs to /Applications, launches
 ```
 
 Permissions needed on first run: **Microphone** + **Accessibility** (for the Fn hotkey and paste).

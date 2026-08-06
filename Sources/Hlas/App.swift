@@ -31,10 +31,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         hotkey.onPress = { [weak self] in self?.hotkeyPressed() }
         hotkey.onRelease = { [weak self] in self?.hotkeyReleased() }
 
-        if !hotkey.start() {
-            NSLog("Hlas: event tap failed — accessibility permission missing?")
-        }
+        startHotkeyWithRetry()
         rebuildTranscriber()
+    }
+
+    /// The event tap can only be created once Accessibility is granted.
+    /// If the user grants it after launch, keep retrying until it works.
+    private func startHotkeyWithRetry(attempt: Int = 0) {
+        if hotkey.start() {
+            Log.write("event tap STARTED (attempt \(attempt), AXTrusted=\(Hotkey.hasAccessibilityPermission(prompt: false)))")
+            return
+        }
+        Log.write("event tap FAILED (attempt \(attempt), AXTrusted=\(Hotkey.hasAccessibilityPermission(prompt: false)))")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
+            self?.startHotkeyWithRetry(attempt: attempt + 1)
+        }
     }
 
     private func requestPermissions() async {
@@ -54,6 +65,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var pressStartedAt: Date?
 
     private func hotkeyPressed() {
+        Log.write("fn PRESS (recording=\(isRecording))")
         if isRecording {
             stopDictation() // latched session — this tap ends it
         } else {
@@ -88,14 +100,25 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         isRecording = false
         let samples = recorder.stop()
         setIcon(recording: false)
+        Log.write("recording stopped: \(samples.count) samples (\(String(format: "%.1f", Double(samples.count) / 16000))s)")
 
         // Ignore accidental taps shorter than 0.3 s.
         guard samples.count > 4800 else {
             overlay.hide()
             return
         }
-        // whisper.cpp misbehaves on sub-second input — pad with silence.
-        var padded = samples
+        // Silence guard: whisper hallucinates on silence ("Konec.", "Titulky…").
+        var peak: Float = 0
+        for s in samples { peak = max(peak, abs(s)) }
+        guard peak > 0.01 else {
+            Log.write("dropped: silence (peak \(peak))")
+            overlay.hide()
+            return
+        }
+        // Leading pad: whisper drops the first word when speech starts at t=0
+        // (the "Ahoj"→"Hoj" bug). Trailing pad: sub-second input misbehaves.
+        var padded = [Float](repeating: 0, count: 4_000) // 0.25 s lead-in
+        padded.append(contentsOf: samples)
         if padded.count < 19_200 {
             padded.append(contentsOf: [Float](repeating: 0, count: 19_200 - padded.count))
         }
@@ -106,9 +129,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         Task {
             do {
                 let text = try await engine.transcribe(samples: padded, language: language)
+                Log.write("transcribed: \"\(text.prefix(80))\"")
                 await MainActor.run {
                     self.overlay.hide()
-                    let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+                    let trimmed = Hallucinations.filter(
+                        text.trimmingCharacters(in: .whitespacesAndNewlines)
+                    )
                     if !trimmed.isEmpty {
                         TextInjector.insert(trimmed)
                         History.shared.add(trimmed)

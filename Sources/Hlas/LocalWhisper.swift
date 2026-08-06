@@ -54,7 +54,10 @@ final class LocalWhisper: Transcriber, @unchecked Sendable {
             ])
         }
 
-        var params = whisper_full_default_params(WHISPER_SAMPLING_GREEDY)
+        // Beam search: measurably better Czech than greedy, near-zero cost on
+        // Metal (benchmarked ~1.1–1.5s for 11s audio on M1 Pro either way).
+        var params = whisper_full_default_params(WHISPER_SAMPLING_BEAM_SEARCH)
+        params.beam_search.beam_size = 5
         params.print_progress = false
         params.print_realtime = false
         params.print_special = false
@@ -68,7 +71,18 @@ final class LocalWhisper: Transcriber, @unchecked Sendable {
         defer { free(langHolder) }
         params.language = UnsafePointer(langHolder)
 
-        let promptHolder = prompt.map { strdup($0) }
+        // Priming prompt (VoiceInk technique): a well-formed sentence in the
+        // target language steers diacritics + punctuation; custom vocabulary
+        // is appended so names/jargon decode correctly.
+        let priming: String
+        switch language {
+        case "cs": priming = "Toto je přesný přepis mluveného projevu se správnou diakritikou, interpunkcí a velkými písmeny."
+        case "sk": priming = "Toto je presný prepis hovoreného prejavu so správnou diakritikou a interpunkciou."
+        case "en": priming = "This is an accurate transcript with proper punctuation and capitalization."
+        default: priming = ""
+        }
+        let fullPrompt = [priming, prompt ?? ""].filter { !$0.isEmpty }.joined(separator: " ")
+        let promptHolder = fullPrompt.isEmpty ? nil : strdup(fullPrompt)
         defer { promptHolder.map { free($0) } }
         if let promptHolder { params.initial_prompt = UnsafePointer(promptHolder) }
 

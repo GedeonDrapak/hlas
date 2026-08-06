@@ -1,0 +1,47 @@
+name: Hlas
+options:
+  bundleIdPrefix: com.gedeon
+  deploymentTarget:
+    macOS: "15.0"
+settings:
+  base:
+    DEVELOPMENT_TEAM: 74N9VPV9D6
+    CODE_SIGN_STYLE: Automatic
+    SWIFT_VERSION: "5.0"
+    MACOSX_DEPLOYMENT_TARGET: "15.0"
+targets:
+  Hlas:
+    type: application
+    platform: macOS
+    sources:
+      - path: Sources/Hlas
+      - path: Sources/CWhisper
+        excludes: ["include/module.modulemap"]
+    info:
+      path: Info.plist
+      properties:
+        CFBundleIdentifier: com.gedeon.hlas
+        CFBundleName: Hlas
+        CFBundleDisplayName: Hlas
+        CFBundleShortVersionString: 0.1.0
+        CFBundleVersion: "1"
+        LSMinimumSystemVersion: "15.0"
+        LSUIElement: true
+        NSMicrophoneUsageDescription: Hlas needs the microphone to transcribe your speech.
+        NSHighResolutionCapable: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.gedeon.hlas
+        SWIFT_OBJC_INTEROP_MODE: objc
+        SWIFT_INCLUDE_PATHS: $(SRCROOT)/Sources/CWhisper/include
+        HEADER_SEARCH_PATHS: $(SRCROOT)/Sources/CWhisper/include
+        LIBRARY_SEARCH_PATHS: $(SRCROOT)/Vendor/lib
+        OTHER_LDFLAGS: >-
+          -lwhisper -lggml -lggml-base -lggml-cpu -lggml-metal -lggml-blas -lc++
+        ENABLE_HARDENED_RUNTIME: false
+        CODE_SIGN_ENTITLEMENTS: ""
+    dependencies:
+      - sdk: Metal.framework
+      - sdk: Accelerate.framework
+      - sdk: AVFoundation.framework
+      - sdk: AppKit.framework

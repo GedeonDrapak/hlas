@@ -60,7 +60,7 @@ struct SettingsView: View {
                     switch settings.engine {
                     case .local: localEngineControls
                     case .groq: apiKeyField("Groq API key", text: $settings.groqAPIKey, hint: "console.groq.com — ~$0.04/hr of audio")
-                    case .openai: apiKeyField("OpenAI API key", text: $settings.openaiAPIKey, hint: "gpt-4o-mini-transcribe — ~$0.18/hr")
+                    case .openai: apiKeyField("OpenAI API key", text: $settings.openaiAPIKey, hint: "gpt-transcribe — ~$0.27/hr, best accuracy + vocabulary support")
                     }
                 }
 

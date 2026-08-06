@@ -7,6 +7,11 @@ final class AudioRecorder {
     private let engine = AVAudioEngine()
     private var converter: AVAudioConverter?
     private(set) var samples: [Float] = []
+    private var warmShutdownTimer: Timer?
+
+    /// Keep the engine running briefly after a dictation so consecutive
+    /// dictations start with zero mic-spinup loss (Handy's technique).
+    private let keepWarmSeconds: TimeInterval = 12
 
     /// 0…1 smoothed input level, for the overlay waveform.
     var onLevel: ((Float) -> Void)?
@@ -19,6 +24,8 @@ final class AudioRecorder {
     )!
 
     func start() throws {
+        warmShutdownTimer?.invalidate()
+        warmShutdownTimer = nil
         samples.removeAll(keepingCapacity: true)
         let input = engine.inputNode
         let inputFormat = input.outputFormat(forBus: 0)
@@ -56,17 +63,25 @@ final class AudioRecorder {
                 DispatchQueue.main.async { self.onLevel?(level) }
             }
         }
-        engine.prepare()
-        try engine.start()
+        if !engine.isRunning {
+            engine.prepare()
+            try engine.start()
+        }
     }
 
     /// Stops capture and returns the recorded 16 kHz mono samples.
+    /// The engine keeps running for `keepWarmSeconds` so an immediate next
+    /// dictation loses zero audio to mic spin-up.
     func stop() -> [Float] {
         engine.inputNode.removeTap(onBus: 0)
-        engine.stop()
         converter = nil
         let result = samples
         samples.removeAll(keepingCapacity: false)
+
+        warmShutdownTimer?.invalidate()
+        warmShutdownTimer = Timer.scheduledTimer(withTimeInterval: keepWarmSeconds, repeats: false) { [weak self] _ in
+            self?.engine.stop()
+        }
         return result
     }
 

@@ -60,10 +60,12 @@ enum TranscriberFactory {
                 model: "whisper-large-v3-turbo"
             )
         case .openai:
+            // gpt-transcribe (July 2026): beats gpt-4o-transcribe, cheaper
+            // ($0.0045/min), supports context/keyword prompts.
             return OpenAICompatibleTranscriber(
                 endpoint: URL(string: "https://api.openai.com/v1/audio/transcriptions")!,
                 apiKey: s.openaiAPIKey,
-                model: "gpt-4o-mini-transcribe"
+                model: "gpt-transcribe"
             )
         case .local:
             return LocalTranscriberHolder.shared
