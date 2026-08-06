@@ -152,10 +152,15 @@ struct OnboardingView: View {
 
             VStack(alignment: .leading, spacing: 0) {
                 Spacer()
-                Text("HLAS")
-                    .font(.system(size: 34, weight: .bold))
-                    .tracking(12)
-                    .foregroundStyle(.white.opacity(0.96))
+                HStack(spacing: 12) {
+                    HlasMark()
+                        .fill(DS.brand)
+                        .frame(width: 28, height: 28)
+                    Text("HLAS")
+                        .font(DS.text(34, weight: .bold))
+                        .tracking(12)
+                        .foregroundStyle(DS.fg)
+                }
                 Text("DICTATION. NOT TYPING.")
                     .font(DS.label(10))
                     .tracking(4)
@@ -472,10 +477,10 @@ struct OnboardingView: View {
     private func stepHeader(_ title: String, _ subtitle: String) -> some View {
         VStack(alignment: .leading, spacing: 6) {
             Text(title)
-                .font(.system(size: 22, weight: .bold))
+                .font(DS.text(22, weight: .bold))
                 .foregroundStyle(DS.fg)
             Text(subtitle)
-                .font(.system(size: 13))
+                .font(DS.text(13))
                 .foregroundStyle(DS.fg2)
                 .fixedSize(horizontal: false, vertical: true)
         }

@@ -10,4 +10,7 @@ let up = CGEvent(keyboardEventSource: src, virtualKey: 63, keyDown: false)!
 up.type = .flagsChanged
 up.flags = []
 up.post(tap: .cghidEventTap)
+// macOS can coalesce a synthetic modifier release during audio route changes.
+Thread.sleep(forTimeInterval: 0.1)
+up.post(tap: .cghidEventTap)
 print("posted fn down+up")

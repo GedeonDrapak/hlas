@@ -22,6 +22,10 @@ Git history is clean and chronological - `git log --oneline` tells the build sto
   audio accumulation runs on a dedicated queue so the final buffer is not lost.
 - Debug logs never contain transcript text, rotate at 1 MB, and private files use mode `0600`.
 - Launch at Login is available in onboarding and Settings. History can be cleared from Settings.
+- Version 0.2.0 adds a custom Hlas app/menu-bar mark, bundled Satoshi typography, searchable
+  History window, live microphone updates and active-window screen overlay placement.
+- Audio capture uses AVCaptureSession because AVAudioEngine input taps can stop delivering
+  buffers with Bluetooth devices on macOS 26. The built-in microphone is the default.
 
 ## Engine economics (research-verified Aug 2026)
 
@@ -38,29 +42,21 @@ Apple SpeechAnalyzer: **no Czech** - ruled out. Parakeet TDT v3 via FluidAudio: 
 
 ## Backlog - mini polish (good Codex tasks, roughly prioritized)
 
-1. **Input-device list refresh.** `InputDevicePicker` enumerates `onAppear` only - refresh when
-   the Menu opens, and listen for device hot-plug (CoreAudio property listener) so unplugging
-   mid-session behaves.
-2. **History window.** Settings shows last 5; add a full searchable list (menu item), copy on
-   click, clear-all.
-3. **Overlay on active screen.** `OverlayPanel.position()` uses `NSScreen.main`; should follow
-   the screen with keyboard focus (multi-display).
-4. **Hallucination blocklist extension.** Collect real false positives from debug.log; consider
+1. **Hallucination blocklist extension.** Collect real false positives from debug.log; consider
    whisper's `no_speech_prob` as an additional signal.
-5. **Priming prompts for more languages** (`LocalWhisper.run`) - de/es/fr/pl at least, mirroring
+2. **Priming prompts for more languages** (`LocalWhisper.run`) - de/es/fr/pl at least, mirroring
    the cs pattern.
-6. **App icon.** None yet (default). Design: Eden green waveform glyph on near-black rounded
-   square; respect the no-pure-black rule.
-7. **Satoshi font bundling** - DS currently uses system font as stand-in. OTFs live in the Eden
-    vault (`Design System/fonts/`); bundle Light/Regular/Medium/Bold + register via CTFont.
-8. **Local model options.** Offer `large-v3-q5_0` (1.1 GB, better Czech, ~2.5x slower) as a
+3. **Local model options.** Offer `large-v3-q5_0` (1.1 GB, better Czech, ~2.5x slower) as a
     "max accuracy" alternative in Settings; reuse ModelDownloader with a model registry.
-9. **LLM cleanup pass (bigger).** Optional post-processing: filler removal, homophone fixes
+4. **LLM cleanup pass (bigger).** Optional post-processing: filler removal, homophone fixes
     (hezky/hezký), number formatting. Provider: Groq (cheap) or Apple Intelligence. Steal the
     prompt from Handy (`settings.rs:726` in cjpais/Handy) - includes prompt-injection defense.
     Must honor "keep original language" for Czech.
-10. **ElevenLabs Scribe engine** - best published Czech WER; same multipart pattern as existing
+5. **ElevenLabs Scribe engine** - best published Czech WER; same multipart pattern as existing
     API engines, different response shape.
+6. **Accessibility pass.** VoiceOver announcements, larger text, Reduce Motion and increased
+   contrast behavior for custom controls.
+7. **Distribution.** Developer ID signing, Hardened Runtime, notarized DMG and update path.
 
 ## Risky areas - touch with care
 
@@ -68,8 +64,8 @@ Apple SpeechAnalyzer: **no Czech** - ruled out. Parakeet TDT v3 via FluidAudio: 
   reintroduce the TCC dance. Test with `tools/fakefn.swift` after ANY change.
 - `TextInjector.swift`: the transient-type tagging and changeCount guard are load-bearing
   (clipboard managers, user copies mid-transcription).
-- `AudioRecorder` keep-warm vs. device switching: warm engine restarts when the preferred device
-  changes - preserve that when refactoring.
+- `AudioRecorder` keep-warm vs. device switching: the AVCaptureSession restarts when the preferred
+  device changes - preserve that when refactoring.
 
 ## Environment facts
 

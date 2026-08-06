@@ -113,10 +113,47 @@ enum AudioDevices {
     }
 }
 
+@MainActor
+final class AudioDeviceMonitor: ObservableObject {
+    static let shared = AudioDeviceMonitor()
+
+    @Published private(set) var devices: [AudioInputDevice] = []
+    private let listenerQueue = DispatchQueue(label: "hlas.audio-device-monitor")
+    private var listeners: [(AudioObjectPropertyAddress, AudioObjectPropertyListenerBlock)] = []
+
+    private init() {
+        devices = AudioDevices.list()
+        listen(for: kAudioHardwarePropertyDevices)
+        listen(for: kAudioHardwarePropertyDefaultInputDevice)
+    }
+
+    func refresh() {
+        devices = AudioDevices.list()
+    }
+
+    private func listen(for selector: AudioObjectPropertySelector) {
+        var address = AudioObjectPropertyAddress(
+            mSelector: selector,
+            mScope: kAudioObjectPropertyScopeGlobal,
+            mElement: kAudioObjectPropertyElementMain
+        )
+        let block: AudioObjectPropertyListenerBlock = { [weak self] _, _ in
+            DispatchQueue.main.async { self?.refresh() }
+        }
+        guard AudioObjectAddPropertyListenerBlock(
+            AudioObjectID(kAudioObjectSystemObject),
+            &address,
+            listenerQueue,
+            block
+        ) == noErr else { return }
+        listeners.append((address, block))
+    }
+}
+
 /// Settings dropdown: system default / pinned built-in / specific device.
 struct InputDevicePicker: View {
     @ObservedObject private var settings = Settings.shared
-    @State private var devices: [AudioInputDevice] = []
+    @ObservedObject private var monitor = AudioDeviceMonitor.shared
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
@@ -127,8 +164,8 @@ struct InputDevicePicker: View {
                 Button { settings.inputDeviceUID = "builtin" } label: {
                     row("Built-in mic - always (ignore AirPods switch)", checked: settings.inputDeviceUID == "builtin")
                 }
-                if !devices.isEmpty { Divider() }
-                ForEach(devices) { device in
+                if !monitor.devices.isEmpty { Divider() }
+                ForEach(monitor.devices) { device in
                     Button { settings.inputDeviceUID = device.uid } label: {
                         row(device.name, checked: settings.inputDeviceUID == device.uid)
                     }
@@ -145,7 +182,7 @@ struct InputDevicePicker: View {
                 .background(RoundedRectangle(cornerRadius: DS.radiusSm).fill(Color.white.opacity(0.06)))
             }
             .menuStyle(.borderlessButton)
-            .onAppear { devices = AudioDevices.list() }
+            .onAppear { monitor.refresh() }
 
             Text("Pin the built-in mic to keep dictation quality when Bluetooth headphones connect.")
                 .font(.system(size: 10)).foregroundStyle(DS.fg3)
@@ -163,7 +200,7 @@ struct InputDevicePicker: View {
         switch settings.inputDeviceUID {
         case "": return "System default"
         case "builtin": return "Built-in mic (always)"
-        case let uid: return AudioDevices.device(uid: uid)?.name ?? "Unavailable - using default"
+        case let uid: return monitor.devices.first { $0.uid == uid }?.name ?? "Unavailable - using default"
         }
     }
 
@@ -171,7 +208,7 @@ struct InputDevicePicker: View {
         switch settings.inputDeviceUID {
         case "": return "gearshape"
         case "builtin": return "laptopcomputer"
-        case let uid: return AudioDevices.device(uid: uid)?.icon ?? "questionmark.circle"
+        case let uid: return monitor.devices.first { $0.uid == uid }?.icon ?? "questionmark.circle"
         }
     }
 }

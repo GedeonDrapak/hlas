@@ -23,9 +23,10 @@ app:
 
 install: app
 	pkill -x Hlas || true
+	@i=0; while pgrep -x Hlas >/dev/null && [ $$i -lt 30 ]; do sleep 0.1; i=$$((i + 1)); done
 	rm -rf /Applications/Hlas.app
 	cp -R $(APP) /Applications/
-	open /Applications/Hlas.app
+	open -n /Applications/Hlas.app
 	@echo "Installed + launched /Applications/Hlas.app"
 
 clean:

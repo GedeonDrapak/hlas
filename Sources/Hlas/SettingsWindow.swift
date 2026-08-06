@@ -160,7 +160,7 @@ struct SettingsView: View {
     private var header: some View {
         VStack(alignment: .leading, spacing: 4) {
             Text("HLAS")
-                .font(.system(size: 13, weight: .bold))
+                .font(DS.text(13, weight: .bold))
                 .tracking(6)
                 .foregroundStyle(DS.fg)
             Text("Hold Fn · speak · release")

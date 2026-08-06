@@ -67,7 +67,7 @@ final class Settings: ObservableObject {
         modelKeepAliveSeconds = d.object(forKey: "modelKeepAlive") as? Double ?? 180
         vocabulary = d.stringArray(forKey: "vocabulary") ?? []
         favoriteLanguages = d.stringArray(forKey: "favoriteLanguages") ?? ["cs", "en"]
-        inputDeviceUID = d.string(forKey: "inputDeviceUID") ?? ""
+        inputDeviceUID = d.string(forKey: "inputDeviceUID") ?? "builtin"
     }
 
     private static func loadAPIKey(account: String, legacyKey: String, defaults: UserDefaults) -> String {

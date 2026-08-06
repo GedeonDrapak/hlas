@@ -1,4 +1,5 @@
 import AppKit
+import AVFoundation
 import SwiftUI
 
 @main
@@ -22,8 +23,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var transcriber: Transcriber = EchoTranscriber()
     private var activeSessionID = UUID()
     private var transcriptionTask: Task<Void, Never>?
+    private weak var statusSummaryItem: NSMenuItem?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        FontRegistrar.register()
         setupMainMenu()
         setupStatusItem()
         _ = History.shared
@@ -110,6 +113,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             overlay.show(.recording)
             setIcon(recording: true)
         } catch {
+            Log.write("recording failed: \(error.localizedDescription)")
             overlay.show(.error(error.localizedDescription))
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { self.overlay.hide() }
         }
@@ -235,20 +239,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         setIcon(recording: false)
         let menu = NSMenu()
-        menu.addItem(withTitle: "Hlas - hold Fn to dictate", action: nil, keyEquivalent: "")
+        let summary = menu.addItem(withTitle: "Hlas", action: nil, keyEquivalent: "")
+        statusSummaryItem = summary
         menu.addItem(.separator())
         menu.addItem(withTitle: "Settings…", action: #selector(openSettings), keyEquivalent: ",")
+        menu.addItem(withTitle: "History…", action: #selector(openHistory), keyEquivalent: "")
         menu.addItem(withTitle: "Welcome Tour…", action: #selector(openOnboarding), keyEquivalent: "")
         menu.addItem(withTitle: "Quit Hlas", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         menu.items.forEach { $0.target = self }
+        menu.delegate = self
         statusItem.menu = menu
     }
 
     private func setIcon(recording: Bool) {
-        let name = recording ? "waveform.circle.fill" : "waveform"
-        let image = NSImage(systemSymbolName: name, accessibilityDescription: "Hlas")
-        image?.isTemplate = !recording
-        statusItem.button?.image = image
+        statusItem.button?.image = HlasMarkImage.menuBar
         statusItem.button?.contentTintColor = recording
             ? NSColor(red: 0, green: 0.9, blue: 0.5, alpha: 1)
             : nil
@@ -260,5 +264,23 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     @objc private func openOnboarding() {
         OnboardingWindow.shared.show()
+    }
+
+    @objc private func openHistory() {
+        HistoryWindow.shared.show()
+    }
+}
+
+extension AppDelegate: NSMenuDelegate {
+    func menuWillOpen(_ menu: NSMenu) {
+        let mic = AVCaptureDevice.authorizationStatus(for: .audio) == .authorized
+        let accessibility = Hotkey.hasAccessibilityPermission(prompt: false)
+        if !mic || !accessibility {
+            statusSummaryItem?.title = "Hlas · Permission needed"
+            return
+        }
+        let engine = Settings.shared.engine.displayName
+        let language = Languages.name(for: Settings.shared.language)
+        statusSummaryItem?.title = "Hlas · \(engine) · \(language)"
     }
 }

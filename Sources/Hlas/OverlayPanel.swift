@@ -61,7 +61,7 @@ final class OverlayPanel {
     }
 
     private func position() {
-        guard let panel, let screen = NSScreen.main else { return }
+        guard let panel, let screen = targetScreen() else { return }
         let f = screen.visibleFrame
         let size = panel.frame.size
         panel.setFrameOrigin(NSPoint(
@@ -69,6 +69,39 @@ final class OverlayPanel {
             y: f.minY + 24
         ))
     }
+
+    private func targetScreen() -> NSScreen? {
+        if let app = NSWorkspace.shared.frontmostApplication,
+           let windows = CGWindowListCopyWindowInfo([.optionOnScreenOnly, .excludeDesktopElements], kCGNullWindowID) as? [[String: Any]],
+           let window = windows.first(where: {
+               ($0[kCGWindowOwnerPID as String] as? pid_t) == app.processIdentifier
+                   && ($0[kCGWindowLayer as String] as? Int) == 0
+           }),
+           let bounds = window[kCGWindowBounds as String] as? [String: Any],
+           let x = (bounds["X"] as? NSNumber)?.doubleValue,
+           let y = (bounds["Y"] as? NSNumber)?.doubleValue,
+           let width = (bounds["Width"] as? NSNumber)?.doubleValue,
+           let height = (bounds["Height"] as? NSNumber)?.doubleValue {
+            let primaryTop = NSScreen.screens.first?.frame.maxY ?? 0
+            let displayFrame = CGRect(
+                x: CGFloat(x),
+                y: primaryTop - CGFloat(y) - CGFloat(height),
+                width: CGFloat(width),
+                height: CGFloat(height)
+            )
+            if let best = NSScreen.screens.max(by: {
+                $0.frame.intersection(displayFrame).area < $1.frame.intersection(displayFrame).area
+            }), best.frame.intersects(displayFrame) {
+                return best
+            }
+        }
+        let mouse = NSEvent.mouseLocation
+        return NSScreen.screens.first { $0.frame.contains(mouse) } ?? NSScreen.main
+    }
+}
+
+private extension CGRect {
+    var area: CGFloat { isNull ? 0 : width * height }
 }
 
 struct OverlayView: View {

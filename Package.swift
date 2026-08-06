@@ -27,7 +27,8 @@ let package = Package(
                 .linkedFramework("Accelerate"),
                 .linkedFramework("AppKit"),
                 .linkedFramework("AVFoundation"),
-                .linkedFramework("Security")
+                .linkedFramework("Security"),
+                .linkedFramework("CoreText")
             ]
         )
     ]

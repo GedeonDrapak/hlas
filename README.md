@@ -18,7 +18,7 @@ Built as a personal replacement for Superwhisper / Wispr Flow / Willow ($15/mo e
 
 - **Hold Fn** → speak → release: text pastes into the focused app.
 - **Quick-tap Fn**: latches hands-free recording; tap again to stop.
-- Menu bar icon → **Settings**: engine, language, vocabulary, history.
+- Menu bar Hlas icon → **Settings** or searchable **History**.
 
 ## Engines
 
@@ -43,13 +43,15 @@ Permissions needed on first run: **Microphone** + **Accessibility** (for the Fn 
 
 Fusion of the Fakturio design system (Linear/Raycast near-black neutrals, hairline borders, 16px radii) and the Eden Makers system (bio-digital green `hsl(153 100% 45%)`, uppercase tracked labels, never pure black/white).
 
+The app uses a custom two-pulse Hlas mark and bundled Satoshi typography. The same mark scales from the macOS app icon down to the monochrome menu bar template.
+
 ## Architecture
 
 ```
 Fn press ──► CGEventTap (Hotkey.swift, health-checked)
               │
               ▼
-        AVAudioEngine ──► 16 kHz mono Float32 (AudioRecorder.swift)
+     AVCaptureSession ──► 16 kHz mono Float32 (AudioRecorder.swift)
               │                    │
               ▼                    ▼
       Overlay pill (NSPanel)   Transcriber protocol

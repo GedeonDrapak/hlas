@@ -51,7 +51,7 @@ make install   # xcodegen → xcodebuild (Release) → /Applications/Hlas.app �
 |---|---|
 | `App.swift` | AppDelegate: status item, hidden Edit menu, dictation loop (hybrid tap/hold), permission retry |
 | `Hotkey.swift` | CGEventTap on Fn (keycode 63, flagsChanged), health-check timer re-enables dead taps |
-| `AudioRecorder.swift` | AVAudioEngine → 16 kHz mono Float32; keep-warm 12 s; per-device selection via AudioUnit |
+| `AudioRecorder.swift` | AVCaptureSession -> 16 kHz mono Float32; Bluetooth-safe capture, 12 s keep-warm |
 | `AudioDevices.swift` | CoreAudio HAL input enumeration + `InputDevicePicker` UI |
 | `Transcriber.swift` | Engine protocol + WAV encoder |
 | `LocalWhisper.swift` | whisper.cpp: lazy load, beam-5, priming prompts (cs/sk/en), idle unload, model downloader |
@@ -61,9 +61,12 @@ make install   # xcodegen → xcodebuild (Release) → /Applications/Hlas.app �
 | `OverlayPanel.swift` | Non-activating NSPanel pill: waveform, source badge, frosted glass |
 | `Onboarding.swift` | 4-step split layout (gradient left / content right), live permission polling |
 | `SettingsWindow.swift` | Engine, language chips, mic picker, vocabulary, history |
+| `HistoryWindow.swift` | Searchable full transcript history, copy, clear |
 | `Languages.swift` | 60+ whisper languages, favorite chips with hover-✕, search popover |
 | `Settings.swift` | UserDefaults-backed observable settings |
 | `History.swift` | Last 50 transcripts, local JSON |
+| `HlasMark.swift` | Shared custom mark for menu bar and SwiftUI brand surfaces |
+| `FontRegistrar.swift` | Process-scoped registration of bundled Satoshi fonts |
 | `DesignTokens.swift` | The design system - read before any UI work |
 | `VisualEffect.swift` | NSVisualEffectView wrapper (frosted glass) |
 | `Log.swift` | File logger (unified log is unreliable for bare SwiftPM-style apps) |

@@ -27,9 +27,18 @@ enum DS {
     static let radius: CGFloat = 16
     static let radiusSm: CGFloat = 8
 
-    // Type - system font stands in for Satoshi (bundled later)
+    static func text(_ size: CGFloat, weight: Font.Weight = .regular) -> Font {
+        let family: String
+        switch weight {
+        case .bold, .heavy, .black: family = "Satoshi-Bold"
+        case .medium, .semibold: family = "Satoshi-Medium"
+        default: family = "Satoshi-Regular"
+        }
+        return .custom(family, size: size)
+    }
+
     static func label(_ size: CGFloat = 11) -> Font {
-        .system(size: size, weight: .medium).monospacedDigit()
+        .custom("Satoshi-Medium", size: size).monospacedDigit()
     }
 }
 
