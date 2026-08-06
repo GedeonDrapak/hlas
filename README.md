@@ -1,30 +1,57 @@
+<div align="center">
+
+![Hlas — Dictation. Not typing.](docs/assets/hero.png)
+
 # Hlas
 
-Ultra-minimal dictation for Apple Silicon Macs. Hold **Fn**, speak (Czech or English), release - text appears at your cursor. No subscription, no account, no telemetry.
+**Dictation. Not typing.**
 
-Built as a personal replacement for Superwhisper / Wispr Flow / Willow ($15/mo each).
+Hold **Fn** · speak Czech or English · release — text lands at your cursor, in any app.
+No subscription. No account. No telemetry. No cloud unless you ask for it.
 
-## Why
+**[Website](https://gedeondrapak.github.io/hlas/)** · [Build it](#build) · [Privacy](docs/PRIVACY.md)
 
-| | Hlas | Superwhisper | Wispr Flow | Willow |
+</div>
+
+---
+
+Built in Prague as a personal replacement for the $8–15/month dictation apps — because every one of them treats Czech as an afterthought, and none of them should cost more than your music streaming.
+
+## Stop renting your own voice
+
+| | **Hlas** | Superwhisper | Wispr Flow | Willow |
 |---|---|---|---|---|
-| Price | free / ~$3/mo API | $8.49/mo | $15/mo | $15/mo |
-| Local + private | yes | yes | no (cloud + screenshots) | partial |
-| Czech quality | whisper large-v3 class | good | uncontrollable | weak |
-| App size | ~4 MB | ~1 GB+ | heavy | heavy |
-| Idle RAM | ~60 MB (model auto-unloads) | ~800 MB | heavy | ? |
+| Price | **free / ~$3/mo API** | $8.49/mo | $15/mo | $15/mo |
+| Local + private | **yes** | yes | no (cloud + screenshots) | partial |
+| Czech quality | **Whisper large-v3 class** | good | uncontrollable | weak |
+| App size | **~4 MB** | ~1 GB+ | heavy | heavy |
+| Idle RAM | **~60 MB** (model auto-unloads) | ~800 MB | heavy | ? |
+| Account required | **no** | yes | yes | yes |
 
-## Usage
+## One key. That's the whole UI.
 
 - **Hold Fn** → speak → release: text pastes into the focused app.
 - **Quick-tap Fn**: latches hands-free recording; tap again to stop.
-- Menu bar Hlas icon → **Settings** or searchable **History**.
+- Menu bar Hlas icon → **Settings**, custom **Vocabulary**, searchable **History**.
 
-## Engines
+![Onboarding](docs/assets/screens.png)
 
-- **Local (default):** whisper.cpp `large-v3-turbo-q5_0` (547 MB one-time download, ~1 GB while loaded, auto-unloads after 3 min idle). Runs on Metal.
-- **Groq API:** whisper-large-v3-turbo - ~$0.04/hr of audio (≈ $1–3/mo at heavy use). BYOK.
-- **OpenAI API:** gpt-transcribe - ~$0.27/hr. BYOK.
+## Your engine, your call
+
+- **Local (default):** whisper.cpp `large-v3-turbo-q5_0` on Metal. One-time 547 MB download, ~1 GB RAM while loaded, auto-unloads after 3 min idle. Works offline. Audio never leaves your Mac.
+- **Groq API:** whisper-large-v3-turbo — ~$0.04/hr of audio (≈ $1–3/mo at heavy use). BYOK.
+- **OpenAI API:** gpt-transcribe — ~$0.27/hr, best accuracy + vocabulary support. BYOK.
+
+![Engine and language selection](docs/assets/engines.png)
+
+## A whole dictation app. Four megabytes.
+
+![Settings and recording pill](docs/assets/settings-pill.png)
+
+- **~60 MB idle RAM** — Whisper loads on demand, unloads after 3 minutes of silence.
+- **Keys live in macOS Keychain** — history stays local and is clearable anytime.
+- **Bluetooth-safe** — pin the built-in mic so AirPods never wreck dictation quality.
+- **Czech-first** — priming prompts for cs/sk/en, Czech-QWERTZ-safe paste.
 
 ## Build
 

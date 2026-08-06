@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hlas — Dictation. Not typing.</title>
+<meta name="description" content="Ultra-minimal dictation for Apple Silicon Macs. Hold Fn, speak Czech or English, release — text lands at your cursor. Free, local, no account, no telemetry.">
+<meta property="og:title" content="Hlas — Dictation. Not typing.">
+<meta property="og:description" content="Ultra-minimal dictation for Apple Silicon Macs. Hold Fn, speak, release. Free, local, 4 MB.">
+<meta property="og:image" content="https://gedeondrapak.github.io/hlas/assets/hero.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'%3E%3Crect x='4' y='9' width='7' height='16' rx='3.5' fill='%2300E67A'/%3E%3Crect x='15' y='3' width='7' height='28' rx='3.5' fill='%23EDEDED'/%3E%3Ccircle cx='29' cy='17' r='3.5' fill='%2300E67A'/%3E%3C/svg%3E">
+<style>
+@font-face { font-family:'Satoshi'; src:url('assets/fonts/Satoshi-Regular.otf'); font-weight:400; font-display:swap; }
+@font-face { font-family:'Satoshi'; src:url('assets/fonts/Satoshi-Medium.otf'); font-weight:500; font-display:swap; }
+@font-face { font-family:'Satoshi'; src:url('assets/fonts/Satoshi-Bold.otf'); font-weight:700; font-display:swap; }
+:root {
+  --bg:#0C0D0F; --surface:#161719; --surface2:#1E2023;
+  --fg:#EDEDED; --fg2:#9E9E9E; --fg3:#858585;
+  --brand:hsl(153,100%,45%); --brand-dim:hsla(153,100%,45%,0.12);
+  --border:rgba(255,255,255,0.08);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background:var(--bg); color:var(--fg);
+  font-family:'Satoshi',-apple-system,BlinkMacSystemFont,sans-serif;
+  -webkit-font-smoothing:antialiased; line-height:1.5;
+}
+a { color:inherit; text-decoration:none; }
+img { max-width:100%; display:block; }
+.wrap { max-width:1080px; margin:0 auto; padding:0 24px; }
+.label {
+  font-weight:500; text-transform:uppercase; letter-spacing:0.3em;
+  font-size:12px; color:var(--brand);
+}
+/* nav */
+nav { display:flex; align-items:center; justify-content:space-between; padding:28px 0; }
+.mark { display:flex; align-items:center; gap:12px; font-weight:700; letter-spacing:0.25em; font-size:17px; }
+.btn {
+  display:inline-flex; align-items:center; gap:10px;
+  border:1px solid var(--border); border-radius:999px;
+  padding:10px 22px; font-size:15px; font-weight:500; color:var(--fg);
+  background:rgba(255,255,255,0.03); transition:all .15s ease;
+}
+.btn:hover { background:var(--surface2); border-color:rgba(255,255,255,0.16); }
+.btn.primary { background:var(--brand); color:#06130C; border-color:transparent; }
+.btn.primary:hover { filter:brightness(1.1); background:var(--brand); }
+/* hero */
+.hero {
+  position:relative; text-align:center; padding:90px 0 80px; overflow:hidden;
+}
+.hero::before {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 55% at 50% 115%, hsla(153,100%,45%,0.13), transparent 60%),
+    radial-gradient(ellipse 60% 45% at 85% -10%, hsla(210,60%,40%,0.09), transparent 60%);
+}
+.hero > * { position:relative; }
+h1 { font-size:clamp(52px,9vw,104px); font-weight:700; line-height:1.02; letter-spacing:-0.015em; }
+h1 .green { color:var(--brand); }
+.hero .sub { font-size:clamp(17px,2.4vw,23px); color:var(--fg2); margin:26px auto 0; max-width:640px; }
+.hero .sub b { color:var(--fg); font-weight:500; }
+.cta { display:flex; gap:14px; justify-content:center; margin-top:36px; flex-wrap:wrap; }
+.chips { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:34px; }
+.chip {
+  display:inline-flex; align-items:center; gap:8px;
+  border:1px solid var(--border); border-radius:999px;
+  padding:8px 16px; font-size:13.5px; color:var(--fg2);
+  background:rgba(255,255,255,0.03);
+}
+.chip b { color:var(--fg); font-weight:500; }
+.dot { width:6px; height:6px; border-radius:50%; background:var(--brand); flex:none; }
+/* live pill */
+.pill {
+  display:inline-flex; align-items:center; gap:13px;
+  background:rgba(22,23,25,0.96); border:1px solid rgba(255,255,255,0.10);
+  border-radius:999px; padding:15px 25px; margin-top:52px;
+  box-shadow:0 24px 60px rgba(0,0,0,0.65), 0 0 60px hsla(153,100%,45%,0.10);
+}
+.pill .rec { width:11px; height:11px; border-radius:50%; background:var(--brand); box-shadow:0 0 13px hsla(153,100%,45%,0.9); animation:blink 1.6s ease-in-out infinite; }
+@keyframes blink { 50% { opacity:0.45; } }
+.wave { display:flex; align-items:center; gap:4px; height:34px; }
+.wave i { display:block; width:4px; border-radius:2px; background:var(--brand); animation:bounce 1.1s ease-in-out infinite; }
+@keyframes bounce { 0%,100% { transform:scaleY(0.35); } 50% { transform:scaleY(1); } }
+/* sections */
+section { padding:70px 0; }
+.sec-head { text-align:center; margin-bottom:48px; }
+h2 { font-size:clamp(30px,4.6vw,46px); font-weight:700; letter-spacing:-0.01em; line-height:1.12; margin-top:14px; }
+h2 .green { color:var(--brand); }
+.sec-head p { color:var(--fg2); font-size:18px; margin-top:14px; max-width:560px; margin-left:auto; margin-right:auto; }
+/* steps */
+.steps { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+.step {
+  background:var(--surface); border:1px solid var(--border); border-radius:16px;
+  padding:30px 26px;
+}
+.step .num { font-size:13px; color:var(--brand); font-weight:500; letter-spacing:0.2em; }
+.step h3 { font-size:21px; margin:12px 0 8px; font-weight:700; }
+.step p { color:var(--fg2); font-size:15.5px; }
+.step kbd {
+  font-family:inherit; background:var(--surface2); border:1px solid var(--border);
+  border-bottom-width:2px; border-radius:7px; padding:2px 9px; font-size:14px; color:var(--fg);
+}
+/* screenshots */
+.shot { border-radius:16px; border:1px solid var(--border); box-shadow:0 40px 90px rgba(0,0,0,0.5); }
+.shots-stack { display:flex; flex-direction:column; gap:56px; }
+/* features */
+.grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+.card { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:28px 26px; }
+.card h3 { font-size:18px; font-weight:700; margin-bottom:8px; }
+.card p { color:var(--fg2); font-size:15px; }
+.card .ic { color:var(--brand); font-size:20px; margin-bottom:14px; display:block; }
+/* table */
+table { width:100%; border-collapse:separate; border-spacing:0; font-size:16px; background:var(--surface); border:1px solid var(--border); border-radius:16px; overflow:hidden; }
+th,td { padding:15px 20px; text-align:center; border-bottom:1px solid var(--border); }
+th { font-weight:500; color:var(--fg2); text-transform:uppercase; letter-spacing:0.12em; font-size:12px; }
+td:first-child,th:first-child { text-align:left; color:var(--fg2); }
+td { color:var(--fg2); }
+.hl { background:var(--brand-dim); color:var(--brand) !important; font-weight:500; }
+th.hl { color:var(--brand); }
+tr:last-child td { border-bottom:none; }
+.tbl-scroll { overflow-x:auto; }
+/* build */
+pre {
+  background:var(--surface); border:1px solid var(--border); border-radius:16px;
+  padding:26px 28px; overflow-x:auto; font-size:14.5px; line-height:1.7;
+  font-family:'SF Mono',ui-monospace,Menlo,monospace; color:var(--fg);
+}
+pre .c { color:var(--fg3); }
+pre .g { color:var(--brand); }
+/* footer */
+footer { border-top:1px solid var(--border); padding:44px 0 60px; margin-top:40px; color:var(--fg3); font-size:14.5px; }
+.foot { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+.foot a { color:var(--fg2); } .foot a:hover { color:var(--fg); }
+@media (max-width:820px) {
+  .steps,.grid { grid-template-columns:1fr; }
+  .hero { padding:60px 0 60px; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav>
+    <a class="mark" href="#">
+      <svg width="26" height="26" viewBox="0 0 34 34"><rect x="4" y="9" width="7" height="16" rx="3.5" fill="hsl(153,100%,45%)"/><rect x="15" y="3" width="7" height="28" rx="3.5" fill="#EDEDED"/><circle cx="29" cy="17" r="3.5" fill="hsl(153,100%,45%)"/></svg>
+      HLAS
+    </a>
+    <div style="display:flex;gap:12px">
+      <a class="btn" href="https://github.com/GedeonDrapak/hlas">GitHub</a>
+      <a class="btn primary" href="#build">Get Hlas</a>
+    </div>
+  </nav>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="label">Free · open source · Apple Silicon</div>
+    <h1 style="margin-top:22px">Dictation.<br><span class="green">Not typing.</span></h1>
+    <p class="sub">Hold <b>Fn</b> · speak Czech or English · release — text lands at your cursor, in any app. No subscription, no account, no cloud unless you ask for it.</p>
+    <div class="cta">
+      <a class="btn primary" href="#build">Build in 2 minutes</a>
+      <a class="btn" href="#compare">Why not Superwhisper?</a>
+    </div>
+    <div class="pill" aria-hidden="true">
+      <span class="rec"></span>
+      <span class="wave" id="wave"></span>
+    </div>
+    <div class="chips">
+      <span class="chip"><span class="dot"></span><b>4 MB</b>&nbsp;app</span>
+      <span class="chip"><b>~60 MB</b>&nbsp;idle RAM</span>
+      <span class="chip"><b>No account</b>&nbsp;· no telemetry</span>
+      <span class="chip"><b>Czech-first</b>&nbsp;· Whisper large-v3</span>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="label">How it works</div>
+      <h2>One key. That's the whole UI.</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">01</div>
+        <h3>Hold <kbd>Fn</kbd></h3>
+        <p>A small pill appears at the bottom of your screen. The mic is live — speak Czech, English, or both.</p>
+      </div>
+      <div class="step">
+        <div class="num">02</div>
+        <h3>Release</h3>
+        <p>Whisper large-v3 transcribes — locally on Metal, or via Groq/OpenAI if you brought a key.</p>
+      </div>
+      <div class="step">
+        <div class="num">03</div>
+        <h3>Text lands at your cursor</h3>
+        <p>Pasted into whatever app has focus. Quick-tap <kbd>Fn</kbd> instead to latch hands-free mode.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap shots-stack">
+    <img class="shot" src="assets/screens.png" alt="Hlas onboarding — welcome step" loading="lazy">
+    <img class="shot" src="assets/engines.png" alt="Hlas onboarding — engine and language selection" loading="lazy">
+    <img class="shot" src="assets/settings-pill.png" alt="Hlas settings window and recording pill" loading="lazy">
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="label">Why Hlas</div>
+      <h2>Small app. <span class="green">Serious engine.</span></h2>
+    </div>
+    <div class="grid">
+      <div class="card"><span class="ic">●</span><h3>Local by default</h3><p>whisper.cpp large-v3-turbo runs on your Mac's GPU. Audio never leaves the machine. Works offline.</p></div>
+      <div class="card"><span class="ic">●</span><h3>Cloud when you want it</h3><p>Bring your own Groq key (~$1–3/mo at heavy use) or OpenAI key for best accuracy. Keys live in macOS Keychain.</p></div>
+      <div class="card"><span class="ic">●</span><h3>Czech that actually works</h3><p>Built in Prague because every dictation app treats Czech as an afterthought. Whisper large-v3 class quality, priming prompts for cs/sk/en.</p></div>
+      <div class="card"><span class="ic">●</span><h3>Featherweight</h3><p>~4 MB app, ~60 MB idle RAM. The model loads on demand and unloads after 3 minutes of silence.</p></div>
+      <div class="card"><span class="ic">●</span><h3>Custom vocabulary</h3><p>Add names and jargon in Settings → Vocabulary — the model learns how to spell them.</p></div>
+      <div class="card"><span class="ic">●</span><h3>Searchable history</h3><p>Every transcript saved locally, searchable from the menu bar, clearable anytime. Never uploaded.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="compare">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="label">The alternative is a subscription</div>
+      <h2>Stop renting <span class="green">your own voice.</span></h2>
+      <p>Built as a personal replacement for the $8–15/month dictation apps.</p>
+    </div>
+    <div class="tbl-scroll">
+    <table>
+      <tr><th></th><th class="hl">Hlas</th><th>Superwhisper</th><th>Wispr Flow</th><th>Willow</th></tr>
+      <tr><td>Price</td><td class="hl">free · ~$3/mo API</td><td>$8.49/mo</td><td>$15/mo</td><td>$15/mo</td></tr>
+      <tr><td>Local &amp; private</td><td class="hl">yes</td><td>yes</td><td>no — cloud</td><td>partial</td></tr>
+      <tr><td>Czech quality</td><td class="hl">Whisper large-v3</td><td>good</td><td>uncontrollable</td><td>weak</td></tr>
+      <tr><td>App size</td><td class="hl">~4 MB</td><td>1 GB+</td><td>heavy</td><td>heavy</td></tr>
+      <tr><td>Idle RAM</td><td class="hl">~60 MB</td><td>~800 MB</td><td>heavy</td><td>?</td></tr>
+      <tr><td>Account required</td><td class="hl">no</td><td>yes</td><td>yes</td><td>yes</td></tr>
+    </table>
+    </div>
+  </div>
+</section>
+
+<section id="build">
+  <div class="wrap" style="max-width:760px">
+    <div class="sec-head">
+      <div class="label">Get Hlas</div>
+      <h2>Build it in two minutes.</h2>
+      <p>Requires an Apple Silicon Mac on macOS 15+, Xcode, and <code>brew install xcodegen</code>.</p>
+    </div>
+    <pre><span class="c"># clone</span>
+git clone https://github.com/GedeonDrapak/hlas && cd hlas
+
+<span class="c"># build whisper.cpp static libs (once)</span>
+make vendor
+
+<span class="c"># build, install to /Applications, launch</span>
+make install</pre>
+    <p style="color:var(--fg2);font-size:15px;margin-top:18px;text-align:center">
+      First run asks for <b style="color:var(--fg)">Microphone</b> + <b style="color:var(--fg)">Accessibility</b> — that's the Fn hotkey and the paste. Full policy in <a href="https://github.com/GedeonDrapak/hlas/blob/main/docs/PRIVACY.md" style="color:var(--brand)">PRIVACY.md</a>.
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <div>Hlas — dictation, not typing. Built in Prague by <a href="https://gedeondrapak.com">Gedeon Drapák</a>.</div>
+    <div style="display:flex;gap:22px">
+      <a href="https://github.com/GedeonDrapak/hlas">GitHub</a>
+      <a href="https://github.com/GedeonDrapak/hlas/blob/main/docs/PRIVACY.md">Privacy</a>
+      <a href="https://github.com/GedeonDrapak/hlas/blob/main/THIRD_PARTY_NOTICES.md">Notices</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const w = document.getElementById('wave');
+  const hs = [8,14,22,30,24,16,20,28,34,26,16,11,15,23,31,25,17,9,13,19,27,21,13,8];
+  hs.forEach((h,i) => {
+    const b = document.createElement('i');
+    b.style.height = h + 'px';
+    b.style.animationDelay = (i * 0.07) + 's';
+    w.appendChild(b);
+  });
+</script>
+</body>
+</html>
