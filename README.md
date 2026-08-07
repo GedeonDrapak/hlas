@@ -9,13 +9,34 @@
 Hold **Fn** · speak Czech or English · release — text lands at your cursor, in any app.
 No subscription. No account. No telemetry. No cloud unless you ask for it.
 
-**[Website](https://gedeondrapak.github.io/hlas/)** · [Build it](#build) · [Privacy](docs/PRIVACY.md)
+### [⬇︎ Download Hlas 0.3.0](https://github.com/GedeonDrapak/hlas/releases/latest/download/Hlas-0.3.0-arm64.dmg) &nbsp;·&nbsp; 2.6 MB &nbsp;·&nbsp; Apple Silicon, macOS 15+
+
+**[Website](https://gedeondrapak.github.io/hlas/)** · [First run](#first-run) · [Build from source](#build) · [Privacy](docs/PRIVACY.md)
 
 </div>
 
 ---
 
 Built in Prague as a personal replacement for the $8–15/month dictation apps — because every one of them treats Czech as an afterthought, and none of them should cost more than your music streaming.
+
+## First run
+
+1. Open the DMG, drag **Hlas** onto **Applications**.
+2. macOS will block the first launch. Open **System Settings → Privacy & Security**, scroll to the bottom, click **Open Anyway**.
+3. Grant **Microphone** (to hear you) and **Accessibility** (for the Fn hotkey and the paste).
+4. Hold **Fn**, speak, release.
+
+<details>
+<summary>Why does macOS warn about it?</summary>
+
+Hlas isn't notarized by Apple — notarization requires a paid Apple Developer Program membership. The app is signed with a stable Apple Development certificate, which means your Accessibility and Microphone grants survive app updates (ad-hoc signed apps silently lose them on every update). Every line of source is in this repo, and you can [build it yourself](#build) in two minutes.
+
+If you'd rather skip the Settings pane:
+
+```bash
+xattr -dr com.apple.quarantine /Applications/Hlas.app
+```
+</details>
 
 ## Stop renting your own voice
 
@@ -55,6 +76,8 @@ Built in Prague as a personal replacement for the $8–15/month dictation apps �
 
 ## Build
 
+Prefer building it yourself? Two minutes:
+
 ```bash
 # 1. Build whisper.cpp static libs (once)
 cd ../hlas
@@ -79,14 +102,18 @@ The full policy ships in the app and is available in [Privacy](docs/PRIVACY.md).
 
 ## Public release
 
-`make install` is for local development. A public DMG must be signed with a Developer ID Application certificate and notarized:
+`make install` is for local development. Two ways to cut a public DMG:
 
 ```bash
+# Current: dev-signed, not notarized. Users approve it once in Privacy & Security.
+tools/release-unsigned.sh
+
+# Ideal: needs a Developer ID Application cert (paid Apple Developer Program).
 xcrun notarytool store-credentials HlasNotary --apple-id <email> --team-id <team-id>
 make release
 ```
 
-The release command creates an Apple Silicon DMG, notarizes it, staples the ticket, and checks Gatekeeper. It intentionally stops if the required certificate or notarization credentials are unavailable.
+`make release` creates an Apple Silicon DMG, notarizes it, staples the ticket, and checks Gatekeeper. It intentionally stops if the required certificate or notarization credentials are unavailable — switch the download links in `README.md` and `docs/index.html` once it can run.
 
 ## Design
 

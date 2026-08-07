@@ -4,3 +4,5 @@ Vendor/lib/
 .DS_Store
 Hlas.xcodeproj/
 .xcbuild/
+dist/
+.release/

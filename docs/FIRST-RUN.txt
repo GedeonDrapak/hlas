@@ -1,0 +1,28 @@
+HLAS - FIRST RUN
+================
+
+1. Drag Hlas.app onto the Applications folder in this window.
+
+2. Open Hlas from Applications. macOS will say it "could not verify that this
+   app is free of malware" and refuse to open it.
+
+   This is expected. Hlas is not notarized by Apple, because notarization
+   requires a paid Apple Developer Program membership. The source code is
+   public: https://github.com/GedeonDrapak/hlas
+
+3. Open System Settings > Privacy & Security, scroll to the bottom, and click
+   "Open Anyway" next to the message about Hlas. Confirm with Touch ID.
+
+   Terminal shortcut if you prefer:
+       xattr -dr com.apple.quarantine /Applications/Hlas.app
+
+4. Hlas will ask for two permissions on first launch:
+   - Microphone     - to hear you
+   - Accessibility  - for the Fn hotkey and to paste text at your cursor
+
+5. Hold Fn, say something, release. The text lands at your cursor.
+
+Hlas lives in the menu bar, not the Dock. Click the waveform icon for
+Settings, History, and the onboarding tour.
+
+Requires an Apple Silicon Mac on macOS 15 or later.

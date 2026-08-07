@@ -121,6 +121,19 @@ td { color:var(--fg2); }
 th.hl { color:var(--brand); }
 tr:last-child td { border-bottom:none; }
 .tbl-scroll { overflow-x:auto; }
+/* note card */
+.note {
+  margin-top:26px; background:var(--surface); border:1px solid var(--border);
+  border-left:2px solid var(--brand); border-radius:16px; padding:26px 28px;
+}
+.note h3 { font-size:17px; font-weight:700; margin-bottom:10px; }
+.note p { color:var(--fg2); font-size:15.5px; }
+.note a { color:var(--brand); }
+.note code {
+  display:block; margin-top:10px; background:var(--bg); border:1px solid var(--border);
+  border-radius:9px; padding:12px 16px; font-size:13.5px; color:var(--fg);
+  font-family:'SF Mono',ui-monospace,Menlo,monospace; overflow-x:auto;
+}
 /* build */
 pre {
   background:var(--surface); border:1px solid var(--border); border-radius:16px;
@@ -149,7 +162,7 @@ footer { border-top:1px solid var(--border); padding:44px 0 60px; margin-top:40p
     </a>
     <div style="display:flex;gap:12px">
       <a class="btn" href="https://github.com/GedeonDrapak/hlas">GitHub</a>
-      <a class="btn primary" href="#build">Get Hlas</a>
+      <a class="btn primary" href="#download">Download</a>
     </div>
   </nav>
 </div>
@@ -160,8 +173,11 @@ footer { border-top:1px solid var(--border); padding:44px 0 60px; margin-top:40p
     <h1 style="margin-top:22px">Dictation.<br><span class="green">Not typing.</span></h1>
     <p class="sub">Hold <b>Fn</b> · speak Czech or English · release — text lands at your cursor, in any app. No subscription, no account, no cloud unless you ask for it.</p>
     <div class="cta">
-      <a class="btn primary" href="#build">Build in 2 minutes</a>
+      <a class="btn primary" href="https://github.com/GedeonDrapak/hlas/releases/latest/download/Hlas-0.3.0-arm64.dmg">Download for macOS &nbsp;·&nbsp; 2.6 MB</a>
       <a class="btn" href="#compare">Why not Superwhisper?</a>
+    </div>
+    <div style="margin-top:14px;font-size:14px;color:var(--fg3)">
+      Apple Silicon · macOS 15+ · free · <a href="#download" style="color:var(--fg2);text-decoration:underline">first-run steps</a>
     </div>
     <div class="pill" aria-hidden="true">
       <span class="rec"></span>
@@ -248,10 +264,54 @@ footer { border-top:1px solid var(--border); padding:44px 0 60px; margin-top:40p
   </div>
 </section>
 
+<section id="download">
+  <div class="wrap" style="max-width:820px">
+    <div class="sec-head">
+      <div class="label">Download</div>
+      <h2>Drop it in. <span class="green">Start talking.</span></h2>
+      <p>2.6 MB disk image. Apple Silicon Mac on macOS 15 or later.</p>
+      <div class="cta" style="margin-top:28px">
+        <a class="btn primary" href="https://github.com/GedeonDrapak/hlas/releases/latest/download/Hlas-0.3.0-arm64.dmg">Download Hlas 0.3.0</a>
+        <a class="btn" href="https://github.com/GedeonDrapak/hlas/releases">All releases</a>
+      </div>
+    </div>
+
+    <div class="steps" style="grid-template-columns:repeat(2,1fr)">
+      <div class="step">
+        <div class="num">01</div>
+        <h3>Drag to Applications</h3>
+        <p>Open the DMG and drag Hlas onto the Applications folder.</p>
+      </div>
+      <div class="step">
+        <div class="num">02</div>
+        <h3>Approve it once</h3>
+        <p>macOS will block the first launch. Open <b style="color:var(--fg);font-weight:500">System&nbsp;Settings → Privacy&nbsp;&amp;&nbsp;Security</b>, scroll down, click <b style="color:var(--fg);font-weight:500">Open Anyway</b>.</p>
+      </div>
+      <div class="step">
+        <div class="num">03</div>
+        <h3>Grant two permissions</h3>
+        <p><b style="color:var(--fg);font-weight:500">Microphone</b> to hear you, <b style="color:var(--fg);font-weight:500">Accessibility</b> for the Fn hotkey and the paste.</p>
+      </div>
+      <div class="step">
+        <div class="num">04</div>
+        <h3>Hold Fn and speak</h3>
+        <p>That's it. Hlas lives in the menu bar, not the Dock.</p>
+      </div>
+    </div>
+
+    <div class="note">
+      <h3>Why does macOS warn about it?</h3>
+      <p>Hlas isn't notarized by Apple — notarization requires a paid Apple Developer Program membership. The app is signed with a stable developer certificate (so your permissions survive updates) and every line of source is public in this repo. If you'd rather not click through the warning, <a href="#build">build it yourself</a> in two minutes.</p>
+      <p style="margin-top:12px">Terminal shortcut, if you prefer it to the Settings pane:</p>
+      <code>xattr -dr com.apple.quarantine /Applications/Hlas.app</code>
+    </div>
+  </div>
+</section>
+
 <section id="build">
   <div class="wrap" style="max-width:760px">
     <div class="sec-head">
-      <div class="label">Get Hlas</div>
+      <div class="label">Or build from source</div>
       <h2>Build it in two minutes.</h2>
       <p>Requires an Apple Silicon Mac on macOS 15+, Xcode, and <code>brew install xcodegen</code>.</p>
     </div>
