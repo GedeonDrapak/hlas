@@ -59,9 +59,25 @@ final class OverlayPanel {
     private static let collectionBehavior: NSWindow.CollectionBehavior =
         [.canJoinAllSpaces, .fullScreenAuxiliary, .ignoresCycle]
 
+    /// The capsule is `pillHeight` tall and centred in the panel. The drop
+    /// shadow (radius 18, y-offset 6) draws OUTSIDE the capsule but is clipped
+    /// by the window, so the panel carries `shadowPad` of transparent margin on
+    /// every side. Without it the shadow survives left and right - where the
+    /// capsule is narrower than the panel - but is sheared off top and bottom.
+    enum Metrics {
+        static let pillHeight: CGFloat = 40
+        static let shadowPad: CGFloat = 32
+        static let width: CGFloat = 320
+        static let height: CGFloat = pillHeight + shadowPad * 2
+        /// Gap between the screen's visible bottom edge and the capsule.
+        static let bottomGap: CGFloat = 24
+        /// Panel origin sits below the capsule by the padding we added.
+        static let originOffset: CGFloat = bottomGap - shadowPad
+    }
+
     private func makePanel() {
         let panel = NSPanel(
-            contentRect: NSRect(x: 0, y: 0, width: 260, height: 44),
+            contentRect: NSRect(x: 0, y: 0, width: Metrics.width, height: Metrics.height),
             styleMask: [.borderless, .nonactivatingPanel],
             backing: .buffered,
             defer: false
@@ -86,7 +102,7 @@ final class OverlayPanel {
         let size = panel.frame.size
         panel.setFrameOrigin(NSPoint(
             x: f.midX - size.width / 2,
-            y: f.minY + 24
+            y: f.minY + Metrics.originOffset
         ))
     }
 
@@ -187,7 +203,7 @@ struct OverlayView: View {
             }
         }
         .padding(.horizontal, 18)
-        .frame(height: 40)
+        .frame(height: OverlayPanel.Metrics.pillHeight)
         .background(
             ZStack {
                 VisualEffectBlur(material: .hudWindow)
