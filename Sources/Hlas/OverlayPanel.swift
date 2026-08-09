@@ -34,6 +34,11 @@ final class OverlayPanel {
         let previous = model.state
         model.state = state
         if panel == nil { makePanel() }
+        // Re-assert on every show: the panel outlives Space switches, and the
+        // window server only re-evaluates Space membership when the behavior
+        // is set. Without this the pill can stay stuck on the Space where it
+        // was first created.
+        panel?.collectionBehavior = Self.collectionBehavior
         position()
         panel?.orderFrontRegardless()
         if state != previous { announce(state) }
@@ -44,6 +49,15 @@ final class OverlayPanel {
         model.levels = Array(repeating: 0, count: model.levels.count)
         panel?.orderOut(nil)
     }
+
+    /// `.canJoinAllSpaces` puts the pill on every Space, including the one the
+    /// user is on right now. `.stationary` (used previously) belongs to the
+    /// mutually exclusive Exposé group with `.managed`/`.transient` and marks
+    /// the window as unmanaged by Space handling - it fought `canJoinAllSpaces`
+    /// and pinned the pill to its creation Space. `.ignoresCycle` keeps it out
+    /// of Cmd-` without touching Space behavior.
+    private static let collectionBehavior: NSWindow.CollectionBehavior =
+        [.canJoinAllSpaces, .fullScreenAuxiliary, .ignoresCycle]
 
     private func makePanel() {
         let panel = NSPanel(
@@ -57,7 +71,11 @@ final class OverlayPanel {
         panel.backgroundColor = .clear
         panel.hasShadow = false
         panel.ignoresMouseEvents = true
-        panel.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary, .stationary]
+        // NOT isFloatingPanel: it forces level .floating (3) and would clobber
+        // the .statusBar (25) level set above, dropping the pill under other
+        // floating windows.
+        panel.hidesOnDeactivate = false
+        panel.collectionBehavior = Self.collectionBehavior
         panel.contentView = NSHostingView(rootView: OverlayView(model: model))
         self.panel = panel
     }

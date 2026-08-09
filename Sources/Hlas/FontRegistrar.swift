@@ -6,7 +6,7 @@ enum FontRegistrar {
         ("Satoshi-Regular", "otf"),
         ("Satoshi-Medium", "otf"),
         ("Satoshi-Bold", "otf"),
-        ("KonectDemo-Regular", "ttf"),
+        ("Konect-Regular", "otf"),
     ]
 
     static func register() {

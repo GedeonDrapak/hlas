@@ -48,12 +48,12 @@ enum DS {
         .custom("Satoshi-Medium", size: size, relativeTo: .caption).monospacedDigit()
     }
 
-    /// Konect Demo — display font for brand moments (wordmark, pure-letter
-    /// uppercase labels ONLY: the demo has 52 glyphs, no digits/punctuation).
-    /// License: free for personal use; buy from Ragam Kata before any public
-    /// distribution (see docs/HANDOFF.md).
+    /// Konect — display font for brand moments (wordmark, uppercase labels).
+    /// Full licensed cut from Ragam Kata: 239 glyphs, digits and punctuation
+    /// included. Still lacks caron/ring diacritics (ČĎĚŇŘŤŮ and lowercase), so
+    /// keep it off user-supplied or Czech copy — Satoshi covers those.
     static func display(_ size: CGFloat) -> Font {
-        .custom("KonectDemo-Regular", size: size, relativeTo: .title)
+        .custom("Konect-Regular", size: size, relativeTo: .title)
     }
 }
 
