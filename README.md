@@ -9,7 +9,7 @@
 Hold **Fn** · speak Czech or English · release — text lands at your cursor, in any app.
 No subscription. No account. No telemetry. No cloud unless you ask for it.
 
-### [⬇︎ Download Hlas 0.3.0](https://github.com/GedeonDrapak/hlas/releases/latest/download/Hlas-0.3.0-arm64.dmg) &nbsp;·&nbsp; 2.6 MB &nbsp;·&nbsp; Apple Silicon, macOS 15+
+### [⬇︎ Download Hlas 0.3.1](https://github.com/GedeonDrapak/hlas/releases/latest/download/Hlas-0.3.1-arm64.dmg) &nbsp;·&nbsp; 2.6 MB &nbsp;·&nbsp; Apple Silicon, macOS 15+
 
 **[Website](https://gedeondrapak.github.io/hlas/)** · [First run](#first-run) · [Build from source](#build) · [Privacy](docs/PRIVACY.md)
 
@@ -98,7 +98,7 @@ Hlas supports Apple Silicon Macs running macOS 15 or later. Intel Macs are inten
 - **Groq / OpenAI:** audio is sent directly to the provider selected in Settings for transcription.
 - API keys are stored in macOS Keychain. History stays local and can be cleared in Settings.
 
-The full policy ships in the app and is available in [Privacy](docs/PRIVACY.md). See [third-party notices](THIRD_PARTY_NOTICES.md) for whisper.cpp, Whisper model, and Satoshi font licenses.
+The full policy ships in the app and is available in [Privacy](docs/PRIVACY.md). See [third-party notices](THIRD_PARTY_NOTICES.md) for whisper.cpp, Whisper model, Satoshi, and Konect font licenses.
 
 ## Public release
 

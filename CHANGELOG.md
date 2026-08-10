@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.1 - 2026-08-09
+
+- Keep the recording pill on the Space you are actually on. `.stationary` conflicted with `.canJoinAllSpaces` and could pin the pill to the Space where it was first created; the collection behavior is now re-asserted on every show.
+- Stop clipping the pill's drop shadow. The panel was 260x44 around a 40pt capsule, so the shadow survived left and right but was sheared off top and bottom.
+- Replace the personal-use Konect demo with the purchased commercial cut. Digits and punctuation are now safe in display text.
+- Ship the first public DMG, signed with a stable developer certificate so Accessibility and Microphone grants survive updates.
+
 ## 0.3.0 - 2026-08-06
 
 - Add Apple Silicon-only distribution configuration with Hardened Runtime and microphone entitlement.

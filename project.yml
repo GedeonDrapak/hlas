@@ -43,8 +43,8 @@ targets:
         CFBundleIdentifier: com.gedeon.hlas
         CFBundleName: Hlas
         CFBundleDisplayName: Hlas
-        CFBundleShortVersionString: 0.3.0
-        CFBundleVersion: "3"
+        CFBundleShortVersionString: 0.3.1
+        CFBundleVersion: "4"
         LSMinimumSystemVersion: "15.0"
         LSUIElement: true
         NSMicrophoneUsageDescription: Hlas needs the microphone to transcribe your speech.
