@@ -52,9 +52,9 @@ make install   # xcodegen → xcodebuild (Release) → /Applications/Hlas.app �
 
 | File | Concern |
 |---|---|
-| `App.swift` | AppDelegate: status item, hidden Edit menu, dictation loop (hybrid tap/hold), permission retry |
+| `App.swift` | AppDelegate: status item, hidden Edit menu, permission retry; DictationCoordinator owns the dictation loop |
 | `Hotkey.swift` | CGEventTap on Fn (keycode 63, flagsChanged), health-check timer re-enables dead taps |
-| `AudioRecorder.swift` | AVCaptureSession -> 16 kHz mono Float32; Bluetooth-safe capture, 12 s keep-warm |
+| `AudioRecorder.swift` | AVCaptureSession -> 16 kHz mono Float32; Bluetooth-safe capture, serial session queue, adaptive 8/30 s keep-warm |
 | `AudioDevices.swift` | CoreAudio HAL input enumeration + `InputDevicePicker` UI |
 | `Transcriber.swift` | Engine protocol |
 | `LocalWhisper.swift` | whisper.cpp: lazy load, beam-5, priming prompts (cs/sk/en), idle unload, model downloader |
@@ -67,7 +67,11 @@ make install   # xcodegen → xcodebuild (Release) → /Applications/Hlas.app �
 | `HistoryWindow.swift` | Searchable full transcript history, copy, clear |
 | `Languages.swift` | 60+ whisper languages, favorite chips with hover-✕, search popover |
 | `Settings.swift` | UserDefaults-backed observable settings |
-| `History.swift` | Last 50 transcripts, local JSON |
+| `History.swift` | Last 50 original/edited transcripts, serial JSON persistence, optional retention |
+| `DictationCoordinator.swift` | Session snapshots, state, cancellation and safe delivery |
+| `SmartTextProcessor.swift` | Automatic cloud editing, no style selector |
+| `AudioFileImporter.swift` | Bounded file decoding and resampling |
+| `ResultWindow.swift` | Recoverable result and original copy |
 | `HlasMark.swift` | Shared custom mark for menu bar and SwiftUI brand surfaces |
 | `FontRegistrar.swift` | Process-scoped registration of bundled Satoshi fonts |
 | `DesignTokens.swift` | The design system - read before any UI work |

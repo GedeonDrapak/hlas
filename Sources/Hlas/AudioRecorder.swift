@@ -1,38 +1,34 @@
 import AVFoundation
 import CoreMedia
+import HlasCore
 
-/// Captures microphone audio and delivers 16 kHz mono Float32 samples,
-/// the native input format of every Whisper-family model.
-final class AudioRecorder: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate {
+// All session lifecycle state belongs to sessionQueue; audio state to captureQueue.
+final class AudioRecorder: NSObject, AVCaptureAudioDataOutputSampleBufferDelegate, @unchecked Sendable {
+    private let sessionQueue = DispatchQueue(label: "hlas.audio-session", qos: .userInitiated)
     private let captureQueue = DispatchQueue(label: "hlas.audio-capture", qos: .userInitiated)
     private var session: AVCaptureSession?
+    private var captureDeviceID: String?
+    private var sessionObservers: [NSObjectProtocol] = []
+    private var needsReconfiguration = false
+    private var lifecycleGeneration = 0
+    private var lastStop: Date?
+    private var activeSessionID: UUID?
+    private var activeToken: CancellationToken?
+
     private var converter: AVAudioConverter?
     private var samples: [Float] = []
     private var isCapturing = false
-    private var captureDeviceID: String?
-    private var warmShutdownTimer: Timer?
-    private var needsReconfiguration = false
-    private var sessionObservers: [NSObjectProtocol] = []
+    private var meteredAt = ContinuousClock.now
+    private var captureToken: CancellationToken?
+    private var limitReported = false
+    private var captureStartedAt = ContinuousClock.now
+    @MainActor var onLevel: (@MainActor (Float, Double) -> Void)?
+    @MainActor var onLimit: (@MainActor () -> Void)?
 
-    /// Keep the microphone session warm briefly so consecutive dictations
-    /// do not pay device startup latency again.
-    private let keepWarmSeconds: TimeInterval = 45
+    static let targetFormat = AVAudioFormat(commonFormat: .pcmFormatFloat32,
+        sampleRate: 16_000, channels: 1, interleaved: false)!
 
-    /// 0...1 smoothed input level, for the overlay waveform.
-    var onLevel: ((Float) -> Void)?
-
-    static let targetFormat = AVAudioFormat(
-        commonFormat: .pcmFormatFloat32,
-        sampleRate: 16_000,
-        channels: 1,
-        interleaved: false
-    )!
-
-    /// The device audio was actually captured from in the current session.
-    private(set) var activeDevice: AudioInputDevice?
-
-    @MainActor
-    private static func preferredDevice() -> AudioInputDevice? {
+    @MainActor private static func preferredDevice() -> AudioInputDevice? {
         switch Settings.shared.inputDeviceUID {
         case "": return nil
         case "builtin": return AudioDevices.builtIn()
@@ -40,248 +36,218 @@ final class AudioRecorder: NSObject, AVCaptureAudioDataOutputSampleBufferDelegat
         }
     }
 
-    @MainActor
-    func start() throws {
-        let startupBegan = ContinuousClock.now
-        warmShutdownTimer?.invalidate()
-        warmShutdownTimer = nil
-
+    @MainActor func start(id: UUID) async throws -> AudioInputDevice? {
         let preferred = Self.preferredDevice()
-        let captureDevice = Self.captureDevice(matching: preferred)
-            ?? AVCaptureDevice.default(for: .audio)
-        guard let captureDevice else {
-            throw Self.error("No microphone input available")
-        }
-
-        var configureMs: Int64 = 0
-        if needsReconfiguration || session == nil || captureDeviceID != captureDevice.uniqueID {
-            let configureBegan = ContinuousClock.now
-            tearDownSession()
-            try configureSession(device: captureDevice)
-            needsReconfiguration = false
-            configureMs = Self.elapsedMs(since: configureBegan)
-        }
-
-        captureQueue.sync {
-            samples.removeAll(keepingCapacity: true)
-            converter = nil
-            isCapturing = true
-        }
-
-        guard let session else {
-            throw Self.error("Microphone session is unavailable")
-        }
-        let runBegan = ContinuousClock.now
-        if !session.isRunning {
-            session.startRunning()
-        }
-        let runMs = Self.elapsedMs(since: runBegan)
-        if configureMs + runMs > 100 {
-            Log.write("capture startup breakdown: configure \(configureMs) ms, startRunning \(runMs) ms")
-        }
-        guard session.isRunning else {
-            captureQueue.sync { isCapturing = false }
-            throw Self.error("Could not start the microphone")
-        }
-
-        captureDeviceID = captureDevice.uniqueID
-        activeDevice = AudioDevices.list().first {
-            $0.uid == captureDevice.uniqueID || $0.name == captureDevice.localizedName
-        } ?? AudioDevices.defaultInputID().flatMap { AudioDevices.device(id: $0) }
-        let startup = startupBegan.duration(to: .now)
-        let milliseconds = startup.components.seconds * 1_000
-            + Int64(startup.components.attoseconds / 1_000_000_000_000_000)
-        Log.write("recording source: \(captureDevice.localizedName), startup \(milliseconds) ms")
-    }
-
-    /// Drop a warm session after the selected or system input changes.
-    /// If capture is active, finish it and rebuild before the next dictation.
-    @MainActor
-    func deviceSelectionDidChange() {
-        warmShutdownTimer?.invalidate()
-        warmShutdownTimer = nil
-        needsReconfiguration = true
-        let capturing = captureQueue.sync { isCapturing }
-        if !capturing {
-            tearDownSession()
-        }
-        Log.write("microphone changed: capture session invalidated")
-    }
-
-    func stop() -> [Float] {
-        let result = captureQueue.sync {
-            isCapturing = false
-            let result = samples
-            samples.removeAll(keepingCapacity: false)
-            return result
-        }
-
-        warmShutdownTimer?.invalidate()
-        warmShutdownTimer = Timer.scheduledTimer(withTimeInterval: keepWarmSeconds, repeats: false) { [weak self] _ in
-            self?.suspendSession()
-        }
-        return result
-    }
-
-    /// Cooldown: release the microphone (indicator turns off) but KEEP the
-    /// configured session, so the next start pays only startRunning — not the
-    /// full ~1.7 s configure+open that caused lost speech on cold dictations.
-    private func suspendSession() {
-        guard let session, session.isRunning else { return }
-        DispatchQueue.global(qos: .utility).async {
-            session.stopRunning()
-            Log.write("capture session suspended (kept configured)")
-        }
-    }
-
-    /// Warm the capture pipeline before the first dictation: configure and
-    /// briefly run the session, then release the mic. Called at app launch
-    /// and on wake from sleep.
-    @MainActor
-    func prewarm() {
-        let capturing = captureQueue.sync { isCapturing }
-        guard !capturing else { return }
-        let preferred = Self.preferredDevice()
-        guard let device = Self.captureDevice(matching: preferred)
-            ?? AVCaptureDevice.default(for: .audio) else { return }
-
-        if needsReconfiguration || session == nil || captureDeviceID != device.uniqueID {
-            tearDownSession()
-            guard (try? configureSession(device: device)) != nil else { return }
-            needsReconfiguration = false
-            captureDeviceID = device.uniqueID
-        }
-        guard let session, !session.isRunning else { return }
-
-        let began = ContinuousClock.now
-        DispatchQueue.global(qos: .utility).async { [weak self] in
-            session.startRunning()
-            Log.write("prewarm: startRunning \(Self.elapsedMs(since: began)) ms")
-            DispatchQueue.global(qos: .utility).asyncAfter(deadline: .now() + 0.5) {
-                guard let self else { return }
-                // Leave it running if a real dictation began meanwhile.
-                let capturing = self.captureQueue.sync { self.isCapturing }
-                if !capturing {
-                    self.suspendSession()
+        let token = CancellationToken()
+        return try await withTaskCancellationHandler {
+            try await withCheckedThrowingContinuation { continuation in
+                sessionQueue.async {
+                    do {
+                        try token.check()
+                        self.lifecycleGeneration += 1
+                        let began = ContinuousClock.now
+                        let device = Self.captureDevice(matching: preferred) ?? AVCaptureDevice.default(for: .audio)
+                        guard let device else { throw Self.error("No microphone input available") }
+                        if self.needsReconfiguration || self.session == nil || self.captureDeviceID != device.uniqueID {
+                            self.tearDownSession()
+                            try self.configureSession(device: device)
+                            self.needsReconfiguration = false
+                        }
+                        self.activeSessionID = id
+                        self.activeToken = token
+                        self.captureQueue.sync {
+                            self.samples.removeAll(keepingCapacity: false)
+                            self.samples.reserveCapacity(16_000 * 30)
+                            self.converter = nil
+                            self.captureToken = token
+                            self.limitReported = false
+                            self.isCapturing = true
+                            self.captureStartedAt = .now
+                        }
+                        guard let session = self.session else { throw Self.error("Microphone session is unavailable") }
+                        if !session.isRunning { session.startRunning() }
+                        try token.check()
+                        guard session.isRunning else { throw Self.error("Could not start the microphone") }
+                        let actual = AudioDevices.list().first { $0.uid == device.uniqueID || $0.name == device.localizedName }
+                        Log.write("capture ready: startup_ms=\(Self.elapsedMs(since: began))")
+                        continuation.resume(returning: actual)
+                    } catch {
+                        self.captureQueue.sync {
+                            self.isCapturing = false
+                            self.samples.removeAll(keepingCapacity: false)
+                        }
+                        self.activeToken = nil
+                        self.scheduleSuspend(after: 0)
+                        continuation.resume(throwing: error)
+                    }
                 }
+            }
+        } onCancel: { token.cancel() }
+    }
+
+    func stop(id: UUID) async -> [Float] {
+        await withCheckedContinuation { continuation in
+            sessionQueue.async {
+                guard self.activeSessionID == id else { continuation.resume(returning: []); return }
+                let result = self.captureQueue.sync {
+                    self.isCapturing = false
+                    let result = self.samples
+                    self.samples = []
+                    self.captureToken = nil
+                    return result
+                }
+                self.activeToken?.cancel()
+                self.activeToken = nil
+                self.activeSessionID = nil
+                let repeated = self.lastStop.map { Date().timeIntervalSince($0) < 60 } ?? false
+                self.lastStop = Date()
+                self.scheduleSuspend(after: repeated ? 30 : 8)
+                continuation.resume(returning: result)
             }
         }
     }
 
-    private static func elapsedMs(since start: ContinuousClock.Instant) -> Int64 {
-        let d = start.duration(to: .now)
-        return d.components.seconds * 1_000 + Int64(d.components.attoseconds / 1_000_000_000_000_000)
+    func cancel(id: UUID) {
+        sessionQueue.async {
+            guard self.activeSessionID == id else { return }
+            self.activeToken?.cancel()
+            self.activeToken = nil
+            self.activeSessionID = nil
+            self.captureQueue.sync {
+                self.isCapturing = false
+                self.samples = []
+                self.captureToken = nil
+            }
+            self.scheduleSuspend(after: 0)
+        }
+    }
+
+    func deviceSelectionDidChange() {
+        sessionQueue.async {
+            self.needsReconfiguration = true
+            if self.activeToken == nil { self.tearDownSession() }
+            Log.write("microphone changed: capture session invalidated")
+        }
+    }
+
+    private func scheduleSuspend(after seconds: Double) {
+        lifecycleGeneration += 1
+        let generation = lifecycleGeneration
+        sessionQueue.asyncAfter(deadline: .now() + seconds) {
+            guard self.lifecycleGeneration == generation, self.activeToken == nil else { return }
+            if self.session?.isRunning == true { self.session?.stopRunning() }
+            Log.write("capture suspended: cooldown_s=\(seconds)")
+        }
+    }
+
+    @MainActor func prewarm() {
+        let preferred = Self.preferredDevice()
+        sessionQueue.async {
+            guard self.activeToken == nil else { return }
+            guard let device = Self.captureDevice(matching: preferred) ?? AVCaptureDevice.default(for: .audio) else { return }
+            do {
+                if self.needsReconfiguration || self.session == nil || self.captureDeviceID != device.uniqueID {
+                    self.tearDownSession()
+                    try self.configureSession(device: device)
+                    self.needsReconfiguration = false
+                }
+                let began = ContinuousClock.now
+                if self.session?.isRunning == false { self.session?.startRunning() }
+                Log.write("prewarm: startup_ms=\(Self.elapsedMs(since: began))")
+                self.scheduleSuspend(after: 0.5)
+            } catch { Log.write("prewarm failed") }
+        }
     }
 
     func shutdown() {
-        warmShutdownTimer?.invalidate()
-        warmShutdownTimer = nil
-        captureQueue.sync {
-            isCapturing = false
-            samples.removeAll(keepingCapacity: false)
-            converter = nil
+        sessionQueue.async {
+            self.activeToken?.cancel()
+            self.activeToken = nil
+            self.activeSessionID = nil
+            self.captureQueue.sync { self.isCapturing = false; self.samples = []; self.converter = nil }
+            self.tearDownSession()
         }
-        tearDownSession()
     }
 
-    static func requestPermission() async -> Bool {
-        await AVCaptureDevice.requestAccess(for: .audio)
+    static func requestPermission() async -> Bool { await AVCaptureDevice.requestAccess(for: .audio) }
+    private static func elapsedMs(since start: ContinuousClock.Instant) -> Int64 {
+        let d = start.duration(to: .now)
+        return d.components.seconds * 1000 + Int64(d.components.attoseconds / 1_000_000_000_000_000)
     }
 
     private func configureSession(device: AVCaptureDevice) throws {
         let session = AVCaptureSession()
         session.beginConfiguration()
         defer { session.commitConfiguration() }
-
         let input = try AVCaptureDeviceInput(device: device)
-        guard session.canAddInput(input) else {
-            throw Self.error("Could not use the selected microphone")
-        }
+        guard session.canAddInput(input) else { throw Self.error("Could not use the selected microphone") }
         session.addInput(input)
-
         let output = AVCaptureAudioDataOutput()
         output.setSampleBufferDelegate(self, queue: captureQueue)
-        guard session.canAddOutput(output) else {
-            throw Self.error("Could not capture microphone audio")
-        }
+        guard session.canAddOutput(output) else { throw Self.error("Could not capture microphone audio") }
         session.addOutput(output)
         self.session = session
-        observeSession(session)
+        captureDeviceID = device.uniqueID
+        for name in [AVCaptureSession.runtimeErrorNotification, AVCaptureSession.wasInterruptedNotification] {
+            let observer = NotificationCenter.default.addObserver(forName: name, object: session, queue: nil) { [weak self] _ in
+                guard let self else { return }
+                self.sessionQueue.async {
+                    guard self.session === session else { return }
+                    self.needsReconfiguration = true; Log.write("capture session interrupted")
+                }
+            }
+            sessionObservers.append(observer)
+        }
     }
 
     private func tearDownSession() {
-        for observer in sessionObservers {
-            NotificationCenter.default.removeObserver(observer)
-        }
-        sessionObservers.removeAll()
-        if session?.isRunning == true {
-            session?.stopRunning()
-        }
+        lifecycleGeneration += 1
+        sessionObservers.forEach { NotificationCenter.default.removeObserver($0) }
+        sessionObservers = []
+        if session?.isRunning == true { session?.stopRunning() }
         session = nil
         captureDeviceID = nil
         captureQueue.sync { converter = nil }
     }
 
-    private func observeSession(_ session: AVCaptureSession) {
-        let center = NotificationCenter.default
-        let runtime = center.addObserver(
-            forName: AVCaptureSession.runtimeErrorNotification,
-            object: session,
-            queue: .main
-        ) { [weak self] notification in
-            let message = (notification.userInfo?[AVCaptureSessionErrorKey] as? Error)?.localizedDescription
-                ?? "unknown error"
-            Log.write("capture session error: \(message)")
-            self?.needsReconfiguration = true
-        }
-        let interrupted = center.addObserver(
-            forName: AVCaptureSession.wasInterruptedNotification,
-            object: session,
-            queue: .main
-        ) { [weak self] _ in
-            Log.write("capture session interrupted")
-            self?.needsReconfiguration = true
-        }
-        sessionObservers = [runtime, interrupted]
-    }
-
     private static func captureDevice(matching preferred: AudioInputDevice?) -> AVCaptureDevice? {
         guard let preferred else { return nil }
-        let devices = AVCaptureDevice.DiscoverySession(
-            deviceTypes: [.microphone], mediaType: .audio, position: .unspecified
-        ).devices
-        return devices.first {
-            $0.uniqueID == preferred.uid || $0.localizedName == preferred.name
-        }
+        return AVCaptureDevice.DiscoverySession(deviceTypes: [.microphone], mediaType: .audio, position: .unspecified)
+            .devices.first { $0.uniqueID == preferred.uid }
+    }
+    private static func error(_ message: String) -> NSError {
+        NSError(domain: "Hlas", code: 1, userInfo: [NSLocalizedDescriptionKey: message])
     }
 
-    private static func error(_ description: String) -> NSError {
-        NSError(domain: "Hlas", code: 1, userInfo: [NSLocalizedDescriptionKey: description])
-    }
-
-    func captureOutput(
-        _ output: AVCaptureOutput,
-        didOutput sampleBuffer: CMSampleBuffer,
-        from connection: AVCaptureConnection
-    ) {
-        guard isCapturing,
-              let inputBuffer = sampleBuffer.audioPCMBuffer else { return }
-
-        if converter == nil {
-            converter = AVAudioConverter(from: inputBuffer.format, to: Self.targetFormat)
-        }
-        guard let converter,
-              let outputBuffer = Self.convert(inputBuffer, using: converter),
-              outputBuffer.frameLength > 0,
-              let channel = outputBuffer.floatChannelData?[0] else { return }
-
-        let chunk = Array(UnsafeBufferPointer(start: channel, count: Int(outputBuffer.frameLength)))
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer,
+                       from connection: AVCaptureConnection) {
+        guard isCapturing, captureToken?.isCancelled == false, let input = sampleBuffer.audioPCMBuffer else { return }
+        if converter == nil { converter = AVAudioConverter(from: input.format, to: Self.targetFormat) }
+        guard let converter, let buffer = Self.convert(input, using: converter),
+              let channel = buffer.floatChannelData?[0] else { return }
+        let remaining = max(0, AudioPreparation.maxSamples - samples.count)
+        let count = min(Int(buffer.frameLength), remaining)
+        if samples.isEmpty, count > 0 { Log.write("capture first_buffer_ms=\(Self.elapsedMs(since: captureStartedAt))") }
+        let chunk = UnsafeBufferPointer(start: channel, count: count)
         samples.append(contentsOf: chunk)
-
-        var peak: Float = 0
-        for sample in chunk { peak = max(peak, abs(sample)) }
-        let level = min(1, peak * 3)
-        DispatchQueue.main.async { [weak self] in self?.onLevel?(level) }
+        if Self.elapsedMs(since: meteredAt) >= 50 {
+            meteredAt = .now
+            let peak = chunk.reduce(Float(0)) { max($0, abs($1)) }
+            let seconds = Double(samples.count) / 16_000
+            let token = captureToken
+            DispatchQueue.main.async { [weak self] in
+                guard token?.isCancelled == false else { return }
+                self?.onLevel?(min(1, peak * 3), seconds)
+            }
+        }
+        if samples.count >= AudioPreparation.maxSamples, !limitReported {
+            limitReported = true
+            let token = captureToken
+            DispatchQueue.main.async { [weak self] in
+                guard token?.isCancelled == false else { return }
+                self?.onLimit?()
+            }
+        }
     }
 
     private static func convert(

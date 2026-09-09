@@ -1,5 +1,6 @@
 import AppKit
 import SwiftUI
+import HlasCore
 
 @MainActor
 final class HistoryWindow {
@@ -32,6 +33,9 @@ private struct HistoryView: View {
     @ObservedObject private var history = History.shared
     @State private var search = ""
     @State private var confirmClear = false
+    @State private var processingID: UUID?
+    @State private var processingTask: Task<Void, Never>?
+
 
     private var entries: [History.Entry] {
         let query = search.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -99,11 +103,32 @@ private struct HistoryView: View {
             .ignoresSafeArea()
         )
         .preferredColorScheme(.dark)
+        .onDisappear { processingTask?.cancel() }
         .alert("Clear history?", isPresented: $confirmClear) {
             Button("Cancel", role: .cancel) {}
             Button("Clear", role: .destructive) { history.clear() }
         } message: {
             Text("This removes all locally stored transcripts.")
+        }
+    }
+
+    private func makeSmart(_ entry: History.Entry) {
+        guard let processor = SmartTextProcessor.configured() else {
+            ResultWindow.shared.show(text: entry.original, original: entry.original, message: SmartTextError.missingKey.localizedDescription)
+            return
+        }
+        processingID = entry.id
+        processingTask = Task { @MainActor in
+            defer { if processingID == entry.id { processingID = nil } }
+            do {
+                let text = try await processor.process(entry.original)
+                try Task.checkCancellation()
+                history.update(entry.id, text: text)
+                ResultWindow.shared.show(text: text, original: entry.original, message: "Smart text is ready")
+            } catch {
+                guard !Task.isCancelled else { return }
+                ResultWindow.shared.show(text: entry.original, original: entry.original, message: error.localizedDescription)
+            }
         }
     }
 
@@ -119,6 +144,12 @@ private struct HistoryView: View {
                     .font(DS.text(10))
                     .foregroundStyle(DS.fg3)
             }
+            Menu {
+                Button("View original") { ResultWindow.shared.show(text: entry.original, original: entry.original, message: "Original transcript") }
+                Button("Make smart text") { makeSmart(entry) }.disabled(processingID != nil)
+                if processingID == entry.id { Button("Cancel") { processingTask?.cancel(); processingID = nil } }
+            } label: { Image(systemName: processingID == entry.id ? "hourglass" : "ellipsis.circle") }
+                .menuStyle(.borderlessButton).frame(width: 24).accessibilityLabel("Transcript actions")
             Button {
                 NSPasteboard.general.clearContents()
                 NSPasteboard.general.setString(entry.text, forType: .string)

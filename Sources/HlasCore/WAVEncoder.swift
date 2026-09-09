@@ -2,7 +2,7 @@ import Foundation
 
 public enum WAVEncoder {
     public static func encode(samples: [Float], sampleRate: Int = 16_000) -> Data {
-        var data = Data()
+        var data = Data(capacity: 44 + samples.count * 2)
         let byteRate = sampleRate * 2
         let dataSize = samples.count * 2
 
@@ -27,11 +27,14 @@ public enum WAVEncoder {
         data.append(contentsOf: Array("data".utf8))
         append(UInt32(dataSize))
 
-        var pcm = [Int16](repeating: 0, count: samples.count)
-        for (index, sample) in samples.enumerated() {
-            pcm[index] = Int16(max(-1, min(1, sample)) * 32767)
+        data.count = 44 + dataSize
+        data.withUnsafeMutableBytes { (bytes: UnsafeMutableRawBufferPointer) in
+            let pcm = bytes.baseAddress!.advanced(by: 44).assumingMemoryBound(to: Int16.self)
+            for (index, sample) in samples.enumerated() {
+                let finite = sample.isFinite ? sample : 0
+                pcm[index] = Int16(max(-1, min(1, finite)) * 32767).littleEndian
+            }
         }
-        pcm.withUnsafeBytes { data.append(contentsOf: $0) }
         return data
     }
 }

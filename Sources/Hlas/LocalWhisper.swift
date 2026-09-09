@@ -6,7 +6,8 @@ import HlasCore
 /// `modelKeepAliveSeconds` of inactivity, so idle RAM stays near zero.
 final class LocalWhisper: Transcriber, @unchecked Sendable {
     private var ctx: OpaquePointer?
-    private var unloadTimer: Timer?
+    private var unloadGeneration = 0
+    private var memoryPressure: DispatchSourceMemoryPressure?
     private let queue = DispatchQueue(label: "hlas.whisper", qos: .userInitiated)
 
     static let modelDir: URL = {
@@ -23,29 +24,53 @@ final class LocalWhisper: Transcriber, @unchecked Sendable {
         Int64((try? modelURL.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0) == modelByteCount
     }
 
-    func transcribe(samples: [Float], language: String?) async throws -> String {
+    func prepare(keepAlive: Double) {
+        guard Self.modelExists else { return }
+        queue.async { [self] in
+            unloadGeneration += 1
+            monitorMemoryPressure()
+            let began = ContinuousClock.now
+            if ctx == nil {
+                var params = whisper_context_default_params()
+                params.use_gpu = true; params.flash_attn = true
+                ctx = whisper_init_from_file_with_params(Self.modelURL.path, params)
+                Log.write("local prefetch: elapsed=\(began.duration(to: .now))")
+            }
+            scheduleUnload(after: keepAlive)
+        }
+    }
+
+    func transcribe(samples: [Float], language: String?, prompt: String?, keepAlive: Double) async throws -> String {
         guard Self.modelExists else {
             throw NSError(domain: "Hlas", code: 404, userInfo: [
                 NSLocalizedDescriptionKey: "Model not downloaded - open Settings"
             ])
         }
-        let vocabPrompt = await Settings.shared.vocabularyPrompt
-        let keepAlive = await Settings.shared.modelKeepAliveSeconds
-
-        return try await withCheckedThrowingContinuation { cont in
-            queue.async { [self] in
-                do {
-                    let text = try run(samples: samples, language: language, prompt: vocabPrompt)
-                    scheduleUnload(after: keepAlive)
-                    cont.resume(returning: text)
-                } catch {
-                    cont.resume(throwing: error)
+        let token = CancellationToken()
+        return try await withTaskCancellationHandler {
+            try await withCheckedThrowingContinuation { continuation in
+                queue.async { [self] in
+                    unloadGeneration += 1
+                    do {
+                        try token.check()
+                        monitorMemoryPressure()
+                        let began = ContinuousClock.now
+                        let cold = ctx == nil
+                        let text = try run(samples: samples, language: language, prompt: prompt, token: token)
+                        try token.check()
+                        Log.write("local inference: cold=\(cold) elapsed=\(began.duration(to: .now))")
+                        scheduleUnload(after: keepAlive)
+                        continuation.resume(returning: text)
+                    } catch {
+                        scheduleUnload(after: keepAlive)
+                        continuation.resume(throwing: error)
+                    }
                 }
             }
-        }
+        } onCancel: { token.cancel() }
     }
 
-    private func run(samples: [Float], language: String?, prompt: String?) throws -> String {
+    private func run(samples: [Float], language: String?, prompt: String?, token: CancellationToken) throws -> String {
         if ctx == nil {
             var cparams = whisper_context_default_params()
             cparams.use_gpu = true
@@ -90,9 +115,16 @@ final class LocalWhisper: Transcriber, @unchecked Sendable {
         defer { promptHolder.map { free($0) } }
         if let promptHolder { params.initial_prompt = UnsafePointer(promptHolder) }
 
+        try token.check()
+        params.abort_callback = { context in
+            guard let context else { return false }
+            return Unmanaged<CancellationToken>.fromOpaque(context).takeUnretainedValue().isCancelled
+        }
+        params.abort_callback_user_data = Unmanaged.passUnretained(token).toOpaque()
         let status = samples.withUnsafeBufferPointer { buf in
             whisper_full(ctx, params, buf.baseAddress, Int32(buf.count))
         }
+        try token.check()
         guard status == 0 else {
             throw NSError(domain: "Hlas", code: Int(status), userInfo: [
                 NSLocalizedDescriptionKey: "Transcription failed (\(status))"
@@ -108,25 +140,37 @@ final class LocalWhisper: Transcriber, @unchecked Sendable {
         return text
     }
 
+    func releaseAfter(_ seconds: Double) { queue.async { [self] in scheduleUnload(after: seconds) } }
+
+    private func monitorMemoryPressure() {
+        guard memoryPressure == nil else { return }
+        let source = DispatchSource.makeMemoryPressureSource(eventMask: [.warning, .critical], queue: queue)
+        source.setEventHandler { [weak self] in self?.freeModel() }
+        source.resume()
+        memoryPressure = source
+    }
+
+    deinit {
+        memoryPressure?.cancel()
+        if let ctx { whisper_free(ctx) }
+    }
+
     private func scheduleUnload(after seconds: Double) {
-        DispatchQueue.main.async { [weak self] in
-            self?.unloadTimer?.invalidate()
-            guard seconds >= 0 else { return } // negative = keep forever
-            self?.unloadTimer = Timer.scheduledTimer(withTimeInterval: max(1, seconds), repeats: false) { _ in
-                self?.unload()
-            }
+        unloadGeneration += 1
+        let generation = unloadGeneration
+        guard seconds >= 0 else { return }
+        queue.asyncAfter(deadline: .now() + seconds) { [weak self] in
+            guard let self, self.unloadGeneration == generation else { return }
+            self.freeModel()
         }
     }
 
-    func unload() {
-        queue.async { [self] in
-            if let c = ctx {
-                whisper_free(c)
-                ctx = nil
-                NSLog("Hlas: model unloaded")
-            }
-        }
+    private func freeModel() {
+        unloadGeneration += 1
+        if let ctx { whisper_free(ctx); self.ctx = nil; Log.write("local model unloaded") }
     }
+
+    func unload() { queue.async { [self] in freeModel() } }
 }
 
 /// Single shared instance so repeated dictations reuse the loaded model.

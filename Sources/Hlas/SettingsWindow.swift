@@ -1,6 +1,7 @@
 import AppKit
 import ServiceManagement
 import SwiftUI
+import HlasCore
 
 @MainActor
 final class SettingsWindow {
@@ -38,6 +39,8 @@ struct SettingsView: View {
     @ObservedObject var history = History.shared
     @StateObject private var downloader = ModelDownloader()
     @State private var newWord = ""
+    @State private var replaceFrom = ""
+    @State private var replaceTo = ""
     @State private var launchAtLogin = false
     @State private var launchAtLoginError: String?
     var onEngineChange: () -> Void
@@ -46,6 +49,26 @@ struct SettingsView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
                 header
+
+                section("OUTPUT") {
+                    Picker("Output", selection: $settings.outputMode) {
+                        ForEach(OutputMode.allCases, id: \.self) { Text($0.title).tag($0) }
+                    }.pickerStyle(.segmented).labelsHidden()
+                    Text(settings.outputMode == .smart
+                        ? "Automatically cleans up your words and chooses paragraphs or lists. Keeps your language and meaning."
+                        : "Your words, without an AI editing pass.")
+                        .font(DS.text(11)).foregroundStyle(DS.fg2)
+                    if settings.outputMode == .smart {
+                        Text(SmartTextProcessor.configured().map { "Text is sent to \($0.provider) for editing, including with Local transcription." }
+                             ?? "Add an OpenAI or Groq key below to use Smart text.")
+                            .font(DS.text(11)).foregroundStyle(DS.fg3)
+                        if settings.engine == .local {
+                            apiKeyField("OpenAI API key", text: $settings.openaiAPIKey, hint: "Used only for Smart text. Local audio stays on this Mac.")
+                        }
+                    }
+                    Text("Hold Option when pressing Fn to use Transcript once.")
+                        .font(DS.text(10)).foregroundStyle(DS.fg3)
+                }
 
                 section("ENGINE") {
                     Picker("", selection: $settings.engine) {
@@ -57,8 +80,8 @@ struct SettingsView: View {
 
                     switch settings.engine {
                     case .local: localEngineControls
-                    case .groq: apiKeyField("Groq API key", text: $settings.groqAPIKey, hint: "console.groq.com - ~$0.04/hr of audio")
-                    case .openai: apiKeyField("OpenAI API key", text: $settings.openaiAPIKey, hint: "gpt-transcribe - ~$0.27/hr, best accuracy + vocabulary support")
+                    case .groq: apiKeyField("Groq API key", text: $settings.groqAPIKey, hint: "Your Groq key is stored in macOS Keychain.")
+                    case .openai: apiKeyField("OpenAI API key", text: $settings.openaiAPIKey, hint: "Your OpenAI key is stored in macOS Keychain.")
                     }
                 }
 
@@ -123,7 +146,38 @@ struct SettingsView: View {
                     }
                 }
 
+                section("TEXT REPLACEMENTS") {
+                    Text("Apply your exact spellings in either output mode.").font(DS.text(11)).foregroundStyle(DS.fg3)
+                    HStack {
+                        TextField("Heard as", text: $replaceFrom)
+                        Image(systemName: "arrow.right").foregroundStyle(DS.fg3)
+                        TextField("Replace with", text: $replaceTo)
+                        Button("Add") {
+                            settings.replacements.append(TextReplacement(from: replaceFrom.trimmingCharacters(in: .whitespaces), to: replaceTo))
+                            replaceFrom = ""; replaceTo = ""
+                        }.disabled(replaceFrom.trimmingCharacters(in: .whitespaces).isEmpty)
+                    }
+                    ForEach(settings.replacements) { rule in
+                        HStack {
+                            Text("\(rule.from) → \(rule.to)").font(DS.text(11))
+                            Spacer()
+                            Button { settings.replacements.removeAll { $0.id == rule.id } } label: { Image(systemName: "xmark") }
+                                .buttonStyle(.borderless).accessibilityLabel("Remove replacement")
+                        }
+                    }
+                }
+
                 section("HISTORY") {
+                    Toggle("Save dictation history", isOn: $settings.historyEnabled).toggleStyle(.switch).tint(DS.brand)
+                    Text("When off, new dictations are not saved. The last result remains available until Hlas quits.")
+                        .font(DS.text(10)).foregroundStyle(DS.fg3)
+                    Picker("Keep history", selection: $settings.historyRetentionDays) {
+                        Text("1 day").tag(1)
+                        Text("7 days").tag(7)
+                        Text("30 days").tag(30)
+                        Text("Until cleared").tag(0)
+                    }
+
                     HStack {
                         if history.entries.isEmpty {
                             Text("Nothing yet - hold Fn and speak.")
@@ -188,6 +242,12 @@ struct SettingsView: View {
 
     @ViewBuilder
     private var localEngineControls: some View {
+        Picker("Model memory", selection: $settings.modelKeepAliveSeconds) {
+            Text("Save memory").tag(0.0)
+            Text("Balanced · 3 min").tag(180.0)
+            Text("Fast start · 10 min").tag(600.0)
+        }
+
         if LocalWhisper.modelExists {
             HStack(spacing: 6) {
                 Circle().fill(DS.brand).frame(width: 6, height: 6)
@@ -224,7 +284,7 @@ struct SettingsView: View {
                 .padding(8)
                 .background(RoundedRectangle(cornerRadius: DS.radiusSm).fill(DS.surfaceHover))
             Text(hint).font(.system(size: 10)).foregroundStyle(DS.fg3)
-            Text("Audio is sent directly to \(label.hasPrefix("Groq") ? "Groq" : "OpenAI") for transcription. Your key stays in your macOS Keychain.")
+            Text("Selected cloud transcription sends audio directly to \(label.hasPrefix("Groq") ? "Groq" : "OpenAI") for transcription. Your key stays in your macOS Keychain.")
                 .font(.system(size: 10)).foregroundStyle(DS.fg3)
         }
     }

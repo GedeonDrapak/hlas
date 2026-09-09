@@ -3,6 +3,7 @@ import AVFoundation
 import Combine
 import HlasCore
 import SwiftUI
+import UniformTypeIdentifiers
 
 @main
 enum Main {
@@ -21,10 +22,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private let hotkey = Hotkey()
     private let recorder = AudioRecorder()
     private let overlay = OverlayPanel()
-    private var isRecording = false
-    private var transcriber: Transcriber = EchoTranscriber()
-    private var activeSessionID = UUID()
-    private var transcriptionTask: Task<Void, Never>?
+    private lazy var coordinator = DictationCoordinator(recorder: recorder, overlay: overlay) { [weak self] recording in
+        self?.setIcon(recording: recording)
+    }
     private weak var statusSummaryItem: NSMenuItem?
     private var inputDeviceCancellable: AnyCancellable?
     private var audioEnvironmentCancellable: AnyCancellable?
@@ -40,12 +40,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             Task { await requestPermissions() }
         }
 
-        recorder.onLevel = { [weak self] level in
-            Task { @MainActor in self?.overlay.model.push(level: level) }
-        }
-        hotkey.onPress = { [weak self] in self?.hotkeyPressed() }
-        hotkey.onRelease = { [weak self] in self?.hotkeyReleased() }
-        hotkey.onEscape = { [weak self] in self?.cancelDictation() }
+        _ = coordinator
+        hotkey.onPress = { [weak self] in self?.coordinator.press() }
+        hotkey.onRelease = { [weak self] in self?.coordinator.release() }
+        hotkey.onEscape = { [weak self] in self?.coordinator.cancel() }
 
         inputDeviceCancellable = Settings.shared.$inputDeviceUID
             .dropFirst()
@@ -91,134 +89,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func rebuildTranscriber() {
-        transcriber.unload()
-        transcriber = TranscriberFactory.make()
-    }
-
-    // MARK: dictation loop
-    // Hybrid mode (VoiceInk-style): hold = push-to-talk, quick tap = latch
-    // hands-free until the next tap.
-
-    private var pressStartedAt: Date?
-
-    private func hotkeyPressed() {
-        Log.write("fn PRESS (recording=\(isRecording))")
-        if isRecording {
-            stopDictation() // latched session - this tap ends it
-        } else {
-            pressStartedAt = Date()
-            startDictation()
-        }
-    }
-
-    private func hotkeyReleased() {
-        guard isRecording, let start = pressStartedAt else { return }
-        if Date().timeIntervalSince(start) >= 0.35 {
-            stopDictation()
-        }
-        // else: quick tap → stay latched, keep recording
-    }
-
-    private func startDictation() {
-        guard !isRecording else { return }
-        activeSessionID = UUID()
-        transcriptionTask?.cancel()
-        transcriptionTask = nil
-        do {
-            try recorder.start()
-            isRecording = true
-            // Source badge in the pill when not the built-in mic
-            if let device = recorder.activeDevice, !device.isBuiltIn {
-                overlay.model.sourceIcon = device.icon
-                overlay.model.sourceName = device.name
-            } else {
-                overlay.model.sourceIcon = nil
-                overlay.model.sourceName = nil
-            }
-            overlay.show(.recording)
-            setIcon(recording: true)
-        } catch {
-            Log.write("recording failed: \(error.localizedDescription)")
-            overlay.show(.error(error.localizedDescription))
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { self.overlay.hide() }
-        }
-    }
-
-    private func stopDictation() {
-        guard isRecording else { return }
-        let sessionID = activeSessionID
-        isRecording = false
-        let samples = recorder.stop()
-        setIcon(recording: false)
-        Log.write("recording stopped: \(samples.count) samples (\(String(format: "%.1f", Double(samples.count) / 16000))s)")
-
-        // Ignore accidental taps shorter than 0.3 s.
-        guard samples.count > 4800 else {
-            overlay.hide()
-            return
-        }
-        // Silence guard: whisper hallucinates on silence ("Konec.", "Titulky…").
-        var peak: Float = 0
-        for s in samples { peak = max(peak, abs(s)) }
-        guard peak > 0.01 else {
-            Log.write("dropped: silence (peak \(peak))")
-            overlay.hide()
-            return
-        }
-        // Leading pad: whisper drops the first word when speech starts at t=0
-        // (the "Ahoj"→"Hoj" bug). Trailing pad: sub-second input misbehaves.
-        var padded = [Float](repeating: 0, count: 4_000) // 0.25 s lead-in
-        padded.append(contentsOf: samples)
-        if padded.count < 19_200 {
-            padded.append(contentsOf: [Float](repeating: 0, count: 19_200 - padded.count))
-        }
-        overlay.show(.transcribing)
-
-        let engine = TranscriberFactory.make()
-        let language = Settings.shared.language == "auto" ? nil : Settings.shared.language
-        transcriptionTask = Task { [weak self] in
-            guard let self else { return }
-            do {
-                let text = try await engine.transcribe(samples: padded, language: language)
-                guard !Task.isCancelled else { return }
-                Log.write("transcription completed: \(text.count) characters")
-                await MainActor.run {
-                    guard self.activeSessionID == sessionID else { return }
-                    self.overlay.hide()
-                    let raw = text.trimmingCharacters(in: .whitespacesAndNewlines)
-                    let trimmed = Hallucinations.filter(raw)
-                    if !trimmed.isEmpty {
-                        TextInjector.insert(trimmed)
-                        History.shared.add(trimmed)
-                        Log.write("text injection posted")
-                    } else if !raw.isEmpty {
-                        Log.write("dropped hallucination output")
-                    }
-                }
-            } catch {
-                guard !Task.isCancelled else { return }
-                await MainActor.run {
-                    guard self.activeSessionID == sessionID else { return }
-                    self.overlay.show(.error(error.localizedDescription))
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) { self.overlay.hide() }
-                }
-            }
-        }
-    }
-
-    private func cancelDictation() {
-        guard isRecording else { return }
-        isRecording = false
-        pressStartedAt = nil
-        activeSessionID = UUID()
-        _ = recorder.stop()
-        setIcon(recording: false)
-        Log.write("recording cancelled")
-        overlay.show(.cancelled)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self] in
-            guard self?.isRecording == false else { return }
-            self?.overlay.hide()
-        }
+        if Settings.shared.engine != .local { LocalTranscriberHolder.shared.unload() }
     }
 
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
@@ -226,12 +97,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         return true
     }
 
-    func applicationWillTerminate(_ notification: Notification) {
-        transcriptionTask?.cancel()
-        if isRecording { _ = recorder.stop() }
-        recorder.shutdown()
-        transcriber.unload()
-    }
+    func applicationWillTerminate(_ notification: Notification) { coordinator.shutdown() }
 
     /// LSUIElement apps have no menu bar, but Cmd-C/V/X/A key equivalents
     /// route through the main menu - without one, paste doesn't work in our
@@ -243,10 +109,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         mainMenu.addItem(appItem)
         let appMenu = NSMenu()
         appMenu.addItem(withTitle: "About Hlas", action: #selector(showAbout), keyEquivalent: "")
+        let cancelItem = appMenu.addItem(withTitle: "Cancel dictation", action: #selector(cancelActiveDictation), keyEquivalent: "\u{1b}")
+        cancelItem.keyEquivalentModifierMask = []
         appMenu.addItem(.separator())
         appMenu.addItem(withTitle: "Quit Hlas", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         appMenu.items.forEach { $0.target = self }
+        appMenu.items.last?.target = NSApp
         appItem.submenu = appMenu
+
+        let fileItem = NSMenuItem()
+        mainMenu.addItem(fileItem)
+        let file = NSMenu(title: "File")
+        let openAudio = file.addItem(withTitle: "Transcribe audio file…", action: #selector(importAudio), keyEquivalent: "o")
+        openAudio.target = self
+        fileItem.submenu = file
 
         let editItem = NSMenuItem()
         mainMenu.addItem(editItem)
@@ -278,6 +154,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let summary = menu.addItem(withTitle: "Hlas", action: nil, keyEquivalent: "")
         statusSummaryItem = summary
         menu.addItem(.separator())
+        for mode in OutputMode.allCases {
+            let item = menu.addItem(withTitle: mode.title, action: #selector(selectOutputMode(_:)), keyEquivalent: "")
+            item.representedObject = mode.rawValue
+        }
+        menu.addItem(withTitle: "Transcribe audio file…", action: #selector(importAudio), keyEquivalent: "")
+        menu.addItem(withTitle: "Show last text…", action: #selector(showLastText), keyEquivalent: "")
+        menu.addItem(withTitle: "Make last text smart…", action: #selector(makeLastSmart), keyEquivalent: "")
+        menu.addItem(.separator())
         menu.addItem(withTitle: "Settings…", action: #selector(openSettings), keyEquivalent: ",")
         menu.addItem(withTitle: "History…", action: #selector(openHistory), keyEquivalent: "")
         menu.addItem(withTitle: "Welcome Tour…", action: #selector(openOnboarding), keyEquivalent: "")
@@ -303,6 +187,24 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem.button?.setAccessibilityLabel("Hlas")
         statusItem.button?.setAccessibilityValue(recording ? "Recording" : "Ready")
     }
+
+    @objc private func selectOutputMode(_ sender: NSMenuItem) {
+        if let raw = sender.representedObject as? String, let mode = OutputMode(rawValue: raw) { Settings.shared.outputMode = mode }
+    }
+    @objc private func importAudio() {
+        guard coordinator.state == .idle else { return }
+        let panel = NSOpenPanel()
+        panel.allowedContentTypes = [.audio]
+        panel.allowsMultipleSelection = false
+        panel.message = "Transcribe up to 10 minutes of audio using your current engine and output mode."
+        panel.begin { [weak self] response in
+            guard response == .OK, let url = panel.url else { return }
+            self?.coordinator.importAudio(url)
+        }
+    }
+    @objc private func cancelActiveDictation() { coordinator.cancel() }
+    @objc private func showLastText() { coordinator.showLast() }
+    @objc private func makeLastSmart() { coordinator.makeLastSmart() }
 
     @objc private func openSettings() {
         SettingsWindow.shared.show(appDelegate: self)
@@ -341,6 +243,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
 extension AppDelegate: NSMenuDelegate {
     func menuWillOpen(_ menu: NSMenu) {
+        for item in menu.items {
+            if let mode = item.representedObject as? String {
+                item.state = mode == Settings.shared.outputMode.rawValue ? .on : .off
+            }
+        }
         let mic = AVCaptureDevice.authorizationStatus(for: .audio) == .authorized
         let accessibility = Hotkey.hasAccessibilityPermission(prompt: false)
         if !mic || !accessibility {
@@ -350,5 +257,16 @@ extension AppDelegate: NSMenuDelegate {
         let engine = Settings.shared.engine.displayName
         let language = Languages.name(for: Settings.shared.language)
         statusSummaryItem?.title = "Hlas · \(engine) · \(language)"
+    }
+}
+
+
+extension AppDelegate: NSMenuItemValidation {
+    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+        if menuItem.action == #selector(cancelActiveDictation) { return coordinator.state != .idle }
+        if menuItem.action == #selector(showLastText) { return coordinator.lastResult != nil }
+        if menuItem.action == #selector(makeLastSmart) { return coordinator.lastResult != nil && coordinator.state == .idle }
+        if menuItem.action == #selector(importAudio) { return coordinator.state == .idle }
+        return true
     }
 }

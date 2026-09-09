@@ -1,5 +1,5 @@
 Hlas Privacy
-Effective date: 6 August 2026
+Effective date: 9 September 2026
 
 Hlas is a menu-bar dictation app. It has no account system, advertising, analytics, or Hlas-operated cloud service.
 
@@ -8,11 +8,14 @@ When Local is selected, speech audio is processed on your Mac by the downloaded 
 
 When Groq or OpenAI is selected, Hlas sends the recording directly to the provider you selected so it can be transcribed. The provider's terms and privacy policy apply to that processing. Hlas does not relay the recording through its own server.
 
+Smart text
+Transcript mode does not run an AI editing pass. Smart text sends the transcript directly to OpenAI or Groq for automatic editing. Hlas uses the selected cloud engine's key, or an available OpenAI key followed by Groq when Local is selected. The provider is shown in Settings. Local speech recognition with Smart text still sends text to this editing provider. No screenshots or surrounding application text are collected.
+
 Stored on your Mac
-API keys are stored in your macOS Keychain. Dictation history is stored locally in Application Support/Hlas and can be cleared in Settings. Diagnostic logs exclude transcript contents.
+API keys are stored in your macOS Keychain. When history is enabled, original and edited transcripts are stored locally in Application Support/Hlas. You can disable new history, clear existing entries or choose an expiration period in Settings. History is limited to 50 entries. The last result remains in memory until Hlas quits. Audio recordings are held in memory, limited to 10 minutes, and are not saved by Hlas. Diagnostic logs exclude transcript contents.
 
 Permissions
-Microphone permission is used only to record speech while dictating. Accessibility permission is used for the Fn shortcut and to paste the resulting text into the focused application.
+Microphone permission is used for dictation and brief microphone warm-up. The configured session may remain running for 8 seconds after an isolated dictation or 30 seconds during a series; audio is not accumulated outside dictation. Accessibility permission is used for the Fn shortcut and to paste the resulting text into the focused application.
 
 Contact
 Questions about privacy: drapakg05@gmail.com

@@ -22,6 +22,15 @@ HLAS - FIRST RUN
 
 5. Hold Fn, say something, release. The text lands at your cursor.
 
+6. In Settings, choose Transcript or Smart text. Smart text automatically
+   cleans up your words and chooses the appropriate structure. It sends the
+   transcript to OpenAI or Groq using your own API key, including when audio
+   transcription is Local. No extra style selection is needed.
+
+UPDATING FROM AN OLDER VERSION
+Quit Hlas first, then replace Hlas.app in Applications with this version.
+Your settings, API keys and existing history are retained.
+
 Hlas lives in the menu bar, not the Dock. Click the waveform icon for
 Settings, History, and the onboarding tour.
 

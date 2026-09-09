@@ -26,7 +26,7 @@ enum Log {
     private static let queue = DispatchQueue(label: "hlas.log")
     private static let formatter: DateFormatter = {
         let f = DateFormatter()
-        f.dateFormat = "HH:mm:ss.SSS"
+        f.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
         return f
     }()
 

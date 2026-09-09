@@ -51,6 +51,8 @@ enum DiagnosticsExporter {
         macOS: \(ProcessInfo.processInfo.operatingSystemVersionString)
         Architecture: \(architecture)
         Engine: \(settings.engine.displayName)
+        Output: \(settings.outputMode.title)
+        History enabled: \(settings.historyEnabled)
         Language: \(Languages.name(for: settings.language))
         Microphone preference: \(microphone)
         Microphone permission: \(microphonePermission ? "granted" : "missing")

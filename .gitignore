@@ -6,3 +6,7 @@ Hlas.xcodeproj/
 .xcbuild/
 dist/
 .release/
+
+# Local analysis, generated graphs and QA evidence
+graphify-out/
+docs/analysis/

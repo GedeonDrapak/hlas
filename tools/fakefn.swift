@@ -5,7 +5,8 @@ let down = CGEvent(keyboardEventSource: src, virtualKey: 63, keyDown: true)!
 down.type = .flagsChanged
 down.flags = .maskSecondaryFn
 down.post(tap: .cghidEventTap)
-Thread.sleep(forTimeInterval: 1.5)
+let holdSeconds = min(30, max(0.1, Double(CommandLine.arguments.dropFirst().first ?? "1.5") ?? 1.5))
+Thread.sleep(forTimeInterval: holdSeconds)
 let up = CGEvent(keyboardEventSource: src, virtualKey: 63, keyDown: false)!
 up.type = .flagsChanged
 up.flags = []

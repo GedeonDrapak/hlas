@@ -3,6 +3,8 @@ import SwiftUI
 
 enum OverlayState: Equatable {
     case hidden
+    case starting
+    case formatting
     case recording
     case transcribing
     case cancelled
@@ -14,6 +16,8 @@ final class OverlayModel: ObservableObject {
     @Published var state: OverlayState = .hidden
     @Published var levels: [Float] = Array(repeating: 0, count: 24)
     /// Set when recording from anything other than the built-in mic.
+    @Published var elapsed: Double = 0
+    @Published var mode = "Transcript"
     @Published var sourceIcon: String?
     @Published var sourceName: String?
 
@@ -67,7 +71,7 @@ final class OverlayPanel {
     enum Metrics {
         static let pillHeight: CGFloat = 40
         static let shadowPad: CGFloat = 32
-        static let width: CGFloat = 320
+        static let width: CGFloat = 420
         static let height: CGFloat = pillHeight + shadowPad * 2
         /// Gap between the screen's visible bottom edge and the capsule.
         static let bottomGap: CGFloat = 24
@@ -109,6 +113,8 @@ final class OverlayPanel {
     private func announce(_ state: OverlayState) {
         let message: String
         switch state {
+        case .starting: message = "Starting microphone"
+        case .formatting: message = "Making smart text"
         case .recording: message = "Recording started"
         case .transcribing: message = "Transcribing"
         case .cancelled: message = "Dictation cancelled"
@@ -166,9 +172,19 @@ struct OverlayView: View {
     var body: some View {
         HStack(spacing: 10) {
             switch model.state {
+            case .starting:
+                ProgressView().controlSize(.small)
+                Text("Starting microphone…").font(DS.text(12)).foregroundStyle(DS.fg2)
+            case .formatting:
+                ProgressView().controlSize(.small)
+                Text("Smart text…").font(DS.text(12)).foregroundStyle(DS.fg2)
+                Text("Esc to cancel").font(DS.text(10)).foregroundStyle(DS.fg3)
             case .recording:
                 Circle().fill(DS.brand).frame(width: 7, height: 7)
                 waveform(color: DS.brand)
+                Text(String(format: "%d:%02d", Int(model.elapsed) / 60, Int(model.elapsed) % 60))
+                    .font(.system(size: 11, design: .monospaced)).foregroundStyle(DS.fg2)
+                Text(model.mode).font(DS.text(10)).foregroundStyle(DS.fg3)
                 if let icon = model.sourceIcon {
                     HStack(spacing: 4) {
                         Image(systemName: icon).font(.system(size: 10))

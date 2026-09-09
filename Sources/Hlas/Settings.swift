@@ -1,4 +1,5 @@
 import Foundation
+import HlasCore
 
 enum EngineKind: String, CaseIterable, Codable {
     case local      // whisper.cpp
@@ -59,7 +60,25 @@ final class Settings: ObservableObject {
         didSet { d.set(inputDeviceUID, forKey: "inputDeviceUID") }
     }
 
+    @Published var outputMode: OutputMode {
+        didSet { d.set(outputMode.rawValue, forKey: "outputMode") }
+    }
+    @Published var historyEnabled: Bool {
+        didSet { d.set(historyEnabled, forKey: "historyEnabled") }
+    }
+    @Published var historyRetentionDays: Int {
+        didSet { d.set(historyRetentionDays, forKey: "historyRetentionDays") }
+    }
+    @Published var replacements: [TextReplacement] {
+        didSet { d.set(try? JSONEncoder().encode(replacements), forKey: "replacements") }
+    }
+
     private init() {
+        outputMode = OutputMode(rawValue: d.string(forKey: "outputMode") ?? "") ?? .transcript
+        historyEnabled = d.object(forKey: "historyEnabled") as? Bool ?? true
+        historyRetentionDays = d.object(forKey: "historyRetentionDays") as? Int ?? 0
+        replacements = d.data(forKey: "replacements").flatMap { try? JSONDecoder().decode([TextReplacement].self, from: $0) } ?? []
+
         engine = EngineKind(rawValue: d.string(forKey: "engine") ?? "") ?? .local
         language = d.string(forKey: "language") ?? "cs"
         groqAPIKey = Self.loadAPIKey(account: "groq", legacyKey: "groqAPIKey", defaults: d)

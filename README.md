@@ -9,7 +9,7 @@
 Hold **Fn** · speak Czech or English · release — text lands at your cursor, in any app.
 No subscription. No account. No telemetry. No cloud unless you ask for it.
 
-### [⬇︎ Download Hlas 0.3.1](https://github.com/GedeonDrapak/hlas/releases/latest/download/Hlas-0.3.1-arm64.dmg) &nbsp;·&nbsp; 2.6 MB &nbsp;·&nbsp; Apple Silicon, macOS 15+
+### [⬇︎ Download Hlas 0.4.2](https://github.com/GedeonDrapak/hlas/releases/download/v0.4.2/Hlas-0.4.2-arm64.dmg) &nbsp;·&nbsp; 2.9 MB &nbsp;·&nbsp; Apple Silicon, macOS 15+
 
 **[Website](https://gedeondrapak.github.io/hlas/)** · [First run](#first-run) · [Build from source](#build) · [Privacy](docs/PRIVACY.md)
 
@@ -56,6 +56,12 @@ xattr -dr com.apple.quarantine /Applications/Hlas.app
 - Menu bar Hlas icon → **Settings**, custom **Vocabulary**, searchable **History**.
 
 ![Onboarding](docs/assets/screens.png)
+
+## Transcript or Smart text
+
+Choose **Transcript** to insert speech recognition output directly, or **Smart text** to automatically clean up dictation and choose readable paragraphs or lists. No style presets to manage. Smart text uses your OpenAI or Groq key and sends text to that provider, including when audio transcription is Local. Hold Option when pressing Fn to use Transcript for one dictation.
+
+Originals remain available in History. You can reprocess an entry, define exact text replacements, disable new history or choose its expiration. The menu also imports audio files up to 10 minutes long. Dictation pastes automatically at the current caret. If you switch to another application during processing, Hlas keeps the result available for copying.
 
 ## Your engine, your call
 

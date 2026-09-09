@@ -39,6 +39,8 @@ let package = Package(
             name: "HlasCoreTests",
             dependencies: ["HlasCore"],
             path: "Tests/HlasCoreTests"
-        )
+        ),
+        .testTarget(name: "HlasIntegrationTests", dependencies: ["Hlas", "HlasCore"],
+                    path: "Tests/HlasIntegrationTests", swiftSettings: [.swiftLanguageMode(.v5)])
     ]
 )

@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.4.2 - 2026-09-09
+
+- Let Smart text choose structure from intent instead of forcing lists by action count.
+- Keep messages, explanations and stories in prose; reserve bullets for real enumerations and numbering for procedures.
+- Add live Czech format-selection fixtures covering prose, quoted requests, shopping lists, task assignments and instructions.
+
+## 0.4.1 - 2026-09-09
+
+- Restore automatic paste for editors that expose no Accessibility focused element. Guard only changes of application; Cmd-V uses the actual caret.
+- Preserve and restore every clipboard format without rejecting images or payloads over 1 MB.
+- Add regression tests for unavailable AX fields, large rich clipboards, and a newer user copy during restoration.
+
+## 0.4.0 - 2026-09-09
+
+- Add Transcript / automatic Smart text, original recovery, and reprocessing from history.
+- Serialize microphone lifecycle off the UI thread, throttle metering and adapt microphone cooldown.
+- Cancel local inference cooperatively and ignore obsolete sessions; prefetch the local model during speech.
+- Fix model idle-unload races and release it under memory pressure.
+- Preserve raw transcripts, add exact replacements, optional history and retention; persist history off the main thread.
+- Check the original focused input before paste and preserve rich clipboard content through a copy fallback.
+- Import audio files and bound recordings to 10 minutes.
+- Reduce WAV allocations and add session-level timing metadata and offline/live regression tests.
+
 ## 0.3.1 - 2026-08-09
 
 - Keep the recording pill on the Space you are actually on. `.stationary` conflicted with `.canJoinAllSpaces` and could pin the pill to the Space where it was first created; the collection behavior is now re-asserted on every show.

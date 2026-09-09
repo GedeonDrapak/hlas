@@ -1,3 +1,15 @@
+# Current update: 0.4.2 (2026-09-09)
+
+Transcript / Smart text is the only output switch. Smart text automatically selects paragraphs or lists, preserves facts and language, and uses OpenAI gpt-4.1-mini or Groq openai/gpt-oss-120b with existing keys. It is optional and never silently enabled for existing installations. No style picker. Format is chosen from intent; never force bullets based on a number of verbs or actions. Messages and stories remain prose, actual lists and procedures get appropriate structure.
+
+DictationCoordinator owns immutable session configuration, cancellation and delivery. AudioRecorder serializes session lifecycle separately from capture. LocalWhisper supports C abort callbacks, recording-time prefetch, pressure unload and generation-checked idle unload. Microphone cooldown is adaptive (8/30 seconds), maximum recording/import is 10 minutes.
+
+History preserves originals and supports retention; existing history format migrates on read. Persistence is serialized off main. Retention defaults to no expiration. Automatic paste checks only that the foreground application has not changed. Do not require AX focused-element identity: Electron editors can report no element while Cmd-V works. Preserve all clipboard formats and restore with a changeCount guard; do not block normal dictation for images or size thresholds.
+
+Validation and measured limitations: see `RELEASE-0.4.2.md`.
+
+## Previous handoff (historical, superseded where conflicting)
+
 # Hlas - handoff / current state (2026-08-06)
 
 App is **installed, fully working, and in daily use** at `/Applications/Hlas.app`.

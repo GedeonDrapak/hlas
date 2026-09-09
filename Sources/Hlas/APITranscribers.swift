@@ -9,16 +9,17 @@ struct OpenAICompatibleTranscriber: Transcriber {
     let model: String
     let providerName: String
 
-    func transcribe(samples: [Float], language: String?) async throws -> String {
+    func transcribe(samples: [Float], language: String?, prompt: String?, keepAlive: Double) async throws -> String {
         guard !apiKey.isEmpty else {
             throw NSError(domain: "Hlas", code: 401, userInfo: [
                 NSLocalizedDescriptionKey: "API key missing - open Settings"
             ])
         }
+        try Task.checkCancellation()
         let wav = WAVEncoder.encode(samples: samples)
         let boundary = "hlas-\(UUID().uuidString)"
 
-        var body = Data()
+        var body = Data(capacity: wav.count + 2048)
         func field(_ name: String, _ value: String) {
             body.append(Data("--\(boundary)\r\nContent-Disposition: form-data; name=\"\(name)\"\r\n\r\n\(value)\r\n".utf8))
         }
@@ -26,7 +27,7 @@ struct OpenAICompatibleTranscriber: Transcriber {
         field("response_format", "json")
         field("temperature", "0")
         if let language { field("language", language) }
-        if let prompt = await Settings.shared.vocabularyPrompt { field("prompt", prompt) }
+        if let prompt { field("prompt", prompt) }
         body.append(Data("--\(boundary)\r\nContent-Disposition: form-data; name=\"file\"; filename=\"audio.wav\"\r\nContent-Type: audio/wav\r\n\r\n".utf8))
         body.append(wav)
         body.append(Data("\r\n--\(boundary)--\r\n".utf8))
@@ -36,15 +37,17 @@ struct OpenAICompatibleTranscriber: Transcriber {
         request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         request.httpBody = body
-        request.timeoutInterval = 30
+        request.timeoutInterval = max(30, min(120, Double(samples.count) / 16000 * 0.3))
 
         let data: Data
         let response: URLResponse
         do {
             (data, response) = try await URLSession.shared.data(for: request)
         } catch {
+            if Task.isCancelled || (error as? URLError)?.code == .cancelled { throw CancellationError() }
             throw TranscriptionNetworkError.from(error, provider: providerName)
         }
+        try Task.checkCancellation()
         guard let http = response as? HTTPURLResponse, http.statusCode == 200 else {
             throw TranscriptionNetworkError.http(
                 statusCode: (response as? HTTPURLResponse)?.statusCode ?? -1,
