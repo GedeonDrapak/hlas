@@ -76,10 +76,11 @@ Apple SpeechAnalyzer: **no Czech** - ruled out. Parakeet TDT v3 via FluidAudio: 
     API engines, different response shape.
 6. **Accessibility QA.** Run Accessibility Inspector and a complete keyboard/VoiceOver walkthrough
    on the final notarized build.
-7. **Distribution credentials.** Install a Developer ID Application certificate, store the
-   `HlasNotary` credentials, run `make release`, and test the notarized DMG on a clean M-series Mac.
+7. ~~**Distribution credentials.**~~ DONE (2026-10-10). Developer ID of Eden Makers (team
+   CLG46PZG7A) + `EdenNotary` notary profile; `make release` builds, notarizes and staples.
+   0.4.2 was re-released notarized. Still to do: confirm on a clean M-series Mac.
 8. ~~**Konect font license.**~~ DONE (Aug 2026). The full commercial cut `Konect-Regular.otf`
-   (Ragam Kata Studio) replaced the personal-use demo. 239 glyphs — digits and punctuation are
+   (Ragam Kata Studio) replaced the personal-use demo. 239 glyphs - digits and punctuation are
    now safe. Still missing caron/ring diacritics (ČĎĚŇŘŤŮ + lowercase), so never point
    `DS.display` at Czech or user-supplied text; Satoshi covers those.
 

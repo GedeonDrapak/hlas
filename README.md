@@ -1,12 +1,12 @@
 <div align="center">
 
-![Hlas — Dictation. Not typing.](docs/assets/hero.png)
+![Hlas - Dictation. Not typing.](docs/assets/hero.png)
 
 # Hlas
 
 **Dictation. Not typing.**
 
-Hold **Fn** · speak Czech or English · release — text lands at your cursor, in any app.
+Hold **Fn** · speak Czech or English · release - text lands at your cursor, in any app.
 No subscription. No account. No telemetry. No cloud unless you ask for it.
 
 ### [⬇︎ Download Hlas 0.4.2](https://github.com/GedeonDrapak/hlas/releases/download/v0.4.2/Hlas-0.4.2-arm64.dmg) &nbsp;·&nbsp; 2.9 MB &nbsp;·&nbsp; Apple Silicon, macOS 15+
@@ -17,24 +17,23 @@ No subscription. No account. No telemetry. No cloud unless you ask for it.
 
 ---
 
-Built in Prague as a personal replacement for the $8–15/month dictation apps — because every one of them treats Czech as an afterthought, and none of them should cost more than your music streaming.
+Built in Prague as a personal replacement for the $8-15/month dictation apps - because every one of them treats Czech as an afterthought, and none of them should cost more than your music streaming.
 
 ## First run
 
-1. Open the DMG, drag **Hlas** onto **Applications**.
-2. macOS will block the first launch. Open **System Settings → Privacy & Security**, scroll to the bottom, click **Open Anyway**.
-3. Grant **Microphone** (to hear you) and **Accessibility** (for the Fn hotkey and the paste).
-4. Hold **Fn**, speak, release.
+1. Open the DMG, drag **Hlas** onto **Applications** and open it. macOS asks once whether to open an app downloaded from the internet: click **Open**.
+2. Grant **Microphone** (to hear you) and **Accessibility** (for the Fn hotkey and the paste). The welcome tour walks you through both.
+3. Hold **Fn**, speak, release.
+
+Hlas is signed with the Developer ID certificate of Eden Makers s.r.o. and notarized by Apple. Every line of source is in this repo, and you can [build it yourself](#build) in two minutes.
 
 <details>
-<summary>Why does macOS warn about it?</summary>
+<summary>Updating from a build before October 2026?</summary>
 
-Hlas isn't notarized by Apple — notarization requires a paid Apple Developer Program membership. The app is signed with a stable Apple Development certificate, which means your Accessibility and Microphone grants survive app updates (ad-hoc signed apps silently lose them on every update). Every line of source is in this repo, and you can [build it yourself](#build) in two minutes.
-
-If you'd rather skip the Settings pane:
+Earlier builds were signed with a personal development certificate. The new signature makes macOS treat Hlas as a new app for permissions, so it asks for Microphone and Accessibility once more. If the Fn key does nothing after updating, remove Hlas from **System Settings → Privacy & Security → Accessibility** with the minus button and grant it again, or run:
 
 ```bash
-xattr -dr com.apple.quarantine /Applications/Hlas.app
+tccutil reset Accessibility com.gedeon.hlas
 ```
 </details>
 
@@ -66,8 +65,8 @@ Originals remain available in History. You can reprocess an entry, define exact 
 ## Your engine, your call
 
 - **Local (default):** whisper.cpp `large-v3-turbo-q5_0` on Metal. One-time 547 MB download, ~1 GB RAM while loaded, auto-unloads after 3 min idle. Works offline. Audio never leaves your Mac.
-- **Groq API:** whisper-large-v3-turbo — ~$0.04/hr of audio (≈ $1–3/mo at heavy use). BYOK.
-- **OpenAI API:** gpt-transcribe — ~$0.27/hr, best accuracy + vocabulary support. BYOK.
+- **Groq API:** whisper-large-v3-turbo - ~$0.04/hr of audio (≈ $1-3/mo at heavy use). BYOK.
+- **OpenAI API:** gpt-transcribe - ~$0.27/hr, best accuracy + vocabulary support. BYOK.
 
 ![Engine and language selection](docs/assets/engines.png)
 
@@ -75,10 +74,10 @@ Originals remain available in History. You can reprocess an entry, define exact 
 
 ![Settings and recording pill](docs/assets/settings-pill.png)
 
-- **~60 MB idle RAM** — Whisper loads on demand, unloads after 3 minutes of silence.
-- **Keys live in macOS Keychain** — history stays local and is clearable anytime.
-- **Bluetooth-safe** — pin the built-in mic so AirPods never wreck dictation quality.
-- **Czech-first** — priming prompts for cs/sk/en, Czech-QWERTZ-safe paste.
+- **~60 MB idle RAM** - Whisper loads on demand, unloads after 3 minutes of silence.
+- **Keys live in macOS Keychain** - history stays local and is clearable anytime.
+- **Bluetooth-safe** - pin the built-in mic so AirPods never wreck dictation quality.
+- **Czech-first** - priming prompts for cs/sk/en, Czech-QWERTZ-safe paste.
 
 ## Build
 
@@ -111,15 +110,18 @@ The full policy ships in the app and is available in [Privacy](docs/PRIVACY.md).
 `make install` is for local development. Two ways to cut a public DMG:
 
 ```bash
-# Current: dev-signed, not notarized. Users approve it once in Privacy & Security.
-tools/release-unsigned.sh
-
-# Ideal: needs a Developer ID Application cert (paid Apple Developer Program).
-xcrun notarytool store-credentials HlasNotary --apple-id <email> --team-id <team-id>
+# Public releases: Developer ID (Eden Makers) + Apple notarization.
+# One-time setup on the release Mac: the Developer ID Application cert of the
+# Eden Makers account (tech@edenmakers.ai) in the login keychain, plus
+xcrun notarytool store-credentials EdenNotary --apple-id tech@edenmakers.ai --team-id CLG46PZG7A
 make release
+
+# Fallback without those credentials: dev-signed, not notarized. Users then
+# have to approve it in Privacy & Security. Do not publish these.
+tools/release-unsigned.sh
 ```
 
-`make release` creates an Apple Silicon DMG, notarizes it, staples the ticket, and checks Gatekeeper. It intentionally stops if the required certificate or notarization credentials are unavailable — switch the download links in `README.md` and `docs/index.html` once it can run.
+`make release` creates an Apple Silicon DMG, notarizes it, staples the ticket, and checks Gatekeeper. It reads the distribution team off the installed Developer ID certificate, so the Eden Makers team never has to be written down next to the personal Apple Development team in `project.yml`. It intentionally stops if the required certificate or notarization credentials are unavailable. Upload the DMG and its `.sha256` to the GitHub release; the website links to the release asset by version.
 
 ## Design
 

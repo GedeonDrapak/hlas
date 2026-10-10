@@ -13,7 +13,7 @@
 
 Apple Silicon, macOS 15 or later. Existing settings, keys and history are preserved. Smart text uses the configured OpenAI or Groq key and sends transcript text to that provider, including when speech recognition is Local. Transcript mode skips the editing request. No screenshots or surrounding editor text are sent.
 
-This release uses the same Apple Development signing identity as prior releases. It is not notarized. First-time installations may require approval in System Settings > Privacy & Security. Quit the existing app before replacing it in Applications.
+Since 2026-10-10 the published DMG is signed with the Developer ID certificate of Eden Makers s.r.o. (team CLG46PZG7A) and notarized by Apple, so it opens without a Gatekeeper warning. The app code is unchanged from the original 0.4.2 build. Because the signature changed from the personal development certificate, macOS asks for Microphone and Accessibility once more after updating; if the Fn key does nothing, run `tccutil reset Accessibility com.gedeon.hlas` and grant it again. Quit the existing app before replacing it in Applications.
 
 ## Verification
 

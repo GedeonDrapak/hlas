@@ -28,6 +28,11 @@ make install   # xcodegen → xcodebuild (Release) → /Applications/Hlas.app �
 
 - Signed with **Apple Development, team 74N9VPV9D6, automatic signing via Xcode**. This gives a
   stable designated requirement → **Accessibility/Microphone TCC grants survive rebuilds**.
+- **Two teams, on purpose.** The `Release` configuration stays on the personal Apple Development
+  team above. The `Distribution` configuration signs with the **Developer ID Application cert of
+  the Eden Makers account (`tech@edenmakers.ai`)**, whose team id differs. `tools/release.sh` reads
+  that team off the installed certificate and passes it to `xcodebuild`; do not hardcode it in
+  `project.yml`, or the two copies will drift.
 - NEVER switch to ad-hoc (`--sign -`): every rebuild changes CDHash → macOS silently ignores the
   Accessibility grant → the Fn hotkey dies and the user must re-toggle permissions.
 - NEVER `codesign` the bundle manually with the dev cert outside Xcode: without an embedded
@@ -43,7 +48,7 @@ make install   # xcodegen → xcodebuild (Release) → /Applications/Hlas.app �
 - **Synthetic dictation:** `swift tools/fakefn.swift` posts an Fn down+up (1.5 s hold). Full
   pipeline fires without touching the keyboard. Check debug.log afterwards.
 - **Visual QA:** `HLAS_STEP=N /Applications/Hlas.app/Contents/MacOS/Hlas` opens onboarding at
-  step N (0–3). Loop: build → launch with env → `screencapture -x shot.png` → read the image →
+  step N (0-3). Loop: build → launch with env → `screencapture -x shot.png` → read the image →
   check contrast/layout - for EVERY step, on EVERY gradient. This caught real bugs twice.
 - **RAM check:** `ps -o rss= -p $(pgrep -x Hlas)` - hidden idle should stay around 60-70 MB; the whisper model
   (~800 MB) must appear only during transcription and unload after `modelKeepAliveSeconds`.
@@ -83,9 +88,9 @@ make install   # xcodegen → xcodebuild (Release) → /Applications/Hlas.app �
 
 - **Never pure black (#000) or pure white (#FFF).** Floors: `#0C0D0F`/`#0F0F0F`; ceilings: ~93 % white.
 - Accent: Eden bio-digital green `hsl(153 100% 45%)` (`DS.brand`) - recording, checkmarks, CTAs.
-- Hairline borders `white 6–12 %`, radius 16 (cards) / 8 (inputs), uppercase tracked labels for
+- Hairline borders `white 6-12 %`, radius 16 (cards) / 8 (inputs), uppercase tracked labels for
   section headers (`DS.label` + `.tracking(3-4)`).
-- Frosted glass everywhere: `VisualEffectBlur` + dark tint 0.45–0.5 (windows), 0.35 (pill).
+- Frosted glass everywhere: `VisualEffectBlur` + dark tint 0.45-0.5 (windows), 0.35 (pill).
 - Any text over gradient photos needs the scrim pattern from `Onboarding.leftPanel` (uniform
   0.38 + heavier bottom). Contrast on EVERY gradient, not just the dark one.
 
