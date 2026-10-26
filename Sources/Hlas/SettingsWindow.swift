@@ -50,6 +50,12 @@ struct SettingsView: View {
             VStack(alignment: .leading, spacing: 24) {
                 header
 
+                section("HOTKEY") {
+                    HotkeyPicker()
+                    Text("Hold to dictate, quick-tap for hands-free. No Fn key on your keyboard? Pick a right-side modifier.")
+                        .font(DS.text(11)).foregroundStyle(DS.fg2)
+                }
+
                 section("OUTPUT") {
                     Picker("Output", selection: $settings.outputMode) {
                         ForEach(OutputMode.allCases, id: \.self) { Text($0.title).tag($0) }
@@ -66,7 +72,9 @@ struct SettingsView: View {
                             apiKeyField("OpenAI API key", text: $settings.openaiAPIKey, hint: "Used only for Smart text. Local audio stays on this Mac.")
                         }
                     }
-                    Text("Hold Option when pressing Fn to use Transcript once.")
+                    Text(settings.hotkey == .rightOption
+                         ? "Hold Left Option when pressing Right Option to use Transcript once."
+                         : "Hold Option when pressing \(settings.hotkey.shortName) to use Transcript once.")
                         .font(DS.text(10)).foregroundStyle(DS.fg3)
                 }
 
@@ -180,7 +188,7 @@ struct SettingsView: View {
 
                     HStack {
                         if history.entries.isEmpty {
-                            Text("Nothing yet - hold Fn and speak.")
+                            Text("Nothing yet - hold \(settings.hotkey.shortName) and speak.")
                                 .font(.system(size: 11)).foregroundStyle(DS.fg3)
                         }
                         Spacer()
@@ -233,7 +241,7 @@ struct SettingsView: View {
                 .font(DS.display(15))
                 .tracking(5)
                 .foregroundStyle(DS.fg)
-            Text("Hold Fn · speak · release")
+            Text("Hold \(settings.hotkey.shortName) · speak · release")
                 .font(.system(size: 11))
                 .foregroundStyle(DS.fg3)
         }
@@ -339,5 +347,38 @@ struct FlowLayoutish: View {
                 .background(Capsule().fill(DS.surfaceHover))
             }
         }
+    }
+}
+
+/// Hold-to-talk key menu, styled like the microphone picker.
+struct HotkeyPicker: View {
+    @ObservedObject private var settings = Settings.shared
+
+    var body: some View {
+        Menu {
+            ForEach(HotkeyChoice.allCases, id: \.self) { choice in
+                if choice == .f13 { Divider() }
+                Button { settings.hotkey = choice } label: {
+                    HStack {
+                        if settings.hotkey == choice { Image(systemName: "checkmark") }
+                        Text(choice.title)
+                    }
+                }
+            }
+        } label: {
+            HStack(spacing: 8) {
+                Image(systemName: "keyboard").font(.system(size: 11)).foregroundStyle(DS.fg2)
+                Text(settings.hotkey.title).font(.system(size: 12)).foregroundStyle(DS.fg)
+                Spacer()
+                Image(systemName: "chevron.up.chevron.down").font(.system(size: 9)).foregroundStyle(DS.fg3)
+            }
+            .padding(.horizontal, 10)
+            .frame(height: 30)
+            .background(RoundedRectangle(cornerRadius: DS.radiusSm).fill(Color.white.opacity(0.06)))
+        }
+        .menuStyle(.borderlessButton)
+        .accessibilityLabel("Dictation hotkey")
+        .accessibilityValue(settings.hotkey.title)
+        .accessibilityHint("Choose the key you hold to dictate")
     }
 }

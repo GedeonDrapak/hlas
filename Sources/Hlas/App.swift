@@ -26,6 +26,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         self?.setIcon(recording: recording)
     }
     private weak var statusSummaryItem: NSMenuItem?
+    private var hotkeyCancellable: AnyCancellable?
     private var inputDeviceCancellable: AnyCancellable?
     private var audioEnvironmentCancellable: AnyCancellable?
 
@@ -44,6 +45,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         hotkey.onPress = { [weak self] in self?.coordinator.press() }
         hotkey.onRelease = { [weak self] in self?.coordinator.release() }
         hotkey.onEscape = { [weak self] in self?.coordinator.cancel() }
+        hotkey.onChord = { [weak self] in self?.coordinator.cancel() }
+        hotkey.trigger = Settings.shared.hotkey.trigger
+        hotkeyCancellable = Settings.shared.$hotkey
+            .dropFirst()
+            .removeDuplicates()
+            .sink { [weak self] choice in
+                self?.hotkey.trigger = choice.trigger
+                Log.write("hotkey set to \(choice.rawValue)")
+            }
 
         inputDeviceCancellable = Settings.shared.$inputDeviceUID
             .dropFirst()

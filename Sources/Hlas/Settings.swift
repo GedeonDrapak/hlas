@@ -60,6 +60,10 @@ final class Settings: ObservableObject {
         didSet { d.set(inputDeviceUID, forKey: "inputDeviceUID") }
     }
 
+    @Published var hotkey: HotkeyChoice {
+        didSet { d.set(hotkey.rawValue, forKey: "hotkey") }
+    }
+
     @Published var outputMode: OutputMode {
         didSet { d.set(outputMode.rawValue, forKey: "outputMode") }
     }
@@ -74,6 +78,7 @@ final class Settings: ObservableObject {
     }
 
     private init() {
+        hotkey = HotkeyChoice(rawValue: d.string(forKey: "hotkey") ?? "") ?? .fn
         outputMode = OutputMode(rawValue: d.string(forKey: "outputMode") ?? "") ?? .transcript
         historyEnabled = d.object(forKey: "historyEnabled") as? Bool ?? true
         historyRetentionDays = d.object(forKey: "historyRetentionDays") as? Int ?? 0

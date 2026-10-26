@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Add a hotkey picker in Settings and the welcome tour: Fn / Globe, Right Option, Right Command, Right Control or F13-F19, for keyboards without Fn.
+- Cancel dictation when a right-side modifier hotkey is used in a shortcut such as Right Cmd+C.
+- Stop F-key hotkeys from leaking autorepeat key presses into the focused app.
+- Detect a stale Accessibility entry from an older build in the welcome tour and offer a one-click reset (`tccutil reset Accessibility`) instead of a card that never turns green.
+
 ## 0.4.2 - 2026-09-09
 
 - Let Smart text choose structure from intent instead of forcing lists by action count.

@@ -61,7 +61,11 @@ import HlasCore
         hideTask?.cancel()
         let settings = Settings.shared
         sessionID = UUID()
-        let mode: OutputMode = NSEvent.modifierFlags.contains(.option) ? .transcript : settings.outputMode
+        // With Right Option as the hotkey, only Left Option (NX_DEVICELALTKEYMASK) means "Transcript once".
+        let optionHeld = settings.hotkey == .rightOption
+            ? CGEventSource.flagsState(.combinedSessionState).rawValue & 0x20 != 0
+            : NSEvent.modifierFlags.contains(.option)
+        let mode: OutputMode = optionHeld ? .transcript : settings.outputMode
         let snap = Snapshot(id: sessionID, transcriber: TranscriberFactory.make(), engine: settings.engine.rawValue,
             language: settings.language == "auto" ? nil : settings.language, prompt: settings.vocabularyPrompt,
             keepAlive: settings.modelKeepAliveSeconds, mode: mode, processor: SmartTextProcessor.configured(),

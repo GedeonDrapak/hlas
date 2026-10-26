@@ -48,6 +48,10 @@ final class OnboardingWindow {
 final class PermissionModel: ObservableObject {
     @Published var mic = false
     @Published var accessibility = false
+    /// Grant was clicked a while ago and macOS still says no. Usually a stale
+    /// TCC entry from an older build: the switch shows on, the csreq no longer matches.
+    @Published var accessibilityStuck = false
+    private var accessibilityRequestedAt: Date?
     private var timer: Timer?
 
     var allGranted: Bool { mic && accessibility }
@@ -68,6 +72,12 @@ final class PermissionModel: ObservableObject {
     func refresh() {
         mic = AVCaptureDevice.authorizationStatus(for: .audio) == .authorized
         accessibility = Hotkey.hasAccessibilityPermission(prompt: false)
+        if accessibility {
+            accessibilityRequestedAt = nil
+            accessibilityStuck = false
+        } else if let requested = accessibilityRequestedAt, Date().timeIntervalSince(requested) > 8 {
+            accessibilityStuck = true
+        }
     }
 
     func requestMic() {
@@ -78,10 +88,28 @@ final class PermissionModel: ObservableObject {
     }
 
     func requestAccessibility() {
+        if accessibilityRequestedAt == nil { accessibilityRequestedAt = Date() }
         _ = Hotkey.hasAccessibilityPermission(prompt: true)
         if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility") {
             NSWorkspace.shared.open(url)
         }
+    }
+
+    /// Toggling a stale entry does nothing; removing it and granting fresh does.
+    func resetAccessibility() {
+        let tccutil = Process()
+        tccutil.executableURL = URL(fileURLWithPath: "/usr/bin/tccutil")
+        tccutil.arguments = ["reset", "Accessibility", Bundle.main.bundleIdentifier ?? "com.gedeon.hlas"]
+        do {
+            try tccutil.run()
+            tccutil.waitUntilExit()
+            Log.write("tccutil reset Accessibility exit=\(tccutil.terminationStatus)")
+        } catch {
+            Log.write("tccutil reset Accessibility failed: \(error.localizedDescription)")
+        }
+        accessibilityStuck = false
+        accessibilityRequestedAt = Date()
+        requestAccessibility()
     }
 }
 
@@ -264,8 +292,8 @@ struct OnboardingView: View {
     private var welcome: some View {
         VStack(alignment: .leading, spacing: 16) {
             stepHeader("Welcome to Hlas", "Your own dictation app. No subscription, no account, no cloud unless you ask for it.")
-            featureRow("waveform", "**Hold Fn** and speak Czech or English. Release - the text pastes at your cursor, in any app.")
-            featureRow("hand.tap", "**Quick-tap Fn** to latch hands-free mode. Tap again to stop.")
+            featureRow("waveform", "**Hold \(settings.hotkey.shortName)** and speak Czech or English. Release - the text pastes at your cursor, in any app.")
+            featureRow("hand.tap", "**Quick-tap \(settings.hotkey.shortName)** to latch hands-free mode. Tap again to stop.")
             featureRow("lock", "Local by default - audio never leaves this Mac. Cloud engines are opt-in.")
             featureRow("bolt", "A ~4 MB app that idles at ~60 MB RAM. The model loads on demand and unloads after inactivity.")
         }
@@ -303,10 +331,19 @@ struct OnboardingView: View {
                 granted: permissions.accessibility,
                 icon: "keyboard",
                 title: "Accessibility",
-                detail: "To catch the Fn key globally and paste text at your cursor.",
+                detail: "To catch the \(settings.hotkey.shortName) key globally and paste text at your cursor.",
                 action: permissions.requestAccessibility
             )
-            if !permissions.accessibility {
+            if permissions.accessibilityStuck {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Hlas is already switched on but this card stays grey? macOS kept an entry from an older Hlas build. Reset it, then switch Hlas on again in the list.")
+                        .font(.system(size: 11))
+                        .foregroundStyle(DS.fg2)
+                        .fixedSize(horizontal: false, vertical: true)
+                    Button("Reset Accessibility entry", action: permissions.resetAccessibility)
+                        .buttonStyle(.bordered)
+                }
+            } else if !permissions.accessibility {
                 Text("System Settings opens on the right page - find Hlas in the list and switch it on.")
                     .font(.system(size: 11))
                     .foregroundStyle(DS.fg3)
@@ -446,9 +483,14 @@ struct OnboardingView: View {
 
     private var tryItStep: some View {
         VStack(alignment: .leading, spacing: 14) {
-            stepHeader("Try it now", "Click into the field, hold Fn, say something, release.")
+            stepHeader("Try it now", "Click into the field, hold \(settings.hotkey.shortName), say something, release.")
 
             TryItField()
+
+            HStack(spacing: 10) {
+                Text("No Fn key? Use").font(.system(size: 12)).foregroundStyle(DS.fg2)
+                HotkeyPicker().frame(width: 180)
+            }
 
             if let last = history.entries.first {
                 VStack(alignment: .leading, spacing: 6) {

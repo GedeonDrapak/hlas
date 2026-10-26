@@ -1,18 +1,58 @@
 import AppKit
 
+/// User-selectable hold-to-talk key. Modifiers and F13-F19 only: they work on
+/// keyboards without Fn/Globe and never swallow a typing key.
+enum HotkeyChoice: String, CaseIterable {
+    case fn, rightOption, rightCommand, rightControl, f13, f14, f15, f16, f17, f18, f19
+
+    var title: String {
+        switch self {
+        case .fn: return "Fn / Globe"
+        case .rightOption: return "Right Option"
+        case .rightCommand: return "Right Command"
+        case .rightControl: return "Right Control"
+        default: return rawValue.uppercased()
+        }
+    }
+
+    /// Short name for inline copy ("Hold Fn and speak").
+    var shortName: String { self == .fn ? "Fn" : title }
+
+    var trigger: Hotkey.Trigger {
+        // Device-dependent flag masks (NX_DEVICER*KEYMASK) tell right from left.
+        switch self {
+        case .fn: return .fnKey
+        case .rightOption: return .modifier(keyCode: 61, deviceMask: 0x40)
+        case .rightCommand: return .modifier(keyCode: 54, deviceMask: 0x10)
+        case .rightControl: return .modifier(keyCode: 62, deviceMask: 0x2000)
+        case .f13: return .keyCode(105)
+        case .f14: return .keyCode(107)
+        case .f15: return .keyCode(113)
+        case .f16: return .keyCode(106)
+        case .f17: return .keyCode(64)
+        case .f18: return .keyCode(79)
+        case .f19: return .keyCode(80)
+        }
+    }
+}
+
 /// Global hold-to-talk hotkey via CGEventTap.
 /// Default: hold the Fn/Globe key (keycode 63) - press starts recording,
 /// release stops. A modifier-only key never conflicts with app shortcuts.
 final class Hotkey {
     enum Trigger {
-        case fnKey                // flagsChanged, keycode 63
-        case keyCode(Int64)       // plain key hold (e.g. F13)
+        case fnKey                                      // flagsChanged, keycode 63
+        case modifier(keyCode: Int64, deviceMask: UInt64) // one side of a modifier pair
+        case keyCode(Int64)                             // plain key hold (e.g. F13)
     }
 
-    var trigger: Trigger = .fnKey
+    var trigger: Trigger = .fnKey { didSet { isDown = false } }
     var onPress: (() -> Void)?
     var onRelease: (() -> Void)?
     var onEscape: (() -> Void)?
+    /// Another key went down while a modifier trigger was held (Right Cmd+C):
+    /// a shortcut, not dictation.
+    var onChord: (() -> Void)?
 
     private var tap: CFMachPort?
     private var runLoopSource: CFRunLoopSource?
@@ -78,17 +118,30 @@ final class Hotkey {
                 isDown = false
                 DispatchQueue.main.async { self.onRelease?() }
             }
+        case .modifier(let code, let mask):
+            if type == .keyDown, isDown {
+                DispatchQueue.main.async { self.onChord?() }
+                break
+            }
+            guard type == .flagsChanged, keycode == code else { break }
+            let active = event.flags.rawValue & mask != 0
+            if active && !isDown {
+                isDown = true
+                DispatchQueue.main.async { self.onPress?() }
+            } else if !active && isDown {
+                isDown = false
+                DispatchQueue.main.async { self.onRelease?() }
+            }
         case .keyCode(let code):
-            guard keycode == code else { break }
+            guard keycode == code, type == .keyDown || type == .keyUp else { break }
             if type == .keyDown && !isDown {
                 isDown = true
                 DispatchQueue.main.async { self.onPress?() }
-                return nil // swallow the trigger key
             } else if type == .keyUp && isDown {
                 isDown = false
                 DispatchQueue.main.async { self.onRelease?() }
-                return nil
             }
+            return nil // swallow the trigger key, autorepeats included
         }
         return Unmanaged.passUnretained(event)
     }
