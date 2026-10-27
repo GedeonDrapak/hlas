@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.4 - 2026-10-27
+
+- Add Soniox (stt-async-v5, ~$0.10 per hour) and Fish Audio (transcribe-1-pro, ~$0.36 per hour) as bring-your-own-key transcription engines in Settings and the welcome tour. Soniox gets your vocabulary as context terms; the upload and job are deleted right after transcription.
+- Explain an exhausted cloud balance (HTTP 402) instead of a generic error.
+
 ## 0.4.3 - 2026-10-27
 
 - Add a hotkey picker in Settings and the welcome tour: Fn / Globe, Right Option, Right Command, Right Control or F13-F19, for keyboards without Fn.

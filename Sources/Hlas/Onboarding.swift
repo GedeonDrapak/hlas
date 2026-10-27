@@ -387,10 +387,21 @@ struct OnboardingView: View {
 
             engineCard(.local, "On this Mac - private & free",
                        "Whisper large-v3-turbo. One-time 547 MB download. Works offline.")
-            engineCard(.groq, "Groq cloud - fastest, ~$3/month",
-                       "Whisper large-v3-turbo. Free API key at console.groq.com.")
-            engineCard(.openai, "OpenAI cloud - best accuracy, ~$8/month",
-                       "gpt-transcribe. API key at platform.openai.com.")
+            // Four cloud cards as a 2x2 grid: a fifth full-width row no longer fits 600 pt.
+            Grid(horizontalSpacing: 10, verticalSpacing: 10) {
+                GridRow {
+                    engineCard(.groq, "Groq - fastest, ~$3/mo",
+                               "Whisper large-v3-turbo. Key at console.groq.com.")
+                    engineCard(.openai, "OpenAI - best accuracy, ~$8/mo",
+                               "gpt-transcribe. Key at platform.openai.com.")
+                }
+                GridRow {
+                    engineCard(.soniox, "Soniox - ~$3/mo",
+                               "stt-async-v5. Key at console.soniox.com.")
+                    engineCard(.fish, "Fish Audio - ~$11/mo",
+                               "transcribe-1-pro. Key at fish.audio.")
+                }
+            }
 
             if settings.engine == .local {
                 localModelStatus
@@ -417,10 +428,12 @@ struct OnboardingView: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(title).font(.system(size: 13, weight: .semibold)).foregroundStyle(DS.fg)
                     Text(detail).font(.system(size: 11)).foregroundStyle(DS.fg3)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
-                Spacer()
+                Spacer(minLength: 0)
             }
             .padding(12)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
             .background(
                 RoundedRectangle(cornerRadius: DS.radiusSm)
                     .fill(Color.white.opacity(settings.engine == kind ? 0.07 : 0.04))
@@ -468,15 +481,16 @@ struct OnboardingView: View {
 
     @ViewBuilder
     private var apiKeyEntry: some View {
-        let binding = settings.engine == .groq ? $settings.groqAPIKey : $settings.openaiAPIKey
-        SecureField("Paste API key…", text: binding)
-            .textFieldStyle(.plain)
-            .padding(10)
-            .background(RoundedRectangle(cornerRadius: DS.radiusSm).fill(Color.white.opacity(0.06)))
-            .onChange(of: settings.groqAPIKey) { (NSApp.delegate as? AppDelegate)?.rebuildTranscriber() }
-            .onChange(of: settings.openaiAPIKey) { (NSApp.delegate as? AppDelegate)?.rebuildTranscriber() }
-        Text("Audio is sent directly to \(settings.engine == .groq ? "Groq" : "OpenAI") for transcription. Your key stays in your macOS Keychain.")
-            .font(.system(size: 10)).foregroundStyle(DS.fg3)
+        if let path = settings.engine.apiKeyPath {
+            SecureField("Paste API key…", text: $settings[dynamicMember: path])
+                .textFieldStyle(.plain)
+                .padding(10)
+                .background(RoundedRectangle(cornerRadius: DS.radiusSm).fill(Color.white.opacity(0.06)))
+                .onChange(of: settings.groqAPIKey) { (NSApp.delegate as? AppDelegate)?.rebuildTranscriber() }
+                .onChange(of: settings.openaiAPIKey) { (NSApp.delegate as? AppDelegate)?.rebuildTranscriber() }
+            Text("Audio is sent directly to \(settings.engine.shortName) for transcription. Your key stays in your macOS Keychain.")
+                .font(.system(size: 10)).foregroundStyle(DS.fg3)
+        }
     }
 
     // MARK: step 3 - try it

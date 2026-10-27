@@ -10,6 +10,12 @@ struct TranscriptionNetworkErrorTests {
         #expect(error.errorDescription == "Your OpenAI API key was rejected. Check it in Settings.")
     }
 
+    @Test("Explains exhausted credit")
+    func exhaustedCredit() {
+        let error = TranscriptionNetworkError.http(statusCode: 402, provider: "Soniox")
+        #expect(error.errorDescription == "Your Soniox account is out of credit. Top it up or choose another engine in Settings.")
+    }
+
     @Test("Explains rate limits")
     func rateLimit() {
         let error = TranscriptionNetworkError.http(statusCode: 429, provider: "Groq")

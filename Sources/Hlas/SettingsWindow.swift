@@ -70,6 +70,8 @@ struct SettingsView: View {
                             .font(DS.text(11)).foregroundStyle(DS.fg3)
                         if settings.engine == .local {
                             apiKeyField("OpenAI API key", text: $settings.openaiAPIKey, hint: "Used only for Smart text. Local audio stays on this Mac.")
+                        } else if settings.engine == .soniox || settings.engine == .fish {
+                            apiKeyField("OpenAI API key", text: $settings.openaiAPIKey, hint: "Used only for Smart text editing.")
                         }
                     }
                     Text(settings.hotkey == .rightOption
@@ -80,7 +82,7 @@ struct SettingsView: View {
 
                 section("ENGINE") {
                     Picker("", selection: $settings.engine) {
-                        ForEach(EngineKind.allCases, id: \.self) { Text($0.displayName).tag($0) }
+                        ForEach(EngineKind.allCases, id: \.self) { Text($0.shortName).tag($0) }
                     }
                     .pickerStyle(.segmented)
                     .labelsHidden()
@@ -90,6 +92,8 @@ struct SettingsView: View {
                     case .local: localEngineControls
                     case .groq: apiKeyField("Groq API key", text: $settings.groqAPIKey, hint: "Your Groq key is stored in macOS Keychain.")
                     case .openai: apiKeyField("OpenAI API key", text: $settings.openaiAPIKey, hint: "Your OpenAI key is stored in macOS Keychain.")
+                    case .soniox: apiKeyField("Soniox API key", text: $settings.sonioxAPIKey, hint: "stt-async-v5, ~$0.10 per hour of audio. Key at console.soniox.com.")
+                    case .fish: apiKeyField("Fish Audio API key", text: $settings.fishAPIKey, hint: "transcribe-1-pro, ~$0.36 per hour of audio. Key at fish.audio/app/api-keys. Vocabulary is not used.")
                     }
                 }
 
@@ -292,7 +296,7 @@ struct SettingsView: View {
                 .padding(8)
                 .background(RoundedRectangle(cornerRadius: DS.radiusSm).fill(DS.surfaceHover))
             Text(hint).font(.system(size: 10)).foregroundStyle(DS.fg3)
-            Text("Selected cloud transcription sends audio directly to \(label.hasPrefix("Groq") ? "Groq" : "OpenAI") for transcription. Your key stays in your macOS Keychain.")
+            Text("Selected cloud transcription sends audio directly to \(label.replacingOccurrences(of: " API key", with: "")) for transcription. Your key stays in your macOS Keychain.")
                 .font(.system(size: 10)).foregroundStyle(DS.fg3)
         }
     }

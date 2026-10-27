@@ -25,6 +25,8 @@ public enum TranscriptionNetworkError: LocalizedError {
             switch statusCode {
             case 401, 403:
                 return "Your \(provider) API key was rejected. Check it in Settings."
+            case 402:
+                return "Your \(provider) account is out of credit. Top it up or choose another engine in Settings."
             case 413:
                 return "This recording is too large for \(provider)."
             case 429:

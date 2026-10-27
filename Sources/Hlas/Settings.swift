@@ -5,12 +5,38 @@ enum EngineKind: String, CaseIterable, Codable {
     case local      // whisper.cpp
     case groq       // Groq API whisper-large-v3-turbo
     case openai     // OpenAI transcription API
+    case soniox     // Soniox async API stt-async-v5
+    case fish       // Fish Audio ASR transcribe-1-pro
 
     var displayName: String {
         switch self {
         case .local: return "Local (whisper.cpp)"
         case .groq: return "Groq API"
         case .openai: return "OpenAI API"
+        case .soniox: return "Soniox API"
+        case .fish: return "Fish Audio API"
+        }
+    }
+
+    /// Segmented-control label; five full names do not fit the Settings width.
+    var shortName: String {
+        switch self {
+        case .local: return "Local"
+        case .groq: return "Groq"
+        case .openai: return "OpenAI"
+        case .soniox: return "Soniox"
+        case .fish: return "Fish Audio"
+        }
+    }
+
+    /// Where this engine's key lives on Settings; nil for Local.
+    @MainActor var apiKeyPath: ReferenceWritableKeyPath<Settings, String>? {
+        switch self {
+        case .local: return nil
+        case .groq: return \.groqAPIKey
+        case .openai: return \.openaiAPIKey
+        case .soniox: return \.sonioxAPIKey
+        case .fish: return \.fishAPIKey
         }
     }
 }
@@ -39,6 +65,20 @@ final class Settings: ObservableObject {
         didSet {
             if !KeychainStore.set(openaiAPIKey, for: "openai") {
                 Log.write("failed to save OpenAI API key to Keychain")
+            }
+        }
+    }
+    @Published var sonioxAPIKey: String {
+        didSet {
+            if !KeychainStore.set(sonioxAPIKey, for: "soniox") {
+                Log.write("failed to save Soniox API key to Keychain")
+            }
+        }
+    }
+    @Published var fishAPIKey: String {
+        didSet {
+            if !KeychainStore.set(fishAPIKey, for: "fish") {
+                Log.write("failed to save Fish Audio API key to Keychain")
             }
         }
     }
@@ -88,6 +128,8 @@ final class Settings: ObservableObject {
         language = d.string(forKey: "language") ?? "cs"
         groqAPIKey = Self.loadAPIKey(account: "groq", legacyKey: "groqAPIKey", defaults: d)
         openaiAPIKey = Self.loadAPIKey(account: "openai", legacyKey: "openaiAPIKey", defaults: d)
+        sonioxAPIKey = KeychainStore.string(for: "soniox") ?? ""
+        fishAPIKey = KeychainStore.string(for: "fish") ?? ""
         modelKeepAliveSeconds = d.object(forKey: "modelKeepAlive") as? Double ?? 180
         vocabulary = d.stringArray(forKey: "vocabulary") ?? []
         favoriteLanguages = d.stringArray(forKey: "favoriteLanguages") ?? ["cs", "en"]

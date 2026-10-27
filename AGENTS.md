@@ -63,7 +63,7 @@ make install   # xcodegen → xcodebuild (Release) → /Applications/Hlas.app �
 | `AudioDevices.swift` | CoreAudio HAL input enumeration + `InputDevicePicker` UI |
 | `Transcriber.swift` | Engine protocol |
 | `LocalWhisper.swift` | whisper.cpp: lazy load, beam-5, priming prompts (cs/sk/en), idle unload, model downloader |
-| `APITranscribers.swift` | Groq (whisper-large-v3-turbo) + OpenAI (gpt-transcribe), shared multipart client |
+| `APITranscribers.swift` | Groq (whisper-large-v3-turbo), OpenAI (gpt-transcribe), Soniox (stt-async-v5, upload/poll/delete), Fish Audio (transcribe-1-pro); shared multipart + HTTP helpers |
 | `TextInjector.swift` | Pasteboard swap + Cmd-V (physical keycode 9), transient-tagged, changeCount-guarded restore |
 | `Sources/HlasCore/` | WAV encoder, hallucination filter, cloud errors and model validation |
 | `OverlayPanel.swift` | Non-activating NSPanel pill: waveform, source badge, frosted glass |

@@ -67,6 +67,8 @@ Originals remain available in History. You can reprocess an entry, define exact 
 - **Local (default):** whisper.cpp `large-v3-turbo-q5_0` on Metal. One-time 547 MB download, ~1 GB RAM while loaded, auto-unloads after 3 min idle. Works offline. Audio never leaves your Mac.
 - **Groq API:** whisper-large-v3-turbo - ~$0.04/hr of audio (≈ $1-3/mo at heavy use). BYOK.
 - **OpenAI API:** gpt-transcribe - ~$0.27/hr, best accuracy + vocabulary support. BYOK.
+- **Soniox API:** stt-async-v5 - ~$0.10/hr, vocabulary as context terms. Upload is deleted right after transcription. BYOK.
+- **Fish Audio API:** transcribe-1-pro - ~$0.36/hr, automatic language detection, no vocabulary support. BYOK.
 
 ![Engine and language selection](docs/assets/engines.png)
 
@@ -100,7 +102,7 @@ Hlas supports Apple Silicon Macs running macOS 15 or later. Intel Macs are inten
 ## Privacy
 
 - **Local:** audio stays on the Mac and is processed by the downloaded Whisper model.
-- **Groq / OpenAI:** audio is sent directly to the provider selected in Settings for transcription.
+- **Groq / OpenAI / Soniox / Fish Audio:** audio is sent directly to the provider selected in Settings for transcription.
 - API keys are stored in macOS Keychain. History stays local and can be cleared in Settings.
 
 The full policy ships in the app and is available in [Privacy](docs/PRIVACY.md). See [third-party notices](THIRD_PARTY_NOTICES.md) for whisper.cpp, Whisper model, Satoshi, and Konect font licenses.
@@ -140,7 +142,9 @@ Fn press ──► CGEventTap (Hotkey.swift, health-checked)
               ▼                    ▼
       Overlay pill (NSPanel)   Transcriber protocol
                                  ├─ LocalWhisper (whisper.cpp, lazy load + idle unload)
-                                 └─ OpenAICompatibleTranscriber (Groq / OpenAI)
+                                 ├─ OpenAICompatibleTranscriber (Groq / OpenAI)
+                                 ├─ SonioxTranscriber (upload, poll, delete)
+                                 └─ FishAudioTranscriber
               │
               ▼
         TextInjector - pasteboard swap + Cmd-V (physical keycode 9,

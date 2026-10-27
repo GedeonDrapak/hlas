@@ -6,10 +6,10 @@ Hlas is a menu-bar dictation app. It has no account system, advertising, analyti
 Audio
 When Local is selected, speech audio is processed on your Mac by the downloaded Whisper model. Hlas does not upload it.
 
-When Groq or OpenAI is selected, Hlas sends the recording directly to the provider you selected so it can be transcribed. The provider's terms and privacy policy apply to that processing. Hlas does not relay the recording through its own server.
+When Groq, OpenAI, Soniox or Fish Audio is selected, Hlas sends the recording directly to the provider you selected so it can be transcribed. The provider's terms and privacy policy apply to that processing. Soniox stores the upload until Hlas deletes it right after transcription. Hlas does not relay the recording through its own server.
 
 Smart text
-Transcript mode does not run an AI editing pass. Smart text sends the transcript directly to OpenAI or Groq for automatic editing. Hlas uses the selected cloud engine's key, or an available OpenAI key followed by Groq when Local is selected. The provider is shown in Settings. Local speech recognition with Smart text still sends text to this editing provider. No screenshots or surrounding application text are collected.
+Transcript mode does not run an AI editing pass. Smart text sends the transcript directly to OpenAI or Groq for automatic editing. Hlas uses the selected cloud engine's key, or an available OpenAI key followed by Groq when Local, Soniox or Fish Audio is selected. The provider is shown in Settings. Local speech recognition with Smart text still sends text to this editing provider. No screenshots or surrounding application text are collected.
 
 Stored on your Mac
 API keys are stored in your macOS Keychain. When history is enabled, original and edited transcripts are stored locally in Application Support/Hlas. You can disable new history, clear existing entries or choose an expiration period in Settings. History is limited to 50 entries. The last result remains in memory until Hlas quits. Audio recordings are held in memory, limited to 10 minutes, and are not saved by Hlas. Diagnostic logs exclude transcript contents.
