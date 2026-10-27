@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.4.3 - 2026-10-27
 
 - Add a hotkey picker in Settings and the welcome tour: Fn / Globe, Right Option, Right Command, Right Control or F13-F19, for keyboards without Fn.
 - Cancel dictation when a right-side modifier hotkey is used in a shortcut such as Right Cmd+C.
