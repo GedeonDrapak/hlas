@@ -17,9 +17,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.4.4</string>
+	<string>0.5.0</string>
 	<key>CFBundleVersion</key>
-	<string>9</string>
+	<string>10</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>15.0</string>
 	<key>LSUIElement</key>
@@ -28,5 +28,9 @@
 	<true/>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Hlas needs the microphone to transcribe your speech.</string>
+	<key>SUFeedURL</key>
+	<string>https://github.com/GedeonDrapak/hlas/releases/latest/download/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>6Ab9JNiS3L8luwAnSEoH2BrHAOQNKaE57ChtjHagWuI=</string>
 </dict>
 </plist>

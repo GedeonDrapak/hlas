@@ -26,6 +26,7 @@ import HlasCore
         let mode: OutputMode
         let processor: SmartTextProcessor?
         let replacements: [TextReplacement]
+        let cleanup: TextCleanupOptions
         let target: TextInjector.Target?
         let saveHistory: Bool
         let isImport: Bool
@@ -69,7 +70,8 @@ import HlasCore
         let snap = Snapshot(id: sessionID, transcriber: TranscriberFactory.make(), engine: settings.engine.rawValue,
             language: settings.language == "auto" ? nil : settings.language, prompt: settings.vocabularyPrompt,
             keepAlive: settings.modelKeepAliveSeconds, mode: mode, processor: SmartTextProcessor.configured(),
-            replacements: settings.replacements, target: TextInjector.Target.capture(), saveHistory: settings.historyEnabled, isImport: false)
+            replacements: settings.allReplacements, cleanup: settings.cleanupOptions, target: TextInjector.Target.capture(),
+            saveHistory: settings.historyEnabled, isImport: false)
         snapshot = snap
         localPrefetched = false
         stopWhenReady = false
@@ -131,7 +133,9 @@ import HlasCore
                     ResultWindow.shared.show(text: raw, original: raw, message: "This may be background audio. Review before copying.")
                     return
                 }
-                var text = TextReplacement.apply(snap.replacements, to: raw)
+                let cleaned = TextCleanup.apply(raw, options: snap.cleanup)
+                guard !cleaned.isEmpty else { finish(.hidden); return }
+                var text = TextReplacement.apply(snap.replacements, to: cleaned)
                 var recoveryMessage: String?
                 if snap.mode == .smart {
                     state = .formatting
@@ -179,7 +183,8 @@ import HlasCore
         let snap = Snapshot(id: sessionID, transcriber: TranscriberFactory.make(), engine: settings.engine.rawValue,
             language: settings.language == "auto" ? nil : settings.language, prompt: settings.vocabularyPrompt,
             keepAlive: settings.modelKeepAliveSeconds, mode: settings.outputMode, processor: SmartTextProcessor.configured(),
-            replacements: settings.replacements, target: nil, saveHistory: settings.historyEnabled, isImport: true)
+            replacements: settings.allReplacements, cleanup: settings.cleanupOptions, target: nil,
+            saveHistory: settings.historyEnabled, isImport: true)
         snapshot = snap
         state = .transcribing
         overlay.show(.transcribing)
@@ -224,6 +229,20 @@ import HlasCore
             self?.overlay.hide()
         }
     }
+    /// Pastes the last result again at the cursor (Ctrl+Option+V). Falls back
+    /// to History so it also works right after Hlas starts.
+    func pasteLast() {
+        guard state == .idle, let text = lastResult?.text ?? History.shared.entries.first?.text else { NSSound.beep(); return }
+        Task {
+            // Cmd-V with Ctrl and Option still held would be a different shortcut.
+            for _ in 0..<40 where !NSEvent.modifierFlags.intersection([.control, .option, .shift]).isEmpty {
+                try? await Task.sleep(for: .milliseconds(25))
+            }
+            TextInjector.insert(text, target: TextInjector.Target.capture())
+            Log.write("paste_last chars=\(text.count)")
+        }
+    }
+    var hasLast: Bool { lastResult != nil || !History.shared.entries.isEmpty }
     func showLast() {
         guard let lastResult else { return }
         ResultWindow.shared.show(text: lastResult.text, original: lastResult.raw, message: "Your last dictation")

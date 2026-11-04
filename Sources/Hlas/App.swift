@@ -35,6 +35,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         setupMainMenu()
         setupStatusItem()
         _ = History.shared
+        _ = Updater.shared
         if OnboardingWindow.shouldShow || ProcessInfo.processInfo.environment["HLAS_STEP"] != nil {
             OnboardingWindow.shared.show()
         } else {
@@ -46,6 +47,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         hotkey.onRelease = { [weak self] in self?.coordinator.release() }
         hotkey.onEscape = { [weak self] in self?.coordinator.cancel() }
         hotkey.onChord = { [weak self] in self?.coordinator.cancel() }
+        hotkey.onPasteLast = { [weak self] in self?.coordinator.pasteLast() }
         hotkey.trigger = Settings.shared.hotkey.trigger
         hotkeyCancellable = Settings.shared.$hotkey
             .dropFirst()
@@ -169,10 +171,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             item.representedObject = mode.rawValue
         }
         menu.addItem(withTitle: "Transcribe audio file…", action: #selector(importAudio), keyEquivalent: "")
+        let pasteLast = menu.addItem(withTitle: "Paste last dictation", action: #selector(pasteLastText), keyEquivalent: "v")
+        pasteLast.keyEquivalentModifierMask = [.control, .option]
         menu.addItem(withTitle: "Show last text…", action: #selector(showLastText), keyEquivalent: "")
         menu.addItem(withTitle: "Make last text smart…", action: #selector(makeLastSmart), keyEquivalent: "")
         menu.addItem(.separator())
         menu.addItem(withTitle: "Settings…", action: #selector(openSettings), keyEquivalent: ",")
+        if Updater.shared.isAvailable {
+            menu.addItem(withTitle: "Check for Updates…", action: #selector(checkForUpdates), keyEquivalent: "")
+        }
         menu.addItem(withTitle: "History…", action: #selector(openHistory), keyEquivalent: "")
         menu.addItem(withTitle: "Welcome Tour…", action: #selector(openOnboarding), keyEquivalent: "")
         menu.addItem(withTitle: "Privacy", action: #selector(openPrivacy), keyEquivalent: "")
@@ -214,6 +221,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
     @objc private func cancelActiveDictation() { coordinator.cancel() }
     @objc private func showLastText() { coordinator.showLast() }
+    @objc private func pasteLastText() { coordinator.pasteLast() }
+    @objc private func checkForUpdates() { Updater.shared.checkForUpdates() }
     @objc private func makeLastSmart() { coordinator.makeLastSmart() }
 
     @objc private func openSettings() {
@@ -275,6 +284,7 @@ extension AppDelegate: NSMenuItemValidation {
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         if menuItem.action == #selector(cancelActiveDictation) { return coordinator.state != .idle }
         if menuItem.action == #selector(showLastText) { return coordinator.lastResult != nil }
+        if menuItem.action == #selector(pasteLastText) { return coordinator.hasLast && coordinator.state == .idle }
         if menuItem.action == #selector(makeLastSmart) { return coordinator.lastResult != nil && coordinator.state == .idle }
         if menuItem.action == #selector(importAudio) { return coordinator.state == .idle }
         return true

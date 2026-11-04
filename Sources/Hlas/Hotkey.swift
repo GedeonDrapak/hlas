@@ -53,6 +53,8 @@ final class Hotkey {
     /// Another key went down while a modifier trigger was held (Right Cmd+C):
     /// a shortcut, not dictation.
     var onChord: (() -> Void)?
+    /// Ctrl+Option+V: paste the last dictation again.
+    var onPasteLast: (() -> Void)?
 
     private var tap: CFMachPort?
     private var runLoopSource: CFRunLoopSource?
@@ -105,6 +107,16 @@ final class Hotkey {
 
         if type == .keyDown, keycode == 53, event.getIntegerValueField(.keyboardEventAutorepeat) == 0 {
             DispatchQueue.main.async { self.onEscape?() }
+        }
+
+        if keycode == 9, type == .keyDown || type == .keyUp, onPasteLast != nil {
+            let flags = event.flags.intersection([.maskControl, .maskAlternate, .maskCommand, .maskShift])
+            if flags == [.maskControl, .maskAlternate] {
+                if type == .keyDown, event.getIntegerValueField(.keyboardEventAutorepeat) == 0 {
+                    DispatchQueue.main.async { self.onPasteLast?() }
+                }
+                return nil
+            }
         }
 
         switch trigger {

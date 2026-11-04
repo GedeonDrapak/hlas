@@ -7,6 +7,10 @@ options:
   bundleIdPrefix: com.gedeon
   deploymentTarget:
     macOS: "15.0"
+packages:
+  Sparkle:
+    url: https://github.com/sparkle-project/Sparkle
+    majorVersion: 2.7.0
 settings:
   base:
     DEVELOPMENT_TEAM: 74N9VPV9D6
@@ -43,12 +47,15 @@ targets:
         CFBundleIdentifier: com.gedeon.hlas
         CFBundleName: Hlas
         CFBundleDisplayName: Hlas
-        CFBundleShortVersionString: 0.4.4
-        CFBundleVersion: "9"
+        CFBundleShortVersionString: 0.5.0
+        CFBundleVersion: "10"
         LSMinimumSystemVersion: "15.0"
         LSUIElement: true
         NSMicrophoneUsageDescription: Hlas needs the microphone to transcribe your speech.
         NSHighResolutionCapable: true
+        # Sparkle: one feed for every release, attached by tools/publish.sh.
+        SUFeedURL: https://github.com/GedeonDrapak/hlas/releases/latest/download/appcast.xml
+        SUPublicEDKey: 6Ab9JNiS3L8luwAnSEoH2BrHAOQNKaE57ChtjHagWuI=
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.gedeon.hlas
@@ -72,6 +79,7 @@ targets:
           CODE_SIGN_INJECT_BASE_ENTITLEMENTS: NO
     dependencies:
       - target: HlasCore
+      - package: Sparkle
       - sdk: Metal.framework
       - sdk: Accelerate.framework
       - sdk: AVFoundation.framework

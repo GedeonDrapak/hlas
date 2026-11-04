@@ -116,6 +116,20 @@ final class Settings: ObservableObject {
     @Published var replacements: [TextReplacement] {
         didSet { d.set(try? JSONEncoder().encode(replacements), forKey: "replacements") }
     }
+    /// Vocabulary term -> how the engine tends to mishear it ("Seedance": ["sídens"]).
+    @Published var vocabularySoundsLike: [String: [String]] {
+        didSet { d.set(vocabularySoundsLike, forKey: "vocabularySoundsLike") }
+    }
+    @Published var removeFillers: Bool {
+        didSet { d.set(removeFillers, forKey: "removeFillers") }
+    }
+    @Published var spokenFormatting: Bool {
+        didSet { d.set(spokenFormatting, forKey: "spokenFormatting") }
+    }
+    /// Labs: experiments, off by default.
+    @Published var labsSpokenSymbols: Bool {
+        didSet { d.set(labsSpokenSymbols, forKey: "labsSpokenSymbols") }
+    }
 
     private init() {
         hotkey = HotkeyChoice(rawValue: d.string(forKey: "hotkey") ?? "") ?? .fn
@@ -123,6 +137,10 @@ final class Settings: ObservableObject {
         historyEnabled = d.object(forKey: "historyEnabled") as? Bool ?? true
         historyRetentionDays = d.object(forKey: "historyRetentionDays") as? Int ?? 0
         replacements = d.data(forKey: "replacements").flatMap { try? JSONDecoder().decode([TextReplacement].self, from: $0) } ?? []
+        vocabularySoundsLike = d.dictionary(forKey: "vocabularySoundsLike") as? [String: [String]] ?? [:]
+        removeFillers = d.object(forKey: "removeFillers") as? Bool ?? true
+        spokenFormatting = d.object(forKey: "spokenFormatting") as? Bool ?? true
+        labsSpokenSymbols = d.object(forKey: "labsSpokenSymbols") as? Bool ?? false
 
         engine = EngineKind(rawValue: d.string(forKey: "engine") ?? "") ?? .local
         language = d.string(forKey: "language") ?? "cs"
@@ -147,5 +165,19 @@ final class Settings: ObservableObject {
 
     var vocabularyPrompt: String? {
         vocabulary.isEmpty ? nil : vocabulary.joined(separator: ", ")
+    }
+
+    var cleanupOptions: TextCleanupOptions {
+        TextCleanupOptions(removeFillers: removeFillers, spokenFormatting: spokenFormatting, spokenSymbols: labsSpokenSymbols)
+    }
+
+    /// Sounds-like fixes first, so a user's own replacement can still refine the term.
+    var allReplacements: [TextReplacement] {
+        Vocabulary.rules(vocabularySoundsLike.filter { vocabulary.contains($0.key) }) + replacements
+    }
+
+    func removeVocabulary(_ word: String) {
+        vocabulary.removeAll { $0 == word }
+        vocabularySoundsLike[word] = nil
     }
 }

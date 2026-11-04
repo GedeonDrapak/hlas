@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.5.0 - 2026-11-04
+
+- Hlas for macOS and Hlas for Windows now live in one repository and ship in one GitHub release with one version number.
+- Automatic updates through Sparkle. Hlas asks once before it starts checking, and Settings and the menu bar have "Check for Updates".
+- Remove filler sounds (ehm, eee, hmm, um) locally, in both output modes. On by default, toggle in Settings > Clean-up.
+- Spoken line breaks: say "nový řádek" or "nový odstavec" (new line, new paragraph) as a separate phrase. On by default.
+- Labs in Settings, for experiments that are off by default. First one: spoken symbols ("zavináč" to @, "podtržítko" to _, "gmail tečka com" to gmail.com).
+- Vocabulary words can carry how the engine mishears them. Click a word, add "sídens, sí dens", and Hlas writes Seedance.
+- Ctrl+Option+V pastes your last dictation again, also from the menu bar.
+
 ## 0.4.4 - 2026-10-27
 
 - Add Soniox (stt-async-v5, ~$0.10 per hour) and Fish Audio (transcribe-1-pro, ~$0.36 per hour) as bring-your-own-key transcription engines in Settings and the welcome tour. Soniox gets your vocabulary as context terms; the upload and job are deleted right after transcription.

@@ -4,6 +4,15 @@ Ultra-minimal macOS menu-bar dictation app (Superwhisper/Wispr Flow replacement)
 Czech-first. Swift + AppKit/SwiftUI, whisper.cpp statically linked, BYOK cloud engines.
 Owner: Gedeon Drapák. Built Aug 2026 with Claude; this file is for any agent continuing work.
 
+## One repository, two apps
+
+Hlas for macOS lives at the root; Hlas for Windows (Rust) lives in `windows/` with its own
+`AGENTS.md`. One version number for both: `project.yml` and `windows/Cargo.toml` must match,
+`tools/publish.sh` refuses otherwise. Release flow: `make release` (signed, notarized DMG +
+Sparkle `appcast.xml`) -> `tools/publish.sh` (one GitHub release) -> the Windows workflow attaches
+the Windows installer. The macOS sources are the source of truth for shared text rules:
+after changing them run `python3 windows/tools/shared_from_mac.py .` and commit the JSON.
+
 ## Read first
 
 1. `README.md` - product overview, engine comparison, architecture diagram.
@@ -72,6 +81,8 @@ make install   # xcodegen → xcodebuild (Release) → /Applications/Hlas.app �
 | `HistoryWindow.swift` | Searchable full transcript history, copy, clear |
 | `Languages.swift` | 60+ whisper languages, favorite chips with hover-✕, search popover |
 | `Settings.swift` | UserDefaults-backed observable settings |
+| `Updater.swift` | Sparkle auto-update (no-op in the SwiftPM test build) |
+| `Sources/HlasCore/TextCleanup.swift` | Offline clean-up: filler sounds, spoken line breaks, Labs spoken symbols, vocabulary sounds-like rules |
 | `History.swift` | Last 50 original/edited transcripts, serial JSON persistence, optional retention |
 | `DictationCoordinator.swift` | Session snapshots, state, cancellation and safe delivery |
 | `SmartTextProcessor.swift` | Automatic cloud editing, no style selector |

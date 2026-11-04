@@ -37,6 +37,7 @@ final class SettingsWindow {
 struct SettingsView: View {
     @ObservedObject var settings = Settings.shared
     @ObservedObject var history = History.shared
+    @ObservedObject private var updater = Updater.shared
     @StateObject private var downloader = ModelDownloader()
     @State private var newWord = ""
     @State private var replaceFrom = ""
@@ -54,6 +55,8 @@ struct SettingsView: View {
                     HotkeyPicker()
                     Text("Hold to dictate, quick-tap for hands-free. No Fn key on your keyboard? Pick a right-side modifier.")
                         .font(DS.text(11)).foregroundStyle(DS.fg2)
+                    Text("Ctrl+Option+V pastes your last dictation again.")
+                        .font(DS.text(10)).foregroundStyle(DS.fg3)
                 }
 
                 section("OUTPUT") {
@@ -78,6 +81,13 @@ struct SettingsView: View {
                          ? "Hold Left Option when pressing Right Option to use Transcript once."
                          : "Hold Option when pressing \(settings.hotkey.shortName) to use Transcript once.")
                         .font(DS.text(10)).foregroundStyle(DS.fg3)
+                }
+
+                section("CLEAN-UP") {
+                    toggle("Remove filler sounds", detail: "Drops ehm, eee, hmm and um. Works offline, in both output modes.",
+                           isOn: $settings.removeFillers)
+                    toggle("Spoken line breaks", detail: "Say \u{201E}nový řádek\u{201C} or \u{201E}nový odstavec\u{201C} (new line, new paragraph) as a separate phrase.",
+                           isOn: $settings.spokenFormatting)
                 }
 
                 section("ENGINE") {
@@ -118,6 +128,10 @@ struct SettingsView: View {
                     }
                     .toggleStyle(.switch)
                     .tint(DS.brand)
+                    if Updater.shared.isAvailable {
+                        toggle("Check for updates automatically", detail: "Once a day, from GitHub. Nothing about you is sent.",
+                               isOn: Binding(get: { updater.automaticallyChecks }, set: { updater.automaticallyChecks = $0 }))
+                    }
                     if let launchAtLoginError {
                         Text(launchAtLoginError)
                             .font(.system(size: 10))
@@ -141,7 +155,7 @@ struct SettingsView: View {
                 }
 
                 section("VOCABULARY") {
-                    Text("Names and jargon the model should recognize.")
+                    Text("Names and jargon the model should recognize. Click a word to add how it gets misheard.")
                         .font(.system(size: 11)).foregroundStyle(DS.fg3)
                     HStack {
                         TextField("Add word…", text: $newWord)
@@ -152,9 +166,7 @@ struct SettingsView: View {
                         Button("Add", action: addWord).buttonStyle(.borderless).tint(DS.brand)
                     }
                     if !settings.vocabulary.isEmpty {
-                        FlowLayoutish(words: settings.vocabulary) { word in
-                            settings.vocabulary.removeAll { $0 == word }
-                        }
+                        VocabularyChips(settings: settings)
                     }
                 }
 
@@ -177,6 +189,13 @@ struct SettingsView: View {
                                 .buttonStyle(.borderless).accessibilityLabel("Remove replacement")
                         }
                     }
+                }
+
+                section("LABS") {
+                    Text("Experiments. Off by default, and they may change or go away.")
+                        .font(DS.text(10)).foregroundStyle(DS.fg3)
+                    toggle("Spoken symbols", detail: "\u{201E}zavináč\u{201C} \u{2192} @, \u{201E}podtržítko\u{201C} \u{2192} _, \u{201E}lomítko\u{201C} \u{2192} /, \u{201E}otazník\u{201C} \u{2192} ?, \u{201E}gmail tečka com\u{201C} \u{2192} gmail.com.",
+                           isOn: $settings.labsSpokenSymbols)
                 }
 
                 section("HISTORY") {
@@ -301,6 +320,18 @@ struct SettingsView: View {
         }
     }
 
+    private func toggle(_ title: String, detail: String, isOn: Binding<Bool>) -> some View {
+        Toggle(isOn: isOn) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title).font(.system(size: 12)).foregroundStyle(DS.fg)
+                Text(detail).font(.system(size: 10)).foregroundStyle(DS.fg3)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .toggleStyle(.switch)
+        .tint(DS.brand)
+    }
+
     private func addWord() {
         let word = newWord.trimmingCharacters(in: .whitespaces)
         guard !word.isEmpty, !settings.vocabulary.contains(word) else { return }
@@ -331,17 +362,45 @@ struct SettingsView: View {
     }
 }
 
-/// Simple wrapping chip list for vocabulary words.
-struct FlowLayoutish: View {
-    let words: [String]
-    let onRemove: (String) -> Void
+/// Vocabulary chips. Click one to edit what it sounds like; the variants are
+/// replaced by the exact term after transcription.
+struct VocabularyChips: View {
+    @ObservedObject var settings: Settings
+    @State private var editing: String?
+    @State private var draft = ""
 
     var body: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 90), spacing: 6)], alignment: .leading, spacing: 6) {
-            ForEach(words, id: \.self) { word in
+            ForEach(settings.vocabulary, id: \.self) { word in
+                let variants = settings.vocabularySoundsLike[word] ?? []
                 HStack(spacing: 4) {
-                    Text(word).font(.system(size: 11)).foregroundStyle(DS.fg2).lineLimit(1)
-                    Button { onRemove(word) } label: {
+                    Button {
+                        draft = variants.joined(separator: ", ")
+                        editing = word
+                    } label: {
+                        HStack(spacing: 3) {
+                            Text(word).font(.system(size: 11)).foregroundStyle(DS.fg2).lineLimit(1)
+                            if !variants.isEmpty {
+                                Image(systemName: "waveform").font(.system(size: 8)).foregroundStyle(DS.brand)
+                            }
+                        }
+                    }
+                    .buttonStyle(.borderless)
+                    .help(variants.isEmpty ? "Add how \(word) gets misheard" : "Sounds like: \(variants.joined(separator: ", "))")
+                    .accessibilityLabel(variants.isEmpty ? word : "\(word), sounds like \(variants.joined(separator: ", "))")
+                    .popover(isPresented: Binding(get: { editing == word }, set: { if !$0 { save(word) } })) {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("\(word) sounds like").font(.system(size: 11, weight: .medium))
+                            TextField("e.g. sídens, sí dens", text: $draft)
+                                .textFieldStyle(.roundedBorder)
+                                .frame(width: 220)
+                                .onSubmit { save(word) }
+                            Text("Comma-separated. Each is replaced by \(word).")
+                                .font(.system(size: 10)).foregroundStyle(.secondary)
+                        }
+                        .padding(12)
+                    }
+                    Button { settings.removeVocabulary(word) } label: {
                         Image(systemName: "xmark").font(.system(size: 7, weight: .bold))
                     }
                     .buttonStyle(.borderless).foregroundStyle(DS.fg3)
@@ -351,6 +410,13 @@ struct FlowLayoutish: View {
                 .background(Capsule().fill(DS.surfaceHover))
             }
         }
+    }
+
+    private func save(_ word: String) {
+        guard editing == word else { return }
+        let variants = Vocabulary.parse(draft).filter { $0.lowercased() != word.lowercased() }
+        settings.vocabularySoundsLike[word] = variants.isEmpty ? nil : variants
+        editing = nil
     }
 }
 

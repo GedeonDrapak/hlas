@@ -9,7 +9,9 @@
 Hold **Fn** · speak Czech or English · release - text lands at your cursor, in any app.
 No subscription. No account. No telemetry. No cloud unless you ask for it.
 
-### [⬇︎ Download Hlas 0.4.2](https://github.com/GedeonDrapak/hlas/releases/download/v0.4.2/Hlas-0.4.2-arm64.dmg) &nbsp;·&nbsp; 2.9 MB &nbsp;·&nbsp; Apple Silicon, macOS 15+
+### [⬇︎ Download for macOS](https://github.com/GedeonDrapak/hlas/releases/latest/download/Hlas-mac-arm64.dmg) &nbsp;·&nbsp; Apple Silicon, macOS 15+
+
+[Windows (beta)](https://github.com/GedeonDrapak/hlas/releases/latest/download/Hlas-windows-x64-setup.exe) &nbsp;·&nbsp; x64, Windows 10 and 11, not code-signed yet
 
 **[Website](https://gedeondrapak.github.io/hlas/)** · [First run](#first-run) · [Build from source](#build) · [Privacy](docs/PRIVACY.md)
 
@@ -81,6 +83,18 @@ Originals remain available in History. You can reprocess an entry, define exact 
 - **Bluetooth-safe** - pin the built-in mic so AirPods never wreck dictation quality.
 - **Czech-first** - priming prompts for cs/sk/en, Czech-QWERTZ-safe paste.
 
+## Repository layout
+
+One repository, two native apps, one release:
+
+| Path | What |
+|---|---|
+| `Sources/`, `Tests/`, `project.yml` | Hlas for macOS (Swift, AppKit/SwiftUI) |
+| `windows/` | Hlas for Windows (Rust, Win32). Its own [README](windows/README.md) and [AGENTS.md](windows/AGENTS.md) |
+| `windows/shared/hlas-shared.json` | Text rules both apps share, generated from the Swift sources; CI fails on drift |
+
+Every GitHub release carries both apps under stable names, so `releases/latest/download/Hlas-mac-arm64.dmg` and `releases/latest/download/Hlas-windows-x64-setup.exe` always point at the newest build.
+
 ## Build
 
 Prefer building it yourself? Two minutes:
@@ -123,7 +137,15 @@ make release
 tools/release-unsigned.sh
 ```
 
-`make release` creates an Apple Silicon DMG, notarizes it, staples the ticket, and checks Gatekeeper. It reads the distribution team off the installed Developer ID certificate, so the Eden Makers team never has to be written down next to the personal Apple Development team in `project.yml`. It intentionally stops if the required certificate or notarization credentials are unavailable. Upload the DMG and its `.sha256` to the GitHub release; the website links to the release asset by version.
+`make release` creates an Apple Silicon DMG, notarizes it, staples the ticket, and checks Gatekeeper. It reads the distribution team off the installed Developer ID certificate, so the Eden Makers team never has to be written down next to the personal Apple Development team in `project.yml`. It intentionally stops if the required certificate or notarization credentials are unavailable. It also writes `dist/appcast.xml`, the Sparkle update feed, signed with the EdDSA key stored in the login Keychain (account `hlas`). Back that key up (`generate_keys --account hlas -x <file>` from Sparkle's `bin/`): without it no update can be signed for existing users.
+
+Then publish one release for both apps:
+
+```bash
+tools/publish.sh
+```
+
+It checks that `project.yml` and `windows/Cargo.toml` carry the same version, creates the GitHub release with the DMG, its checksum, the stable-named `Hlas-mac-arm64.dmg` and `appcast.xml`, and takes the notes from both changelogs. Publishing triggers the Windows workflow, which builds the same tag and attaches `Hlas-windows-x64-setup.exe` a few minutes later.
 
 ## Design
 

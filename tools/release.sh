@@ -39,7 +39,21 @@ xcodebuild -project Hlas.xcodeproj -scheme Hlas -configuration Distribution \
   -derivedDataPath "$BUILD_DIR" -destination 'platform=macOS,arch=arm64' \
   DEVELOPMENT_TEAM="$DISTRIBUTION_TEAM" build
 
-codesign -vvv --strict "$APP"
+# Sparkle's helpers ship with Sparkle's own signature and `xcodebuild build`
+# only re-signs the framework's outer bundle, so notarization would reject
+# them. Sign inside-out with our Developer ID, then the app itself.
+SPARKLE="$APP/Contents/Frameworks/Sparkle.framework"
+if [[ -d "$SPARKLE" ]]; then
+  for helper in "$SPARKLE"/Versions/B/XPCServices/Installer.xpc "$SPARKLE"/Versions/B/Autoupdate "$SPARKLE"/Versions/B/Updater.app; do
+    codesign --force --sign "$IDENTITY" --options runtime --timestamp "$helper"
+  done
+  codesign --force --sign "$IDENTITY" --options runtime --timestamp --preserve-metadata=entitlements \
+    "$SPARKLE"/Versions/B/XPCServices/Downloader.xpc
+  codesign --force --sign "$IDENTITY" --options runtime --timestamp "$SPARKLE"
+  codesign --force --sign "$IDENTITY" --options runtime --timestamp --entitlements "$ROOT/Hlas.entitlements" "$APP"
+fi
+
+codesign -vvv --strict --deep "$APP"
 # Capture first: `codesign | grep -q` exits 141 under pipefail when grep stops
 # reading early.
 ENTITLEMENTS="$(codesign -d --entitlements :- "$APP" 2>&1)"
@@ -79,4 +93,15 @@ xcrun stapler staple "$DMG"
 xcrun stapler validate "$DMG"
 spctl --assess --type open --context context:primary-signature -vv "$DMG"
 
+# Stable name for README links (releases/latest/download/Hlas-mac-arm64.dmg),
+# checksum, and the Sparkle feed signed with the EdDSA key in the login
+# Keychain (account "hlas", created by Sparkle's generate_keys).
+cp "$DMG" "$DIST_DIR/Hlas-mac-arm64.dmg"
+(cd "$DIST_DIR" && shasum -a 256 "${DMG:t}" > "${DMG:t}.sha256")
+BUILD="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$APP/Contents/Info.plist")"
+SIGN_UPDATE="$BUILD_DIR/SourcePackages/artifacts/sparkle/Sparkle/bin/sign_update"
+SIGNATURE="$("$SIGN_UPDATE" --account hlas "$DMG")"
+python3 "$ROOT/tools/appcast.py" "$VERSION" "$BUILD" "${DMG:t}" "$SIGNATURE" > "$DIST_DIR/appcast.xml"
+
 print "Ready: $DMG"
+print "Publish with: tools/publish.sh"
