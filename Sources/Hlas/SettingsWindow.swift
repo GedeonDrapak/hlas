@@ -92,11 +92,13 @@ struct SettingsView: View {
                 }
 
                 section("ENGINE") {
-                    Picker("", selection: $settings.engine) {
-                        ForEach(EngineKind.allCases, id: \.self) { Text($0.shortName).tag($0) }
+                    // A menu, not segments: five engine names need more than the
+                    // window's width and would stretch the whole page.
+                    Picker("Engine", selection: $settings.engine) {
+                        ForEach(EngineKind.allCases, id: \.self) { Text($0.displayName).tag($0) }
                     }
-                    .pickerStyle(.segmented)
-                    .labelsHidden()
+                    .pickerStyle(.menu)
+                    .fixedSize()
                     .onChange(of: settings.engine) { onEngineChange() }
 
                     switch settings.engine {
@@ -260,6 +262,9 @@ struct SettingsView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.top, 4)
             }
+            // Fixed content width: one wide control must never stretch and
+            // centre the whole page past the window edges.
+            .frame(width: 420 - 56, alignment: .leading)
             .padding(28)
         }
         .frame(width: 420, height: 560)

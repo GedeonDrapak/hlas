@@ -39,7 +39,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let env = ProcessInfo.processInfo.environment
         if env["HLAS_OPEN"] == nil, OnboardingWindow.shouldShow || env["HLAS_STEP"] != nil {
             OnboardingWindow.shared.show()
-        } else {
+        } else if env["HLAS_OPEN"] == nil {
             Task { await requestPermissions() }
         }
 
@@ -68,7 +68,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             .dropFirst()
             .sink { [weak self] _ in self?.recorder.deviceSelectionDidChange() }
 
-        startHotkeyWithRetry()
+        // Visual QA builds (HLAS_OPEN) never touch the keyboard or ask for permissions.
+        if env["HLAS_OPEN"] == nil { startHotkeyWithRetry() }
         rebuildTranscriber()
 
         // First-dictation latency: warm the capture pipeline now and after

@@ -14,6 +14,7 @@
 - Welcome tour: new "Your text" step explains Transcript vs Smart text and the clean-up switches; steps slide in from the side, backgrounds crossfade, the current-step highlight glides, permission cards animate when granted.
 - Shorter menu bar menu: daily actions on top, the tour, updates, diagnostics and legal under Help. "Make smart text" moved into the last-dictation window.
 - Fix "Transcribe Audio File" opening its file dialog behind other apps, so the click seemed to do nothing.
+- Settings: the engine is now a menu. Five segments needed more than the window's width and pushed the whole page past both edges.
 - Credits: "Made by Gedeon Drapák and Edenmakers" with links in Help, About and at the bottom of Settings.
 - The recording waveform is drawn every display frame (up to 120 Hz on ProMotion) and scrolls smoothly between level updates.
 
