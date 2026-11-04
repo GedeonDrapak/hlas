@@ -252,6 +252,13 @@ struct SettingsView: View {
                     .font(.system(size: 11))
                     .foregroundStyle(DS.fg3)
                 }
+
+                Text(.init("Made by [Gedeon Drapák](\(Credits.creatorURL.absoluteString)) and [Edenmakers](\(Credits.studioURL.absoluteString)) in Prague."))
+                    .font(.system(size: 11))
+                    .foregroundStyle(DS.fg3)
+                    .tint(DS.brand)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.top, 4)
             }
             .padding(28)
         }

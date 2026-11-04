@@ -183,6 +183,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(withTitle: "History…", action: #selector(openHistory), keyEquivalent: "")
         menu.addItem(withTitle: "Settings…", action: #selector(openSettings), keyEquivalent: ",")
         let help = NSMenu()
+        help.addItem(withTitle: "About Hlas", action: #selector(showAbout), keyEquivalent: "")
         help.addItem(withTitle: "Welcome Tour…", action: #selector(openOnboarding), keyEquivalent: "")
         if Updater.shared.isAvailable {
             help.addItem(withTitle: "Check for Updates…", action: #selector(checkForUpdates), keyEquivalent: "")
@@ -191,6 +192,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         help.addItem(.separator())
         help.addItem(withTitle: "Privacy", action: #selector(openPrivacy), keyEquivalent: "")
         help.addItem(withTitle: "Third-party Notices", action: #selector(openThirdPartyNotices), keyEquivalent: "")
+        help.addItem(.separator())
+        help.addItem(withTitle: "Made by Gedeon Drapák", action: nil, keyEquivalent: "").isEnabled = false
+        help.addItem(withTitle: "gedeondrapak.com", action: #selector(openCreatorSite), keyEquivalent: "")
+        help.addItem(withTitle: "Edenmakers - AI Film & Advertising", action: #selector(openStudioSite), keyEquivalent: "")
         help.items.forEach { $0.target = self }
         menu.addItem(withTitle: "Help", action: nil, keyEquivalent: "").submenu = help
         menu.addItem(.separator())
@@ -249,10 +254,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.orderFrontStandardAboutPanel(options: [
             .applicationName: "Hlas",
             .applicationVersion: version,
-            .credits: NSAttributedString(string: "Private dictation for Apple Silicon Macs.")
+            .credits: Credits.aboutText
         ])
         NSApp.activate(ignoringOtherApps: true)
     }
+
+    @objc private func openCreatorSite() { NSWorkspace.shared.open(Credits.creatorURL) }
+    @objc private func openStudioSite() { NSWorkspace.shared.open(Credits.studioURL) }
 
     @objc private func openPrivacy() {
         LegalDocuments.open("Privacy")
