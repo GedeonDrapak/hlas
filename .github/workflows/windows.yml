@@ -11,7 +11,12 @@ on:
   # there; publishing triggers this workflow, which attaches the Windows files.
   release:
     types: [published]
+  # Re-attach the Windows files to an existing release (e.g. after a CI fix).
   workflow_dispatch:
+    inputs:
+      release_tag:
+        description: "Existing release tag to attach the Windows files to, e.g. v0.5.0"
+        required: false
 
 defaults:
   run:
@@ -94,7 +99,7 @@ jobs:
       - name: Install NSIS
         run: choco install nsis --no-progress -y
       - name: Build installer
-        working-directory: installer
+        working-directory: windows/installer
         run: |
           $metadata = cargo metadata --no-deps --format-version 1 | ConvertFrom-Json
           $version = $metadata.packages[0].version
@@ -171,7 +176,7 @@ jobs:
 
       # Stable names so README links to releases/latest/download/... never go stale.
       - name: Attach to the release
-        if: github.event_name == 'release'
+        if: github.event_name == 'release' || inputs.release_tag != ''
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -180,7 +185,7 @@ jobs:
           $sums = Get-FileHash Hlas-windows-x64-setup.exe, Hlas-windows-x64.exe -Algorithm SHA256 |
             ForEach-Object { "$($_.Hash.ToLower())  $(Split-Path $_.Path -Leaf)" }
           Set-Content -Encoding ascii Hlas-windows-SHA256SUMS.txt $sums
-          gh release upload "${{ github.event.release.tag_name }}" Hlas-windows-x64-setup.exe Hlas-windows-x64.exe Hlas-windows-SHA256SUMS.txt --clobber
+          gh release upload "${{ github.event.release.tag_name || inputs.release_tag }}" Hlas-windows-x64-setup.exe Hlas-windows-x64.exe Hlas-windows-SHA256SUMS.txt --clobber
 
   vulkan:
     name: Experimental GPU build (Vulkan)
@@ -221,12 +226,12 @@ jobs:
           name: hlas-vulkan-exe
           path: windows/hlas-vulkan.exe
       - name: Attach to the release
-        if: github.event_name == 'release'
+        if: github.event_name == 'release' || inputs.release_tag != ''
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           Copy-Item hlas-vulkan.exe Hlas-windows-x64-vulkan.exe
-          gh release upload "${{ github.event.release.tag_name }}" Hlas-windows-x64-vulkan.exe --clobber
+          gh release upload "${{ github.event.release.tag_name || inputs.release_tag }}" Hlas-windows-x64-vulkan.exe --clobber
 
   clang:
     name: Local engine built with clang (speed comparison)
