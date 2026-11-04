@@ -227,10 +227,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         panel.allowedContentTypes = [.audio]
         panel.allowsMultipleSelection = false
         panel.message = "Transcribe up to 10 minutes of audio using your current engine and output mode."
+        panel.prompt = "Transcribe"
+        // A menu bar app is never active on its own: without this the panel
+        // opens behind the frontmost app and the click seems to do nothing.
+        NSApp.activate(ignoringOtherApps: true)
+        panel.level = .modalPanel
         panel.begin { [weak self] response in
             guard response == .OK, let url = panel.url else { return }
             self?.coordinator.importAudio(url)
         }
+        panel.makeKeyAndOrderFront(nil)
     }
     @objc private func cancelActiveDictation() { coordinator.cancel() }
     @objc private func showLastText() { coordinator.showLast() }
