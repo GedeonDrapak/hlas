@@ -120,11 +120,11 @@ import HlasCore
                 let prepared = await Task.detached(priority: .userInitiated) { AudioPreparation.padded(samples) }.value
                 try Task.checkCancellation()
                 guard let prepared else { finish(.hidden); return }
-                let raw = try await snap.transcriber.transcribe(samples: prepared, language: snap.language,
-                    prompt: snap.prompt, keepAlive: snap.keepAlive).trimmingCharacters(in: .whitespacesAndNewlines)
+                let (raw, retried) = try await snap.transcriber.transcribeRecovering(samples: prepared, language: snap.language,
+                    prompt: snap.prompt, keepAlive: snap.keepAlive)
                 try Task.checkCancellation()
                 guard sessionID == snap.id else { return }
-                Log.write("session=\(snap.id) phase=stt_done elapsed=\(stoppedAt.duration(to: .now)) chars=\(raw.count)")
+                Log.write("session=\(snap.id) phase=stt_done elapsed=\(stoppedAt.duration(to: .now)) chars=\(raw.count) retried_unprimed=\(retried)")
                 guard !raw.isEmpty else { finish(.hidden); return }
                 lastResult = (raw, raw)
                 guard !Hallucinations.filter(raw).isEmpty else {
@@ -272,5 +272,5 @@ import HlasCore
             }
         }
     }
-    func shutdown() { task?.cancel(); hideTask?.cancel(); recorder.shutdown(); LocalTranscriberHolder.shared.unload() }
+    func shutdown() { task?.cancel(); hideTask?.cancel(); recorder.shutdown(); LocalTranscriberHolder.shared.unloadAndWait() }
 }

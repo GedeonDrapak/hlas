@@ -9,6 +9,8 @@
 - Labs in Settings, for experiments that are off by default. First one: spoken symbols ("zavináč" to @, "podtržítko" to _, "gmail tečka com" to gmail.com).
 - Vocabulary words can carry how the engine mishears them. Click a word, add "sídens, sí dens", and Hlas writes Seedance.
 - Ctrl+Option+V pastes your last dictation again, also from the menu bar.
+- Fix lost dictations: when Whisper's Czech priming prompt turns real speech into a subtitle credit ("Titulky vytvořil..."), Hlas now transcribes the same audio again without any prompt instead of discarding it.
+- Free the local model before quitting, so ggml no longer aborts at exit.
 
 ## 0.4.4 - 2026-10-27
 

@@ -19,7 +19,11 @@ final class LocalWhisper: Transcriber, @unchecked Sendable {
 
     static let modelName = "ggml-large-v3-turbo-q5_0.bin"
     static let modelByteCount: Int64 = 574_041_195
-    static var modelURL: URL { modelDir.appendingPathComponent(modelName) }
+    /// HLAS_MODEL_PATH points tests at a model outside Application Support.
+    static var modelURL: URL {
+        ProcessInfo.processInfo.environment["HLAS_MODEL_PATH"].map { URL(fileURLWithPath: $0) }
+            ?? modelDir.appendingPathComponent(modelName)
+    }
     static var modelExists: Bool {
         Int64((try? modelURL.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0) == modelByteCount
     }
@@ -41,6 +45,15 @@ final class LocalWhisper: Transcriber, @unchecked Sendable {
     }
 
     func transcribe(samples: [Float], language: String?, prompt: String?, keepAlive: Double) async throws -> String {
+        try await transcribe(samples: samples, language: language, prompt: prompt, priming: true, keepAlive: keepAlive)
+    }
+
+    func transcribeWithoutPrompt(samples: [Float], language: String?, keepAlive: Double) async throws -> String {
+        try await transcribe(samples: samples, language: language, prompt: nil, priming: false, keepAlive: keepAlive)
+    }
+
+    private func transcribe(samples: [Float], language: String?, prompt: String?, priming: Bool,
+                            keepAlive: Double) async throws -> String {
         guard Self.modelExists else {
             throw NSError(domain: "Hlas", code: 404, userInfo: [
                 NSLocalizedDescriptionKey: "Model not downloaded - open Settings"
@@ -56,7 +69,7 @@ final class LocalWhisper: Transcriber, @unchecked Sendable {
                         monitorMemoryPressure()
                         let began = ContinuousClock.now
                         let cold = ctx == nil
-                        let text = try run(samples: samples, language: language, prompt: prompt, token: token)
+                        let text = try run(samples: samples, language: language, prompt: prompt, priming: priming, token: token)
                         try token.check()
                         Log.write("local inference: cold=\(cold) elapsed=\(began.duration(to: .now))")
                         scheduleUnload(after: keepAlive)
@@ -70,7 +83,8 @@ final class LocalWhisper: Transcriber, @unchecked Sendable {
         } onCancel: { token.cancel() }
     }
 
-    private func run(samples: [Float], language: String?, prompt: String?, token: CancellationToken) throws -> String {
+    private func run(samples: [Float], language: String?, prompt: String?, priming usePriming: Bool,
+                     token: CancellationToken) throws -> String {
         if ctx == nil {
             var cparams = whisper_context_default_params()
             cparams.use_gpu = true
@@ -110,7 +124,7 @@ final class LocalWhisper: Transcriber, @unchecked Sendable {
         case "en": priming = "This is an accurate transcript with proper punctuation and capitalization."
         default: priming = ""
         }
-        let fullPrompt = [priming, prompt ?? ""].filter { !$0.isEmpty }.joined(separator: " ")
+        let fullPrompt = [usePriming ? priming : "", prompt ?? ""].filter { !$0.isEmpty }.joined(separator: " ")
         let promptHolder = fullPrompt.isEmpty ? nil : strdup(fullPrompt)
         defer { promptHolder.map { free($0) } }
         if let promptHolder { params.initial_prompt = UnsafePointer(promptHolder) }
@@ -171,6 +185,9 @@ final class LocalWhisper: Transcriber, @unchecked Sendable {
     }
 
     func unload() { queue.async { [self] in freeModel() } }
+    /// For quitting: ggml's Metal device aborts in its exit-time destructor
+    /// while a model is still loaded, so free it before the process exits.
+    func unloadAndWait() { queue.sync { freeModel() } }
 }
 
 /// Single shared instance so repeated dictations reuse the loaded model.
