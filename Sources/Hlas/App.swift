@@ -36,13 +36,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         setupStatusItem()
         _ = History.shared
         _ = Updater.shared
-        if OnboardingWindow.shouldShow || ProcessInfo.processInfo.environment["HLAS_STEP"] != nil {
+        let env = ProcessInfo.processInfo.environment
+        if env["HLAS_OPEN"] == nil, OnboardingWindow.shouldShow || env["HLAS_STEP"] != nil {
             OnboardingWindow.shared.show()
         } else {
             Task { await requestPermissions() }
         }
 
         _ = coordinator
+        // Visual QA: HLAS_OPEN=settings opens Settings at launch.
+        if ProcessInfo.processInfo.environment["HLAS_OPEN"] == "settings" { openSettings() }
         hotkey.onPress = { [weak self] in self?.coordinator.press() }
         hotkey.onRelease = { [weak self] in self?.coordinator.release() }
         hotkey.onEscape = { [weak self] in self?.coordinator.cancel() }
@@ -166,25 +169,30 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let summary = menu.addItem(withTitle: "Hlas", action: nil, keyEquivalent: "")
         statusSummaryItem = summary
         menu.addItem(.separator())
+        // Daily actions on top; everything you need once lives under Help.
         for mode in OutputMode.allCases {
             let item = menu.addItem(withTitle: mode.title, action: #selector(selectOutputMode(_:)), keyEquivalent: "")
             item.representedObject = mode.rawValue
         }
-        menu.addItem(withTitle: "Transcribe audio file…", action: #selector(importAudio), keyEquivalent: "")
-        let pasteLast = menu.addItem(withTitle: "Paste last dictation", action: #selector(pasteLastText), keyEquivalent: "v")
-        pasteLast.keyEquivalentModifierMask = [.control, .option]
-        menu.addItem(withTitle: "Show last text…", action: #selector(showLastText), keyEquivalent: "")
-        menu.addItem(withTitle: "Make last text smart…", action: #selector(makeLastSmart), keyEquivalent: "")
         menu.addItem(.separator())
-        menu.addItem(withTitle: "Settings…", action: #selector(openSettings), keyEquivalent: ",")
-        if Updater.shared.isAvailable {
-            menu.addItem(withTitle: "Check for Updates…", action: #selector(checkForUpdates), keyEquivalent: "")
-        }
+        let pasteLast = menu.addItem(withTitle: "Paste Last Dictation", action: #selector(pasteLastText), keyEquivalent: "v")
+        pasteLast.keyEquivalentModifierMask = [.control, .option]
+        menu.addItem(withTitle: "Show Last Dictation…", action: #selector(showLastText), keyEquivalent: "")
+        menu.addItem(withTitle: "Transcribe Audio File…", action: #selector(importAudio), keyEquivalent: "")
+        menu.addItem(.separator())
         menu.addItem(withTitle: "History…", action: #selector(openHistory), keyEquivalent: "")
-        menu.addItem(withTitle: "Welcome Tour…", action: #selector(openOnboarding), keyEquivalent: "")
-        menu.addItem(withTitle: "Privacy", action: #selector(openPrivacy), keyEquivalent: "")
-        menu.addItem(withTitle: "Third-party notices", action: #selector(openThirdPartyNotices), keyEquivalent: "")
-        menu.addItem(withTitle: "Export Diagnostics…", action: #selector(exportDiagnostics), keyEquivalent: "")
+        menu.addItem(withTitle: "Settings…", action: #selector(openSettings), keyEquivalent: ",")
+        let help = NSMenu()
+        help.addItem(withTitle: "Welcome Tour…", action: #selector(openOnboarding), keyEquivalent: "")
+        if Updater.shared.isAvailable {
+            help.addItem(withTitle: "Check for Updates…", action: #selector(checkForUpdates), keyEquivalent: "")
+        }
+        help.addItem(withTitle: "Export Diagnostics…", action: #selector(exportDiagnostics), keyEquivalent: "")
+        help.addItem(.separator())
+        help.addItem(withTitle: "Privacy", action: #selector(openPrivacy), keyEquivalent: "")
+        help.addItem(withTitle: "Third-party Notices", action: #selector(openThirdPartyNotices), keyEquivalent: "")
+        help.items.forEach { $0.target = self }
+        menu.addItem(withTitle: "Help", action: nil, keyEquivalent: "").submenu = help
         menu.addItem(.separator())
         let quit = menu.addItem(withTitle: "Quit Hlas", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         menu.items.forEach { $0.target = self }
@@ -223,7 +231,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     @objc private func showLastText() { coordinator.showLast() }
     @objc private func pasteLastText() { coordinator.pasteLast() }
     @objc private func checkForUpdates() { Updater.shared.checkForUpdates() }
-    @objc private func makeLastSmart() { coordinator.makeLastSmart() }
 
     @objc private func openSettings() {
         SettingsWindow.shared.show(appDelegate: self)
@@ -285,7 +292,6 @@ extension AppDelegate: NSMenuItemValidation {
         if menuItem.action == #selector(cancelActiveDictation) { return coordinator.state != .idle }
         if menuItem.action == #selector(showLastText) { return coordinator.lastResult != nil }
         if menuItem.action == #selector(pasteLastText) { return coordinator.hasLast && coordinator.state == .idle }
-        if menuItem.action == #selector(makeLastSmart) { return coordinator.lastResult != nil && coordinator.state == .idle }
         if menuItem.action == #selector(importAudio) { return coordinator.state == .idle }
         return true
     }

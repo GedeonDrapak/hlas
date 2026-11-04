@@ -57,7 +57,7 @@ make install   # xcodegen → xcodebuild (Release) → /Applications/Hlas.app �
 - **Synthetic dictation:** `swift tools/fakefn.swift` posts an Fn down+up (1.5 s hold). Full
   pipeline fires without touching the keyboard. Check debug.log afterwards.
 - **Visual QA:** `HLAS_STEP=N /Applications/Hlas.app/Contents/MacOS/Hlas` opens onboarding at
-  step N (0-3). Loop: build → launch with env → `screencapture -x shot.png` → read the image →
+  step N (0-4). Loop: build → launch with env → `screencapture -x shot.png` → read the image →
   check contrast/layout - for EVERY step, on EVERY gradient. This caught real bugs twice.
 - **RAM check:** `ps -o rss= -p $(pgrep -x Hlas)` - hidden idle should stay around 60-70 MB; the whisper model
   (~800 MB) must appear only during transcription and unload after `modelKeepAliveSeconds`.

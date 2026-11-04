@@ -4,13 +4,13 @@ import SwiftUI
 @MainActor final class ResultWindow {
     static let shared = ResultWindow()
     private var window: NSWindow?
-    func show(text: String, original: String, message: String) {
+    func show(text: String, original: String, message: String, onMakeSmart: (() -> Void)? = nil) {
         let window = self.window ?? NSWindow(contentRect: NSRect(x: 0, y: 0, width: 520, height: 390),
             styleMask: [.titled, .closable, .resizable], backing: .buffered, defer: false)
         window.title = "Your text"
         window.isReleasedWhenClosed = false
         window.minSize = NSSize(width: 420, height: 320)
-        let host = NSHostingView(rootView: ResultView(text: text, original: original, message: message))
+        let host = NSHostingView(rootView: ResultView(text: text, original: original, message: message, onMakeSmart: onMakeSmart))
         host.sizingOptions = []
         window.contentView = host
         if self.window == nil { window.setContentSize(NSSize(width: 520, height: 390)) }
@@ -25,6 +25,7 @@ private struct ResultView: View {
     let text: String
     let original: String
     let message: String
+    var onMakeSmart: (() -> Void)?
     @State private var showOriginal = false
     @State private var copied = false
     var body: some View {
@@ -37,6 +38,9 @@ private struct ResultView: View {
             HStack {
                 if original != text { Toggle("Original transcript", isOn: $showOriginal).toggleStyle(.switch) }
                 Spacer()
+                if let onMakeSmart, original == text {
+                    Button("Make smart text", action: onMakeSmart)
+                }
                 Button(copied ? "Copied" : "Copy text") {
                     NSPasteboard.general.clearContents()
                     NSPasteboard.general.setString(showOriginal ? original : text, forType: .string)

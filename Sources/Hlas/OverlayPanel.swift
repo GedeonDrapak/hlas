@@ -21,9 +21,13 @@ final class OverlayModel: ObservableObject {
     @Published var sourceIcon: String?
     @Published var sourceName: String?
 
+    /// When the newest level arrived. The waveform scrolls continuously
+    /// between arrivals instead of jumping once per level.
+    private(set) var pushedAt = Date()
     func push(level: Float) {
         levels.removeFirst()
         levels.append(level)
+        pushedAt = Date()
     }
 }
 
@@ -233,15 +237,29 @@ struct OverlayView: View {
         .animation(reduceMotion ? nil : .easeOut(duration: 0.18), value: model.state)
     }
 
+    /// Drawn every display frame (120 Hz on ProMotion) by TimelineView +
+    /// Canvas. Levels arrive every 50 ms; in between the bars slide left by
+    /// the elapsed fraction and ease toward their new height, so motion stays
+    /// smooth at any refresh rate. Reduce Motion pauses the timeline.
     private func waveform(color: Color) -> some View {
-        HStack(spacing: 2.5) {
-            ForEach(Array(model.levels.enumerated()), id: \.offset) { _, level in
-                Capsule()
-                    .fill(color)
-                    .frame(width: 2.5, height: max(3, CGFloat(level) * 22))
+        let bar: CGFloat = 2.5, gap: CGFloat = 2.5, pitch = bar + gap
+        let count = model.levels.count
+        return TimelineView(.animation(minimumInterval: nil, paused: reduceMotion)) { timeline in
+            Canvas { context, size in
+                let levels = model.levels
+                let progress = reduceMotion ? 1 : min(1, max(0, timeline.date.timeIntervalSince(model.pushedAt) / 0.05))
+                let eased = 1 - pow(1 - progress, 3)
+                for i in levels.indices {
+                    let x = CGFloat(i) * pitch + (1 - CGFloat(progress)) * pitch
+                    // The newest bar grows in; the oldest fades out at the left edge.
+                    let grow = i == levels.count - 1 ? CGFloat(eased) : 1
+                    let height = max(3, CGFloat(levels[i]) * 22 * grow)
+                    let fade = min(1, x / pitch)
+                    let rect = CGRect(x: x, y: (size.height - height) / 2, width: bar, height: height)
+                    context.fill(Capsule().path(in: rect), with: .color(color.opacity(fade)))
+                }
             }
         }
-        .frame(height: 24)
-        .animation(reduceMotion ? nil : .linear(duration: 0.06), value: model.levels)
+        .frame(width: CGFloat(count) * pitch, height: 24)
     }
 }

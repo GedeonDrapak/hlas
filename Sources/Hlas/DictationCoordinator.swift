@@ -245,7 +245,8 @@ import HlasCore
     var hasLast: Bool { lastResult != nil || !History.shared.entries.isEmpty }
     func showLast() {
         guard let lastResult else { return }
-        ResultWindow.shared.show(text: lastResult.text, original: lastResult.raw, message: "Your last dictation")
+        ResultWindow.shared.show(text: lastResult.text, original: lastResult.raw, message: "Your last dictation",
+                                 onMakeSmart: { [weak self] in self?.makeLastSmart() })
     }
     func makeLastSmart() {
         guard state == .idle, let lastResult else { return }

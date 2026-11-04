@@ -47,6 +47,7 @@ struct SettingsView: View {
     var onEngineChange: () -> Void
 
     var body: some View {
+        ScrollViewReader { scroller in
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
                 header
@@ -113,45 +114,6 @@ struct SettingsView: View {
 
                 section("MICROPHONE") {
                     InputDevicePicker()
-                }
-
-                section("GENERAL") {
-                    Toggle(isOn: Binding(
-                        get: { launchAtLogin },
-                        set: updateLaunchAtLogin
-                    )) {
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text("Start Hlas at login").font(.system(size: 12)).foregroundStyle(DS.fg)
-                            Text("Keep dictation ready in the menu bar.")
-                                .font(.system(size: 10)).foregroundStyle(DS.fg3)
-                        }
-                    }
-                    .toggleStyle(.switch)
-                    .tint(DS.brand)
-                    if Updater.shared.isAvailable {
-                        toggle("Check for updates automatically", detail: "Once a day, from GitHub. Nothing about you is sent.",
-                               isOn: Binding(get: { updater.automaticallyChecks }, set: { updater.automaticallyChecks = $0 }))
-                    }
-                    if let launchAtLoginError {
-                        Text(launchAtLoginError)
-                            .font(.system(size: 10))
-                            .foregroundStyle(DS.destructive)
-                    }
-                    HStack(spacing: 12) {
-                        Button("Privacy") { LegalDocuments.open("Privacy") }
-                        Button("Third-party notices") { LegalDocuments.open("ThirdPartyNotices") }
-                    }
-                    .buttonStyle(.borderless)
-                    .font(.system(size: 11))
-                    .foregroundStyle(DS.fg3)
-                }
-
-                section("SUPPORT") {
-                    Text("Export a small troubleshooting file. It contains no transcripts or API keys.")
-                        .font(.caption)
-                        .foregroundStyle(DS.fg3)
-                    Button("Export diagnostics…") { DiagnosticsExporter.present() }
-                        .buttonStyle(.bordered)
                 }
 
                 section("VOCABULARY") {
@@ -241,6 +203,55 @@ struct SettingsView: View {
                         .background(RoundedRectangle(cornerRadius: DS.radiusSm).fill(DS.surface))
                     }
                 }
+
+                section("GENERAL") {
+                    Toggle(isOn: Binding(
+                        get: { launchAtLogin },
+                        set: updateLaunchAtLogin
+                    )) {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Start Hlas at login").font(.system(size: 12)).foregroundStyle(DS.fg)
+                            Text("Keep dictation ready in the menu bar.")
+                                .font(.system(size: 10)).foregroundStyle(DS.fg3)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .toggleStyle(.switch)
+                    .tint(DS.brand)
+                    if Updater.shared.isAvailable {
+                        toggle("Check for updates automatically", detail: "Once a day, from GitHub. Nothing about you is sent.",
+                               isOn: Binding(get: { updater.automaticallyChecks }, set: { updater.automaticallyChecks = $0 }))
+                    }
+                    if let launchAtLoginError {
+                        Text(launchAtLoginError)
+                            .font(.system(size: 10))
+                            .foregroundStyle(DS.destructive)
+                    }
+                    HStack(spacing: 12) {
+                        Button("Privacy") { LegalDocuments.open("Privacy") }
+                        Button("Third-party notices") { LegalDocuments.open("ThirdPartyNotices") }
+                    }
+                    .buttonStyle(.borderless)
+                    .font(.system(size: 11))
+                    .foregroundStyle(DS.fg3)
+                }
+
+                section("SUPPORT") {
+                    Text("Export a small troubleshooting file. It contains no transcripts or API keys.")
+                        .font(.caption)
+                        .foregroundStyle(DS.fg3)
+                    Button("Export diagnostics…") { DiagnosticsExporter.present() }
+                        .buttonStyle(.bordered)
+                    HStack(spacing: 12) {
+                        Button("Welcome tour") { OnboardingWindow.shared.show() }
+                        if Updater.shared.isAvailable {
+                            Button("Check for updates") { Updater.shared.checkForUpdates() }
+                        }
+                    }
+                    .buttonStyle(.borderless)
+                    .font(.system(size: 11))
+                    .foregroundStyle(DS.fg3)
+                }
             }
             .padding(28)
         }
@@ -255,6 +266,11 @@ struct SettingsView: View {
         .preferredColorScheme(.dark)
         .onAppear {
             launchAtLogin = SMAppService.mainApp.status == .enabled
+            // Visual QA: HLAS_SETTINGS_SECTION=LABS opens scrolled to that section.
+            if let target = ProcessInfo.processInfo.environment["HLAS_SETTINGS_SECTION"] {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { scroller.scrollTo(target, anchor: .top) }
+            }
+        }
         }
     }
 
@@ -327,6 +343,7 @@ struct SettingsView: View {
                 Text(detail).font(.system(size: 10)).foregroundStyle(DS.fg3)
                     .fixedSize(horizontal: false, vertical: true)
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .toggleStyle(.switch)
         .tint(DS.brand)
@@ -359,6 +376,7 @@ struct SettingsView: View {
                 .foregroundStyle(DS.fg3)
             content()
         }
+        .id(title)
     }
 }
 

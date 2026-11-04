@@ -11,6 +11,9 @@
 - Ctrl+Option+V pastes your last dictation again, also from the menu bar.
 - Fix lost dictations: when Whisper's Czech priming prompt turns real speech into a subtitle credit ("Titulky vytvořil..."), Hlas now transcribes the same audio again without any prompt instead of discarding it.
 - Free the local model before quitting, so ggml no longer aborts at exit.
+- Welcome tour: new "Your text" step explains Transcript vs Smart text and the clean-up switches; steps slide in from the side, backgrounds crossfade, the current-step highlight glides, permission cards animate when granted.
+- Shorter menu bar menu: daily actions on top, the tour, updates, diagnostics and legal under Help. "Make smart text" moved into the last-dictation window.
+- The recording waveform is drawn every display frame (up to 120 Hz on ProMotion) and scrolls smoothly between level updates.
 
 ## 0.4.4 - 2026-10-27
 
