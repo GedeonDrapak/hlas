@@ -9,7 +9,10 @@ use windows::Win32::UI::WindowsAndMessaging::{
     MessageBoxW, IDYES, MB_ICONINFORMATION, MB_OK, MB_SETFOREGROUND, MB_TOPMOST, MB_YESNO,
 };
 
-const API: &str = "https://api.github.com/repos/GedeonDrapak/hlas-win/releases?per_page=10";
+/// One repository ships both apps. A release counts for Windows only once its
+/// Windows installer is attached (CI adds it a few minutes after publishing).
+const API: &str = "https://api.github.com/repos/GedeonDrapak/hlas/releases?per_page=10";
+const WINDOWS_ASSET: &str = "Hlas-windows-x64-setup.exe";
 
 fn latest() -> anyhow::Result<(String, String)> {
     let client = reqwest::blocking::Client::builder()
@@ -22,6 +25,13 @@ fn latest() -> anyhow::Result<(String, String)> {
         .into_iter()
         .flatten()
         .filter(|r| !r["draft"].as_bool().unwrap_or(false))
+        .filter(|r| {
+            r["assets"]
+                .as_array()
+                .into_iter()
+                .flatten()
+                .any(|a| a["name"].as_str() == Some(WINDOWS_ASSET))
+        })
         .filter_map(|r| {
             Some((
                 r["tag_name"].as_str()?.to_string(),

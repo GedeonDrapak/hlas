@@ -12,8 +12,8 @@ of RAM.
 
 ## Install
 
-Download `Hlas-setup.exe` from the
-[latest release](https://github.com/GedeonDrapak/hlas-win/releases). It
+Download `Hlas-windows-x64-setup.exe` from the
+[latest release](https://github.com/GedeonDrapak/hlas/releases). It
 installs per user, needs no administrator rights and registers a normal
 uninstaller.
 

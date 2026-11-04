@@ -8,7 +8,7 @@ Unicode true
 !define COMPANY "Gedeon Drapak"
 !define DESCRIPTION "Ultra-minimal dictation"
 !ifndef VERSION
-  !define VERSION "0.2.0"
+  !define VERSION "0.5.0"
 !endif
 !ifndef BIN_DIR
   !define BIN_DIR "..\target\release"
@@ -85,7 +85,7 @@ Section "Install"
   WriteRegStr HKCU "${UNINST_KEY}" "DisplayIcon" "$INSTDIR\hlas.ico"
   WriteRegStr HKCU "${UNINST_KEY}" "DisplayVersion" "${VERSION}"
   WriteRegStr HKCU "${UNINST_KEY}" "Publisher" "${COMPANY}"
-  WriteRegStr HKCU "${UNINST_KEY}" "URLInfoAbout" "https://github.com/GedeonDrapak/hlas-win"
+  WriteRegStr HKCU "${UNINST_KEY}" "URLInfoAbout" "https://github.com/GedeonDrapak/hlas"
   WriteRegStr HKCU "${UNINST_KEY}" "InstallLocation" "$INSTDIR"
   WriteRegStr HKCU "${UNINST_KEY}" "UninstallString" '"$INSTDIR\uninstall.exe"'
   WriteRegDWORD HKCU "${UNINST_KEY}" "EstimatedSize" 8000

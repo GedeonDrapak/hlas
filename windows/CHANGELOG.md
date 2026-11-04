@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.0 - 2026-11-04
+
+- Hlas for Windows moved into the Hlas repository (`windows/`) and now ships in the same GitHub release as Hlas for macOS, with the same version number. The installer is `Hlas-windows-x64-setup.exe`.
+- "Check for updates" reads releases of GedeonDrapak/hlas and only offers a release that has the Windows installer attached.
+
 ## 0.2.0 - 2026-10-09
 
 Rebuilt around a platform-independent, unit-tested core (`src/core`) and a

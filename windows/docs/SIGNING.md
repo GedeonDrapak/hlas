@@ -34,7 +34,7 @@ reputation.
    its name.
 6. **Let GitHub sign without secrets that expire:** create an Entra app
    registration (or user-assigned managed identity) with a **federated
-   credential** for `GedeonDrapak/hlas-win`, entity type *Tag* (pattern `v*`)
+   credential** for `GedeonDrapak/hlas`, entity type *Tag* (pattern `v*`)
    and *Branch* `master`. Give it the **Artifact Signing Certificate Profile
    Signer** role on the signing account (older docs call it "Trusted Signing
    Certificate Profile Signer").

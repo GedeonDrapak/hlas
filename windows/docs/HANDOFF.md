@@ -1,5 +1,13 @@
 # Hlas for Windows - handoff (2026-10-09)
 
+> **2026-11-04: moved.** Hlas for Windows now lives in `windows/` of
+> [GedeonDrapak/hlas](https://github.com/GedeonDrapak/hlas), imported with its full history from
+> hlas-win `ui-dark` (which contains `parity-0.2`). CI runs from the root `.github/workflows/windows.yml`.
+> One version for both apps (0.5.0); a published GitHub release gets the Windows files attached by CI.
+> Not yet ported from macOS 0.5.0: filler removal, spoken line breaks, Labs spoken symbols,
+> vocabulary sounds-like (`Sources/HlasCore/TextCleanup.swift` + its tests are the spec), paste last
+> dictation, Sparkle-style auto-update.
+
 For whoever continues the repo (Tomáš). Branch **`parity-0.2`**, version
 **0.2.0**, not merged and not released yet. Everything below was built and
 checked on a Mac plus GitHub's Windows runners. **Nobody has run it on a real

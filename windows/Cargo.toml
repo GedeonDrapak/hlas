@@ -1,11 +1,11 @@
 [package]
 name = "hlas"
-version = "0.2.0"
+version = "0.5.0"
 edition = "2021"
 description = "Ultra-minimal dictation for Windows. Hold a key, speak, release."
 authors = ["Gedeon Drapak"]
 license = "MIT"
-repository = "https://github.com/GedeonDrapak/hlas-win"
+repository = "https://github.com/GedeonDrapak/hlas"
 
 [[bin]]
 name = "hlas"
