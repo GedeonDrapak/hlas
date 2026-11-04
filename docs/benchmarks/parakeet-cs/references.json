@@ -1,0 +1,34 @@
+{
+  "voices": {
+    "jan_m": "KIDKfqJyZ6ASuyzsKfh5",
+    "hana_f": "2qbJHyAaz7tHCfVZS6z3",
+    "marketa_f": "Nr9bRiFsgPeaoVggMD2V",
+    "zazy_m": "U48DQ1c9SVmD2BVCSiHL"
+  },
+  "tts_model": "eleven_multilingual_v2",
+  "utterances": [
+    {"id": "s01", "voice": "jan_m", "tags": ["slack", "names", "tech"], "text": "Ahoj Ondro, finální render je nahraný na Google Drive ve složce pro klienta. Mrkni na to prosím do zítřka do deseti, ať to stihneme poslat."},
+    {"id": "s02", "voice": "hana_f", "tags": ["email", "numbers"], "text": "Dobrý den, děkuji za zpětnou vazbu. Úpravy zapracujeme do pátku a druhou verzi vám pošleme nejpozději 14. listopadu."},
+    {"id": "s03", "voice": "zazy_m", "tags": ["numbers"], "text": "Faktura je na 3 500 korun bez DPH a splatnost je sedm dní. Zálohu ve výši padesáti procent prosím pošlete do konce týdne."},
+    {"id": "s04", "voice": "marketa_f", "tags": ["list"], "text": "Nákupní seznam: dvě mléka, rohlíky, máslo, šest vajec, kilo brambor, česnek, kyselé okurky a něco k pití na víkend."},
+    {"id": "s05", "voice": "jan_m", "tags": ["note", "names"], "text": "Poznámka pro mě: zavolat Darině kvůli smlouvě, zkontrolovat rozpočet na leden a připomenout Tomáši Hubálkovi, že potřebujeme Windows verzi Hlasu."},
+    {"id": "s06", "voice": "hana_f", "tags": ["tech"], "text": "Ten záběr v Seedance vypadá dobře, ale pohyb kamery je moc rychlý. Zkus to přegenerovat v Klingu s delším promptem a bez hudby."},
+    {"id": "s07", "voice": "zazy_m", "tags": ["tech"], "text": "Higgsfield nám zase spálil kredity na nepovedené verze. Příště nejdřív udělej levný draft a finál renderuj až po schválení."},
+    {"id": "s08", "voice": "marketa_f", "tags": ["diacritics"], "text": "Příští týden jedeme do Brna, kde budeme natáčet u řeky. Půjčíme si dodávku a vrátíme ji v úterý ráno před devátou."},
+    {"id": "s09", "voice": "jan_m", "tags": ["numbers", "names"], "text": "Schůzka s klientem se přesouvá na čtvrtek ve 14:30. Darina pošle pozvánku a já připravím krátkou prezentaci s ukázkami."},
+    {"id": "s10", "voice": "hana_f", "tags": ["tech"], "text": "Deadline na storyboard je v pondělí. Pokud to nestihneme, musíme posunout celý harmonogram natáčení o týden."},
+    {"id": "s11", "voice": "zazy_m", "tags": ["email", "long"], "text": "Dobrý den, pane Nováku, v příloze posílám cenovou nabídku na kampaň. Cena zahrnuje tři kola revizí, finální úpravu barev a export pro sociální sítě i pro televizi. V případě dotazů mi klidně zavolejte."},
+    {"id": "s12", "voice": "marketa_f", "tags": ["note", "diacritics"], "text": "Nezapomeň, že zítra v osm ráno máš zubaře a odpoledne vyzvedáváš balík na poště. Klíče od auta jsou v šuplíku v kuchyni."},
+    {"id": "s13", "voice": "jan_m", "tags": ["tech"], "text": "Pushni to na branch a otevři pull request. Já to pak projdu a mergnu, jakmile projdou testy."},
+    {"id": "s14", "voice": "hana_f", "tags": ["numbers"], "text": "Celkový rozpočet projektu je 165 000 korun, z toho 40 procent jde na generování a zbytek na postprodukci a zvuk."},
+    {"id": "s15", "voice": "zazy_m", "tags": ["numbers"], "text": "Dnes je středa 4. listopadu 2026 a do konce roku musíme dokončit ještě dva projekty a jeden pitch."},
+    {"id": "s16", "voice": "marketa_f", "tags": ["names"], "text": "Tomáš Hubálek dnes dodělá instalátor pro Windows a Ondra ho večer otestuje na svém notebooku."},
+    {"id": "s17", "voice": "jan_m", "tags": ["slack", "colloquial"], "text": "Jo, v pohodě, dám vědět, až to bude hotový. Teď jsem na place, takže mi to chvíli potrvá."},
+    {"id": "s18", "voice": "hana_f", "tags": ["tech"], "text": "Voiceover nahrajeme přes ElevenLabs, titulky vyexportujeme ze střihu a celý projekt pak nasdílíme klientovi přes odkaz na review."},
+    {"id": "s19", "voice": "zazy_m", "tags": ["long", "names"], "text": "Chtěl bych shrnout dnešní poradu. Za prvé, Mindfall Protocol pošleme na další dva festivaly. Za druhé, na web doplníme nové reference a fotky z premiéry. Za třetí, do konce měsíce musíme najít nového střihače, protože současná kapacita nestačí."},
+    {"id": "s20", "voice": "marketa_f", "tags": ["diacritics"], "text": "Účetní uzávěrka je hotová, ale chybí nám dvě účtenky z čerpací stanice a jedna faktura za hudební licenci."},
+    {"id": "s21", "voice": "jan_m", "tags": ["diacritics", "tongue-twister"], "text": "Tři sta třicet tři stříbrných stříkaček stříkalo přes tři sta třicet tři stříbrných střech."}
+  ],
+  "noisy_copies": ["s01", "s03", "s06", "s12", "s19"],
+  "noise": "pink noise mixed at 20 dB SNR (ffmpeg anoisesrc, RMS matched)"
+}
