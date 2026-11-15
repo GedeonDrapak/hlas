@@ -1,0 +1,41 @@
+<!doctype html><html lang="cs"><head><meta charset="utf-8"><title>Náhled: Google a sdílení</title>
+<style>
+body{margin:0;background:#fff;font-family:Arial,sans-serif;color:#202124;padding:32px 40px}
+h2{font:600 13px/1 -apple-system,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#888;margin:36px 0 14px}
+.serp{max-width:650px}
+.site{display:flex;align-items:center;gap:12px}
+.fav{width:28px;height:28px;border-radius:50%;background:#f1f3f4;display:flex;align-items:center;justify-content:center}
+.fav img{width:18px;height:18px}
+.name{font-size:14px;color:#202124;line-height:20px}.url{font-size:12px;color:#4d5156;line-height:18px}
+.title{font-size:20px;line-height:26px;color:#1a0dab;margin:8px 0 3px}
+.desc{font-size:14px;line-height:22px;color:#4d5156}
+.dark{background:#1f1f1f;padding:24px;border-radius:12px;max-width:650px;margin-top:16px}
+.dark .name{color:#e8eaed}.dark .url{color:#bdc1c6}.dark .title{color:#99c3ff}.dark .desc{color:#bdc1c6}.dark .fav{background:#303134}
+.card{width:500px;border-radius:14px;overflow:hidden;border:1px solid #ddd;font-family:-apple-system,sans-serif}
+.card img{width:100%;display:block}.card div{padding:10px 14px;background:#f5f5f5}
+.card small{color:#777;font-size:12px}.card b{display:block;font-size:15px;margin-top:2px}
+.row{display:flex;gap:28px;flex-wrap:wrap}
+.tab{display:inline-flex;align-items:center;gap:8px;background:#dee1e6;padding:8px 14px;border-radius:10px 10px 0 0;font-size:13px}
+.tab img{width:16px;height:16px}
+</style></head><body>
+<h2>Google, světlý režim</h2>
+<div class="serp"><div class="site"><div class="fav"><img src="/favicon.ico"></div><div><div class="name">Hlas</div><div class="url">https://hlas.dev</div></div></div>
+<div class="title" id="t1"></div><div class="desc" id="d1"></div></div>
+<h2>Google, tmavý režim</h2>
+<div class="dark serp"><div class="site"><div class="fav"><img src="/favicon.ico"></div><div><div class="name">Hlas</div><div class="url">https://hlas.dev</div></div></div>
+<div class="title" id="t2"></div><div class="desc" id="d2"></div></div>
+<h2>Záložka v prohlížeči</h2>
+<div class="tab"><img src="/favicon.svg"> Hlas: diktování česky pro Mac a Windows</div>
+<h2>Sdílení odkazu (Slack, LinkedIn, Messenger, X)</h2>
+<div class="row">
+<div class="card"><img src="/assets/og-cs.jpg"><div><small>hlas.dev</small><b>Hlas: diktování pro Mac a Windows, které umí česky</b></div></div>
+<div class="card"><img src="/assets/og.jpg"><div><small>hlas.dev/en/</small><b>Hlas: dictation for Mac and Windows</b></div></div>
+</div>
+<h2>Ikony</h2>
+<div class="row" style="align-items:end"><img src="/icon-512.png" width="96"><img src="/apple-touch-icon.png" width="60" style="border-radius:14px"><img src="/favicon.svg" width="32"><img src="/favicon.ico" width="16"></div>
+<script>
+fetch('/').then(r=>r.text()).then(h=>{const d=new DOMParser().parseFromString(h,'text/html');
+const t=d.title, m=d.querySelector('meta[name=description]').content;
+const cut=(s,n)=>s.length>n?s.slice(0,n).replace(/\s+\S*$/,'')+' ...':s;
+for(const i of [1,2]){document.getElementById('t'+i).textContent=cut(t,60);document.getElementById('d'+i).textContent=cut(m,158);}});
+</script></body></html>

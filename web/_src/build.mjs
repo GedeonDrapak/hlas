@@ -55,7 +55,6 @@ export function loadLocales() {
 }
 
 const logo = (n = 22) => `<svg width="${n}" height="${n}" viewBox="0 0 34 34" aria-hidden="true"><rect x="4" y="9" width="7" height="16" rx="3.5" fill="#00E67A"/><rect x="15" y="3" width="7" height="28" rx="3.5" fill="#EDEDED"/><circle cx="29" cy="17" r="3.5" fill="#00E67A"/></svg>`;
-const favicon = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'%3E%3Crect x='4' y='9' width='7' height='16' rx='3.5' fill='%2300E67A'/%3E%3Crect x='15' y='3' width='7' height='28' rx='3.5' fill='%23EDEDED'/%3E%3Ccircle cx='29' cy='17' r='3.5' fill='%2300E67A'/%3E%3C/svg%3E`;
 const apple = `<svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.8-3-.8c-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7 2-1.1 2.8-2.3c.9-1.3 1.2-2.5 1.3-2.6-.1 0-2.5-1-2.5-3.8zM14.1 5.8c.6-.8 1.1-1.9 1-3-1 0-2.1.6-2.8 1.4-.6.7-1.2 1.8-1 2.9 1.1.1 2.2-.5 2.8-1.3z"/></svg>`;
 const win = `<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 5.5l7.5-1v7.2H3zM11.5 4.3L21 3v8.7h-9.5zM3 12.7h7.5v7.2L3 18.8zM11.5 12.7H21V21l-9.5-1.3z"/></svg>`;
 
@@ -73,6 +72,9 @@ export function siteLinks(code) {
   };
 }
 
+// Site name "Hlas" above the result in Google comes from this.
+const WEBSITE_LD = { '@context': 'https://schema.org', '@type': 'WebSite', name: 'Hlas', alternateName: 'hlas.dev', url: 'https://hlas.dev/' };
+
 export function head({ code, hreflang, dir, title, description, path, alternates, ogTitle, ogDescription, jsonld = [] }) {
   const alt = (alternates || []).map(([h, p]) => `<link rel="alternate" hreflang="${h}" href="${SITE}${p}">`).join('\n');
   return `<!doctype html>
@@ -89,16 +91,19 @@ ${alt}
 <meta property="og:url" content="${SITE}${path}">
 <meta property="og:title" content="${esc(ogTitle || title)}">
 <meta property="og:description" content="${esc(ogDescription || description)}">
-<meta property="og:image" content="${SITE}/assets/og.jpg">
+<meta property="og:image" content="${SITE}/assets/${code === 'cs' || code === 'sk' ? 'og-cs.jpg' : 'og.jpg'}">
+<meta property="og:image:alt" content="Hlas">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="${ogLocale[code] || 'en_US'}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#121212">
-<link rel="icon" href="${favicon}">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" as="font" type="font/otf" href="/assets/fonts/Satoshi-Medium.otf" crossorigin>
 <link rel="stylesheet" href="/styles.css?v=${CSSV}">
-${jsonld.map((o) => `<script type="application/ld+json">${json(o)}</script>`).join('\n')}
+${[WEBSITE_LD, ...jsonld].map((o) => `<script type="application/ld+json">${json(o)}</script>`).join('\n')}
 </head>
 <body class="${systemFont.has(code) ? 'sysfont' : ''}">`;
 }
