@@ -20,7 +20,7 @@
   },
   "hero": {
     "badge": "Újdonság: Hlas Cloud korlátlanul, évi 35 €-ért",
-    "h1": "Diktálás Macre és Windowsra, amely magyarul is ír.",
+    "h1": "Diktálás Macre és Windowsra,|amely *magyarul* is ír.",
     "sub": "Tartsd lenyomva az <kbd>Fn</kbd> billentyűt, beszélj, engedd el. A szöveg oda kerül, ahol a kurzor áll, bármelyik appban. Az app 4 MB, és üresjáratban 60 MB RAM-ot használ.",
     "dlMac": "Ingyenes letöltés Macre",
     "dlWin": "Windows (béta)",

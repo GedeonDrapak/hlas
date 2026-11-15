@@ -20,7 +20,7 @@
   },
   "hero": {
     "badge": "Novidade: Hlas Cloud, ilimitado por € 35 ao ano",
-    "h1": "Ditado para Mac e Windows que fala português.",
+    "h1": "Ditado para Mac e Windows|que fala *português*.",
     "sub": "Segure <kbd>Fn</kbd>, fale e solte. O texto aparece onde está o seu cursor, em qualquer app. São só 4 MB e 60 MB de RAM em repouso.",
     "dlMac": "Baixar grátis para Mac",
     "dlWin": "Windows (beta)",

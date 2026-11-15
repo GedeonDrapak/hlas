@@ -20,7 +20,7 @@
   },
   "hero": {
     "badge": "Nyhed: Hlas Cloud, ubegrænset for 35 € om året",
-    "h1": "Diktering til Mac og Windows, der taler dansk.",
+    "h1": "Diktering til Mac og Windows,|der taler *dansk*.",
     "sub": "Hold <kbd>Fn</kbd> nede, tal, slip. Teksten lander, hvor markøren står, i enhver app. Appen fylder 4 MB og bruger 60 MB RAM i ro.",
     "dlMac": "Hent gratis til Mac",
     "dlWin": "Windows (beta)",

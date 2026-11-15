@@ -20,7 +20,7 @@
   },
   "hero": {
     "badge": "Mới: Hlas Cloud, không giới hạn với 35 € mỗi năm",
-    "h1": "Gõ bằng giọng nói cho Mac và Windows, nói được tiếng Việt.",
+    "h1": "Gõ bằng giọng nói cho Mac và Windows,|nói được *tiếng Việt*.",
     "sub": "Giữ <kbd>Fn</kbd>, nói, thả ra. Chữ hiện ngay tại con trỏ, trong mọi ứng dụng. Ứng dụng chỉ 4 MB và dùng 60 MB RAM khi rảnh.",
     "dlMac": "Tải miễn phí cho Mac",
     "dlWin": "Windows (beta)",

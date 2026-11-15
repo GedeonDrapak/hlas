@@ -20,7 +20,7 @@
   },
   "hero": {
     "badge": "Novo: Hlas Cloud, neomejeno za 35 € na leto",
-    "h1": "Narekovanje za Mac in Windows, ki govori slovensko.",
+    "h1": "Narekovanje za Mac in Windows,|ki govori *slovensko*.",
     "sub": "Drži <kbd>Fn</kbd>, govori, spusti. Besedilo se pojavi tam, kjer je kazalec, v katerikoli aplikaciji. Aplikacija ima 4 MB in v mirovanju porabi 60 MB RAM-a.",
     "dlMac": "Prenesi brezplačno za Mac",
     "dlWin": "Windows (beta)",

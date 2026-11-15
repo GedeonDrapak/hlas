@@ -20,7 +20,7 @@
   },
   "hero": {
     "badge": "Nyhet: Hlas Cloud, ubegrenset for 35 € i året",
-    "h1": "Diktering for Mac og Windows som snakker norsk.",
+    "h1": "Diktering for Mac og Windows|som snakker *norsk*.",
     "sub": "Hold inne <kbd>Fn</kbd>, snakk, slipp. Teksten havner der markøren står, i hvilken som helst app. Appen er på 4 MB og bruker 60 MB RAM i ro.",
     "dlMac": "Last ned gratis for Mac",
     "dlWin": "Windows (beta)",

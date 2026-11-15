@@ -20,7 +20,7 @@
   },
   "hero": {
     "badge": "Novinka: Hlas Cloud, neobmedzene za 35 € ročne",
-    "h1": "Diktovanie pre Mac a Windows,|ktoré vie po slovensky.",
+    "h1": "Diktovanie pre Mac a Windows,|ktoré vie *po slovensky*.",
     "sub": "Podrž <kbd>Fn</kbd>, hovor, pusť. Text pristane tam, kde máš kurzor, v akejkoľvek aplikácii. Appka má 4 MB a v pokoji berie 60 MB RAM.",
     "dlMac": "Stiahnuť zadarmo pre Mac",
     "dlWin": "Windows (beta)",

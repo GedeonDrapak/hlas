@@ -20,7 +20,7 @@
   },
   "hero": {
     "badge": "Yeni: Hlas Cloud, yılda 35 € ile sınırsız",
-    "h1": "Mac ve Windows için Türkçe konuşan dikte uygulaması.",
+    "h1": "Mac ve Windows için|*Türkçe* konuşan dikte uygulaması.",
     "sub": "<kbd>Fn</kbd>'e basılı tut, konuş, bırak. Yazı imlecin olduğu yere düşer, hangi uygulamada olursan ol. Uygulama 4 MB ve boştayken sadece 60 MB RAM kullanır.",
     "dlMac": "Mac için ücretsiz indir",
     "dlWin": "Windows (beta)",

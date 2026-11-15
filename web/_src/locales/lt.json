@@ -20,7 +20,7 @@
   },
   "hero": {
     "badge": "Naujiena: Hlas Cloud, neribotai už 35 € per metus",
-    "h1": "Diktavimas Mac ir Windows, kuris kalba lietuviškai.",
+    "h1": "Diktavimas Mac ir Windows,|kuris kalba *lietuviškai*.",
     "sub": "Laikykite <kbd>Fn</kbd>, kalbėkite, atleiskite. Tekstas atsiranda ten, kur yra žymeklis, bet kurioje programoje. Programa užima 4 MB, o ramybės būsenoje naudoja 60 MB RAM.",
     "dlMac": "Atsisiųsti nemokamai Mac",
     "dlWin": "Windows (beta)",

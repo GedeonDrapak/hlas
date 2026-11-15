@@ -20,7 +20,7 @@
   },
   "hero": {
     "badge": "Novetat: Hlas Cloud, il·limitat per 35 € l'any",
-    "h1": "Dictat per a Mac i Windows que parla català.",
+    "h1": "Dictat per a Mac i Windows|que parla *català*.",
     "sub": "Mantén <kbd>Fn</kbd>, parla i deixa anar. El text apareix just on tens el cursor, a qualsevol app. Ocupa 4 MB i en repòs només fa servir 60 MB de RAM.",
     "dlMac": "Baixa'l gratis per a Mac",
     "dlWin": "Windows (beta)",

@@ -20,7 +20,7 @@
   },
   "hero": {
     "badge": "Jaunums: Hlas Cloud, neierobežoti par 35 € gadā",
-    "h1": "Diktēšana Mac un Windows, kas runā latviski.",
+    "h1": "Diktēšana Mac un Windows,|kas runā *latviski*.",
     "sub": "Turiet <kbd>Fn</kbd>, runājiet, atlaidiet. Teksts parādās tur, kur ir kursors, jebkurā lietotnē. Lietotne aizņem 4 MB un miera stāvoklī izmanto 60 MB RAM.",
     "dlMac": "Lejupielādēt bez maksas Mac",
     "dlWin": "Windows (beta)",

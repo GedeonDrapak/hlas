@@ -20,7 +20,7 @@
   },
   "hero": {
     "badge": "Uutta: Hlas Cloud, rajattomasti 35 € vuodessa",
-    "h1": "Sanelu Macille ja Windowsille, joka puhuu suomea.",
+    "h1": "Sanelu Macille ja Windowsille,|joka puhuu *suomea*.",
     "sub": "Pidä <kbd>Fn</kbd> pohjassa, puhu, päästä irti. Teksti ilmestyy kursorin kohdalle missä tahansa sovelluksessa. Sovellus vie 4 MB ja levossa 60 MB RAM-muistia.",
     "dlMac": "Lataa ilmaiseksi Macille",
     "dlWin": "Windows (beta)",

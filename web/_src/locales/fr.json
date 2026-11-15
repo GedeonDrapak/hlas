@@ -20,7 +20,7 @@
   },
   "hero": {
     "badge": "Nouveau : Hlas Cloud, illimité pour 35 € par an",
-    "h1": "La dictée pour Mac et Windows qui parle français.",
+    "h1": "La dictée pour Mac et Windows|qui parle *français*.",
     "sub": "Maintenez <kbd>Fn</kbd>, parlez, relâchez. Le texte apparaît là où se trouve votre curseur, dans n'importe quelle app. 4 Mo, et seulement 60 Mo de RAM au repos.",
     "dlMac": "Télécharger gratuitement pour Mac",
     "dlWin": "Windows (bêta)",

@@ -20,7 +20,7 @@
   },
   "hero": {
     "badge": "Nyhet: Hlas Cloud, obegränsat för 35 € om året",
-    "h1": "Diktering för Mac och Windows som talar svenska.",
+    "h1": "Diktering för Mac och Windows|som talar *svenska*.",
     "sub": "Håll in <kbd>Fn</kbd>, prata, släpp. Texten hamnar där markören står, i vilken app som helst. Appen är 4 MB och drar 60 MB RAM i vila.",
     "dlMac": "Ladda ner gratis för Mac",
     "dlWin": "Windows (beta)",

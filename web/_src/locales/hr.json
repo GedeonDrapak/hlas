@@ -20,7 +20,7 @@
   },
   "hero": {
     "badge": "Novo: Hlas Cloud, neograničeno za 35 € godišnje",
-    "h1": "Diktiranje za Mac i Windows koje govori hrvatski.",
+    "h1": "Diktiranje za Mac i Windows|koje govori *hrvatski*.",
     "sub": "Drži <kbd>Fn</kbd>, govori, pusti. Tekst se pojavi tamo gdje ti je kursor, u bilo kojoj aplikaciji. Aplikacija ima 4 MB i u mirovanju troši 60 MB RAM-a.",
     "dlMac": "Preuzmi besplatno za Mac",
     "dlWin": "Windows (beta)",

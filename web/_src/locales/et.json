@@ -20,7 +20,7 @@
   },
   "hero": {
     "badge": "Uus: Hlas Cloud, piiramatult 35 € aastas",
-    "h1": "Dikteerimine Macile ja Windowsile, mis räägib eesti keelt.",
+    "h1": "Dikteerimine Macile ja Windowsile,|mis räägib *eesti keelt*.",
     "sub": "Hoia <kbd>Fn</kbd> all, räägi, lase lahti. Tekst ilmub sinna, kus on kursor, igas rakenduses. Rakendus on 4 MB ja kasutab puhkeolekus 60 MB RAM-i.",
     "dlMac": "Laadi Macile tasuta",
     "dlWin": "Windows (beeta)",

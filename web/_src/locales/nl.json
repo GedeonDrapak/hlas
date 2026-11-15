@@ -20,7 +20,7 @@
   },
   "hero": {
     "badge": "Nieuw: Hlas Cloud, onbeperkt voor € 35 per jaar",
-    "h1": "Dicteren op Mac en Windows, gewoon in het Nederlands.",
+    "h1": "Dicteren op Mac en Windows,|gewoon in het *Nederlands*.",
     "sub": "Houd <kbd>Fn</kbd> ingedrukt, praat, laat los. De tekst verschijnt waar je cursor staat, in elke app. 4 MB groot en in rust maar 60 MB RAM.",
     "dlMac": "Gratis downloaden voor Mac",
     "dlWin": "Windows (bèta)",

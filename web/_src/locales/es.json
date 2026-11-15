@@ -20,7 +20,7 @@
   },
   "hero": {
     "badge": "Nuevo: Hlas Cloud, ilimitado por 35 € al año",
-    "h1": "Dictado para Mac y Windows que habla español.",
+    "h1": "Dictado para Mac y Windows|que habla *español*.",
     "sub": "Mantén <kbd>Fn</kbd>, habla y suelta. El texto aparece justo donde está el cursor, en cualquier app. Pesa 4 MB y en reposo usa solo 60 MB de RAM.",
     "dlMac": "Descargar gratis para Mac",
     "dlWin": "Windows (beta)",

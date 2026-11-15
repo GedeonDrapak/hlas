@@ -20,7 +20,7 @@
   },
   "hero": {
     "badge": "Novità: Hlas Cloud, illimitato a 35 € l'anno",
-    "h1": "La dettatura per Mac e Windows che parla italiano.",
+    "h1": "La dettatura per Mac e Windows|che parla *italiano*.",
     "sub": "Tieni premuto <kbd>Fn</kbd>, parla, rilascia. Il testo compare dove si trova il cursore, in qualsiasi app. Pesa 4 MB e a riposo usa solo 60 MB di RAM.",
     "dlMac": "Scarica gratis per Mac",
     "dlWin": "Windows (beta)",

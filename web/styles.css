@@ -542,8 +542,9 @@ body.sysfont { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto San
 @media (max-width:560px) { .consent { flex-direction:column; align-items:stretch; } .consent div button { flex:1; } }
 
 /* Hero headline: voice-wave scribble under the last word, drawn after the words land. */
-h1 .mark { position:relative; }
-h1 .mark .scribble { position:absolute; left:-2%; width:104%; bottom:-.34em; height:.36em; overflow:visible; pointer-events:none; }
+/* Behind the letters (isolation keeps z-index:-1 inside the word), crossing the descenders. */
+h1 .mark { position:relative; isolation:isolate; white-space:nowrap; }
+h1 .mark .scribble { position:absolute; z-index:-1; left:-3%; width:106%; bottom:-.06em; height:.34em; overflow:visible; pointer-events:none; }
 h1 .mark .scribble path { fill:none; stroke:var(--brand); stroke-width:3.6; stroke-linecap:round; stroke-linejoin:round; vector-effect:non-scaling-stroke;
   stroke-dasharray:1; stroke-dashoffset:1; filter:drop-shadow(0 0 6px rgba(0,230,122,.45)); }
 .split.in .mark .scribble path { animation:scribble 1.1s var(--ease) forwards; animation-delay:calc(var(--i) * 55ms + 700ms); }

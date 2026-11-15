@@ -20,7 +20,7 @@
   },
   "hero": {
     "badge": "新上线: Hlas Cloud，每年 €35 无限使用",
-    "h1": "会说中文的 Mac 和 Windows 语音输入。",
+    "h1": "会说*中文*的|Mac 和 Windows 语音输入。",
     "sub": "按住 <kbd>Fn</kbd> 说话，松开即可。文字直接出现在光标所在位置，任何应用都能用。软件仅 4 MB，空闲时只占 60 MB 内存。",
     "dlMac": "免费下载 Mac 版",
     "dlWin": "Windows (测试版)",

@@ -106,16 +106,14 @@ const SCRIBBLE = (() => {
   }
   return `<svg class="scribble" viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M${pts.join(' L')}" pathLength="1"/></svg>`;
 })();
+// "|" breaks the line, *word* (may span spaces, may touch other letters as in
+// Thai or Japanese) gets the scribble. Each space-separated token animates in.
 function headline(text) {
-  if (!/\s/.test(text.replace(/\|/g, ' '))) return esc(text.replace(/\|/g, ''));
   let i = 0;
-  const lines = text.split('|').map((l) => l.trim().split(/\s+/));
-  const total = lines.flat().length;
-  return lines.map((words) => words.map((w) => {
-    const n = i++;
-    if (n !== total - 1) return `<span class="w" style="--i:${n}">${esc(w)}</span>`;
-    const m = w.match(/^(.*?)([.!?。]?)$/);
-    return `<span class="w mark" style="--i:${n}">${esc(m[1])}${SCRIBBLE}</span>${m[2] ? `<span class="w" style="--i:${n}">${esc(m[2])}</span>` : ''}`;
+  return text.split('|').map((line) => (line.trim().match(/[^\s*]*\*[^*]+\*\S*|\S+/g) || []).map((tok) => {
+    const m = tok.match(/^([^*]*)\*([^*]+)\*(.*)$/);
+    const inner = m ? `${esc(m[1])}<span class="mark">${esc(m[2])}${SCRIBBLE}</span>${esc(m[3])}` : esc(tok);
+    return `<span class="w" style="--i:${i++}">${inner}</span>`;
   }).join(' ')).join('<br>');
 }
 

@@ -20,7 +20,7 @@
   },
   "hero": {
     "badge": "Nou: Hlas Cloud nelimitat, 35 € pe an",
-    "h1": "Dictare pentru Mac și Windows care vorbește românește.",
+    "h1": "Dictare pentru Mac și Windows|care vorbește *românește*.",
     "sub": "Ține apăsat <kbd>Fn</kbd>, vorbește, eliberează. Textul apare acolo unde e cursorul, în orice aplicație. Aplicația are 4 MB și în repaus folosește 60 MB RAM.",
     "dlMac": "Descarcă gratuit pentru Mac",
     "dlWin": "Windows (beta)",
