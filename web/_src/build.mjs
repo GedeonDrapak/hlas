@@ -15,6 +15,24 @@ const hashOf = (f) => createHash('sha256').update(readFileSync(join(dirname(file
 const CSSV = hashOf('styles.css');
 const JSV = hashOf('app.js');
 const ORBV = hashOf('orb.js');
+const TRV = hashOf('track.js');
+
+// Analytics and ad pixels (see track.js). Empty ID = that tag is not loaded.
+// Cloudflare Web Analytics is cookieless and runs without a consent banner;
+// the others load only after the visitor allows them.
+const TRACKING = {
+  cf: '586b59f2a7b045148c0891288b0a3b46', // Cloudflare Web Analytics, site hlas.dev
+  ga4: '', // Google Analytics 4 measurement ID, G-XXXXXXXXXX
+  gads: '', // Google Ads tag, AW-XXXXXXXXXX
+  gadsLabels: {}, // Google Ads conversion labels by data-ev name, e.g. { checkout: 'AbC-123' }
+  meta: '', // Meta pixel (dataset) ID
+};
+const CONSENT_TAGS = !!(TRACKING.ga4 || TRACKING.gads || TRACKING.meta);
+const CONSENT_TEXT = {
+  cs: { msg: 'Abychom věděli, které reklamy fungují, rádi bychom použili Google Analytics a reklamní pixely. Souhlasíš?', yes: 'Povolit', no: 'Odmítnout', more: 'Soukromí' },
+  sk: { msg: 'Aby sme vedeli, ktoré reklamy fungujú, radi by sme použili Google Analytics a reklamné pixely. Súhlasíš?', yes: 'Povoliť', no: 'Odmietnuť', more: 'Súkromie' },
+  en: { msg: 'To see which ads work, we would like to use Google Analytics and ad pixels. Is that OK?', yes: 'Allow', no: 'Decline', more: 'Privacy' },
+};
 const UPDATED = '2026-11-15';
 const VERSION = '0.6.0';
 const DMG = 'https://github.com/GedeonDrapak/hlas/releases/latest/download/Hlas-mac-arm64.dmg';
@@ -54,7 +72,9 @@ export function loadLocales() {
   return out;
 }
 
-const logo = (n = 22) => `<svg width="${n}" height="${n}" viewBox="0 0 34 34" aria-hidden="true"><rect x="4" y="9" width="7" height="16" rx="3.5" fill="#00E67A"/><rect x="15" y="3" width="7" height="28" rx="3.5" fill="#EDEDED"/><circle cx="29" cy="17" r="3.5" fill="#00E67A"/></svg>`;
+// The Hlas mark: one path, the same geometry as Resources/Brand/hlas-icon.svg and Sources/Hlas/HlasMark.swift.
+const MARK_D = 'M478 328C435 328 401 362 401 405V850C401 893 435 927 478 927C521 927 556 893 556 850V711C556 673 580 643 616 643H660C692 643 715 667 715 699V738C715 776 745 806 783 806C821 806 851 776 851 738V523C851 485 821 455 783 455C745 455 715 485 715 523V557C715 588 692 611 661 611H612C580 611 556 586 556 554V405C556 362 521 328 478 328Z';
+const logo = (n = 22) => `<svg width="${n}" height="${n}" viewBox="326 328 600 599" aria-hidden="true"><path fill="#00E67A" d="${MARK_D}"/></svg>`;
 const apple = `<svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.8-3-.8c-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7 2-1.1 2.8-2.3c.9-1.3 1.2-2.5 1.3-2.6-.1 0-2.5-1-2.5-3.8zM14.1 5.8c.6-.8 1.1-1.9 1-3-1 0-2.1.6-2.8 1.4-.6.7-1.2 1.8-1 2.9 1.1.1 2.2-.5 2.8-1.3z"/></svg>`;
 const win = `<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 5.5l7.5-1v7.2H3zM11.5 4.3L21 3v8.7h-9.5zM3 12.7h7.5v7.2L3 18.8zM11.5 12.7H21V21l-9.5-1.3z"/></svg>`;
 
@@ -104,6 +124,8 @@ ${alt}
 <link rel="preload" as="font" type="font/otf" href="/assets/fonts/Satoshi-Medium.otf" crossorigin>
 <link rel="stylesheet" href="/styles.css?v=${CSSV}">
 ${[WEBSITE_LD, ...jsonld].map((o) => `<script type="application/ld+json">${json(o)}</script>`).join('\n')}
+<script>window.HLAS_TRACK=${json({ ...TRACKING, lang: code, privacy: siteLinks(code).privacy, text: CONSENT_TEXT[code] || CONSENT_TEXT.en })}</script>
+<script src="/track.js?v=${TRV}" defer></script>
 </head>
 <body class="${systemFont.has(code) ? 'sysfont' : ''}">`;
 }
@@ -120,7 +142,7 @@ export function footer(t, code) {
   return `<footer class="wrap footer">
   <span class="brand">${logo(18)}<span>HLAS</span></span>
   <span class="made">${esc(f.made)} <a href="https://gedeondrapak.com">Gedeon Drapák</a> ${esc(f.and)} <a href="https://edenmakers.ai">Edenmakers</a></span>
-  <nav class="foot-links"><a href="${L.compare}">${esc(f.compare)}</a><a href="${L.faq}">${esc(f.faq)}</a><a href="${L.privacy}">${esc(f.privacy)}</a><a href="${L.about}">${esc(f.about)}</a><a href="${L.press}">${esc(f.press)}</a><a href="${L.changelog}">${esc(f.changelog)}</a><a href="${L.languages}">${esc(f.languages)}</a><a href="${GITHUB}">GitHub</a></nav>
+  <nav class="foot-links"><a href="${L.compare}">${esc(f.compare)}</a><a href="${L.faq}">${esc(f.faq)}</a><a href="${L.privacy}">${esc(f.privacy)}</a><a href="${L.about}">${esc(f.about)}</a><a href="${L.press}">${esc(f.press)}</a><a href="${L.changelog}">${esc(f.changelog)}</a><a href="${L.languages}">${esc(f.languages)}</a><a href="${GITHUB}">GitHub</a>${CONSENT_TAGS ? '<a href="#" onclick="hlasConsent();return false">Cookies</a>' : ''}</nav>
   <p class="legal">${esc(f.trust)} Eden Makers s.r.o. · IČO 24518344 · DIČ CZ24518344 · Plzeňská 3352/156, 150 00 Praha</p>
 </footer>`;
 }

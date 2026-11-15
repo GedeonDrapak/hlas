@@ -417,8 +417,9 @@ button, input, textarea, select, details, summary { border:0; }
 
 /* ---------- multi-language site ---------- */
 body.sysfont { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans','Hiragino Sans','PingFang SC','Apple SD Gothic Neo','Noto Sans Devanagari','Noto Sans Bengali','Noto Sans Thai','Noto Sans Arabic','Noto Sans Hebrew',sans-serif; }
-.skip { position:absolute; left:-9999px; }
-.skip:focus { left:16px; top:16px; z-index:99; background:var(--fg); color:#111; padding:8px 14px; border-radius:999px; }
+/* Hidden by moving it up, not left:-9999px: on right-to-left pages that made the page scroll sideways. */
+.skip { position:absolute; inset-inline-start:16px; top:16px; z-index:99; transform:translateY(-300%); background:var(--fg); color:#111; padding:8px 14px; border-radius:999px; }
+.skip:focus { transform:none; }
 .langmenu { position:relative; }
 .langmenu summary { list-style:none; cursor:pointer; font-size:12.5px; font-weight:700; letter-spacing:.08em; color:var(--fg2); padding:8px 11px; border-radius:999px; }
 .langmenu summary::-webkit-details-marker { display:none; }
@@ -518,9 +519,23 @@ body.sysfont { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto San
 @keyframes beam { to { --beam:360deg; } }
 @media (prefers-reduced-motion: reduce) { .beam::before { animation:none; } .vglow.think i { animation:none; } }
 /* Phones: a tall hero would stretch the photo behind the text; keep it wide and anchored at the demo. */
-@media (max-width:720px) { .hero-bg { background-size:260% auto; background-position:center bottom; } }
+@media (max-width:720px) { .hero-bg { background-size:260% auto; background-position:center bottom;
+  /* The photo covers only the bottom ~650px here; fade its top edge so there is no hard line. */
+  -webkit-mask-image:linear-gradient(to top, #000 0, #000 360px, transparent 660px); mask-image:linear-gradient(to top, #000 0, #000 360px, transparent 660px); } }
 /* Small notes sit on the hill crest: darker halo so they stay legible. */
 .hero-note, .hero-privacy { color:rgba(237,237,237,.86); text-shadow:0 1px 2px rgba(0,0,0,.7), 0 0 18px rgba(0,0,0,.65); }
 
 /* [hidden] must win over .suggest { display:flex } or an empty pill shows under the nav. */
 .suggest[hidden] { display:none; }
+
+/* ---------- consent banner (track.js), shown only when a pixel ID is configured ---------- */
+.consent { position:fixed; left:50%; bottom:18px; transform:translateX(-50%); z-index:70; width:min(560px, calc(100% - 32px));
+  display:flex; align-items:center; gap:16px; padding:14px 14px 14px 20px; border-radius:20px;
+  background:rgba(24,24,24,.86); -webkit-backdrop-filter:blur(24px) saturate(160%); backdrop-filter:blur(24px) saturate(160%);
+  box-shadow:0 20px 60px rgba(0,0,0,.55); font-size:14px; color:var(--fg2); }
+.consent p { flex:1; line-height:1.45; }
+.consent a { color:var(--fg); text-decoration:underline; text-underline-offset:3px; }
+.consent div { display:flex; gap:8px; flex:none; }
+.consent button { font:inherit; font-weight:600; padding:9px 15px; border-radius:999px; border:0; cursor:pointer; background:rgba(255,255,255,.1); color:var(--fg); }
+.consent button.yes { background:var(--brand); color:var(--brand-ink); }
+@media (max-width:560px) { .consent { flex-direction:column; align-items:stretch; } .consent div button { flex:1; } }

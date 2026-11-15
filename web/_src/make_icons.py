@@ -9,15 +9,37 @@ WEB = Path(__file__).resolve().parents[1]
 FONTS = WEB / "assets" / "fonts"
 BG, GREEN, WHITE = (18, 18, 18), (0, 230, 122), (237, 237, 237)
 
-# The mark on a dark rounded tile: on a white Google results page the white
-# middle bar of the bare mark would disappear.
-SVG = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+# The Hlas mark (the same path as Resources/Brand/hlas-icon.svg and the app icon), green on a dark rounded tile.
+MARK_D = "M478 328C435 328 401 362 401 405V850C401 893 435 927 478 927C521 927 556 893 556 850V711C556 673 580 643 616 643H660C692 643 715 667 715 699V738C715 776 745 806 783 806C821 806 851 776 851 738V523C851 485 821 455 783 455C745 455 715 485 715 523V557C715 588 692 611 661 611H612C580 611 556 586 556 554V405C556 362 521 328 478 328Z"
+MARK_H = 28 / 599  # mark height on the 48 unit tile
+SVG = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
 <rect width="48" height="48" rx="11" fill="#121212"/>
-<rect x="11" y="16" width="7" height="16" rx="3.5" fill="#00E67A"/>
-<rect x="22" y="10" width="7" height="28" rx="3.5" fill="#EDEDED"/>
-<circle cx="36" cy="24" r="3.5" fill="#00E67A"/>
+<path fill="#00E67A" transform="translate({24 - 626 * MARK_H:.3f} {24 - 627.5 * MARK_H:.3f}) scale({MARK_H:.5f})" d="{MARK_D}"/>
 </svg>
 """
+
+
+def mark_points() -> list[tuple[float, float]]:
+    """The mark outline as a polygon in source units (curves sampled)."""
+    import re
+    tok = re.findall(r"[MCVHZ]|-?\d+(?:\.\d+)?", MARK_D)
+    pts, i, cur = [], 0, (0.0, 0.0)
+    while i < len(tok):
+        c = tok[i]; i += 1
+        if c == "M":
+            cur = (float(tok[i]), float(tok[i + 1])); i += 2; pts.append(cur)
+        elif c == "V":
+            cur = (cur[0], float(tok[i])); i += 1; pts.append(cur)
+        elif c == "H":
+            cur = (float(tok[i]), cur[1]); i += 1; pts.append(cur)
+        elif c == "C":
+            p1 = (float(tok[i]), float(tok[i + 1])); p2 = (float(tok[i + 2]), float(tok[i + 3])); p3 = (float(tok[i + 4]), float(tok[i + 5])); i += 6
+            for k in range(1, 25):
+                s = k / 24; m = 1 - s
+                pts.append((m ** 3 * cur[0] + 3 * m * m * s * p1[0] + 3 * m * s * s * p2[0] + s ** 3 * p3[0],
+                            m ** 3 * cur[1] + 3 * m * m * s * p1[1] + 3 * m * s * s * p2[1] + s ** 3 * p3[1]))
+            cur = p3
+    return pts
 
 
 def mark(size: int, tile: bool = True) -> Image.Image:
@@ -27,9 +49,8 @@ def mark(size: int, tile: bool = True) -> Image.Image:
     u = s / 48
     if tile:
         d.rounded_rectangle((0, 0, s - 1, s - 1), radius=11 * u, fill=BG)
-    d.rounded_rectangle((11 * u, 16 * u, 18 * u, 32 * u), radius=3.5 * u, fill=GREEN)
-    d.rounded_rectangle((22 * u, 10 * u, 29 * u, 38 * u), radius=3.5 * u, fill=WHITE)
-    d.ellipse((32.5 * u, 20.5 * u, 39.5 * u, 27.5 * u), fill=GREEN)
+    k = MARK_H * u
+    d.polygon([((x - 626) * k + s / 2, (y - 627.5) * k + s / 2) for x, y in mark_points()], fill=GREEN)
     return im.resize((size, size), Image.LANCZOS)
 
 
