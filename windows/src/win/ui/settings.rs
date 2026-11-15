@@ -707,7 +707,8 @@ impl SettingsWindow {
         let cloud_key = keystore::get_key(keystore::HLAS_CLOUD);
         self.cloud_key
             .set_text(cloud_key.as_deref().unwrap_or_default());
-        self.cloud_trial.set_visible(cloud_key.is_none());
+        // Enable/disable only: set_visible would show it on every Settings page.
+        self.cloud_trial.set_enabled(cloud_key.is_none());
         self.cloud_status.set_color(ds::FG2);
         if cloud_key.is_some() {
             self.check_cloud();
@@ -798,7 +799,7 @@ impl SettingsWindow {
         if let Some(text) = self.cloud_result.lock().unwrap().take() {
             let ok = text.starts_with("Active");
             self.cloud_trial
-                .set_visible(self.cloud_key.text().trim().is_empty());
+                .set_enabled(self.cloud_key.text().trim().is_empty());
             self.cloud_status
                 .set_color(if ok { ds::BRAND } else { ds::DANGER });
             self.cloud_status.set_text(&text);
