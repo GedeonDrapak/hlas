@@ -17,6 +17,27 @@ pub enum NetError {
 impl fmt::Display for NetError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
+            NetError::Http { status, provider } if *provider == "Hlas Cloud" => match status {
+                401 => write!(
+                    f,
+                    "Your Hlas Cloud licence key was not recognised. Check it in Settings."
+                ),
+                402 => write!(
+                    f,
+                    "Your Hlas Cloud trial or subscription has ended. Get Hlas Cloud in Settings or choose another engine."
+                ),
+                403 => write!(
+                    f,
+                    "This Hlas Cloud licence is in use on more than 5 computers. Remove it from one you no longer use."
+                ),
+                429 => write!(
+                    f,
+                    "You reached today's Hlas Cloud fair-use limit. It resets at midnight UTC."
+                ),
+                413 => write!(f, "This recording is too large for Hlas Cloud."),
+                500..=599 => write!(f, "Hlas Cloud is temporarily unavailable. Try again shortly."),
+                _ => write!(f, "Hlas Cloud could not transcribe this recording. Try again."),
+            },
             NetError::Http { status, provider } => match status {
                 401 | 403 => write!(
                     f,
@@ -48,6 +69,9 @@ impl fmt::Display for NetError {
                     f,
                     "Could not reach {provider}. Check your connection and try again."
                 )
+            }
+            NetError::MissingKey { provider } if *provider == "Hlas Cloud" => {
+                write!(f, "Add your Hlas Cloud licence key in Settings.")
             }
             NetError::MissingKey { provider } => {
                 write!(f, "Add your {provider} API key in Settings.")
@@ -156,6 +180,25 @@ mod tests {
         assert!(e(429).contains("limit"));
         assert!(e(503).contains("temporarily unavailable"));
         assert!(e(400).contains("could not transcribe"));
+    }
+
+    #[test]
+    fn hlas_cloud_errors_talk_about_the_subscription() {
+        let e = |status| {
+            NetError::Http {
+                status,
+                provider: "Hlas Cloud",
+            }
+            .to_string()
+        };
+        assert!(e(401).contains("licence key was not recognised"));
+        assert!(e(402).contains("trial or subscription has ended"));
+        assert!(e(403).contains("more than 5 computers"));
+        assert!(e(429).contains("fair-use limit"));
+        assert_eq!(
+            NetError::MissingKey { provider: "Hlas Cloud" }.to_string(),
+            "Add your Hlas Cloud licence key in Settings."
+        );
     }
 
     #[test]

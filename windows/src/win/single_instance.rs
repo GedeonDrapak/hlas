@@ -18,6 +18,13 @@ pub static SHOW_MESSAGE: Lazy<u32> = Lazy::new(|| {
     unsafe { RegisterWindowMessageW(PCWSTR(name.as_ptr())) }
 });
 
+/// Broadcast after a `hlas://activate` link stored a Hlas Cloud licence:
+/// the running instance switches to Hlas Cloud and opens Settings.
+pub static ACTIVATED_MESSAGE: Lazy<u32> = Lazy::new(|| {
+    let name = wide("HlasForWindows.CloudActivated");
+    unsafe { RegisterWindowMessageW(PCWSTR(name.as_ptr())) }
+});
+
 /// Holds the mutex for the life of the process.
 pub struct Guard(#[allow(dead_code)] HANDLE);
 
@@ -34,6 +41,13 @@ pub fn acquire() -> Option<Guard> {
 
 pub fn signal_existing() {
     let msg = *SHOW_MESSAGE;
+    unsafe {
+        let _ = PostMessageW(HWND(0xffff as _), msg, WPARAM(0), LPARAM(0));
+    }
+}
+
+pub fn signal_activated() {
+    let msg = *ACTIVATED_MESSAGE;
     unsafe {
         let _ = PostMessageW(HWND(0xffff as _), msg, WPARAM(0), LPARAM(0));
     }

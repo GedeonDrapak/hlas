@@ -22,6 +22,7 @@ struct MultipartForm {
         request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         request.httpBody = body + Data("--\(boundary)--\r\n".utf8)
+        HlasCloud.tag(&request)
         return request
     }
 }
@@ -194,6 +195,14 @@ enum TranscriberFactory {
     static func make() -> Transcriber {
         let s = Settings.shared
         switch s.engine {
+        case .hlasCloud:
+            // Our Worker speaks the OpenAI protocol and picks the model itself.
+            return OpenAICompatibleTranscriber(
+                endpoint: HlasCloud.transcriptionEndpoint,
+                apiKey: s.hlasCloudKey,
+                model: "hlas-cloud",
+                providerName: "Hlas Cloud"
+            )
         case .groq:
             return OpenAICompatibleTranscriber(
                 endpoint: URL(string: "https://api.groq.com/openai/v1/audio/transcriptions")!,

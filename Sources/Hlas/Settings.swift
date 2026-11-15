@@ -3,6 +3,7 @@ import HlasCore
 
 enum EngineKind: String, CaseIterable, Codable {
     case local      // whisper.cpp
+    case hlasCloud = "hlascloud" // Hlas Cloud subscription, our API (see cloud/)
     case groq       // Groq API whisper-large-v3-turbo
     case openai     // OpenAI transcription API
     case soniox     // Soniox async API stt-async-v5
@@ -11,6 +12,7 @@ enum EngineKind: String, CaseIterable, Codable {
     var displayName: String {
         switch self {
         case .local: return "Local (whisper.cpp)"
+        case .hlasCloud: return "Hlas Cloud"
         case .groq: return "Groq API"
         case .openai: return "OpenAI API"
         case .soniox: return "Soniox API"
@@ -22,6 +24,7 @@ enum EngineKind: String, CaseIterable, Codable {
     var shortName: String {
         switch self {
         case .local: return "Local"
+        case .hlasCloud: return "Hlas Cloud"
         case .groq: return "Groq"
         case .openai: return "OpenAI"
         case .soniox: return "Soniox"
@@ -33,6 +36,7 @@ enum EngineKind: String, CaseIterable, Codable {
     @MainActor var apiKeyPath: ReferenceWritableKeyPath<Settings, String>? {
         switch self {
         case .local: return nil
+        case .hlasCloud: return \.hlasCloudKey
         case .groq: return \.groqAPIKey
         case .openai: return \.openaiAPIKey
         case .soniox: return \.sonioxAPIKey
@@ -53,6 +57,14 @@ final class Settings: ObservableObject {
     /// ISO 639-1 code, or "auto".
     @Published var language: String {
         didSet { d.set(language, forKey: "language") }
+    }
+    /// Hlas Cloud license key (hlas_XXXXX-...), the bearer credential for our API.
+    @Published var hlasCloudKey: String {
+        didSet {
+            if !KeychainStore.set(hlasCloudKey, for: "hlascloud") {
+                Log.write("failed to save Hlas Cloud license key to Keychain")
+            }
+        }
     }
     @Published var groqAPIKey: String {
         didSet {
@@ -144,6 +156,7 @@ final class Settings: ObservableObject {
 
         engine = EngineKind(rawValue: d.string(forKey: "engine") ?? "") ?? .local
         language = d.string(forKey: "language") ?? "cs"
+        hlasCloudKey = KeychainStore.string(for: "hlascloud") ?? ""
         groqAPIKey = Self.loadAPIKey(account: "groq", legacyKey: "groqAPIKey", defaults: d)
         openaiAPIKey = Self.loadAPIKey(account: "openai", legacyKey: "openaiAPIKey", defaults: d)
         sonioxAPIKey = KeychainStore.string(for: "soniox") ?? ""

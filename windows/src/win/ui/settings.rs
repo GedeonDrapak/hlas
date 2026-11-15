@@ -13,6 +13,8 @@ use native_windows_gui as nwg;
 use nwg::NwgError;
 use std::cell::{Cell, RefCell};
 use std::rc::Rc;
+use std::sync::{Arc, Mutex};
+use crate::core::cloud;
 
 const MEMORY: [(u64, &str); 3] = [
     (0, "Save memory - unload at once"),
@@ -25,7 +27,7 @@ const RETENTION: [(u32, &str); 4] = [
     (7, "7 days"),
     (30, "30 days"),
 ];
-const ENGINES: [Engine; 3] = [Engine::Local, Engine::Groq, Engine::OpenAI];
+const ENGINES: [Engine; 4] = [Engine::Local, Engine::HlasCloud, Engine::Groq, Engine::OpenAI];
 
 // Layout, in logical pixels.
 const WIDTH: i32 = 780;
@@ -38,12 +40,17 @@ const ROW: i32 = 52;
 const CTRL_W: i32 = 250;
 const CTRL_X: i32 = X0 + CW - PAD - CTRL_W;
 
-const PAGES: [(char, &str, &str); 5] = [
+const PAGES: [(char, &str, &str); 6] = [
     ('\u{E720}', "Dictation", "How you talk to Hlas."),
     (
         '\u{E945}',
         "Engine",
         "Where speech turns into text. API keys stay in Windows Credential Manager.",
+    ),
+    (
+        '\u{E753}',
+        "Hlas Cloud",
+        "Unlimited dictation without keys or a model download.",
     ),
     (
         '\u{E8D2}',
@@ -62,6 +69,9 @@ fn engine_note(engine: Engine) -> &'static str {
     match engine {
         Engine::Local => {
             "Runs on this PC. Private, free and offline after a one-time 547 MB download."
+        }
+        Engine::HlasCloud => {
+            "Hlas Cloud. Unlimited dictation for EUR 35 a year, no keys. Add your licence on the Hlas Cloud page."
         }
         Engine::Groq => "Groq cloud. The fastest, about $3 a month with your own key.",
         Engine::OpenAI => {
@@ -88,6 +98,16 @@ pub struct SettingsWindow {
     memory: Dropdown,
     groq_key: nwg::TextInput,
     openai_key: nwg::TextInput,
+    cloud_key: nwg::TextInput,
+    cloud_status: Text,
+    cloud_check: nwg::Button,
+    cloud_trial: nwg::Button,
+    cloud_buy: nwg::Button,
+    cloud_manage: nwg::Button,
+    /// Result of the last background licence check, picked up by the timer.
+    cloud_result: Arc<Mutex<Option<String>>>,
+    /// Result of "Try free for 7 days": the trial key, or a message.
+    trial_result: Arc<Mutex<Option<Result<String, String>>>>,
     vocabulary: nwg::TextBox,
     replacements: nwg::TextBox,
     history_on: nwg::Button,
@@ -269,7 +289,7 @@ impl SettingsWindow {
         s.card(g, (X0, 84, CW, 100));
         let engine = s.segmented(
             g,
-            &["On this PC", "Groq", "OpenAI"],
+            &["On this PC", "Hlas Cloud", "Groq", "OpenAI"],
             (X0 + PAD, 84 + PAD, CW - 2 * PAD, 36),
             0,
         )?;
@@ -322,8 +342,59 @@ impl SettingsWindow {
         row_label(s, g, "OpenAI API key", 356 + ROW);
         let openai_key = s.input(g, (CTRL_X, 356 + ROW + 9, CTRL_W, 34), true)?;
 
-        // 3. Vocabulary.
+        // 3. Hlas Cloud.
         let g = 3;
+        s.card(g, (X0, 84, CW, 2 * ROW));
+        row_label(s, g, "Licence key", 84);
+        let cloud_key = s.input(g, (CTRL_X, 84 + 9, CTRL_W, 34), true)?;
+        s.rule(g, X0 + PAD, 84 + ROW, CW - 2 * PAD);
+        let cloud_status = s.label(
+            g,
+            "",
+            (X0 + PAD, 84 + ROW, CW - 2 * PAD - 130, ROW),
+            &t.small,
+            ds::FG2,
+            skin::LINE,
+        );
+        let cloud_check = s.button(
+            g,
+            "Check",
+            (X0 + CW - PAD - 110, 84 + ROW + 9, 110, 34),
+            Kind::Secondary,
+            ds::SURFACE,
+        )?;
+        s.label(
+            g,
+            "EUR 35 a year + VAT, unlimited dictation with fair use up to 3 hours a day. After payment the welcome page opens Hlas and fills in your key. Audio goes through our server to Groq and is not stored.",
+            (X0, 84 + 2 * ROW + 14, CW, 54),
+            &t.small,
+            ds::FG3,
+            skin::WRAP,
+        );
+        let cloud_trial = s.button(
+            g,
+            "Try free for 7 days",
+            (X0, 84 + 2 * ROW + 80, 170, 36),
+            Kind::Primary,
+            ds::BG,
+        )?;
+        let cloud_buy = s.button(
+            g,
+            "Get Hlas Cloud",
+            (X0 + 180, 84 + 2 * ROW + 80, 150, 36),
+            Kind::Secondary,
+            ds::BG,
+        )?;
+        let cloud_manage = s.button(
+            g,
+            "Manage subscription",
+            (X0 + 340, 84 + 2 * ROW + 80, 184, 36),
+            Kind::Secondary,
+            ds::BG,
+        )?;
+
+        // 4. Vocabulary.
+        let g = 4;
         let mut boxes = Vec::new();
         for (i, (name, help)) in [
             ("Words to recognize", "One per line: names, brands, jargon."),
@@ -355,8 +426,8 @@ impl SettingsWindow {
         let replacements = boxes.pop().expect("two boxes");
         let vocabulary = boxes.pop().expect("two boxes");
 
-        // 4. History.
-        let g = 4;
+        // 5. History.
+        let g = 5;
         s.card(g, (X0, 84, CW, 60 + ROW));
         let history_on = switch_row(
             s,
@@ -387,8 +458,8 @@ impl SettingsWindow {
             ds::BG,
         )?;
 
-        // 5. About.
-        let g = 5;
+        // 6. About.
+        let g = 6;
         s.card(g, (X0, 84, CW, 128));
         s.logo(g, X0 + PAD, 84 + 18, 40);
         s.label(
@@ -465,6 +536,14 @@ impl SettingsWindow {
             memory,
             groq_key,
             openai_key,
+            cloud_key,
+            cloud_status,
+            cloud_check,
+            cloud_trial,
+            cloud_buy,
+            cloud_manage,
+            cloud_result: Arc::new(Mutex::new(None)),
+            trial_result: Arc::new(Mutex::new(None)),
             vocabulary,
             replacements,
             history_on,
@@ -502,6 +581,10 @@ impl SettingsWindow {
                 }
                 E::OnButtonClick if ui.engine.index_of(&handle).is_some() => ui.refresh_engine(),
                 E::OnButtonClick if handle == ui.save.handle => ui.save(),
+                E::OnButtonClick if handle == ui.cloud_check.handle => ui.check_cloud(),
+                E::OnButtonClick if handle == ui.cloud_buy.handle => shell::open(cloud::BUY_URL),
+                E::OnButtonClick if handle == ui.cloud_trial.handle => ui.start_trial(),
+                E::OnButtonClick if handle == ui.cloud_manage.handle => ui.manage_cloud(),
                 E::OnButtonClick if handle == ui.model_button.handle => {
                     if model::status().active {
                         model::cancel();
@@ -534,7 +617,8 @@ impl SettingsWindow {
                     crate::win::update::check_in_background(true)
                 }
                 E::OnTimerTick if handle == ui.timer.handle && ui.window.visible() => {
-                    ui.refresh_model()
+                    ui.refresh_model();
+                    ui.refresh_cloud();
                 }
                 _ => {}
             }
@@ -615,6 +699,15 @@ impl SettingsWindow {
             .set_text(&keystore::get_key(keystore::GROQ).unwrap_or_default());
         self.openai_key
             .set_text(&keystore::get_key(keystore::OPENAI).unwrap_or_default());
+        let cloud_key = keystore::get_key(keystore::HLAS_CLOUD);
+        self.cloud_key.set_text(cloud_key.as_deref().unwrap_or_default());
+        self.cloud_trial.set_visible(cloud_key.is_none());
+        self.cloud_status.set_color(ds::FG2);
+        if cloud_key.is_some() {
+            self.check_cloud();
+        } else {
+            self.cloud_status.set_text("No licence yet.");
+        }
         c::set_box_text(&self.vocabulary, &cfg.vocabulary.join("\n"));
         c::set_box_text(&self.replacements, &format_replacements(&cfg.replacements));
         self.skin
@@ -640,11 +733,83 @@ impl SettingsWindow {
         self.engine_note.set_text(engine_note(self.engine()));
     }
 
+    /// Checks the licence in the background; the timer shows the answer.
+    fn check_cloud(&self) {
+        let Some(key) = cloud::normalize_key(&self.cloud_key.text()) else {
+            self.cloud_status.set_color(ds::DANGER);
+            self.cloud_status.set_text(if self.cloud_key.text().trim().is_empty() {
+                "No licence yet."
+            } else {
+                "That does not look like a licence key (hlas_XXXXX-...)."
+            });
+            return;
+        };
+        self.cloud_status.set_color(ds::FG2);
+        self.cloud_status.set_text("Checking...");
+        let slot = self.cloud_result.clone();
+        std::thread::spawn(move || {
+            let text = match crate::win::engine::cloud::account(&key) {
+                Ok(status) => cloud::describe(&status),
+                Err(e) => crate::core::errors::user_message(&e),
+            };
+            *slot.lock().unwrap() = Some(text);
+        });
+    }
+
+    /// Starts the free trial in the background; the timer stores the key.
+    fn start_trial(&self) {
+        self.cloud_status.set_color(ds::FG2);
+        self.cloud_status.set_text("Starting your free trial...");
+        let slot = self.trial_result.clone();
+        std::thread::spawn(move || {
+            let result = crate::win::engine::cloud::start_trial().map(|(key, _)| key);
+            *slot.lock().unwrap() = Some(result);
+        });
+    }
+
+    fn refresh_cloud(&self) {
+        if let Some(result) = self.trial_result.lock().unwrap().take() {
+            match result {
+                Ok(key) => {
+                    self.cloud_key.set_text(&key);
+                    self.skin.select(
+                        &self.engine,
+                        ENGINES.iter().position(|e| *e == Engine::HlasCloud).unwrap_or(1),
+                    );
+                    self.save();
+                    self.check_cloud();
+                }
+                Err(message) => {
+                    self.cloud_status.set_color(ds::DANGER);
+                    self.cloud_status.set_text(&message);
+                }
+            }
+        }
+        if let Some(text) = self.cloud_result.lock().unwrap().take() {
+            let ok = text.starts_with("Active");
+            self.cloud_trial.set_visible(self.cloud_key.text().trim().is_empty());
+            self.cloud_status.set_color(if ok { ds::BRAND } else { ds::DANGER });
+            self.cloud_status.set_text(&text);
+        }
+    }
+
+    /// Opens the Stripe portal for this licence, or the portal sign-in page.
+    fn manage_cloud(&self) {
+        let key = cloud::normalize_key(&self.cloud_key.text());
+        std::thread::spawn(move || {
+            let url = key
+                .and_then(|k| crate::win::engine::cloud::portal_url(&k))
+                .unwrap_or_else(|| cloud::PORTAL_LOGIN_URL.to_string());
+            shell::open(&url);
+        });
+    }
+
     fn refresh_model(&self) {
         let s = model::status();
         if !crate::win::engine::local::cpu_supported() {
-            self.model_status
-                .set_text("This processor cannot run the local engine. Use Groq or OpenAI.");
+            self.model_status.set_text(
+                "This processor cannot run the local engine. Use Hlas Cloud, Groq or OpenAI.",
+            );
             self.model_button.set_text("Unavailable");
             self.model_button.set_enabled(false);
             self.model_meter.set(0.0);
@@ -718,6 +883,15 @@ impl SettingsWindow {
 
         keystore::persist(keystore::GROQ, &self.groq_key.text());
         keystore::persist(keystore::OPENAI, &self.openai_key.text());
+        let cloud_text = self.cloud_key.text();
+        let cloud_key = cloud::normalize_key(&cloud_text);
+        let cloud_typo = cloud_key.is_none() && !cloud_text.trim().is_empty();
+        if !cloud_typo {
+            keystore::persist(keystore::HLAS_CLOUD, cloud_key.as_deref().unwrap_or(""));
+            if let Some(k) = &cloud_key {
+                self.cloud_key.set_text(k);
+            }
+        }
         if let Err(e) = autostart::set(launch) {
             log::error!("autostart change failed: {e}");
         }
@@ -738,6 +912,14 @@ impl SettingsWindow {
             cfg.launch_at_login = launch;
         });
         let (warning, color) = match engine {
+            _ if cloud_typo => (
+                "Saved, but the Hlas Cloud licence key looks wrong. Paste it again.",
+                ds::DANGER,
+            ),
+            Engine::HlasCloud if !keystore::has_key(keystore::HLAS_CLOUD) => (
+                "Saved. Add your licence on the Hlas Cloud page.",
+                ds::DANGER,
+            ),
             Engine::Groq if !keystore::has_key(keystore::GROQ) => {
                 ("Saved. Add a Groq key to use Groq.", ds::DANGER)
             }

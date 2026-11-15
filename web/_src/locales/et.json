@@ -1,0 +1,340 @@
+{
+  "code": "et",
+  "langName": "Eesti",
+  "langNameEn": "Estonian",
+  "dec": ",",
+  "meta": {
+    "kw": "kõne tekstiks Mac",
+    "title": "Hlas: kõne tekstiks eesti keeles, Mac ja Windows",
+    "description": "Hoia Fn all, räägi, lase lahti. Tekst ilmub kursori kohale igas rakenduses. 4 MB, puhkeolekus 60 MB RAM-i, töötab ka võrguta. Tasuta või Hlas Cloud 35 € aastas.",
+    "ogTitle": "Hlas: dikteerimine Macile ja Windowsile, mis räägib eesti keelt",
+    "ogDescription": "Hoia Fn all, räägi, lase lahti. 4 MB rakendus, puhkeolekus 60 MB RAM-i, töötab ka võrguta."
+  },
+  "nav": {
+    "features": "Funktsioonid",
+    "performance": "Jõudlus",
+    "languages": "Keeled",
+    "pricing": "Hinnad",
+    "download": "Laadi alla",
+    "language": "Keel"
+  },
+  "hero": {
+    "badge": "Uus: Hlas Cloud, piiramatult 35 € aastas",
+    "h1": "Dikteerimine Macile ja Windowsile, mis räägib eesti keelt.",
+    "sub": "Hoia <kbd>Fn</kbd> all, räägi, lase lahti. Tekst ilmub sinna, kus on kursor, igas rakenduses. Rakendus on 4 MB ja kasutab puhkeolekus 60 MB RAM-i.",
+    "dlMac": "Laadi Macile tasuta",
+    "dlWin": "Windows (beeta)",
+    "note": "Apple Silicon, macOS 15+ · 4 MB · Windows 10 ja 11 beetas, paigaldaja pole veel allkirjastatud",
+    "privacy": "Kohalikus režiimis pole kontot vaja ja sinu heli ei lahku kunagi arvutist."
+  },
+  "demo": {
+    "tabNotes": "Märkmed",
+    "idle": "Hoia Fn all ja räägi",
+    "busy": "Kirjutan üles",
+    "scenes": [
+      {
+        "ctx": [
+          [
+            "Kati",
+            "Kuidas esitlusega läheb?"
+          ]
+        ],
+        "text": "Tere, Kati, esitlus on valmis. Saadan lõpliku versiooni täna õhtul üle vaatamiseks."
+      },
+      {
+        "ctx": [
+          [
+            "Saaja",
+            "marko@stuudio.ee"
+          ],
+          [
+            "Teema",
+            "Pakkumine"
+          ]
+        ],
+        "text": "Tere, Marko, aitäh sõnumi eest. Saadan sulle pakkumise homme hommikupoolikul."
+      },
+      {
+        "ctx": [
+          [
+            "Märge",
+            "täna 18:07"
+          ]
+        ],
+        "text": "Põdur Zagrebi tšellomängija-följetonist Ciqo külmetas kehvas garaažis. Iga täpitäht omal kohal."
+      }
+    ]
+  },
+  "stats": {
+    "app": "kogu rakendus",
+    "ram": "RAM-i puhkeolekus",
+    "speed": "11 s kõne üleskirjutamiseks",
+    "langs": "keelt, nende seas eesti keel"
+  },
+  "features": {
+    "eyebrow": "Mis sees on",
+    "h2": "Kõik, mida vajad, et lõpetada trükkimine.<br>Mitte midagi üleliigset.",
+    "offline": {
+      "chip": "Kohalik mudel töötab",
+      "h3": "Töötab ka võrguta",
+      "p": "Whisper töötab otse sinu arvutis. Heli ei lahku sealt kunagi.",
+      "strong": "Wi-Fit pole? Pole probleemi."
+    },
+    "vocab": {
+      "add": "Lisa",
+      "h3": "Sinu oma sõnastik",
+      "p": "Nimed, brändid ja erialane släng. Ütle Hlasile, kuidas ta neid valesti kuuleb.",
+      "strong": "Edaspidi tulevad need õigesti.",
+      "items": [
+        [
+          "Kubernetes",
+          "kuuleb: kuber nettis"
+        ],
+        [
+          "Figma",
+          "kuuleb: fikma"
+        ],
+        [
+          "EBITDA",
+          "kuuleb: ebit taa"
+        ]
+      ],
+      "cycle": [
+        [
+          "Notion",
+          "kuuleb: nouššen"
+        ],
+        [
+          "Salesforce",
+          "kuuleb: seils foors"
+        ],
+        [
+          "Kubernetes",
+          "kuuleb: kuber nettis"
+        ],
+        [
+          "Figma",
+          "kuuleb: fikma"
+        ],
+        [
+          "EBITDA",
+          "kuuleb: ebit taa"
+        ]
+      ]
+    },
+    "smart": {
+      "h3": "Nutikas tekst",
+      "p": "Teeb lobisemisest puhtad lõigud või loendid, vastavalt sellele, mida mõtlesid.",
+      "strong": "Originaal jääb alati Ajalukku alles.",
+      "raw": "ee et homme on vaja osta piima ja siis ka leiba ja ehm helistada Liisile",
+      "title": "Homme",
+      "out": [
+        "osta piima",
+        "osta leiba",
+        "helista Liisile"
+      ]
+    },
+    "langs": {
+      "h3": "Räägib eesti keelt",
+      "p": "Whisper large-v3 kirjutab eesti keelt kirjavahemärkide ja suurtähtedega seal, kus need olema peavad.",
+      "strong": "Lisaks üle 60 muu keele."
+    }
+  },
+  "mini": [
+    {
+      "h4": "Helifailid",
+      "p": "Lohista sisse kuni 10-minutiline salvestis ja saa tekst."
+    },
+    {
+      "h4": "Hoia või toksa",
+      "p": "Hoia Fn all, et rääkida. Toksa korra käed-vabad režiimiks, toksa uuesti, et lõpetada."
+    },
+    {
+      "h4": "Sinu kiirklahv",
+      "p": "Fn, parem Option, parem Command, parem Control või F13 kuni F19."
+    },
+    {
+      "h4": "Ajalugu",
+      "p": "Otsitav, kohalik ja kustutatav. Kleebi viimane dikteering uuesti ühe otseteega."
+    }
+  ],
+  "perf": {
+    "eyebrow": "Jõudlus",
+    "h2": "Kergem kui see vaheleht, mille sulgeda unustasid.",
+    "ram": {
+      "h3": "RAM-i puhkeolekus",
+      "p": "Mudel laaditakse, kui räägid, ja vabastatakse pärast 3 minutit vaikust.",
+      "foot": "Hlas mõõdetud M1 Pro peal peidetud rakendusega. Laaditud kohaliku mudeliga kasutab umbes 1 GB. Konkurendi näitaja pärineb meie enda võrdlusest."
+    },
+    "size": {
+      "h3": "Rakenduse suurus",
+      "p": "Natiivne Swift Macis, natiivne Rust Windowsis. Ei mingit Electroni."
+    },
+    "speed": {
+      "h3": "Kiirem, kui jõuad üle lugeda",
+      "speak": "Sina räägid",
+      "writes": "Hlas kirjutab",
+      "p": "Kohalik mudel Apple Siliconil, Metaliga kiirendatud."
+    },
+    "fill": {
+      "h3": "Täitesõnad kaovad",
+      "html": "<s>Ee,</s> <span>saada mulle</span> <s>ehm</s> <span>lõplik versioon</span> <s>hmm</s> <span>reedeks.</span>",
+      "p": "Kõhklushäälitsused nagu ee, ehm ja hmm eemaldatakse kohalikult, igas režiimis."
+    },
+    "sym": {
+      "h3": "Ütle sümbol",
+      "p": "Häälega öeldud sümbolid ja reavahetused töötavad inglise ja tšehhi keeles. Labsi funktsioon.",
+      "morph": [
+        [
+          "at sign",
+          "@"
+        ],
+        [
+          "underscore",
+          "_"
+        ],
+        [
+          "new line",
+          "↵"
+        ],
+        [
+          "dot com",
+          ".com"
+        ]
+      ]
+    },
+    "priv": {
+      "h3": "Sinu, mitte meie",
+      "items": [
+        "Kontot pole vaja",
+        "Telemeetriat pole",
+        "Võtmed süsteemi võtmehoidjas",
+        "Lähtekood GitHubis"
+      ]
+    },
+    "apps": {
+      "h3": "Töötab igas rakenduses",
+      "p": "Kui sinna saab kirjutada, saab sinna ka dikteerida."
+    }
+  },
+  "langs": {
+    "eyebrow": "Keeled",
+    "h2": "Ehitatud Prahas keeltele, mida suured rakendused meenutavad viimasena.",
+    "points": [
+      {
+        "b": "õ ä ö ü",
+        "h4": "Kirjavahemärgid paigas",
+        "p": "Whisper large-v3 kirjutab täpitähed, suurtähed, komad ja küsimärgid, mitte üht pikka väiketähtedes rida."
+      },
+      {
+        "b": "EN",
+        "h4": "Sega keeli vabalt",
+        "p": "Kinnita kasutatavad keeled või lase Hlasil keel ise ära tunda. Ingliskeelsed terminid eesti teksti sees jäävad puutumata."
+      },
+      {
+        "b": "Ab",
+        "h4": "Sinu sõnad, sinu kirjapilt",
+        "p": "Õpeta Hlasile nimed ja oskussõnad sõnastikus korra selgeks ja edaspidi kirjutab ta neid sinu moodi."
+      }
+    ],
+    "note": "Esimesena häälestati tšehhi keel. Eesti keel töötab praegu Whisper large-v3 peal ilma lisahäälestuseta, nii et kui eesti keel on sinu emakeel, anna meile GitHubis teada, kuidas tal läheb."
+  },
+  "pricing": {
+    "eyebrow": "Hinnad",
+    "h2": "Tasuta sinu enda arvutis.<br>35 € aastas, kui tahad muretult.",
+    "free": {
+      "name": "Hlas",
+      "forever": "igavesti",
+      "sub": "Kogu rakendus. Töötab sinu arvutis või sinu enda API-võtmega.",
+      "items": [
+        "Kohalik Whisperi mudel, töötab ka võrguta",
+        "Või kasuta oma võtit: Groq, OpenAI, Soniox, Fish Audio",
+        "Sõnastik, ajalugu, teksti korrastamine, helifailid",
+        "Mac ja Windows"
+      ],
+      "cta": "Laadi alla tasuta"
+    },
+    "cloud": {
+      "per": "aastas + käibemaks",
+      "sub": "See teeb 2,92 € kuus, vähemalt 54 % vähem kui Superwhisper või Wispr Flow. Piiramatu dikteerimine meie API kaudu.",
+      "items": [
+        "Piiramatu dikteerimine, ühtegi API-võtit pole vaja seadistada",
+        "Pole vaja alla laadida 547 MB mudelit",
+        "Mudel ei laadita kunagi sinu RAM-i, säästab akut",
+        "Kiire ka vanematel ja nõrgematel arvutitel"
+      ],
+      "cta": "Telli ette 35 € eest aastas",
+      "manage": "Juba tellija? Arved ja tühistamine",
+      "vat": "ELi tarbijad maksavad 42,35 €, mis sisaldab 21 % Tšehhi käibemaksu. Käibemaksukohustuslasena registreeritud ELi ettevõtted maksavad pöördmaksustamisega 35 €."
+    },
+    "yearly": {
+      "title": "Mida aasta dikteerimist maksab",
+      "big": "54 kuni 73 % odavam kui konkurendid",
+      "foot": "Aastaplaanid võrdluses ilma käibemaksuta, seisuga 14. november 2026: Superwhisper Pro 84,99 $ aastas, Wispr Flow Pro ja Willow Pro 12 $ kuus aastase arveldusega. Ümber arvutatud EKP 13. novembri 2026 kursiga, 1 $ = 0,90481 €. Osal konkurentidel on ka tasuta plaanid või ühekordsed litsentsid, vaata täielikku võrdlust."
+    },
+    "compareLink": "Täielik võrdlus, sh tasuta ja ühekordse ostuga rakendused"
+  },
+  "faq": {
+    "eyebrow": "Küsimused",
+    "h2": "Enne, kui küsid.",
+    "items": [
+      {
+        "q": "Kas tasuta versioon on päriselt tasuta?",
+        "a": "Jah. Kohalik mootor töötab sinu arvutis ega maksa midagi. Kui eelistad pilvemootorit, saad sisestada oma API-võtme ja maksta otse teenusepakkujale, tavaliselt üks kuni kolm dollarit kuus."
+      },
+      {
+        "q": "Kas Hlas töötab võrguta?",
+        "a": "Jah. Kohaliku mootoriga töötab Whisper sinu Macis ega vaja pärast 547 MB mudeli ühekordset allalaadimist internetiühendust."
+      },
+      {
+        "q": "Kui hästi see eesti keelest aru saab?",
+        "a": "Hlas kasutab Whisper large-v3, mis toetab eesti keelt. Kvaliteet sõltub keelest ja hääldusest ning eesti keelt pole me veel eraldi häälestanud, nii et proovi tasuta versiooni oma häälega. Lisa nimed ja oskussõnad sõnastikku ja Hlas kirjutab need sinu moodi."
+      },
+      {
+        "q": "Kui palju RAM-i see dikteerides kasutab?",
+        "a": "Puhkeolekus umbes 60 MB. Laaditud kohaliku mudeliga umbes 1 GB ja pärast 3 minutit vaikust mudel vabastatakse. Hlas Cloud ei laadi mudelit üldse."
+      },
+      {
+        "q": "Kas see töötab Inteli protsessoriga Macis?",
+        "a": "Ei. Maci rakendus vajab Apple Siliconi ja macOS 15 või uuemat. Windows 10 ja 11 x64-l on toetatud beetana."
+      },
+      {
+        "q": "Kas saan dikteerida prompte Claude Code'i, Cursorisse või ChatGPT-sse?",
+        "a": "Jah. Hlas kirjutab igasse rakendusse, kuhu saab kirjutada, ka terminali ja koodiredaktorisse. Lisa teekide ja funktsioonide nimed sõnastikku, siis tulevad need õigesti."
+      },
+      {
+        "q": "Kuidas arved ja tühistamine käivad?",
+        "a": "Pärast makset saadab Stripe sulle e-postiga käibemaksuarve, mille väljastab Eden Makers s.r.o. ELi ettevõtted saavad maksmisel sisestada oma käibemaksukohustuslase numbri. Kaarti vahetad, arveid laadid alla või tellimuse tühistad kliendiportaalis; tellimus kehtib siis makstud aasta lõpuni."
+      },
+      {
+        "q": "Kui piiramatu on piiramatu?",
+        "a": "Hlas Cloudil pole minutiloendurit ega pakette. Et hind saaks jääda 35 € aastas, kehtib mõistlik kasutus kuni 3 tundi dikteerimist päevas ja limiit nullitakse UTC keskööl."
+      },
+      {
+        "q": "Kuhu mu heli läheb?",
+        "a": "Kohaliku mootoriga mitte kuhugi. See jääb sinu arvutisse. Hlas Cloudiga läheb see meie serveri kaudu Groqi ainult üleskirjutamiseks ja meie server seda ei salvesta. Oma võtmega läheb see otse sinu valitud teenusepakkujale."
+      }
+    ]
+  },
+  "final": {
+    "h2": "Lõpeta trükkimine. Hakka rääkima.",
+    "p": "Kaks minutit allalaadimisest esimese dikteeritud lauseni.",
+    "dlMac": "Laadi Macile"
+  },
+  "footer": {
+    "made": "Prahas valmistasid",
+    "and": "ja",
+    "privacy": "Privaatsus",
+    "compare": "Võrdlus",
+    "faq": "KKK",
+    "about": "Meist",
+    "press": "Meediale",
+    "changelog": "Muudatused",
+    "languages": "Kõik keeled",
+    "trust": "Versioon 0.5.0, avaldatud 4. novembril 2026. Maci rakendus on allkirjastatud Apple Developer ID-ga ja Apple'i poolt notariseeritud."
+  },
+  "toast": {
+    "soon": "Hlas Cloud käivitub peagi. Seni laadi alla tasuta versioon."
+  },
+  "suggest": "Hlas on saadaval ka eesti keeles"
+}

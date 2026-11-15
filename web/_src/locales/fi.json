@@ -1,0 +1,340 @@
+{
+  "code": "fi",
+  "langName": "Suomi",
+  "langNameEn": "Finnish",
+  "dec": ",",
+  "meta": {
+    "kw": "sanelu Mac",
+    "title": "Hlas: sanelu suomeksi Macille ja Windowsille",
+    "description": "Pidä Fn pohjassa, puhu, päästä irti. Teksti ilmestyy kursorin kohdalle missä tahansa sovelluksessa. 4 MB, 60 MB RAM levossa, toimii ilman nettiä. Ilmainen.",
+    "ogTitle": "Hlas: sanelu Macille ja Windowsille, joka puhuu suomea",
+    "ogDescription": "Pidä Fn pohjassa, puhu, päästä irti. 4 MB sovellus, 60 MB RAM levossa, toimii offline."
+  },
+  "nav": {
+    "features": "Ominaisuudet",
+    "performance": "Suorituskyky",
+    "languages": "Kielet",
+    "pricing": "Hinnoittelu",
+    "download": "Lataa",
+    "language": "Kieli"
+  },
+  "hero": {
+    "badge": "Uutta: Hlas Cloud, rajattomasti 35 € vuodessa",
+    "h1": "Sanelu Macille ja Windowsille, joka puhuu suomea.",
+    "sub": "Pidä <kbd>Fn</kbd> pohjassa, puhu, päästä irti. Teksti ilmestyy kursorin kohdalle missä tahansa sovelluksessa. Sovellus vie 4 MB ja levossa 60 MB RAM-muistia.",
+    "dlMac": "Lataa ilmaiseksi Macille",
+    "dlWin": "Windows (beta)",
+    "note": "Apple Silicon, macOS 15+ · 4 MB · Windows 10 ja 11 betassa, asennusohjelmaa ei ole vielä allekirjoitettu",
+    "privacy": "Paikallisessa tilassa et tarvitse tiliä, eikä äänesi koskaan poistu tietokoneelta."
+  },
+  "demo": {
+    "tabNotes": "Muistiinpanot",
+    "idle": "Pidä Fn pohjassa ja puhu",
+    "busy": "Litteroidaan",
+    "scenes": [
+      {
+        "ctx": [
+          [
+            "Aino",
+            "Miten esitys edistyy?"
+          ]
+        ],
+        "text": "Moi Aino, esitys on valmis. Lähetän lopullisen version tarkistettavaksi tänä iltana."
+      },
+      {
+        "ctx": [
+          [
+            "Vastaanottaja",
+            "mikko@studio.fi"
+          ],
+          [
+            "Aihe",
+            "Tarjous"
+          ]
+        ],
+        "text": "Hei Mikko, kiitos viestistäsi. Lähetän tarjouksen sinulle huomenna aamupäivällä."
+      },
+      {
+        "ctx": [
+          [
+            "Muistiinpano",
+            "tänään 18.07"
+          ]
+        ],
+        "text": "Törkylempijävongahdus. Jokainen ä ja ö paikallaan."
+      }
+    ]
+  },
+  "stats": {
+    "app": "koko sovellus",
+    "ram": "RAM levossa",
+    "speed": "11 s puheen litterointiin",
+    "langs": "kieltä, suomi mukaan lukien"
+  },
+  "features": {
+    "eyebrow": "Mitä sisältä löytyy",
+    "h2": "Kaikki, mitä tarvitset näppäilyn lopettamiseen.<br>Ei mitään turhaa.",
+    "offline": {
+      "chip": "Paikallinen malli käynnissä",
+      "h3": "Toimii ilman nettiä",
+      "p": "Whisper toimii suoraan koneellasi. Ääni ei koskaan poistu sieltä.",
+      "strong": "Ei wifiä? Ei hätää."
+    },
+    "vocab": {
+      "add": "Lisää",
+      "h3": "Oma sanasto",
+      "p": "Nimet, brändit ja ammattislangi. Kerro Hlasille, miten se kuulee ne väärin.",
+      "strong": "Siitä eteenpäin ne menevät oikein.",
+      "items": [
+        [
+          "Kubernetes",
+          "kuulee: kupernetes"
+        ],
+        [
+          "Figma",
+          "kuulee: fikma"
+        ],
+        [
+          "EBITDA",
+          "kuulee: ebitta"
+        ]
+      ],
+      "cycle": [
+        [
+          "Notion",
+          "kuulee: nousen"
+        ],
+        [
+          "Salesforce",
+          "kuulee: seilsfors"
+        ],
+        [
+          "Kubernetes",
+          "kuulee: kupernetes"
+        ],
+        [
+          "Figma",
+          "kuulee: fikma"
+        ],
+        [
+          "EBITDA",
+          "kuulee: ebitta"
+        ]
+      ]
+    },
+    "smart": {
+      "h3": "Älykäs teksti",
+      "p": "Muuttaa polveilevan puheen siisteiksi kappaleiksi tai listoiksi sen mukaan, mitä tarkoitit.",
+      "strong": "Alkuperäinen jää aina Historiaan.",
+      "raw": "ehm eli huomenna pitää ostaa maitoa ja sit myös leipää ja eh soittaa Ainolle",
+      "title": "Huomenna",
+      "out": [
+        "osta maitoa",
+        "osta leipää",
+        "soita Ainolle"
+      ]
+    },
+    "langs": {
+      "h3": "Puhuu suomea",
+      "p": "Whisper large-v3 kirjoittaa suomea välimerkkien ja isojen alkukirjainten kanssa siellä, missä ne kuuluvat.",
+      "strong": "Lisäksi yli 60 muuta kieltä."
+    }
+  },
+  "mini": [
+    {
+      "h4": "Äänitiedostot",
+      "p": "Pudota sisään enintään 10 minuutin tallenne ja saat tekstin."
+    },
+    {
+      "h4": "Pidä tai napauta",
+      "p": "Pidä Fn pohjassa puhuessasi. Napauta kerran handsfree-tilaan ja uudelleen lopettaaksesi."
+    },
+    {
+      "h4": "Oma pikanäppäin",
+      "p": "Fn, oikea Option, oikea Command, oikea Control tai F13-F19."
+    },
+    {
+      "h4": "Historia",
+      "p": "Haettava, paikallinen ja tyhjennettävä. Liitä viimeisin sanelu uudelleen yhdellä pikanäppäimellä."
+    }
+  ],
+  "perf": {
+    "eyebrow": "Suorituskyky",
+    "h2": "Kevyempi kuin välilehti, jonka unohdit sulkea.",
+    "ram": {
+      "h3": "RAM levossa",
+      "p": "Malli latautuu, kun puhut, ja vapautuu 3 minuutin hiljaisuuden jälkeen.",
+      "foot": "Hlas mitattu M1 Pro -koneella sovellus piilotettuna. Kun paikallinen malli on ladattuna, se käyttää noin 1 GB. Kilpailijan luku on omasta vertailustamme."
+    },
+    "size": {
+      "h3": "Sovelluksen koko",
+      "p": "Natiivi Swift Macilla, natiivi Rust Windowsilla. Ei Electronia."
+    },
+    "speed": {
+      "h3": "Nopeampi kuin ehdit lukea sen",
+      "speak": "Sinä puhut",
+      "writes": "Hlas kirjoittaa",
+      "p": "Paikallinen malli Apple Siliconilla, Metal-kiihdytetty."
+    },
+    "fill": {
+      "h3": "Täytesanat katoavat",
+      "html": "<s>Eh,</s> <span>lähetä mulle</span> <s>mm</s> <span>lopullinen versio</span> <s>hmm</s> <span>perjantaihin mennessä.</span>",
+      "p": "Epäröintiäänet kuten eh, mm ja hmm poistetaan paikallisesti, joka tilassa."
+    },
+    "sym": {
+      "h3": "Sano symboli",
+      "p": "Puhutut symbolit ja rivinvaihdot toimivat englanniksi ja tšekiksi. Labs-ominaisuus.",
+      "morph": [
+        [
+          "at sign",
+          "@"
+        ],
+        [
+          "underscore",
+          "_"
+        ],
+        [
+          "new line",
+          "↵"
+        ],
+        [
+          "dot com",
+          ".com"
+        ]
+      ]
+    },
+    "priv": {
+      "h3": "Sinun, ei meidän",
+      "items": [
+        "Ei tiliä",
+        "Ei telemetriaa",
+        "Avaimet järjestelmän avainnipussa",
+        "Lähdekoodi GitHubissa"
+      ]
+    },
+    "apps": {
+      "h3": "Toimii joka sovelluksessa",
+      "p": "Jos siihen voi kirjoittaa, siihen voi sanella."
+    }
+  },
+  "langs": {
+    "eyebrow": "Kielet",
+    "h2": "Rakennettu Prahassa kielille, jotka isot sovellukset muistavat viimeisenä.",
+    "points": [
+      {
+        "b": "ä ö",
+        "h4": "Välimerkit kohdallaan",
+        "p": "Whisper large-v3 kirjoittaa ä:t ja ö:t, isot alkukirjaimet, pilkut ja kysymysmerkit, ei yhtä pitkää pienaakkosriviä."
+      },
+      {
+        "b": "EN",
+        "h4": "Sekoita kieliä vapaasti",
+        "p": "Kiinnitä käyttämäsi kielet tai anna Hlasin tunnistaa kieli itse. Englanninkieliset termit pysyvät ehjinä suomen keskellä."
+      },
+      {
+        "b": "Ab",
+        "h4": "Sinun sanasi, sinun kirjoitusasusi",
+        "p": "Opeta Hlasille nimet ja ammattisanat kerran sanastossa, niin se kirjoittaa ne jatkossa sinun tavallasi."
+      }
+    ],
+    "note": "Tšekki viritettiin ensimmäisenä. Suomi toimii toistaiseksi Whisper large-v3:n varassa ilman erillistä viritystä, joten jos suomi on äidinkielesi, kerro meille GitHubissa, miten se pärjää."
+  },
+  "pricing": {
+    "eyebrow": "Hinnoittelu",
+    "h2": "Ilmainen omalla koneellasi.<br>35 € vuodessa, jos haluat sen vaivattomaksi.",
+    "free": {
+      "name": "Hlas",
+      "forever": "ikuisesti",
+      "sub": "Koko sovellus. Toimii omalla koneellasi tai omalla API-avaimellasi.",
+      "items": [
+        "Paikallinen Whisper-malli, toimii ilman nettiä",
+        "Tai käytä omaa avainta: Groq, OpenAI, Soniox, Fish Audio",
+        "Sanasto, historia, tekstin siistiminen, äänitiedostot",
+        "Mac ja Windows"
+      ],
+      "cta": "Lataa ilmaiseksi"
+    },
+    "cloud": {
+      "per": "vuodessa + ALV",
+      "sub": "Se on 2,92 € kuukaudessa, vähintään 54 % vähemmän kuin Superwhisper tai Wispr Flow. Rajaton sanelu meidän API:mme kautta.",
+      "items": [
+        "Rajaton sanelu, ei API-avaimia asennettavaksi",
+        "Ei 547 MB:n mallia ladattavaksi",
+        "Malli ei koskaan lataudu RAM-muistiisi, säästää akkua",
+        "Nopea myös vanhemmilla ja heikommilla koneilla"
+      ],
+      "cta": "Tilaa ennakkoon 35 € vuodessa",
+      "manage": "Jo tilaaja? Laskut ja peruutus",
+      "vat": "EU:n kuluttajat maksavat 42,35 € sisältäen 21 %:n Tšekin ALV:n. EU-yritykset, joilla on ALV-tunniste, maksavat 35 € käännetyllä verovelvollisuudella."
+    },
+    "yearly": {
+      "title": "Mitä vuosi sanelua maksaa",
+      "big": "54-73 % edullisempi kuin kilpailijat",
+      "foot": "Vuosihinnat verrattu ilman ALV:tä 14.11.2026 tilanteen mukaan: Superwhisper Pro 84,99 $ vuodessa, Wispr Flow Pro ja Willow Pro 12 $ kuukaudessa vuosilaskutuksella. Muunnettu EKP:n 13.11.2026 kurssilla, 1 $ = 0,90481 €. Osalla kilpailijoista on myös ilmaisversioita tai kertalisenssejä, katso koko vertailu."
+    },
+    "compareLink": "Koko vertailu, myös ilmaiset ja kertaostosovellukset"
+  },
+  "faq": {
+    "eyebrow": "Kysymykset",
+    "h2": "Ennen kuin kysyt.",
+    "items": [
+      {
+        "q": "Onko ilmaisversio oikeasti ilmainen?",
+        "a": "On. Paikallinen moottori toimii koneellasi eikä maksa mitään. Jos haluat pilvimoottorin, voit lisätä oman API-avaimesi ja maksaa palveluntarjoajalle suoraan, yleensä yhdestä kolmeen dollaria kuukaudessa."
+      },
+      {
+        "q": "Toimiiko Hlas ilman nettiä?",
+        "a": "Toimii. Paikallisella moottorilla Whisper pyörii Macillasi eikä tarvitse nettiyhteyttä sen jälkeen, kun 547 MB:n malli on ladattu kerran."
+      },
+      {
+        "q": "Kuinka hyvin se ymmärtää suomea?",
+        "a": "Hlas käyttää Whisper large-v3:a, joka tukee suomea. Laatu vaihtelee kielen, murteen ja aksentin mukaan, emmekä ole vielä virittäneet suomea erikseen, joten kokeile ilmaisversiota omalla äänelläsi. Lisää nimet ja ammattisanat sanastoon, niin Hlas kirjoittaa ne haluamallasi tavalla."
+      },
+      {
+        "q": "Paljonko RAM-muistia se vie sanellessa?",
+        "a": "Levossa noin 60 MB. Kun paikallinen malli on ladattuna, se käyttää noin 1 GB, ja se vapautuu 3 minuutin hiljaisuuden jälkeen. Hlas Cloud ei lataa mallia ollenkaan."
+      },
+      {
+        "q": "Toimiiko se Intel-Maceilla?",
+        "a": "Ei. Mac-sovellus vaatii Apple Siliconin ja macOS 15:n tai uudemman. Windows 10 ja 11 x64-koneilla ovat tuettuina betassa."
+      },
+      {
+        "q": "Voinko sanella prompteja Claude Codeen, Cursoriin tai ChatGPT:hen?",
+        "a": "Voit. Hlas kirjoittaa mihin tahansa sovellukseen, johon voi kirjoittaa, myös päätteisiin ja koodieditoreihin. Lisää kirjastojen ja funktioiden nimet sanastoon, niin ne tulevat oikein."
+      },
+      {
+        "q": "Miten laskut ja peruutus toimivat?",
+        "a": "Maksun jälkeen Stripe lähettää sinulle sähköpostilla ALV-laskun, jonka on laatinut Eden Makers s.r.o. EU-yritykset voivat syöttää ALV-tunnisteensa kassalla. Vaihda korttia, lataa laskuja tai peru tilaus asiakasportaalissa; tilaus on silloin voimassa maksetun vuoden loppuun."
+      },
+      {
+        "q": "Kuinka rajaton rajaton on?",
+        "a": "Hlas Cloudissa ei ole minuuttilaskuria eikä tasoja. Jotta hinta pysyy 35 eurossa vuodessa, kohtuullinen käyttö tarkoittaa enintään 3 tuntia sanelua päivässä, ja raja nollautuu keskiyöllä UTC-aikaa."
+      },
+      {
+        "q": "Minne ääneni menee?",
+        "a": "Paikallisella moottorilla ei minnekään. Se pysyy koneellasi. Hlas Cloudilla se kulkee palvelimemme kautta Groqille pelkkää litterointia varten, eikä palvelimemme tallenna sitä. Omalla avaimella se menee suoraan valitsemallesi palveluntarjoajalle."
+      }
+    ]
+  },
+  "final": {
+    "h2": "Lopeta näppäily. Ala puhua.",
+    "p": "Kaksi minuuttia latauksesta ensimmäiseen saneltuun lauseeseen.",
+    "dlMac": "Lataa Macille"
+  },
+  "footer": {
+    "made": "Prahassa sen tekivät",
+    "and": "ja",
+    "privacy": "Tietosuoja",
+    "compare": "Vertailu",
+    "faq": "UKK",
+    "about": "Tietoa meistä",
+    "press": "Medialle",
+    "changelog": "Muutosloki",
+    "languages": "Kaikki kielet",
+    "trust": "Versio 0.5.0, julkaistu 4.11.2026. Mac-sovellus on allekirjoitettu Apple Developer ID:llä ja Applen notarisoima."
+  },
+  "toast": {
+    "soon": "Hlas Cloud julkaistaan pian. Lataa sillä välin ilmaisversio."
+  },
+  "suggest": "Hlas on saatavilla myös suomeksi"
+}

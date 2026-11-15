@@ -7,6 +7,8 @@ use keyring::Entry;
 const SERVICE: &str = "com.gedeon.hlas";
 pub const GROQ: &str = "groq-api-key";
 pub const OPENAI: &str = "openai-api-key";
+/// Hlas Cloud licence key (not an API key, but just as secret).
+pub const HLAS_CLOUD: &str = "hlascloud-license";
 
 fn entry(account: &str) -> Result<Entry> {
     Ok(Entry::new(SERVICE, account)?)

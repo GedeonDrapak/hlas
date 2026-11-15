@@ -1,5 +1,6 @@
 import AppKit
 import SwiftUI
+import ThinkingOrbsKit
 
 enum OverlayState: Equatable {
     case hidden
@@ -184,11 +185,15 @@ struct OverlayView: View {
                 Text("Smart text…").font(DS.text(12)).foregroundStyle(DS.fg2)
                 Text("Esc to cancel").font(DS.text(10)).foregroundStyle(DS.fg3)
             case .recording:
-                Circle().fill(DS.brand).frame(width: 7, height: 7)
+                // Light dots of the dark-theme orb, tinted to the brand green.
+                ThinkingOrb(state: .breathing, size: .px20, theme: .dark, displaySize: 20)
+                    .colorMultiply(DS.brand)
+                    .brightness(0.15)
+                    .shadow(color: DS.brand.opacity(0.5), radius: 4)
+                    .frame(width: 20, height: 20)
                 waveform(color: DS.brand)
                 Text(String(format: "%d:%02d", Int(model.elapsed) / 60, Int(model.elapsed) % 60))
                     .font(.system(size: 11, design: .monospaced)).foregroundStyle(DS.fg2)
-                Text(model.mode).font(DS.text(10)).foregroundStyle(DS.fg3)
                 if let icon = model.sourceIcon {
                     HStack(spacing: 4) {
                         Image(systemName: icon).font(.system(size: 10))
@@ -200,10 +205,10 @@ struct OverlayView: View {
                     .frame(maxWidth: 110)
                 }
             case .transcribing:
-                ProgressView().controlSize(.small).tint(DS.fg2)
-                Text("TRANSCRIBING")
-                    .font(DS.display(11))
-                    .tracking(3)
+                ThinkingOrb(state: .breathing, size: .px20, theme: .dark, displaySize: 20)
+                    .frame(width: 20, height: 20)
+                Text("Transcribing…")
+                    .font(DS.text(13))
                     .foregroundStyle(DS.fg2)
             case .cancelled:
                 Image(systemName: "xmark.circle.fill")
@@ -230,7 +235,6 @@ struct OverlayView: View {
                 Color(hex: 0x0F0F0F).opacity(0.35) // dark tint over the blur
             }
             .clipShape(Capsule())
-            .overlay(Capsule().strokeBorder(Color.white.opacity(0.12), lineWidth: 1))
             .shadow(color: .black.opacity(0.35), radius: 18, y: 6)
         )
         .frame(maxWidth: .infinity, maxHeight: .infinity)

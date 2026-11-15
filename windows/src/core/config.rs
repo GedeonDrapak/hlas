@@ -17,16 +17,19 @@ pub enum Engine {
     Groq,
     /// OpenAI cloud, gpt-transcribe. Best accuracy, BYOK.
     OpenAI,
+    /// Hlas Cloud: paid subscription, licence key instead of an API key.
+    HlasCloud,
 }
 
 impl Engine {
-    pub const ALL: [Engine; 3] = [Engine::Local, Engine::Groq, Engine::OpenAI];
+    pub const ALL: [Engine; 4] = [Engine::Local, Engine::HlasCloud, Engine::Groq, Engine::OpenAI];
 
     pub fn id(self) -> &'static str {
         match self {
             Engine::Local => "local",
             Engine::Groq => "groq",
             Engine::OpenAI => "openai",
+            Engine::HlasCloud => "hlascloud",
         }
     }
 }

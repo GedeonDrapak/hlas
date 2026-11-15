@@ -1,0 +1,340 @@
+{
+  "code": "ms",
+  "langName": "Bahasa Melayu",
+  "langNameEn": "Malay",
+  "dec": ".",
+  "meta": {
+    "kw": "aplikasi taip suara Mac",
+    "title": "Hlas: aplikasi taip suara untuk Mac dan Windows",
+    "description": "Tahan Fn, bercakap, lepaskan. Teks muncul di tempat kursor, dalam apa jua aplikasi. 4 MB, 60 MB RAM ketika rehat, Whisper luar talian. Percuma atau €35 setahun.",
+    "ogTitle": "Hlas: dikte untuk Mac dan Windows yang faham bahasa Melayu",
+    "ogDescription": "Tahan Fn, bercakap, lepaskan. Aplikasi 4 MB, 60 MB RAM ketika rehat, berfungsi luar talian."
+  },
+  "nav": {
+    "features": "Ciri",
+    "performance": "Prestasi",
+    "languages": "Bahasa",
+    "pricing": "Harga",
+    "download": "Muat turun",
+    "language": "Bahasa"
+  },
+  "hero": {
+    "badge": "Baharu: Hlas Cloud, tanpa had untuk €35 setahun",
+    "h1": "Dikte untuk Mac dan Windows yang faham bahasa Melayu.",
+    "sub": "Tahan <kbd>Fn</kbd>, bercakap, lepaskan. Teks terus muncul di tempat kursor anda, dalam apa jua aplikasi. Aplikasinya hanya 4 MB dan menggunakan 60 MB RAM ketika rehat.",
+    "dlMac": "Muat turun percuma untuk Mac",
+    "dlWin": "Windows (beta)",
+    "note": "Apple Silicon, macOS 15+ · 4 MB · Windows 10 dan 11 dalam beta, pemasang belum ditandatangani",
+    "privacy": "Dalam mod tempatan, tiada akaun diperlukan dan audio anda tidak pernah keluar dari komputer."
+  },
+  "demo": {
+    "tabNotes": "Nota",
+    "idle": "Tahan Fn dan bercakap",
+    "busy": "Menukar ke teks",
+    "scenes": [
+      {
+        "ctx": [
+          [
+            "Aisyah",
+            "Macam mana dengan slaid tu?"
+          ]
+        ],
+        "text": "Hai Aisyah, slaid dah siap. Malam ni saya hantar versi akhir untuk semakan."
+      },
+      {
+        "ctx": [
+          [
+            "Kepada",
+            "faizal@studio.com.my"
+          ],
+          [
+            "Subjek",
+            "Sebut harga"
+          ]
+        ],
+        "text": "Salam Encik Faizal, terima kasih atas mesej anda. Saya akan hantar sebut harga esok pagi."
+      },
+      {
+        "ctx": [
+          [
+            "Nota",
+            "hari ini 6:07 PTG"
+          ]
+        ],
+        "text": "Esok, Encik Hafiz dari Kuala Lumpur akan hantar tiga dokumen. Boleh semak sebelum Jumaat? Setiap huruf di tempatnya."
+      }
+    ]
+  },
+  "stats": {
+    "app": "keseluruhan aplikasi",
+    "ram": "RAM ketika rehat",
+    "speed": "untuk menyalin 11 saat pertuturan",
+    "langs": "bahasa, termasuk bahasa Melayu"
+  },
+  "features": {
+    "eyebrow": "Apa di dalamnya",
+    "h2": "Semua yang anda perlukan untuk berhenti menaip.<br>Tiada yang tidak perlu.",
+    "offline": {
+      "chip": "Model tempatan sedang berjalan",
+      "h3": "Berfungsi luar talian",
+      "p": "Whisper berjalan terus pada komputer anda. Audio tidak pernah keluar darinya.",
+      "strong": "Tiada Wi-Fi, tiada masalah."
+    },
+    "vocab": {
+      "add": "Tambah",
+      "h3": "Perbendaharaan kata sendiri",
+      "p": "Nama, jenama dan jargon. Beritahu Hlas bagaimana ia tersalah dengar.",
+      "strong": "Selepas itu ia menulisnya dengan betul.",
+      "items": [
+        [
+          "Shopee",
+          "kedengaran: syopi"
+        ],
+        [
+          "Kubernetes",
+          "kedengaran: kuber netis"
+        ],
+        [
+          "EBITDA",
+          "kedengaran: ebit da"
+        ]
+      ],
+      "cycle": [
+        [
+          "Grab",
+          "kedengaran: greb"
+        ],
+        [
+          "Notion",
+          "kedengaran: nosyen"
+        ],
+        [
+          "Shopee",
+          "kedengaran: syopi"
+        ],
+        [
+          "Kubernetes",
+          "kedengaran: kuber netis"
+        ],
+        [
+          "EBITDA",
+          "kedengaran: ebit da"
+        ]
+      ]
+    },
+    "smart": {
+      "h3": "Teks pintar",
+      "p": "Tukar cakap yang meleret jadi perenggan kemas atau senarai, ikut apa yang anda maksudkan.",
+      "strong": "Teks asal sentiasa kekal dalam Sejarah.",
+      "raw": "erm jadi esok saya kena beli susu lepas tu roti juga dan uh telefon Hafiz",
+      "title": "Esok",
+      "out": [
+        "beli susu",
+        "beli roti",
+        "telefon Hafiz"
+      ]
+    },
+    "langs": {
+      "h3": "Faham bahasa Melayu",
+      "p": "Whisper large-v3 menulis bahasa Melayu lengkap dengan tanda baca dan huruf besar.",
+      "strong": "Ditambah 60+ bahasa lain."
+    }
+  },
+  "mini": [
+    {
+      "h4": "Fail audio",
+      "p": "Letak rakaman sehingga 10 minit dan dapatkan teksnya."
+    },
+    {
+      "h4": "Tahan atau ketik",
+      "p": "Tahan Fn untuk bercakap. Ketik sekali untuk bebas tangan, ketik lagi untuk berhenti."
+    },
+    {
+      "h4": "Kekunci pilihan anda",
+      "p": "Fn, Option kanan, Command kanan, Control kanan atau F13 hingga F19."
+    },
+    {
+      "h4": "Sejarah",
+      "p": "Boleh dicari, disimpan setempat, boleh dipadam. Tampal semula dikte terakhir dengan satu pintasan."
+    }
+  ],
+  "perf": {
+    "eyebrow": "Prestasi",
+    "h2": "Lebih ringan daripada tab yang anda terlupa tutup.",
+    "ram": {
+      "h3": "RAM ketika rehat",
+      "p": "Model dimuatkan ketika anda bercakap dan dilepaskan selepas 3 minit senyap.",
+      "foot": "Hlas diukur pada M1 Pro dengan aplikasi tersembunyi. Ketika model tempatan dimuatkan, ia menggunakan kira-kira 1 GB. Angka pesaing daripada perbandingan kami sendiri."
+    },
+    "size": {
+      "h3": "Saiz aplikasi",
+      "p": "Swift asli pada Mac, Rust asli pada Windows. Tanpa Electron."
+    },
+    "speed": {
+      "h3": "Lebih pantas daripada anda membacanya semula",
+      "speak": "Anda bercakap",
+      "writes": "Hlas menulis",
+      "p": "Model tempatan pada Apple Silicon, dipecut dengan Metal."
+    },
+    "fill": {
+      "h3": "Kata pengisi hilang",
+      "html": "<s>Erm,</s> <span>hantar saya</span> <s>uh</s> <span>versi akhir</span> <s>hmm</s> <span>sebelum Jumaat.</span>",
+      "p": "Bunyi teragak-agak seperti erm, uh dan hmm dibuang secara setempat, dalam setiap mod."
+    },
+    "sym": {
+      "h3": "Sebut simbolnya",
+      "p": "Simbol dan baris baharu melalui suara, dalam bahasa Inggeris dan Czech. Ciri Labs.",
+      "morph": [
+        [
+          "at sign",
+          "@"
+        ],
+        [
+          "underscore",
+          "_"
+        ],
+        [
+          "new line",
+          "↵"
+        ],
+        [
+          "dot com",
+          ".com"
+        ]
+      ]
+    },
+    "priv": {
+      "h3": "Milik anda, bukan kami",
+      "items": [
+        "Tiada akaun",
+        "Tiada telemetri",
+        "Kunci dalam keychain sistem",
+        "Kod sumber di GitHub"
+      ]
+    },
+    "apps": {
+      "h3": "Berfungsi dalam setiap aplikasi",
+      "p": "Jika anda boleh menaip di situ, anda boleh mendikte di situ."
+    }
+  },
+  "langs": {
+    "eyebrow": "Bahasa",
+    "h2": "Dibina di Prague untuk bahasa yang selalu dianaktirikan oleh aplikasi besar.",
+    "points": [
+      {
+        "b": "Aa",
+        "h4": "Tanda baca yang betul",
+        "p": "Whisper large-v3 menulis huruf besar, koma dan tanda soal, bukan satu baris panjang huruf kecil."
+      },
+      {
+        "b": "EN",
+        "h4": "Campur bahasa dengan bebas",
+        "p": "Pilih bahasa yang anda guna atau biarkan Hlas mengesan secara automatik. Istilah Inggeris dalam ayat Melayu kekal utuh."
+      },
+      {
+        "b": "Ab",
+        "h4": "Perkataan anda, ejaan anda",
+        "p": "Ajar Hlas nama dan jargon sekali dalam perbendaharaan kata, dan selepas itu ia menulisnya mengikut cara anda."
+      }
+    ],
+    "note": "Bahasa Czech kami tala dahulu. Bahasa Melayu berjalan pada Whisper large-v3 tanpa penalaan tambahan buat masa ini, dan penutur asli dialu-alukan untuk kongsi hasilnya dengan kami di GitHub."
+  },
+  "pricing": {
+    "eyebrow": "Harga",
+    "h2": "Percuma pada komputer anda sendiri.<br>€35 setahun jika mahu tanpa leceh.",
+    "free": {
+      "name": "Hlas",
+      "forever": "selamanya",
+      "sub": "Aplikasi penuh. Berjalan pada komputer anda, atau dengan kunci API anda sendiri.",
+      "items": [
+        "Model Whisper tempatan, berfungsi luar talian",
+        "Atau guna kunci sendiri: Groq, OpenAI, Soniox, Fish Audio",
+        "Perbendaharaan kata, sejarah, kemas teks, fail audio",
+        "Mac dan Windows"
+      ],
+      "cta": "Muat turun percuma"
+    },
+    "cloud": {
+      "per": "setahun + VAT",
+      "sub": "Itu €2.92 sebulan, sekurang-kurangnya 54% lebih murah daripada Superwhisper atau Wispr Flow. Dikte tanpa had melalui API kami.",
+      "items": [
+        "Dikte tanpa had, tiada kunci API untuk disediakan",
+        "Tiada model 547 MB untuk dimuat turun",
+        "Model tidak pernah dimuatkan ke RAM anda, jimat bateri",
+        "Pantas juga pada mesin lama dan kurang berkuasa"
+      ],
+      "cta": "Tempah sekarang, €35 setahun",
+      "manage": "Sudah melanggan? Invois dan pembatalan",
+      "vat": "Pengguna di EU membayar €42.35 termasuk VAT Czech 21%. Perniagaan EU yang mempunyai nombor VAT membayar €35 di bawah caj balikan."
+    },
+    "yearly": {
+      "title": "Kos dikte selama setahun",
+      "big": "54 hingga 73% lebih murah daripada pesaing",
+      "foot": "Pelan tahunan dibandingkan tanpa VAT, pada 14 November 2026: Superwhisper Pro $84.99 setahun, Wispr Flow Pro dan Willow Pro $12 sebulan dibilkan tahunan. Ditukar pada kadar ECB 13 November 2026, $1 = €0.90481. Sesetengah pesaing turut ada pelan percuma atau lesen sekali bayar, lihat perbandingan penuh."
+    },
+    "compareLink": "Perbandingan penuh, termasuk aplikasi percuma dan sekali bayar"
+  },
+  "faq": {
+    "eyebrow": "Soalan",
+    "h2": "Sebelum anda bertanya.",
+    "items": [
+      {
+        "q": "Adakah versi percuma benar-benar percuma?",
+        "a": "Ya. Enjin tempatan berjalan pada komputer anda dan tiada sebarang caj. Jika anda lebih suka enjin awan, masukkan kunci API anda sendiri dan bayar terus kepada penyedia, biasanya satu hingga tiga dolar sebulan."
+      },
+      {
+        "q": "Adakah Hlas berfungsi luar talian?",
+        "a": "Ya. Dengan enjin tempatan, Whisper berjalan pada Mac anda dan tidak memerlukan internet selepas model 547 MB dimuat turun sekali."
+      },
+      {
+        "q": "Sejauh mana Hlas memahami bahasa Melayu?",
+        "a": "Hlas menggunakan Whisper large-v3 yang menyokong bahasa Melayu, tetapi kami belum menalanya khusus untuk bahasa Melayu dan kualiti berbeza mengikut bahasa dan loghat. Cuba versi percuma, dan tambah nama serta istilah dalam perbendaharaan kata supaya ia ditulis mengikut cara anda."
+      },
+      {
+        "q": "Berapa banyak RAM yang digunakan semasa mendikte?",
+        "a": "Kira-kira 60 MB ketika rehat. Ketika model tempatan dimuatkan, kira-kira 1 GB, dan ia dilepaskan selepas 3 minit senyap. Hlas Cloud langsung tidak memuatkan model."
+      },
+      {
+        "q": "Adakah ia berjalan pada Mac Intel?",
+        "a": "Tidak. Aplikasi Mac memerlukan Apple Silicon dan macOS 15 atau lebih baharu. Windows 10 dan 11 pada x64 disokong dalam beta."
+      },
+      {
+        "q": "Bolehkah saya mendikte prompt ke Claude Code, Cursor atau ChatGPT?",
+        "a": "Boleh. Hlas menaip dalam mana-mana aplikasi yang membolehkan anda menaip, termasuk terminal dan editor kod. Tambah nama pustaka dan fungsi dalam perbendaharaan kata supaya hasilnya tepat."
+      },
+      {
+        "q": "Bagaimana invois dan pembatalan berfungsi?",
+        "a": "Selepas pembayaran, Stripe menghantar invois VAT daripada Eden Makers s.r.o. melalui e-mel. Syarikat dari EU boleh memasukkan nombor VAT semasa pembayaran. Tukar kad, muat turun invois atau batalkan langganan di portal pelanggan; langganan kekal aktif hingga akhir tahun yang telah dibayar."
+      },
+      {
+        "q": "Tanpa had itu sejauh mana?",
+        "a": "Hlas Cloud tiada pembilang minit atau peringkat. Untuk mengekalkan harga €35 setahun, penggunaan wajar adalah sehingga 3 jam dikte sehari, yang ditetapkan semula pada tengah malam UTC."
+      },
+      {
+        "q": "Ke mana audio saya pergi?",
+        "a": "Dengan enjin tempatan, tidak ke mana-mana. Ia kekal pada komputer anda. Dengan Hlas Cloud, ia melalui pelayan kami ke Groq hanya untuk transkripsi dan pelayan kami tidak menyimpannya. Dengan kunci sendiri, ia terus ke penyedia yang anda pilih."
+      }
+    ]
+  },
+  "final": {
+    "h2": "Berhenti menaip. Mula bercakap.",
+    "p": "Dua minit dari muat turun hingga ayat pertama yang anda dikte.",
+    "dlMac": "Muat turun untuk Mac"
+  },
+  "footer": {
+    "made": "Dibuat di Prague oleh",
+    "and": "dan",
+    "privacy": "Privasi",
+    "compare": "Perbandingan",
+    "faq": "Soalan lazim",
+    "about": "Tentang",
+    "press": "Media",
+    "changelog": "Log perubahan",
+    "languages": "Semua bahasa",
+    "trust": "Versi 0.5.0 bertarikh 4 November 2026. Aplikasi Mac ditandatangani dengan Apple Developer ID dan dinotari oleh Apple."
+  },
+  "toast": {
+    "soon": "Hlas Cloud akan dilancarkan tidak lama lagi. Muat turun versi percuma dahulu."
+  },
+  "suggest": "Hlas juga tersedia dalam bahasa Melayu"
+}

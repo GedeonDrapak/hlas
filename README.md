@@ -176,3 +176,7 @@ Fn press ──► CGEventTap (Hotkey.swift, health-checked)
 Techniques borrowed from studying Handy, VoiceInk and FluidVoice source:
 hybrid tap/hold hotkey (VoiceInk), tap health-check (FluidVoice), clipboard
 etiquette + sub-second padding + Czech filler handling (Handy).
+
+## Credits
+
+- Thinking orb in the status pill and on the website: [thinking-orbs](https://github.com/Jakubantalik/Libraries.dev) by Jakub Antalik, MIT licence (`web/vendor/thinking-orbs/LICENSE`).

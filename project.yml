@@ -11,6 +11,11 @@ packages:
   Sparkle:
     url: https://github.com/sparkle-project/Sparkle
     majorVersion: 2.7.0
+  # Thinking orb in the pill while transcribing (MIT, Jakub Antalik). Pinned:
+  # the repo asks to track main and its old tags predate the manifest.
+  LibrariesDev:
+    url: https://github.com/Jakubantalik/Libraries.dev
+    revision: 387b049ca8fe97b5d72999b5bf61a19ab1ccff81
 settings:
   base:
     DEVELOPMENT_TEAM: 74N9VPV9D6
@@ -47,12 +52,16 @@ targets:
         CFBundleIdentifier: com.gedeon.hlas
         CFBundleName: Hlas
         CFBundleDisplayName: Hlas
-        CFBundleShortVersionString: 0.5.0
-        CFBundleVersion: "10"
+        CFBundleShortVersionString: 0.6.0
+        CFBundleVersion: "11"
         LSMinimumSystemVersion: "15.0"
         LSUIElement: true
         NSMicrophoneUsageDescription: Hlas needs the microphone to transcribe your speech.
         NSHighResolutionCapable: true
+        # hlas://activate?key=... opens Hlas from the Hlas Cloud welcome page.
+        CFBundleURLTypes:
+          - CFBundleURLName: com.gedeon.hlas
+            CFBundleURLSchemes: [hlas]
         # Sparkle: one feed for every release, attached by tools/publish.sh.
         SUFeedURL: https://github.com/GedeonDrapak/hlas/releases/latest/download/appcast.xml
         SUPublicEDKey: 6Ab9JNiS3L8luwAnSEoH2BrHAOQNKaE57ChtjHagWuI=
@@ -80,6 +89,8 @@ targets:
     dependencies:
       - target: HlasCore
       - package: Sparkle
+      - package: LibrariesDev
+        product: ThinkingOrbsKit
       - sdk: Metal.framework
       - sdk: Accelerate.framework
       - sdk: AVFoundation.framework

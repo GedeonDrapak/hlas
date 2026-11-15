@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.6.0 - 2026-11-15
+
+- Hlas Cloud on Windows: a fourth engine that dictates through the Hlas Cloud subscription (EUR 35 a year) with a licence key instead of an API key. Smart text goes through Hlas Cloud too when it is the engine.
+- New Settings page "Hlas Cloud": licence key, live subscription status, "Get Hlas Cloud" and "Manage subscription" (Stripe customer portal).
+- `hlas://activate?key=...` links from the page shown after payment store the licence in Credential Manager and switch to Hlas Cloud, also when Hlas is already running. The installer registers the `hlas:` protocol and the uninstaller removes it with the stored licence.
+- Free 7-day Hlas Cloud trial without a card (30 minutes a day): "Try free for 7 days" on the Hlas Cloud page. One trial per install.
+- Hlas Cloud requests carry a random install id (`%LOCALAPPDATA%\Hlas\install-id`); one licence works on up to 5 computers.
+- The status pill no longer draws a border.
+- Clear messages for an unknown licence, an ended trial or subscription, too many computers and the daily fair-use limit.
+
 ## 0.5.0 - 2026-11-04
 
 - Hlas for Windows moved into the Hlas repository (`windows/`) and now ships in the same GitHub release as Hlas for macOS, with the same version number. The installer is `Hlas-windows-x64-setup.exe`.

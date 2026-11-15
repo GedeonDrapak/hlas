@@ -1,0 +1,340 @@
+{
+  "code": "nl",
+  "langName": "Nederlands",
+  "langNameEn": "Dutch",
+  "dec": ",",
+  "meta": {
+    "kw": "dicteer app Mac Nederlands offline",
+    "title": "Hlas: dicteer-app voor Mac en Windows in het Nederlands",
+    "description": "Houd Fn ingedrukt, praat, laat los. De tekst staat bij je cursor, in elke app. 4 MB, 60 MB RAM in rust, Whisper offline. Gratis of onbeperkt voor € 35 per jaar.",
+    "ogTitle": "Hlas: dicteren op Mac en Windows, ook in het Nederlands",
+    "ogDescription": "Houd Fn ingedrukt, praat, laat los. App van 4 MB, 60 MB RAM in rust, werkt offline."
+  },
+  "nav": {
+    "features": "Functies",
+    "performance": "Prestaties",
+    "languages": "Talen",
+    "pricing": "Prijzen",
+    "download": "Downloaden",
+    "language": "Taal"
+  },
+  "hero": {
+    "badge": "Nieuw: Hlas Cloud, onbeperkt voor € 35 per jaar",
+    "h1": "Dicteren op Mac en Windows, gewoon in het Nederlands.",
+    "sub": "Houd <kbd>Fn</kbd> ingedrukt, praat, laat los. De tekst verschijnt waar je cursor staat, in elke app. 4 MB groot en in rust maar 60 MB RAM.",
+    "dlMac": "Gratis downloaden voor Mac",
+    "dlWin": "Windows (bèta)",
+    "note": "Apple Silicon, macOS 15+ · 4 MB · Windows 10 en 11 in bèta, installatieprogramma nog niet ondertekend",
+    "privacy": "In de lokale modus heb je geen account nodig en verlaat je audio nooit je computer."
+  },
+  "demo": {
+    "tabNotes": "Notities",
+    "idle": "Houd Fn ingedrukt en praat",
+    "busy": "Bezig met uitschrijven",
+    "scenes": [
+      {
+        "ctx": [
+          [
+            "Sanne",
+            "Hoe staat het met de presentatie?"
+          ]
+        ],
+        "text": "Hoi Sanne, de presentatie is af. Vanavond stuur ik je de definitieve versie ter goedkeuring."
+      },
+      {
+        "ctx": [
+          [
+            "Aan",
+            "daan.devries@bureau.nl"
+          ],
+          [
+            "Onderwerp",
+            "Offerte"
+          ]
+        ],
+        "text": "Hallo Daan, bedankt voor je bericht. Morgenochtend stuur ik je de offerte."
+      },
+      {
+        "ctx": [
+          [
+            "Notitie",
+            "vandaag 18:07"
+          ]
+        ],
+        "text": "Pa's wijze lynx bezag vroom het fikse aquaduct. Elke apostrof, trema en hoofdletter op zijn plek."
+      }
+    ]
+  },
+  "stats": {
+    "app": "de hele app",
+    "ram": "RAM in rust",
+    "speed": "om 11 s spraak uit te schrijven",
+    "langs": "talen, Nederlands inbegrepen"
+  },
+  "features": {
+    "eyebrow": "Wat erin zit",
+    "h2": "Alles wat je nodig hebt om te stoppen met typen.<br>Niets wat je niet nodig hebt.",
+    "offline": {
+      "chip": "Lokaal model actief",
+      "h3": "Werkt offline",
+      "p": "Whisper draait gewoon op je eigen computer. Je audio gaat nergens heen.",
+      "strong": "Geen wifi? Geen probleem."
+    },
+    "vocab": {
+      "add": "Toevoegen",
+      "h3": "Je eigen woordenlijst",
+      "p": "Namen, merken en vakjargon. Vertel Hlas hoe het ze verkeerd verstaat.",
+      "strong": "Vanaf dan schrijft het ze goed.",
+      "items": [
+        [
+          "Kubernetes",
+          "hoort: kuber nettis"
+        ],
+        [
+          "Figma",
+          "hoort: fikma"
+        ],
+        [
+          "EBITDA",
+          "hoort: ebit da"
+        ]
+      ],
+      "cycle": [
+        [
+          "Notion",
+          "hoort: nousjun"
+        ],
+        [
+          "Nguyen",
+          "hoort: nwujen"
+        ],
+        [
+          "Kubernetes",
+          "hoort: kuber nettis"
+        ],
+        [
+          "Figma",
+          "hoort: fikma"
+        ],
+        [
+          "EBITDA",
+          "hoort: ebit da"
+        ]
+      ]
+    },
+    "smart": {
+      "h3": "Slimme tekst",
+      "p": "Maakt van losse gedachten nette alinea's of lijstjes, afhankelijk van wat je bedoelde.",
+      "strong": "Het origineel blijft altijd in de Geschiedenis.",
+      "raw": "uhm dus morgen moet ik melk kopen en dan ook nog brood en eh Bram bellen",
+      "title": "Morgen",
+      "out": [
+        "melk kopen",
+        "brood kopen",
+        "Bram bellen"
+      ]
+    },
+    "langs": {
+      "h3": "Spreekt Nederlands",
+      "p": "Whisper large-v3 schrijft Nederlands met leestekens en hoofdletters.",
+      "strong": "Plus meer dan 60 andere talen."
+    }
+  },
+  "mini": [
+    {
+      "h4": "Audiobestanden",
+      "p": "Sleep een opname van maximaal 10 minuten erin en krijg de tekst."
+    },
+    {
+      "h4": "Vasthouden of tikken",
+      "p": "Houd Fn vast om te praten. Tik één keer voor handsfree, tik nog eens om te stoppen."
+    },
+    {
+      "h4": "Jouw sneltoets",
+      "p": "Fn, rechter Option, rechter Command, rechter Control of F13 tot en met F19."
+    },
+    {
+      "h4": "Geschiedenis",
+      "p": "Doorzoekbaar, lokaal, wisbaar. Plak het laatste dictaat opnieuw met één sneltoets."
+    }
+  ],
+  "perf": {
+    "eyebrow": "Prestaties",
+    "h2": "Lichter dan het tabblad dat je vergat te sluiten.",
+    "ram": {
+      "h3": "RAM in rust",
+      "p": "Het model laadt zodra je praat en wordt na 3 minuten stilte weer vrijgegeven.",
+      "foot": "Hlas gemeten op een M1 Pro met de app verborgen. Met het lokale model geladen gebruikt het ongeveer 1 GB. Cijfer van de concurrent uit onze eigen vergelijking."
+    },
+    "size": {
+      "h3": "Grootte van de app",
+      "p": "Native Swift op de Mac, native Rust op Windows. Geen Electron."
+    },
+    "speed": {
+      "h3": "Sneller dan jij het kunt teruglezen",
+      "speak": "Jij praat",
+      "writes": "Hlas schrijft",
+      "p": "Lokaal model op Apple Silicon, versneld met Metal."
+    },
+    "fill": {
+      "h3": "Stopwoordjes verdwijnen",
+      "html": "<s>Uhm,</s> <span>stuur me</span> <s>eh</s> <span>de definitieve versie</span> <s>hmm</s> <span>voor vrijdag.</span>",
+      "p": "Aarzelingen zoals uhm, eh en hmm worden lokaal verwijderd, in elke modus."
+    },
+    "sym": {
+      "h3": "Zeg het symbool",
+      "p": "Gesproken symbolen en regeleinden, in het Engels en Tsjechisch. Een Labs-functie.",
+      "morph": [
+        [
+          "at sign",
+          "@"
+        ],
+        [
+          "underscore",
+          "_"
+        ],
+        [
+          "new line",
+          "↵"
+        ],
+        [
+          "dot com",
+          ".com"
+        ]
+      ]
+    },
+    "priv": {
+      "h3": "Van jou, niet van ons",
+      "items": [
+        "Geen account",
+        "Geen telemetrie",
+        "Sleutels in de sleutelhanger van het systeem",
+        "Broncode op GitHub"
+      ]
+    },
+    "apps": {
+      "h3": "Werkt in elke app",
+      "p": "Waar je kunt typen, kun je dicteren."
+    }
+  },
+  "langs": {
+    "eyebrow": "Talen",
+    "h2": "Gemaakt in Praag, voor talen die grote apps pas achteraf meenemen.",
+    "points": [
+      {
+        "b": "ë ï é",
+        "h4": "Leestekens zoals het hoort",
+        "p": "Whisper large-v3 schrijft hoofdletters, komma's en vraagtekens, geen lange regel in kleine letters."
+      },
+      {
+        "b": "EN",
+        "h4": "Talen vrij mengen",
+        "p": "Zet je talen vast of laat Hlas ze zelf herkennen. Engelse termen midden in een Nederlandse zin blijven heel."
+      },
+      {
+        "b": "Ab",
+        "h4": "Jouw woorden, jouw spelling",
+        "p": "Leer Hlas namen en vakjargon één keer in de woordenlijst, en vanaf dan schrijft het ze zoals jij wilt."
+      }
+    ],
+    "note": "Tsjechisch hebben we als eerste fijngeslepen. Nederlands draait voorlopig op Whisper large-v3 zonder extra afstemming, en als moedertaalspreker horen we graag op GitHub hoe het gaat."
+  },
+  "pricing": {
+    "eyebrow": "Prijzen",
+    "h2": "Gratis op je eigen computer.<br>€ 35 per jaar als je het zonder gedoe wilt.",
+    "free": {
+      "name": "Hlas",
+      "forever": "voor altijd",
+      "sub": "De volledige app. Draait op je eigen computer of met je eigen API-sleutel.",
+      "items": [
+        "Lokaal Whisper-model, werkt offline",
+        "Of je eigen sleutel: Groq, OpenAI, Soniox, Fish Audio",
+        "Woordenlijst, geschiedenis, opschonen, audiobestanden",
+        "Mac en Windows"
+      ],
+      "cta": "Gratis downloaden"
+    },
+    "cloud": {
+      "per": "per jaar excl. btw",
+      "sub": "Dat is € 2,92 per maand, minstens 54% goedkoper dan Superwhisper of Wispr Flow. Onbeperkt dicteren via onze API.",
+      "items": [
+        "Onbeperkt dicteren, geen API-sleutels om in te stellen",
+        "Geen model van 547 MB om te downloaden",
+        "Het model komt nooit in je RAM, dat spaart je batterij",
+        "Ook snel op oudere en minder krachtige computers"
+      ],
+      "cta": "Voorbestellen voor € 35 per jaar",
+      "manage": "Al abonnee? Facturen en opzeggen",
+      "vat": "Consumenten in de EU betalen € 42,35 inclusief 21% Tsjechische btw. Bedrijven in de EU met een btw-nummer betalen € 35 met btw verlegd."
+    },
+    "yearly": {
+      "title": "Wat een jaar dicteren kost",
+      "big": "54 tot 73% goedkoper dan de concurrentie",
+      "foot": "Jaarabonnementen vergeleken exclusief btw, per 14 november 2026: Superwhisper Pro $ 84,99 per jaar, Wispr Flow Pro en Willow Pro $ 12 per maand bij jaarlijkse betaling. Omgerekend tegen de ECB-koers van 13 november 2026, $ 1 = € 0,90481. Sommige concurrenten hebben ook gratis abonnementen of eenmalige licenties, zie de volledige vergelijking."
+    },
+    "compareLink": "Volledige vergelijking, inclusief gratis apps en eenmalige licenties"
+  },
+  "faq": {
+    "eyebrow": "Vragen",
+    "h2": "Voordat je het vraagt.",
+    "items": [
+      {
+        "q": "Is de gratis versie echt gratis?",
+        "a": "Ja. De lokale engine draait op je computer en kost niets. Wil je liever een cloud-engine, dan vul je je eigen API-sleutel in en betaal je de aanbieder rechtstreeks, meestal één tot drie dollar per maand."
+      },
+      {
+        "q": "Werkt Hlas offline?",
+        "a": "Ja. Met de lokale engine draait Whisper op je Mac en heb je geen internet nodig na de eenmalige download van het model van 547 MB."
+      },
+      {
+        "q": "Hoe goed verstaat het Nederlands?",
+        "a": "Hlas gebruikt Whisper large-v3, dat Nederlands ondersteunt. Er is nog geen extra afstemming voor het Nederlands, en de kwaliteit verschilt per taal en accent, ook tussen Nederlands en Vlaams. Probeer het gewoon met de gratis versie. Zet namen en vakjargon in de woordenlijst, dan schrijft Hlas ze goed."
+      },
+      {
+        "q": "Hoeveel RAM gebruikt het tijdens het dicteren?",
+        "a": "In rust ongeveer 60 MB. Met het lokale model geladen ongeveer 1 GB, dat na 3 minuten stilte weer wordt vrijgegeven. Hlas Cloud laadt helemaal geen model."
+      },
+      {
+        "q": "Werkt het op Intel-Macs?",
+        "a": "Nee. De Mac-app heeft Apple Silicon en macOS 15 of nieuwer nodig. Windows 10 en 11 op x64 worden in bèta ondersteund."
+      },
+      {
+        "q": "Kan ik prompts dicteren in Claude Code, Cursor of ChatGPT?",
+        "a": "Ja. Hlas typt in elke app waar je kunt typen, ook in terminals en code-editors. Zet namen van libraries en functies in de woordenlijst, dan komen ze er goed uit."
+      },
+      {
+        "q": "Hoe werken facturen en opzeggen?",
+        "a": "Na de betaling stuurt Stripe je per mail een btw-factuur van Eden Makers s.r.o. Bedrijven uit de EU kunnen bij het afrekenen hun btw-nummer invullen. Je pas wijzigen, facturen downloaden of opzeggen doe je in het klantportaal; het abonnement loopt dan door tot het einde van het betaalde jaar."
+      },
+      {
+        "q": "Hoe onbeperkt is onbeperkt?",
+        "a": "Hlas Cloud heeft geen minutenteller en geen niveaus. Om de prijs op € 35 per jaar te houden, geldt redelijk gebruik tot 3 uur dicteren per dag, gereset om middernacht UTC."
+      },
+      {
+        "q": "Waar gaat mijn audio naartoe?",
+        "a": "Met de lokale engine nergens heen: het blijft op je computer. Met Hlas Cloud gaat het via onze server naar Groq, alleen voor het uitschrijven, en onze server slaat het niet op. Met je eigen sleutel gaat het rechtstreeks naar de aanbieder die je hebt gekozen."
+      }
+    ]
+  },
+  "final": {
+    "h2": "Stop met typen. Begin met praten.",
+    "p": "Twee minuten van download tot je eerste gedicteerde zin.",
+    "dlMac": "Downloaden voor Mac"
+  },
+  "footer": {
+    "made": "Gemaakt in Praag door",
+    "and": "en",
+    "privacy": "Privacy",
+    "compare": "Vergelijking",
+    "faq": "Veelgestelde vragen",
+    "about": "Over ons",
+    "press": "Pers",
+    "changelog": "Wijzigingen",
+    "languages": "Alle talen",
+    "trust": "Versie 0.5.0 van 4 november 2026. De Mac-app is ondertekend met een Apple Developer ID en genotariseerd door Apple."
+  },
+  "toast": {
+    "soon": "Hlas Cloud komt binnenkort. Download voorlopig de gratis versie."
+  },
+  "suggest": "Hlas is ook beschikbaar in het Nederlands"
+}

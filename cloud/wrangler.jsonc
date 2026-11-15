@@ -1,0 +1,50 @@
+{
+  // Hlas Cloud: license check + transcription proxy for the Hlas apps.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "hlas-cloud",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-01",
+  "observability": { "enabled": true },
+  // api.hlas.dev is the public address; workers.dev stays on for the Stripe
+  // webhook created by scripts/setup-secrets.sh.
+  "routes": [{ "pattern": "api.hlas.dev", "custom_domain": true }],
+  "workers_dev": true,
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "hlas-cloud",
+      "database_id": "9eaf6290-7f5f-4f60-bf80-0ed936965ad7"
+    }
+  ],
+  "vars": {
+    // Public base URL of this Worker, used in links it renders.
+    "PUBLIC_URL": "https://api.hlas.dev",
+    // Where customers land when they leave the Stripe customer portal.
+    "PORTAL_RETURN_URL": "https://api.hlas.dev/account",
+    // Stripe Entitlements feature that unlocks Hlas Cloud.
+    "ENTITLEMENT_KEY": "hlas_cloud",
+    // Fair use: seconds of audio per customer per UTC day.
+    "DAILY_AUDIO_SECONDS": "10800",
+    // Upstream models (Groq, OpenAI-compatible API).
+    "TRANSCRIBE_MODEL": "whisper-large-v3-turbo",
+    "SMART_TEXT_MODEL": "openai/gpt-oss-120b",
+    // Sender for e-mail sign-in codes. Empty disables e-mail sign-in until a
+    // domain is onboarded to Cloudflare Email Sending and the send_email
+    // binding below is uncommented.
+    "EMAIL_FROM": "",
+    // Free trial: days, and audio seconds per UTC day while it runs.
+    "TRIAL_DAYS": "7",
+    "TRIAL_DAILY_AUDIO_SECONDS": "1800",
+    // Installs one license may use within 30 days.
+    "MAX_DEVICES": "5",
+    // Alert when all customers together pass this many audio seconds in a day
+    // (36000 s = 10 h, about $0.40 on whisper-large-v3-turbo).
+    "ALERT_DAILY_AUDIO_SECONDS": "36000"
+  },
+  // Daily report and health check (00:15 UTC).
+  "triggers": { "crons": ["15 0 * * *"] }
+  // "send_email": [{ "name": "EMAIL" }]
+  // Secrets (wrangler secret put, see scripts/setup-secrets.sh):
+  //   STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, GROQ_API_KEY, LICENSE_ENC_KEY
+  // Optional: ALERT_WEBHOOK_URL (Slack incoming webhook) for alerts and the daily report.
+}

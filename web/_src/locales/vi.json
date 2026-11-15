@@ -1,0 +1,340 @@
+{
+  "code": "vi",
+  "langName": "Tiếng Việt",
+  "langNameEn": "Vietnamese",
+  "dec": ",",
+  "meta": {
+    "kw": "gõ bằng giọng nói trên Mac",
+    "title": "Hlas: gõ bằng giọng nói trên Mac và Windows, chạy cả offline",
+    "description": "Giữ Fn, nói, thả ra. Chữ hiện ngay tại con trỏ, trong mọi ứng dụng. Ứng dụng gốc chỉ 4 MB, dùng 60 MB RAM khi rảnh, gõ bằng giọng nói offline với Whisper. Miễn phí, hoặc không giới hạn với Hlas Cloud giá 35 € mỗi năm.",
+    "ogTitle": "Hlas: gõ bằng giọng nói cho Mac và Windows",
+    "ogDescription": "Giữ Fn, nói, thả ra. Ứng dụng 4 MB, 60 MB RAM khi rảnh, chạy được offline."
+  },
+  "nav": {
+    "features": "Tính năng",
+    "performance": "Hiệu năng",
+    "languages": "Ngôn ngữ",
+    "pricing": "Bảng giá",
+    "download": "Tải về",
+    "language": "Ngôn ngữ"
+  },
+  "hero": {
+    "badge": "Mới: Hlas Cloud, không giới hạn với 35 € mỗi năm",
+    "h1": "Gõ bằng giọng nói cho Mac và Windows, nói được tiếng Việt.",
+    "sub": "Giữ <kbd>Fn</kbd>, nói, thả ra. Chữ hiện ngay tại con trỏ, trong mọi ứng dụng. Ứng dụng chỉ 4 MB và dùng 60 MB RAM khi rảnh.",
+    "dlMac": "Tải miễn phí cho Mac",
+    "dlWin": "Windows (beta)",
+    "note": "Apple Silicon, macOS 15+ · 4 MB · Windows 10 và 11 đang beta, bộ cài chưa được ký",
+    "privacy": "Ở chế độ cục bộ, bạn không cần tài khoản và giọng nói không bao giờ rời khỏi máy."
+  },
+  "demo": {
+    "tabNotes": "Ghi chú",
+    "idle": "Giữ Fn và nói",
+    "busy": "Đang chép lời",
+    "scenes": [
+      {
+        "ctx": [
+          [
+            "Linh",
+            "Slide tới đâu rồi?"
+          ]
+        ],
+        "text": "Chào Linh, slide xong rồi nhé. Tối nay mình gửi bản cuối để duyệt."
+      },
+      {
+        "ctx": [
+          [
+            "Đến",
+            "minh@studio.vn"
+          ],
+          [
+            "Tiêu đề",
+            "Đề xuất"
+          ]
+        ],
+        "text": "Chào anh Minh, cảm ơn anh đã nhắn. Sáng mai em sẽ gửi anh bản đề xuất."
+      },
+      {
+        "ctx": [
+          [
+            "Ghi chú",
+            "hôm nay 18:07"
+          ]
+        ],
+        "text": "Do bạch kim rất quý nên sẽ dùng để lắp vô xương. Từng dấu thanh đều đúng chỗ."
+      }
+    ]
+  },
+  "stats": {
+    "app": "toàn bộ ứng dụng",
+    "ram": "RAM khi rảnh",
+    "speed": "để chép 11 giây lời nói",
+    "langs": "ngôn ngữ, có tiếng Việt"
+  },
+  "features": {
+    "eyebrow": "Bên trong có gì",
+    "h2": "Đủ mọi thứ để bạn khỏi phải gõ phím.<br>Không thừa thứ gì.",
+    "offline": {
+      "chip": "Mô hình cục bộ đang chạy",
+      "h3": "Chạy offline",
+      "p": "Whisper chạy ngay trên máy của bạn. Âm thanh không rời khỏi máy.",
+      "strong": "Không có Wi-Fi cũng chẳng sao."
+    },
+    "vocab": {
+      "add": "Thêm",
+      "h3": "Từ điển của riêng bạn",
+      "p": "Tên người, thương hiệu, thuật ngữ. Chỉ cho Hlas biết nó hay nghe nhầm thành gì.",
+      "strong": "Từ đó trở đi sẽ viết đúng.",
+      "items": [
+        [
+          "Kubernetes",
+          "nghe thành: cu bơ nét tít"
+        ],
+        [
+          "Figma",
+          "nghe thành: phích ma"
+        ],
+        [
+          "EBITDA",
+          "nghe thành: e bít đa"
+        ]
+      ],
+      "cycle": [
+        [
+          "Notion",
+          "nghe thành: nâu sần"
+        ],
+        [
+          "Shopee",
+          "nghe thành: sốp pi"
+        ],
+        [
+          "Kubernetes",
+          "nghe thành: cu bơ nét tít"
+        ],
+        [
+          "Figma",
+          "nghe thành: phích ma"
+        ],
+        [
+          "EBITDA",
+          "nghe thành: e bít đa"
+        ]
+      ]
+    },
+    "smart": {
+      "h3": "Văn bản thông minh",
+      "p": "Biến lời nói lan man thành đoạn văn hoặc danh sách gọn gàng, đúng ý bạn.",
+      "strong": "Bản gốc luôn được giữ trong Lịch sử.",
+      "raw": "ờ thì mai phải mua sữa rồi còn bánh mì nữa với lại à gọi cho Tuấn",
+      "title": "Ngày mai",
+      "out": [
+        "mua sữa",
+        "mua bánh mì",
+        "gọi cho Tuấn"
+      ]
+    },
+    "langs": {
+      "h3": "Nói được tiếng Việt",
+      "p": "Whisper large-v3 viết tiếng Việt có dấu câu, dấu thanh và chữ hoa đúng chỗ.",
+      "strong": "Cùng hơn 60 ngôn ngữ khác."
+    }
+  },
+  "mini": [
+    {
+      "h4": "Tệp âm thanh",
+      "p": "Thả vào bản ghi âm dài đến 10 phút và nhận lại văn bản."
+    },
+    {
+      "h4": "Giữ hoặc chạm",
+      "p": "Giữ Fn để nói. Chạm một lần để rảnh tay, chạm lần nữa để dừng."
+    },
+    {
+      "h4": "Phím tắt tùy chọn",
+      "p": "Fn, Option phải, Command phải, Control phải hoặc F13 đến F19."
+    },
+    {
+      "h4": "Lịch sử",
+      "p": "Tìm kiếm được, lưu trên máy, xóa được. Dán lại lần đọc gần nhất chỉ với một phím tắt."
+    }
+  ],
+  "perf": {
+    "eyebrow": "Hiệu năng",
+    "h2": "Nhẹ hơn cả cái tab bạn quên đóng.",
+    "ram": {
+      "h3": "RAM khi rảnh",
+      "p": "Mô hình chỉ được nạp khi bạn nói và tự giải phóng sau 3 phút im lặng.",
+      "foot": "Hlas được đo trên M1 Pro khi ẩn ứng dụng. Khi đã nạp mô hình cục bộ, ứng dụng dùng khoảng 1 GB. Số liệu đối thủ lấy từ so sánh của chính chúng tôi."
+    },
+    "size": {
+      "h3": "Dung lượng ứng dụng",
+      "p": "Swift gốc trên Mac, Rust gốc trên Windows. Không dùng Electron."
+    },
+    "speed": {
+      "h3": "Nhanh hơn cả lúc bạn đọc lại",
+      "speak": "Bạn nói",
+      "writes": "Hlas viết",
+      "p": "Mô hình cục bộ trên Apple Silicon, tăng tốc bằng Metal."
+    },
+    "fill": {
+      "h3": "Từ đệm biến mất",
+      "html": "<s>Um,</s> <span>gửi mình</span> <s>uh</s> <span>bản cuối</span> <s>hmm</s> <span>trước thứ Sáu nhé.</span>",
+      "p": "Những tiếng ngập ngừng như um, uh và hmm được xóa ngay trên máy, ở mọi chế độ."
+    },
+    "sym": {
+      "h3": "Nói ra ký hiệu",
+      "p": "Đọc ký hiệu và xuống dòng bằng giọng nói hoạt động với tiếng Anh và tiếng Séc. Một tính năng Labs.",
+      "morph": [
+        [
+          "at sign",
+          "@"
+        ],
+        [
+          "underscore",
+          "_"
+        ],
+        [
+          "new line",
+          "↵"
+        ],
+        [
+          "dot com",
+          ".com"
+        ]
+      ]
+    },
+    "priv": {
+      "h3": "Của bạn, không phải của chúng tôi",
+      "items": [
+        "Không cần tài khoản",
+        "Không thu thập dữ liệu sử dụng",
+        "Khóa lưu trong keychain hệ thống",
+        "Mã nguồn trên GitHub"
+      ]
+    },
+    "apps": {
+      "h3": "Dùng được trong mọi ứng dụng",
+      "p": "Gõ được ở đâu, đọc được ở đó."
+    }
+  },
+  "langs": {
+    "eyebrow": "Ngôn ngữ",
+    "h2": "Làm tại Praha, cho những ngôn ngữ mà các ứng dụng lớn thường bỏ quên.",
+    "points": [
+      {
+        "b": "ă ơ",
+        "h4": "Dấu câu chuẩn chỉnh",
+        "p": "Whisper large-v3 viết chữ hoa, dấu phẩy và dấu hỏi, chứ không phải một dòng chữ thường dài dằng dặc."
+      },
+      {
+        "b": "EN",
+        "h4": "Nói lẫn ngôn ngữ thoải mái",
+        "p": "Ghim các ngôn ngữ bạn dùng hoặc để Hlas tự nhận diện. Thuật ngữ tiếng Anh trong câu vẫn giữ nguyên."
+      },
+      {
+        "b": "Ab",
+        "h4": "Từ của bạn, cách viết của bạn",
+        "p": "Dạy Hlas tên riêng và thuật ngữ một lần trong từ điển, từ đó nó sẽ viết theo cách của bạn."
+      }
+    ],
+    "note": "Hlas được tinh chỉnh cho tiếng Séc trước tiên. Tiếng Việt hiện chạy trên Whisper large-v3, chưa có tinh chỉnh thêm. Rất mong người bản ngữ cho chúng tôi biết kết quả trên GitHub."
+  },
+  "pricing": {
+    "eyebrow": "Bảng giá",
+    "h2": "Miễn phí trên máy của bạn.<br>35 € mỗi năm nếu muốn khỏi bận tâm.",
+    "free": {
+      "name": "Hlas",
+      "forever": "mãi mãi",
+      "sub": "Đầy đủ ứng dụng. Chạy trên máy bạn, hoặc bằng API key của riêng bạn.",
+      "items": [
+        "Mô hình Whisper cục bộ, chạy offline",
+        "Hoặc dùng key riêng: Groq, OpenAI, Soniox, Fish Audio",
+        "Từ điển, lịch sử, làm sạch văn bản, tệp âm thanh",
+        "Mac và Windows"
+      ],
+      "cta": "Tải miễn phí"
+    },
+    "cloud": {
+      "per": "mỗi năm + VAT",
+      "sub": "Tức 2,92 € mỗi tháng, rẻ hơn Superwhisper hay Wispr Flow ít nhất 54 %. Đọc không giới hạn qua API của chúng tôi.",
+      "items": [
+        "Đọc không giới hạn, không cần cài API key",
+        "Không phải tải mô hình 547 MB",
+        "Mô hình không chiếm RAM của bạn, đỡ tốn pin",
+        "Nhanh cả trên máy cũ và máy yếu"
+      ],
+      "cta": "Đặt trước với 35 € mỗi năm",
+      "manage": "Đã đăng ký? Hóa đơn và hủy gói",
+      "vat": "Người tiêu dùng tại EU trả 42,35 € đã gồm 21 % VAT của Séc. Doanh nghiệp EU có mã số VAT trả 35 € theo cơ chế reverse charge."
+    },
+    "yearly": {
+      "title": "Một năm gõ bằng giọng nói tốn bao nhiêu",
+      "big": "Rẻ hơn đối thủ từ 54 đến 73 %",
+      "foot": "So sánh các gói năm chưa gồm VAT, tính đến ngày 14/11/2026: Superwhisper Pro 84,99 $ mỗi năm, Wispr Flow Pro và Willow Pro 12 $ mỗi tháng khi trả theo năm. Quy đổi theo tỷ giá ECB ngày 13/11/2026, 1 $ = 0,90481 €. Một số đối thủ còn có gói miễn phí hoặc giấy phép mua một lần, xem so sánh đầy đủ."
+    },
+    "compareLink": "So sánh đầy đủ, gồm cả ứng dụng miễn phí và mua một lần"
+  },
+  "faq": {
+    "eyebrow": "Câu hỏi",
+    "h2": "Trước khi bạn hỏi.",
+    "items": [
+      {
+        "q": "Bản miễn phí có thật sự miễn phí?",
+        "a": "Có. Bộ máy cục bộ chạy trên máy tính của bạn và không tốn gì. Nếu thích bộ máy trên đám mây, bạn có thể gắn API key của mình và trả thẳng cho nhà cung cấp, thường khoảng một đến ba đô la mỗi tháng."
+      },
+      {
+        "q": "Hlas có chạy offline không?",
+        "a": "Có. Với bộ máy cục bộ, Whisper chạy trên Mac của bạn và không cần internet sau khi tải mô hình 547 MB một lần."
+      },
+      {
+        "q": "Hlas hiểu tiếng Việt tốt đến đâu?",
+        "a": "Hlas dùng Whisper large-v3, có hỗ trợ tiếng Việt. Chất lượng thay đổi theo ngôn ngữ và giọng vùng miền, nên hãy thử bản miễn phí trước. Thêm tên riêng và thuật ngữ vào từ điển để Hlas viết đúng theo ý bạn."
+      },
+      {
+        "q": "Khi đọc, Hlas dùng bao nhiêu RAM?",
+        "a": "Khoảng 60 MB khi rảnh. Khi đã nạp mô hình cục bộ thì khoảng 1 GB, và mô hình được giải phóng sau 3 phút im lặng. Hlas Cloud hoàn toàn không nạp mô hình."
+      },
+      {
+        "q": "Có chạy trên Mac chip Intel không?",
+        "a": "Không. Ứng dụng Mac cần Apple Silicon và macOS 15 trở lên. Windows 10 và 11 trên x64 được hỗ trợ ở bản beta."
+      },
+      {
+        "q": "Tôi có thể đọc prompt vào Claude Code, Cursor hay ChatGPT không?",
+        "a": "Được. Hlas gõ vào mọi ứng dụng mà bạn gõ được, kể cả terminal và trình soạn thảo code. Thêm tên thư viện và hàm vào từ điển để chúng ra đúng."
+      },
+      {
+        "q": "Hóa đơn và hủy gói hoạt động thế nào?",
+        "a": "Sau khi thanh toán, Stripe gửi email hóa đơn VAT từ Eden Makers s.r.o. Doanh nghiệp tại EU có thể nhập mã số VAT khi thanh toán. Đổi thẻ, tải hóa đơn hay hủy gói đều trong cổng khách hàng, gói vẫn dùng được đến hết năm đã trả."
+      },
+      {
+        "q": "Không giới hạn là không giới hạn đến mức nào?",
+        "a": "Hlas Cloud không đếm phút và không chia hạng. Để giữ giá 35 € mỗi năm, mức sử dụng hợp lý là tối đa 3 giờ đọc mỗi ngày, đặt lại lúc nửa đêm theo giờ UTC."
+      },
+      {
+        "q": "Giọng nói của tôi đi đâu?",
+        "a": "Với bộ máy cục bộ, không đi đâu cả, nó ở lại trên máy bạn. Với Hlas Cloud, nó đi qua máy chủ của chúng tôi tới Groq chỉ để chép lời và máy chủ của chúng tôi không lưu lại. Với key riêng, nó đi thẳng tới nhà cung cấp bạn chọn."
+      }
+    ]
+  },
+  "final": {
+    "h2": "Thôi gõ phím. Bắt đầu nói.",
+    "p": "Hai phút từ lúc tải về đến câu đầu tiên bạn đọc.",
+    "dlMac": "Tải cho Mac"
+  },
+  "footer": {
+    "made": "Làm tại Praha bởi",
+    "and": "và",
+    "privacy": "Quyền riêng tư",
+    "compare": "So sánh",
+    "faq": "Hỏi đáp",
+    "about": "Giới thiệu",
+    "press": "Báo chí",
+    "changelog": "Nhật ký thay đổi",
+    "languages": "Tất cả ngôn ngữ",
+    "trust": "Phiên bản 0.5.0 ngày 4/11/2026. Ứng dụng Mac được ký bằng Apple Developer ID và được Apple công chứng."
+  },
+  "toast": {
+    "soon": "Hlas Cloud sắp ra mắt. Trong lúc chờ, hãy dùng thử bản miễn phí."
+  },
+  "suggest": "Hlas cũng có bản tiếng Việt"
+}

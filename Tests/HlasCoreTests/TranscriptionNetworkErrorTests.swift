@@ -16,6 +16,18 @@ struct TranscriptionNetworkErrorTests {
         #expect(error.errorDescription == "Your Soniox account is out of credit. Top it up or choose another engine in Settings.")
     }
 
+    @Test("Explains Hlas Cloud license and subscription states")
+    func hlasCloud() {
+        #expect(TranscriptionNetworkError.http(statusCode: 401, provider: "Hlas Cloud").errorDescription
+                == "Your Hlas Cloud license key was not recognised. Check it in Settings.")
+        #expect(TranscriptionNetworkError.http(statusCode: 402, provider: "Hlas Cloud").errorDescription
+                == "Your Hlas Cloud trial or subscription has ended. Get Hlas Cloud in Settings or choose another engine.")
+        #expect(TranscriptionNetworkError.http(statusCode: 403, provider: "Hlas Cloud").errorDescription?
+                .contains("more than 5 computers") == true)
+        #expect(TranscriptionNetworkError.http(statusCode: 429, provider: "Hlas Cloud").errorDescription
+                == "You reached today's Hlas Cloud fair-use limit. It resets at midnight UTC.")
+    }
+
     @Test("Explains rate limits")
     func rateLimit() {
         let error = TranscriptionNetworkError.http(statusCode: 429, provider: "Groq")

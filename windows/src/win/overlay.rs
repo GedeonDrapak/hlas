@@ -6,7 +6,7 @@
 //! 30 fps timer drains. Painting is double-buffered GDI, scaled to the
 //! monitor's DPI, and every GDI object is released after use.
 
-use super::single_instance::SHOW_MESSAGE;
+use super::single_instance::{ACTIVATED_MESSAGE, SHOW_MESSAGE};
 use super::wide;
 use crossbeam_channel::{Receiver, Sender};
 use once_cell::sync::OnceCell;
@@ -38,7 +38,6 @@ const SHOW_DELAY: Duration = Duration::from_millis(140);
 const BARS: usize = 18;
 
 const BG: u32 = 0x161719;
-const BORDER: u32 = 0x2C2F33;
 const FG: u32 = 0xECEEED;
 const FG_DIM: u32 = 0x8E9693;
 const BRAND: u32 = 0x00E67A;
@@ -139,6 +138,7 @@ unsafe fn run() {
     SetTimer(hwnd, TIMER_ID, 33, None);
     // Make sure the broadcast id is registered before a second launch sends it.
     let _ = *SHOW_MESSAGE;
+    let _ = *ACTIVATED_MESSAGE;
 
     let mut msg = MSG::default();
     while GetMessageW(&mut msg, None, 0, 0).as_bool() {
@@ -149,6 +149,11 @@ unsafe fn run() {
 
 unsafe extern "system" fn wndproc(hwnd: HWND, msg: u32, wparam: WPARAM, lparam: LPARAM) -> LRESULT {
     if msg == *SHOW_MESSAGE {
+        super::ui::send(super::ui::Command::OpenSettings);
+        return LRESULT(0);
+    }
+    if msg == *ACTIVATED_MESSAGE {
+        super::state::update_config(|c| c.engine = crate::core::config::Engine::HlasCloud);
         super::ui::send(super::ui::Command::OpenSettings);
         return LRESULT(0);
     }
@@ -347,14 +352,6 @@ unsafe fn paint(hwnd: HWND) {
             },
             BG,
         );
-        let pen = CreatePen(PS_SOLID, 1, rgb(BORDER));
-        let old_pen = SelectObject(mem, pen);
-        let old_brush = SelectObject(mem, GetStockObject(NULL_BRUSH));
-        let _ = RoundRect(mem, 0, 0, w, h, h, h);
-        SelectObject(mem, old_brush);
-        SelectObject(mem, old_pen);
-        let _ = DeleteObject(pen);
-
         SetBkMode(mem, TRANSPARENT);
         let (main, aside, color) = label(&v.pill);
         let left = px(20.0);

@@ -39,6 +39,18 @@ pub fn transcribe(cfg: &Config, samples: &[f32], cancel: &Arc<AtomicBool>) -> Re
                 prompt.as_deref(),
             )
         }
+        Engine::HlasCloud => {
+            let key = keystore::get_key(keystore::HLAS_CLOUD)
+                .ok_or(NetError::MissingKey { provider: "Hlas Cloud" })?;
+            let prompt = text::vocabulary_prompt(&cfg.vocabulary);
+            cloud::transcribe(
+                cloud::Provider::HlasCloud,
+                &key,
+                samples,
+                language,
+                prompt.as_deref(),
+            )
+        }
         Engine::OpenAI => {
             let key = keystore::get_key(keystore::OPENAI)
                 .ok_or(NetError::MissingKey { provider: "OpenAI" })?;
@@ -56,11 +68,18 @@ pub fn transcribe(cfg: &Config, samples: &[f32], cancel: &Arc<AtomicBool>) -> Re
 
 /// The Smart text provider and its key, if any key is configured.
 pub fn smart_provider(cfg: &Config) -> Option<(SmartProvider, String)> {
+    let cloud = keystore::get_key(keystore::HLAS_CLOUD);
     let groq = keystore::get_key(keystore::GROQ);
     let openai = keystore::get_key(keystore::OPENAI);
-    let provider =
-        text::choose_smart_provider(cfg.engine == Engine::Groq, groq.is_some(), openai.is_some())?;
+    let provider = text::choose_smart_provider(
+        cfg.engine == Engine::HlasCloud,
+        cloud.is_some(),
+        cfg.engine == Engine::Groq,
+        groq.is_some(),
+        openai.is_some(),
+    )?;
     let key = match provider {
+        SmartProvider::HlasCloud => cloud?,
         SmartProvider::Groq => groq?,
         SmartProvider::OpenAI => openai?,
     };

@@ -5,6 +5,7 @@
 //! `crate::win` wires these pieces to the real hardware.
 
 pub mod audio;
+pub mod cloud;
 pub mod config;
 pub mod decode;
 pub mod errors;

@@ -133,6 +133,7 @@ pub fn vocabulary_prompt(vocabulary: &[String]) -> Option<String> {
 pub enum SmartProvider {
     Groq,
     OpenAI,
+    HlasCloud,
 }
 
 impl SmartProvider {
@@ -140,30 +141,39 @@ impl SmartProvider {
         match self {
             SmartProvider::Groq => "Groq",
             SmartProvider::OpenAI => "OpenAI",
+            SmartProvider::HlasCloud => "Hlas Cloud",
         }
     }
-    pub fn endpoint(self) -> &'static str {
+    pub fn endpoint(self) -> String {
         match self {
-            SmartProvider::Groq => "https://api.groq.com/openai/v1/chat/completions",
-            SmartProvider::OpenAI => "https://api.openai.com/v1/chat/completions",
+            SmartProvider::Groq => "https://api.groq.com/openai/v1/chat/completions".into(),
+            SmartProvider::OpenAI => "https://api.openai.com/v1/chat/completions".into(),
+            SmartProvider::HlasCloud => super::cloud::chat_endpoint(),
         }
     }
     pub fn model(self) -> &'static str {
         match self {
             SmartProvider::Groq => &SHARED.smart_text_models.groq,
             SmartProvider::OpenAI => &SHARED.smart_text_models.openai,
+            // The server picks the model; this only fills the field.
+            SmartProvider::HlasCloud => &SHARED.smart_text_models.groq,
         }
     }
 }
 
-/// Same preference order as macOS: Groq when it is the transcription engine
-/// and has a key, otherwise OpenAI, otherwise Groq.
+/// Same preference order as macOS: Hlas Cloud when it is the transcription
+/// engine and has a licence, then Groq when it is the engine and has a key,
+/// otherwise OpenAI, otherwise Groq.
 pub fn choose_smart_provider(
+    engine_is_cloud: bool,
+    has_cloud: bool,
     engine_is_groq: bool,
     has_groq: bool,
     has_openai: bool,
 ) -> Option<SmartProvider> {
-    if engine_is_groq && has_groq {
+    if engine_is_cloud && has_cloud {
+        Some(SmartProvider::HlasCloud)
+    } else if engine_is_groq && has_groq {
         Some(SmartProvider::Groq)
     } else if has_openai {
         Some(SmartProvider::OpenAI)
@@ -186,7 +196,7 @@ pub fn smart_request(provider: SmartProvider, text: &str) -> Value {
             {"role": "user", "content": text},
         ],
     });
-    if provider == SmartProvider::Groq {
+    if provider != SmartProvider::OpenAI {
         body["reasoning_effort"] = json!("low");
     }
     body
@@ -317,11 +327,13 @@ mod tests {
     #[test]
     fn smart_provider_preference_matches_mac() {
         use SmartProvider::*;
-        assert_eq!(choose_smart_provider(true, true, true), Some(Groq));
-        assert_eq!(choose_smart_provider(false, true, true), Some(OpenAI));
-        assert_eq!(choose_smart_provider(false, true, false), Some(Groq));
-        assert_eq!(choose_smart_provider(true, false, true), Some(OpenAI));
-        assert_eq!(choose_smart_provider(false, false, false), None);
+        assert_eq!(choose_smart_provider(false, false, true, true, true), Some(Groq));
+        assert_eq!(choose_smart_provider(false, false, false, true, true), Some(OpenAI));
+        assert_eq!(choose_smart_provider(false, false, false, true, false), Some(Groq));
+        assert_eq!(choose_smart_provider(true, true, false, true, true), Some(HlasCloud));
+        assert_eq!(choose_smart_provider(true, false, false, false, true), Some(OpenAI));
+        assert_eq!(choose_smart_provider(false, false, true, false, true), Some(OpenAI));
+        assert_eq!(choose_smart_provider(false, false, false, false, false), None);
     }
 
     #[test]

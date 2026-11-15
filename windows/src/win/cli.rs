@@ -1,6 +1,6 @@
 //! Command-line mode, used by CI and for scripting:
 //!
-//!   hlas.exe --transcribe <audio> [--out <file>] [--engine local|groq|openai]
+//!   hlas.exe --transcribe <audio> [--out <file>] [--engine local|hlascloud|groq|openai]
 //!            [--language cs|auto] [--smart]
 //!   hlas.exe --download-model
 //!   hlas.exe --version
@@ -43,7 +43,7 @@ pub fn run(args: &[String]) -> i32 {
         return 0;
     }
     if args.iter().any(|a| a == "--help") {
-        println!("hlas.exe --transcribe <audio> [--out <file>] [--engine local|groq|openai] [--language <code>|auto] [--smart]");
+        println!("hlas.exe --transcribe <audio> [--out <file>] [--engine local|hlascloud|groq|openai] [--language <code>|auto] [--smart]");
         println!("hlas.exe --download-model");
         return 0;
     }
@@ -72,6 +72,7 @@ pub fn run(args: &[String]) -> i32 {
         cfg.engine = match e.as_str() {
             "groq" => Engine::Groq,
             "openai" => Engine::OpenAI,
+            "hlascloud" => Engine::HlasCloud,
             _ => Engine::Local,
         };
     }

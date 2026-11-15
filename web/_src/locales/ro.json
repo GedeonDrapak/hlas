@@ -1,0 +1,340 @@
+{
+  "code": "ro",
+  "langName": "Română",
+  "langNameEn": "Romanian",
+  "dec": ",",
+  "meta": {
+    "title": "Hlas: dictare în română pentru Mac și Windows, și offline",
+    "description": "Ține apăsat Fn, vorbește, eliberează. Textul apare unde e cursorul, în orice aplicație. 4 MB, 60 MB RAM în repaus, Whisper offline. Gratuit.",
+    "ogTitle": "Hlas: dictare pentru Mac și Windows care vorbește românește",
+    "ogDescription": "Ține apăsat Fn, vorbește, eliberează. Aplicație de 4 MB, 60 MB RAM în repaus, merge offline.",
+    "kw": "dictare vocală în română pe Mac"
+  },
+  "nav": {
+    "features": "Funcții",
+    "performance": "Performanță",
+    "languages": "Limbi",
+    "pricing": "Prețuri",
+    "download": "Descarcă",
+    "language": "Limbă"
+  },
+  "hero": {
+    "badge": "Nou: Hlas Cloud nelimitat, 35 € pe an",
+    "h1": "Dictare pentru Mac și Windows care vorbește românește.",
+    "sub": "Ține apăsat <kbd>Fn</kbd>, vorbește, eliberează. Textul apare acolo unde e cursorul, în orice aplicație. Aplicația are 4 MB și în repaus folosește 60 MB RAM.",
+    "dlMac": "Descarcă gratuit pentru Mac",
+    "dlWin": "Windows (beta)",
+    "note": "Apple Silicon, macOS 15+ · 4 MB · Windows 10 și 11 în beta, instalatorul nu e încă semnat",
+    "privacy": "În modul local nu ai nevoie de cont, iar vocea ta nu părăsește niciodată calculatorul."
+  },
+  "demo": {
+    "tabNotes": "Notițe",
+    "idle": "Ține apăsat Fn și vorbește",
+    "busy": "Transcriu",
+    "scenes": [
+      {
+        "ctx": [
+          [
+            "Ioana",
+            "Cum merge cu prezentarea?"
+          ]
+        ],
+        "text": "Salut Ioana, prezentarea e gata. Diseară îți trimit versiunea finală spre aprobare."
+      },
+      {
+        "ctx": [
+          [
+            "Către",
+            "andrei@studio.ro"
+          ],
+          [
+            "Subiect",
+            "Ofertă"
+          ]
+        ],
+        "text": "Bună ziua, vă mulțumesc pentru mesaj. Vă trimit oferta mâine dimineață."
+      },
+      {
+        "ctx": [
+          [
+            "Notiță",
+            "azi 18:07"
+          ]
+        ],
+        "text": "Fumegând hipnotic sașiul azvârle mreje în bălți. Fiecare ș, ț și â la locul lui."
+      }
+    ]
+  },
+  "stats": {
+    "app": "toată aplicația",
+    "ram": "RAM în repaus",
+    "speed": "ca să transcrie 11 s de vorbire",
+    "langs": "limbi, inclusiv româna"
+  },
+  "features": {
+    "eyebrow": "Ce găsești înăuntru",
+    "h2": "Tot ce-ți trebuie ca să nu mai tastezi.<br>Nimic în plus.",
+    "offline": {
+      "chip": "Model local activ",
+      "h3": "Merge offline",
+      "p": "Whisper rulează direct pe calculatorul tău. Sunetul nu pleacă niciodată de pe el.",
+      "strong": "Fără Wi-Fi, nicio problemă."
+    },
+    "vocab": {
+      "add": "Adaugă",
+      "h3": "Vocabularul tău",
+      "p": "Nume, branduri și jargon. Spune-i lui Hlas cum le aude greșit.",
+      "strong": "De acum le scrie corect.",
+      "items": [
+        [
+          "GitHub",
+          "aude: ghitab"
+        ],
+        [
+          "Notion",
+          "aude: noușăn"
+        ],
+        [
+          "EBITDA",
+          "aude: ebitda"
+        ]
+      ],
+      "cycle": [
+        [
+          "Kubernetes",
+          "aude: cubernetis"
+        ],
+        [
+          "Jira",
+          "aude: gira"
+        ],
+        [
+          "GitHub",
+          "aude: ghitab"
+        ],
+        [
+          "Notion",
+          "aude: noușăn"
+        ],
+        [
+          "EBITDA",
+          "aude: ebitda"
+        ]
+      ]
+    },
+    "smart": {
+      "h3": "Text inteligent",
+      "p": "Transformă vorbăria în paragrafe curate sau liste, după ce ai vrut să spui.",
+      "strong": "Originalul rămâne mereu în Istoric.",
+      "raw": "ăă deci mâine trebuie să cumpăr lapte și apoi și pâine și hmm s-o sun pe Ioana",
+      "title": "Mâine",
+      "out": [
+        "cumpăr lapte",
+        "cumpăr pâine",
+        "o sun pe Ioana"
+      ]
+    },
+    "langs": {
+      "h3": "Vorbește românește",
+      "p": "Whisper large-v3 scrie în română, cu punctuație și majuscule unde le e locul.",
+      "strong": "Plus peste 60 de alte limbi."
+    }
+  },
+  "mini": [
+    {
+      "h4": "Fișiere audio",
+      "p": "Pune o înregistrare de până la 10 minute și primești textul."
+    },
+    {
+      "h4": "Ține apăsat sau atinge",
+      "p": "Ține Fn ca să vorbești. Atinge o dată pentru mâini libere, încă o dată ca să oprești."
+    },
+    {
+      "h4": "Tasta ta",
+      "p": "Fn, Option dreapta, Command dreapta, Control dreapta sau F13 până la F19."
+    },
+    {
+      "h4": "Istoric",
+      "p": "Căutabil, local, ștergibil. Lipești din nou ultima dictare cu o singură scurtătură."
+    }
+  ],
+  "perf": {
+    "eyebrow": "Performanță",
+    "h2": "Mai ușor decât tabul pe care ai uitat să-l închizi.",
+    "ram": {
+      "h3": "RAM în repaus",
+      "p": "Modelul se încarcă atunci când vorbești și se descarcă după 3 minute de liniște.",
+      "foot": "Hlas măsurat pe un M1 Pro, cu aplicația ascunsă. Cu modelul local încărcat folosește circa 1 GB. Cifra concurenței provine din propria noastră comparație."
+    },
+    "size": {
+      "h3": "Dimensiunea aplicației",
+      "p": "Swift nativ pe Mac, Rust nativ pe Windows. Fără Electron."
+    },
+    "speed": {
+      "h3": "Mai rapid decât apuci să recitești",
+      "speak": "Tu vorbești",
+      "writes": "Hlas scrie",
+      "p": "Model local pe Apple Silicon, accelerat prin Metal."
+    },
+    "fill": {
+      "h3": "Ezitările dispar",
+      "html": "<s>Eee,</s> <span>trimite-mi</span> <s>hmm</s> <span>versiunea finală</span> <s>mm</s> <span>până vineri.</span>",
+      "p": "Ezitări ca eee, hmm și mm sunt eliminate local, în orice mod."
+    },
+    "sym": {
+      "h3": "Spune simbolul",
+      "p": "Simboluri și rânduri noi dictate, în engleză și cehă. O funcție din Labs.",
+      "morph": [
+        [
+          "at sign",
+          "@"
+        ],
+        [
+          "underscore",
+          "_"
+        ],
+        [
+          "new line",
+          "↵"
+        ],
+        [
+          "dot com",
+          ".com"
+        ]
+      ]
+    },
+    "priv": {
+      "h3": "Ale tale, nu ale noastre",
+      "items": [
+        "Fără cont",
+        "Fără telemetrie",
+        "Chei în keychain-ul sistemului",
+        "Cod sursă pe GitHub"
+      ]
+    },
+    "apps": {
+      "h3": "Merge în orice aplicație",
+      "p": "Dacă poți tasta acolo, poți dicta acolo."
+    }
+  },
+  "langs": {
+    "eyebrow": "Limbi",
+    "h2": "Făcut la Praga pentru limbile pe care aplicațiile mari le tratează ca pe o notă de subsol.",
+    "points": [
+      {
+        "b": "ă ș ț",
+        "h4": "Punctuație cum trebuie",
+        "p": "Whisper large-v3 pune majuscule, virgule și semne de întrebare, nu un singur rând lung cu litere mici."
+      },
+      {
+        "b": "EN",
+        "h4": "Amestecă limbile liber",
+        "p": "Fixează limbile pe care le folosești sau lasă Hlas pe detectare automată. Termenii în engleză rămân intacți în frazele în română."
+      },
+      {
+        "b": "Ab",
+        "h4": "Cuvintele tale, ortografia ta",
+        "p": "Învață-l pe Hlas o dată nume și jargon în vocabular și de atunci le scrie cum vrei tu."
+      }
+    ],
+    "note": "Prima limbă pe care am reglat-o a fost ceha. Româna rulează deocamdată pe Whisper large-v3, fără reglaje suplimentare. Dacă ești vorbitor nativ, spune-ne pe GitHub cum se descurcă."
+  },
+  "pricing": {
+    "eyebrow": "Prețuri",
+    "h2": "Gratuit pe calculatorul tău.<br>35 € pe an dacă vrei totul fără efort.",
+    "free": {
+      "name": "Hlas",
+      "forever": "pentru totdeauna",
+      "sub": "Aplicația completă. Rulează pe calculatorul tău sau cu propria cheie API.",
+      "items": [
+        "Model Whisper local, merge offline",
+        "Sau cheia ta: Groq, OpenAI, Soniox, Fish Audio",
+        "Vocabular, istoric, curățare text, fișiere audio",
+        "Mac și Windows"
+      ],
+      "cta": "Descarcă gratuit"
+    },
+    "cloud": {
+      "per": "pe an + TVA",
+      "sub": "Adică 2,92 € pe lună, cu cel puțin 54% mai puțin decât Superwhisper sau Wispr Flow. Dictare nelimitată prin API-ul nostru.",
+      "items": [
+        "Dictare nelimitată, fără chei API de configurat",
+        "Fără modelul de 547 MB de descărcat",
+        "Modelul nu se încarcă niciodată în RAM, cruță bateria",
+        "Rapid și pe calculatoare mai vechi și mai slabe"
+      ],
+      "cta": "Precomandă cu 35 € pe an",
+      "manage": "Ai deja abonament? Facturi și anulare",
+      "vat": "Persoanele fizice din UE plătesc 42,35 €, cu TVA ceh de 21% inclus. Firmele din UE cu cod de TVA plătesc 35 € prin taxare inversă."
+    },
+    "yearly": {
+      "title": "Cât costă un an de dictare",
+      "big": "Cu 54 până la 73% mai ieftin decât concurența",
+      "foot": "Abonamente anuale comparate fără TVA, la 14 noiembrie 2026: Superwhisper Pro 84,99 $ pe an, Wispr Flow Pro și Willow Pro 12 $ pe lună cu plată anuală. Conversie la cursul BCE din 13 noiembrie 2026, 1 $ = 0,90481 €. Unii concurenți au și planuri gratuite sau licențe unice, vezi comparația completă."
+    },
+    "compareLink": "Comparația completă, inclusiv aplicații gratuite și cu licență unică"
+  },
+  "faq": {
+    "eyebrow": "Întrebări",
+    "h2": "Înainte să întrebi.",
+    "items": [
+      {
+        "q": "Versiunea gratuită chiar e gratuită?",
+        "a": "Da. Motorul local rulează pe calculatorul tău și nu costă nimic. Dacă preferi un motor în cloud, adaugi propria cheie API și plătești direct furnizorul, de obicei între unu și trei dolari pe lună."
+      },
+      {
+        "q": "Hlas merge offline?",
+        "a": "Da. Cu motorul local, Whisper rulează pe Mac-ul tău și nu are nevoie de internet după descărcarea unică a modelului de 547 MB."
+      },
+      {
+        "q": "Cât de bine înțelege româna?",
+        "a": "Hlas folosește Whisper large-v3, care suportă româna. Calitatea variază în funcție de limbă și accent, iar româna nu are încă reglaje suplimentare, așa că cel mai bine o încerci în versiunea gratuită. Adaugă nume și jargon în vocabular și Hlas le scrie cum vrei tu."
+      },
+      {
+        "q": "Câtă memorie RAM folosește când dictez?",
+        "a": "Circa 60 MB în repaus. Cu modelul local încărcat folosește circa 1 GB, iar după 3 minute de liniște modelul se descarcă. Hlas Cloud nu încarcă niciun model."
+      },
+      {
+        "q": "Merge pe Mac-uri cu Intel?",
+        "a": "Nu. Aplicația pentru Mac are nevoie de Apple Silicon și macOS 15 sau mai nou. Windows 10 și 11 pe x64 sunt suportate în beta."
+      },
+      {
+        "q": "Pot dicta prompturi în Claude Code, Cursor sau ChatGPT?",
+        "a": "Da. Hlas scrie în orice aplicație în care poți tasta, inclusiv terminale și editoare de cod. Adaugă numele bibliotecilor și funcțiilor în vocabular ca să iasă corect."
+      },
+      {
+        "q": "Cum funcționează facturile și anularea?",
+        "a": "După plată, Stripe îți trimite pe e-mail o factură cu TVA de la Eden Makers s.r.o. Firmele din UE își pot introduce codul de TVA la plată. Schimbi cardul, descarci facturi sau anulezi din portalul clienților, iar abonamentul rămâne activ până la finalul anului plătit."
+      },
+      {
+        "q": "Cât de nelimitat e nelimitat?",
+        "a": "Hlas Cloud nu are contor de minute sau niveluri. Ca prețul să rămână 35 € pe an, utilizarea corectă înseamnă până la 3 ore de dictare pe zi, iar limita se resetează la miezul nopții UTC."
+      },
+      {
+        "q": "Unde ajunge vocea mea?",
+        "a": "Cu motorul local, nicăieri. Rămâne pe calculatorul tău. Cu Hlas Cloud trece prin serverul nostru către Groq doar pentru transcriere, iar serverul nostru nu o stochează. Cu propria cheie merge direct la furnizorul ales de tine."
+      }
+    ]
+  },
+  "final": {
+    "h2": "Nu mai tasta. Vorbește.",
+    "p": "Două minute de la descărcare până la prima propoziție dictată.",
+    "dlMac": "Descarcă pentru Mac"
+  },
+  "footer": {
+    "made": "Făcut la Praga de",
+    "and": "și",
+    "privacy": "Confidențialitate",
+    "compare": "Comparație",
+    "faq": "Întrebări",
+    "about": "Despre noi",
+    "press": "Presă",
+    "changelog": "Noutăți",
+    "languages": "Toate limbile",
+    "trust": "Versiunea 0.5.0 din 4 noiembrie 2026. Aplicația pentru Mac e semnată cu Apple Developer ID și notarizată de Apple."
+  },
+  "toast": {
+    "soon": "Hlas Cloud se lansează în curând. Până atunci, descarcă versiunea gratuită."
+  },
+  "suggest": "Hlas este disponibil și în română"
+}

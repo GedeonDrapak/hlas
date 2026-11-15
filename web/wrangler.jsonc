@@ -1,0 +1,19 @@
+{
+  // hlas.dev landing page. Build first: node _src/build.mjs. Deploy: npx wrangler deploy
+  "$schema": "../cloud/node_modules/wrangler/config-schema.json",
+  "name": "hlas-web",
+  "main": "_deploy/worker.js",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": ".",
+    "binding": "ASSETS",
+    "run_worker_first": true,
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "routes": [
+    { "pattern": "hlas.dev", "custom_domain": true },
+    { "pattern": "www.hlas.dev", "custom_domain": true }
+  ],
+  "workers_dev": false
+}

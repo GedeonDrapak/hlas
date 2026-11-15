@@ -1,0 +1,340 @@
+{
+  "code": "hu",
+  "langName": "Magyar",
+  "langNameEn": "Hungarian",
+  "dec": ",",
+  "meta": {
+    "title": "Hlas: magyar diktálás Macre és Windowsra, offline is",
+    "description": "Tartsd lenyomva az Fn-t, beszélj, engedd el. A szöveg oda kerül, ahol a kurzor áll, bármelyik appban. 4 MB, 60 MB RAM üresjáratban, offline Whisper.",
+    "ogTitle": "Hlas: diktálás Macre és Windowsra, amely magyarul is ír",
+    "ogDescription": "Tartsd lenyomva az Fn-t, beszélj, engedd el. 4 MB-os app, 60 MB RAM üresjáratban, offline is működik.",
+    "kw": "magyar diktálás Mac"
+  },
+  "nav": {
+    "features": "Funkciók",
+    "performance": "Teljesítmény",
+    "languages": "Nyelvek",
+    "pricing": "Árak",
+    "download": "Letöltés",
+    "language": "Nyelv"
+  },
+  "hero": {
+    "badge": "Újdonság: Hlas Cloud korlátlanul, évi 35 €-ért",
+    "h1": "Diktálás Macre és Windowsra, amely magyarul is ír.",
+    "sub": "Tartsd lenyomva az <kbd>Fn</kbd> billentyűt, beszélj, engedd el. A szöveg oda kerül, ahol a kurzor áll, bármelyik appban. Az app 4 MB, és üresjáratban 60 MB RAM-ot használ.",
+    "dlMac": "Ingyenes letöltés Macre",
+    "dlWin": "Windows (béta)",
+    "note": "Apple Silicon, macOS 15+ · 4 MB · Windows 10 és 11 bétában, a telepítő még nincs aláírva",
+    "privacy": "Helyi módban nem kell fiók, és a hangod soha nem hagyja el a gépedet."
+  },
+  "demo": {
+    "tabNotes": "Jegyzetek",
+    "idle": "Tartsd lenyomva az Fn-t és beszélj",
+    "busy": "Átírás",
+    "scenes": [
+      {
+        "ctx": [
+          [
+            "Eszter",
+            "Hogy áll a prezentáció?"
+          ]
+        ],
+        "text": "Szia Eszter, kész a prezentáció. Este küldöm a végleges változatot jóváhagyásra."
+      },
+      {
+        "ctx": [
+          [
+            "Címzett",
+            "bence@studio.hu"
+          ],
+          [
+            "Tárgy",
+            "Ajánlat"
+          ]
+        ],
+        "text": "Kedves Bence, köszönöm az üzenetet. Az ajánlatot holnap délelőtt küldöm."
+      },
+      {
+        "ctx": [
+          [
+            "Jegyzet",
+            "ma 18:07"
+          ]
+        ],
+        "text": "Árvíztűrő tükörfúrógép. Minden ékezet a helyén, a hosszú ő és ű is."
+      }
+    ]
+  },
+  "stats": {
+    "app": "a teljes app",
+    "ram": "RAM üresjáratban",
+    "speed": "11 s beszéd átírása",
+    "langs": "nyelv, köztük a magyar"
+  },
+  "features": {
+    "eyebrow": "Mi van benne",
+    "h2": "Minden, ami ahhoz kell, hogy ne gépelj többet.<br>Semmi felesleg.",
+    "offline": {
+      "chip": "Helyi modell fut",
+      "h3": "Offline is működik",
+      "p": "A Whisper közvetlenül a gépeden fut. A hang soha nem hagyja el.",
+      "strong": "Nincs Wi-Fi? Semmi gond."
+    },
+    "vocab": {
+      "add": "Hozzáadás",
+      "h3": "Saját szótár",
+      "p": "Nevek, márkák és szakszavak. Mondd meg a Hlasnak, hogyan hallja félre őket.",
+      "strong": "Onnantól helyesen írja.",
+      "items": [
+        [
+          "GitHub",
+          "ezt hallja: githáb"
+        ],
+        [
+          "Notion",
+          "ezt hallja: nóusön"
+        ],
+        [
+          "EBITDA",
+          "ezt hallja: ebitda"
+        ]
+      ],
+      "cycle": [
+        [
+          "Kubernetes",
+          "ezt hallja: kubernetisz"
+        ],
+        [
+          "Jira",
+          "ezt hallja: dzsíra"
+        ],
+        [
+          "GitHub",
+          "ezt hallja: githáb"
+        ],
+        [
+          "Notion",
+          "ezt hallja: nóusön"
+        ],
+        [
+          "EBITDA",
+          "ezt hallja: ebitda"
+        ]
+      ]
+    },
+    "smart": {
+      "h3": "Okos szöveg",
+      "p": "A csapongó beszédből tiszta bekezdéseket vagy listát csinál, aszerint, amit gondoltál.",
+      "strong": "Az eredeti mindig megmarad az Előzményekben.",
+      "raw": "ööö szóval holnap kell vennem tejet meg aztán kenyeret is és hmm felhívni Esztert",
+      "title": "Holnap",
+      "out": [
+        "tejet venni",
+        "kenyeret venni",
+        "felhívni Esztert"
+      ]
+    },
+    "langs": {
+      "h3": "Beszél magyarul",
+      "p": "A Whisper large-v3 magyarul ír, írásjelekkel és nagybetűkkel ott, ahol kell.",
+      "strong": "Plusz több mint 60 másik nyelv."
+    }
+  },
+  "mini": [
+    {
+      "h4": "Hangfájlok",
+      "p": "Húzz be egy legfeljebb 10 perces felvételt, és megkapod a szöveget."
+    },
+    {
+      "h4": "Tartsd vagy koppints",
+      "p": "Tartsd lenyomva az Fn-t és beszélj. Egy koppintás a szabad kezes módhoz, még egy a leállításhoz."
+    },
+    {
+      "h4": "Saját billentyű",
+      "p": "Fn, jobb Option, jobb Command, jobb Control vagy F13-tól F19-ig."
+    },
+    {
+      "h4": "Előzmények",
+      "p": "Kereshető, helyi, törölhető. A legutóbbi diktálást egy billentyűparanccsal újra beillesztheted."
+    }
+  ],
+  "perf": {
+    "eyebrow": "Teljesítmény",
+    "h2": "Könnyebb, mint a lap, amit elfelejtettél bezárni.",
+    "ram": {
+      "h3": "RAM üresjáratban",
+      "p": "A modell akkor töltődik be, amikor beszélsz, és 3 perc csend után felszabadul.",
+      "foot": "A Hlast M1 Prón mértük, elrejtett appal. Betöltött helyi modellel körülbelül 1 GB-ot használ. A versenytárs adata saját összehasonlításunkból származik."
+    },
+    "size": {
+      "h3": "App méret",
+      "p": "Natív Swift Macen, natív Rust Windowson. Semmi Electron."
+    },
+    "speed": {
+      "h3": "Gyorsabb, mint ahogy visszaolvasod",
+      "speak": "Te beszélsz",
+      "writes": "A Hlas ír",
+      "p": "Helyi modell Apple Siliconon, Metal gyorsítással."
+    },
+    "fill": {
+      "h3": "A töltelékszavak eltűnnek",
+      "html": "<s>Ehm,</s> <span>küldd el</span> <s>eee</s> <span>a végleges változatot</span> <s>hmm</s> <span>péntekig.</span>",
+      "p": "Az olyan hezitálásokat, mint az ehm, eee és hmm, helyben eltávolítja, minden módban."
+    },
+    "sym": {
+      "h3": "Mondd ki a jelet",
+      "p": "Kimondott jelek és sortörések, angolul és csehül. Labs funkció.",
+      "morph": [
+        [
+          "at sign",
+          "@"
+        ],
+        [
+          "underscore",
+          "_"
+        ],
+        [
+          "new line",
+          "↵"
+        ],
+        [
+          "dot com",
+          ".com"
+        ]
+      ]
+    },
+    "priv": {
+      "h3": "A tiéd, nem a miénk",
+      "items": [
+        "Nincs fiók",
+        "Nincs telemetria",
+        "Kulcsok a rendszer kulcskarikájában",
+        "Forráskód a GitHubon"
+      ]
+    },
+    "apps": {
+      "h3": "Minden appban működik",
+      "p": "Ahol gépelni tudsz, ott diktálni is."
+    }
+  },
+  "langs": {
+    "eyebrow": "Nyelvek",
+    "h2": "Prágában készült, azoknak a nyelveknek, amelyekkel a nagy appok csak utólag foglalkoznak.",
+    "points": [
+      {
+        "b": "ő ű á",
+        "h4": "Írásjelek, ahogy kell",
+        "p": "A Whisper large-v3 nagybetűket, vesszőket és kérdőjeleket ír, nem egyetlen hosszú, kisbetűs sort."
+      },
+      {
+        "b": "EN",
+        "h4": "Keverd a nyelveket",
+        "p": "Rögzítsd a használt nyelveidet, vagy hagyd a Hlast automatikus felismerésen. Az angol kifejezések a magyar mondatban is épek maradnak."
+      },
+      {
+        "b": "Ab",
+        "h4": "A te szavaid, a te írásmódod",
+        "p": "Tanítsd meg a Hlasnak egyszer a neveket és szakszavakat a szótárban, és onnantól úgy írja őket, ahogy te."
+      }
+    ],
+    "note": "Elsőként a csehet hangoltuk. A magyar egyelőre külön hangolás nélkül, a Whisper large-v3-on fut. Ha magyar anyanyelvű vagy, írd meg nekünk a GitHubon, hogyan teljesít."
+  },
+  "pricing": {
+    "eyebrow": "Árak",
+    "h2": "Ingyenes a saját gépeden.<br>Évi 35 €, ha gondtalanul szeretnéd.",
+    "free": {
+      "name": "Hlas",
+      "forever": "örökre",
+      "sub": "A teljes app. A saját gépeden fut, vagy a saját API-kulcsoddal.",
+      "items": [
+        "Helyi Whisper modell, offline is működik",
+        "Vagy saját kulcs: Groq, OpenAI, Soniox, Fish Audio",
+        "Szótár, előzmények, szövegtisztítás, hangfájlok",
+        "Mac és Windows"
+      ],
+      "cta": "Ingyenes letöltés"
+    },
+    "cloud": {
+      "per": "évente + áfa",
+      "sub": "Ez havi 2,92 €, legalább 54%-kal kevesebb, mint a Superwhisper vagy a Wispr Flow. Korlátlan diktálás az API-nkon keresztül.",
+      "items": [
+        "Korlátlan diktálás, nincs beállítandó API-kulcs",
+        "Nem kell letölteni az 547 MB-os modellt",
+        "A modell sosem töltődik a RAM-ba, kíméli az akkumulátort",
+        "Régebbi és gyengébb gépeken is gyors"
+      ],
+      "cta": "Előrendelés évi 35 €-ért",
+      "manage": "Már előfizetsz? Számlák és lemondás",
+      "vat": "Az EU-s magánszemélyek 42,35 €-t fizetnek, 21% cseh áfával. Közösségi adószámmal rendelkező EU-s cégek 35 €-t fizetnek fordított adózással."
+    },
+    "yearly": {
+      "title": "Mennyibe kerül egy év diktálás",
+      "big": "54-73%-kal olcsóbb a versenytársaknál",
+      "foot": "Éves csomagok áfa nélkül, 2026. november 14-i állapot: Superwhisper Pro évi 84,99 $, Wispr Flow Pro és Willow Pro havi 12 $ éves fizetéssel. Az EKB 2026. november 13-i árfolyamán átszámolva, 1 $ = 0,90481 €. Néhány versenytársnak ingyenes csomagja vagy egyszeri licence is van, lásd a teljes összehasonlítást."
+    },
+    "compareLink": "Teljes összehasonlítás, az ingyenes és egyszeri licences appokkal együtt"
+  },
+  "faq": {
+    "eyebrow": "Kérdések",
+    "h2": "Mielőtt megkérdeznéd.",
+    "items": [
+      {
+        "q": "Tényleg ingyenes az ingyenes verzió?",
+        "a": "Igen. A helyi motor a gépeden fut, és semmibe sem kerül. Ha felhős motort szeretnél, megadod a saját API-kulcsodat, és közvetlenül a szolgáltatónak fizetsz, általában havi egy-három dollárt."
+      },
+      {
+        "q": "Működik a Hlas offline?",
+        "a": "Igen. A helyi motorral a Whisper a Maceden fut, és a modell egyszeri letöltése (547 MB) után nem kell hozzá internet."
+      },
+      {
+        "q": "Mennyire érti a magyart?",
+        "a": "A Hlas a Whisper large-v3-at használja, amely támogatja a magyart. A minőség nyelvenként és akcentusonként eltér, a magyart pedig még nem hangoltuk külön, ezért érdemes kipróbálni az ingyenes verzióban. A neveket és szakszavakat add hozzá a szótárhoz, és a Hlas úgy írja őket, ahogy te."
+      },
+      {
+        "q": "Mennyi RAM-ot használ diktálás közben?",
+        "a": "Üresjáratban körülbelül 60 MB-ot. Betöltött helyi modellel körülbelül 1 GB-ot, és 3 perc csend után a modell felszabadul. A Hlas Cloud egyáltalán nem tölt be modellt."
+      },
+      {
+        "q": "Fut Intel processzoros Macen?",
+        "a": "Nem. A Mac apphoz Apple Silicon és macOS 15 vagy újabb kell. A Windows 10 és 11 x64-en bétában támogatott."
+      },
+      {
+        "q": "Diktálhatok promptokat a Claude Code-ba, a Cursorba vagy a ChatGPT-be?",
+        "a": "Igen. A Hlas minden appba ír, ahol gépelni lehet, terminálba és kódszerkesztőbe is. A könyvtár- és függvényneveket add hozzá a szótárhoz, hogy helyesen jöjjenek ki."
+      },
+      {
+        "q": "Hogyan működik a számla és a lemondás?",
+        "a": "Fizetés után a Stripe e-mailben küld áfás számlát az Eden Makers s.r.o.-tól. Az EU-s cégek fizetéskor megadhatják a közösségi adószámukat. Kártyát, számlákat és lemondást az ügyfélportálon kezelhetsz, az előfizetés a kifizetett év végéig fut."
+      },
+      {
+        "q": "Mennyire korlátlan a korlátlan?",
+        "a": "A Hlas Cloudban nincs percszámláló és nincsenek csomagszintek. Hogy az ár évi 35 € maradhasson, a méltányos használat napi legfeljebb 3 óra diktálás, amely éjfélkor (UTC) nullázódik."
+      },
+      {
+        "q": "Hová kerül a hangom?",
+        "a": "A helyi motorral sehová, a gépeden marad. A Hlas Clouddal a szerverünkön keresztül a Groqhoz jut, csak az átírás miatt, és a szerverünk nem tárolja. Saját kulccsal egyenesen a választott szolgáltatóhoz megy."
+      }
+    ]
+  },
+  "final": {
+    "h2": "Ne gépelj. Beszélj.",
+    "p": "Két perc a letöltéstől az első lediktált mondatig.",
+    "dlMac": "Letöltés Macre"
+  },
+  "footer": {
+    "made": "Prágában készítette:",
+    "and": "és",
+    "privacy": "Adatvédelem",
+    "compare": "Összehasonlítás",
+    "faq": "GYIK",
+    "about": "Rólunk",
+    "press": "Sajtó",
+    "changelog": "Változásnapló",
+    "languages": "Minden nyelv",
+    "trust": "0.5.0-s verzió, 2026. november 4. A Mac appot Apple Developer ID írja alá, és az Apple hitelesítette."
+  },
+  "toast": {
+    "soon": "A Hlas Cloud hamarosan indul. Addig töltsd le az ingyenes verziót."
+  },
+  "suggest": "A Hlas magyarul is elérhető"
+}

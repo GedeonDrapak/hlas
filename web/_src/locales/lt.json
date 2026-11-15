@@ -1,0 +1,340 @@
+{
+  "code": "lt",
+  "langName": "Lietuvių",
+  "langNameEn": "Lithuanian",
+  "dec": ",",
+  "meta": {
+    "kw": "diktavimo programa Mac",
+    "title": "Hlas: diktavimo programa Mac ir Windows lietuviškai",
+    "description": "Laikykite Fn, kalbėkite, atleiskite. Tekstas atsiranda ten, kur žymeklis, bet kurioje programoje. 4 MB, 60 MB RAM ramybės būsenoje, veikia be interneto.",
+    "ogTitle": "Hlas: diktavimas Mac ir Windows, kuris kalba lietuviškai",
+    "ogDescription": "Laikykite Fn, kalbėkite, atleiskite. 4 MB programa, 60 MB RAM ramybės būsenoje, veikia be interneto."
+  },
+  "nav": {
+    "features": "Funkcijos",
+    "performance": "Našumas",
+    "languages": "Kalbos",
+    "pricing": "Kainos",
+    "download": "Atsisiųsti",
+    "language": "Kalba"
+  },
+  "hero": {
+    "badge": "Naujiena: Hlas Cloud, neribotai už 35 € per metus",
+    "h1": "Diktavimas Mac ir Windows, kuris kalba lietuviškai.",
+    "sub": "Laikykite <kbd>Fn</kbd>, kalbėkite, atleiskite. Tekstas atsiranda ten, kur yra žymeklis, bet kurioje programoje. Programa užima 4 MB, o ramybės būsenoje naudoja 60 MB RAM.",
+    "dlMac": "Atsisiųsti nemokamai Mac",
+    "dlWin": "Windows (beta)",
+    "note": "Apple Silicon, macOS 15+ · 4 MB · Windows 10 ir 11 beta versija, diegimo programa dar nepasirašyta",
+    "privacy": "Vietiniu režimu paskyros nereikia, o jūsų garsas niekada nepalieka kompiuterio."
+  },
+  "demo": {
+    "tabNotes": "Užrašai",
+    "idle": "Laikykite Fn ir kalbėkite",
+    "busy": "Rašoma",
+    "scenes": [
+      {
+        "ctx": [
+          [
+            "Eglė",
+            "Kaip sekasi su pristatymu?"
+          ]
+        ],
+        "text": "Labas, Egle, pristatymas paruoštas. Galutinę versiją peržiūrai atsiųsiu šįvakar."
+      },
+      {
+        "ctx": [
+          [
+            "Kam",
+            "mantas@studija.lt"
+          ],
+          [
+            "Tema",
+            "Pasiūlymas"
+          ]
+        ],
+        "text": "Laba diena, Mantai, ačiū už žinutę. Pasiūlymą atsiųsiu rytoj pirmoje dienos pusėje."
+      },
+      {
+        "ctx": [
+          [
+            "Užrašas",
+            "šiandien 18:07"
+          ]
+        ],
+        "text": "Įlinkdama fechtuotojo špaga sublykčiojusi pragręžė apvalų arbūzą. Kiekviena nosinė ir paukščiukas savo vietoje."
+      }
+    ]
+  },
+  "stats": {
+    "app": "visa programa",
+    "ram": "RAM ramybės būsenoje",
+    "speed": "11 s kalbos perrašyti",
+    "langs": "kalbų, įskaitant lietuvių"
+  },
+  "features": {
+    "eyebrow": "Kas viduje",
+    "h2": "Viskas, ko reikia, kad nustotumėte rinkti tekstą.<br>Nieko nereikalingo.",
+    "offline": {
+      "chip": "Veikia vietinis modelis",
+      "h3": "Veikia be interneto",
+      "p": "Whisper veikia tiesiai jūsų kompiuteryje. Garsas jo niekada nepalieka.",
+      "strong": "Nėra Wi-Fi? Jokių problemų."
+    },
+    "vocab": {
+      "add": "Pridėti",
+      "h3": "Jūsų žodynas",
+      "p": "Vardai, prekių ženklai ir profesinis žargonas. Pasakykite Hlas, kaip jis juos išgirsta neteisingai.",
+      "strong": "Nuo tada jis rašys teisingai.",
+      "items": [
+        [
+          "Kubernetes",
+          "girdi: kuber netis"
+        ],
+        [
+          "Figma",
+          "girdi: fig ma"
+        ],
+        [
+          "EBITDA",
+          "girdi: ebit da"
+        ]
+      ],
+      "cycle": [
+        [
+          "Notion",
+          "girdi: nouše"
+        ],
+        [
+          "Salesforce",
+          "girdi: seils fors"
+        ],
+        [
+          "Kubernetes",
+          "girdi: kuber netis"
+        ],
+        [
+          "Figma",
+          "girdi: fig ma"
+        ],
+        [
+          "EBITDA",
+          "girdi: ebit da"
+        ]
+      ]
+    },
+    "smart": {
+      "h3": "Išmanusis tekstas",
+      "p": "Padrikas kalbėjimas virsta tvarkingomis pastraipomis ar sąrašais, pagal tai, ką turėjote omenyje.",
+      "strong": "Originalas visada lieka Istorijoje.",
+      "raw": "ee tai rytoj reikia nupirkti pieno ir paskui dar duonos ir ehm paskambinti Rūtai",
+      "title": "Rytoj",
+      "out": [
+        "nupirkti pieno",
+        "nupirkti duonos",
+        "paskambinti Rūtai"
+      ]
+    },
+    "langs": {
+      "h3": "Kalba lietuviškai",
+      "p": "Whisper large-v3 rašo lietuviškai su skyrybos ženklais ir didžiosiomis raidėmis ten, kur jų reikia.",
+      "strong": "Ir dar daugiau nei 60 kalbų."
+    }
+  },
+  "mini": [
+    {
+      "h4": "Garso failai",
+      "p": "Įkelkite iki 10 minučių įrašą ir gaukite tekstą."
+    },
+    {
+      "h4": "Laikykite arba spustelėkite",
+      "p": "Laikykite Fn ir kalbėkite. Spustelėkite kartą, kad kalbėtumėte laisvomis rankomis, ir dar kartą, kad sustabdytumėte."
+    },
+    {
+      "h4": "Jūsų klavišas",
+      "p": "Fn, dešinysis Option, dešinysis Command, dešinysis Control arba F13-F19."
+    },
+    {
+      "h4": "Istorija",
+      "p": "Paieška, saugoma vietoje, galima išvalyti. Paskutinį diktavimą vėl įklijuosite vienu spartuoju klavišu."
+    }
+  ],
+  "perf": {
+    "eyebrow": "Našumas",
+    "h2": "Lengvesnė už skirtuką, kurį pamiršote uždaryti.",
+    "ram": {
+      "h3": "RAM ramybės būsenoje",
+      "p": "Modelis įkeliamas, kai kalbate, ir atlaisvinamas po 3 minučių tylos.",
+      "foot": "Hlas matuota su M1 Pro, programa paslėpta. Kai įkeltas vietinis modelis, naudojama apie 1 GB. Konkurento duomenys iš mūsų pačių palyginimo."
+    },
+    "size": {
+      "h3": "Programos dydis",
+      "p": "Natūralus Swift Mac kompiuteriuose, natūralus Rust Windows. Jokio Electron."
+    },
+    "speed": {
+      "h3": "Greičiau, nei spėsite perskaityti",
+      "speak": "Jūs kalbate",
+      "writes": "Hlas rašo",
+      "p": "Vietinis modelis Apple Silicon, spartinamas per Metal."
+    },
+    "fill": {
+      "h3": "Užpildai dingsta",
+      "html": "<s>Ee,</s> <span>atsiųskite man</span> <s>ehm</s> <span>galutinę versiją</span> <s>hmm</s> <span>iki penktadienio.</span>",
+      "p": "Dvejonės garsai, tokie kaip ee, ehm ir hmm, pašalinami vietoje, bet kuriuo režimu."
+    },
+    "sym": {
+      "h3": "Pasakykite simbolį",
+      "p": "Ištarti simboliai ir eilučių lūžiai veikia anglų ir čekų kalbomis. Labs funkcija.",
+      "morph": [
+        [
+          "at sign",
+          "@"
+        ],
+        [
+          "underscore",
+          "_"
+        ],
+        [
+          "new line",
+          "↵"
+        ],
+        [
+          "dot com",
+          ".com"
+        ]
+      ]
+    },
+    "priv": {
+      "h3": "Jūsų, ne mūsų",
+      "items": [
+        "Jokios paskyros",
+        "Jokios telemetrijos",
+        "Raktai sistemos raktinėje",
+        "Išeitinis kodas GitHub"
+      ]
+    },
+    "apps": {
+      "h3": "Veikia bet kurioje programoje",
+      "p": "Jei ten galima rašyti, ten galima ir diktuoti."
+    }
+  },
+  "langs": {
+    "eyebrow": "Kalbos",
+    "h2": "Sukurta Prahoje kalboms, kurias didžiosios programos prisimena paskutinės.",
+    "points": [
+      {
+        "b": "ą ė š ž",
+        "h4": "Teisinga skyryba",
+        "p": "Whisper large-v3 rašo lietuviškas raides, didžiąsias raides, kablelius ir klaustukus, o ne vieną ilgą eilutę mažosiomis raidėmis."
+      },
+      {
+        "b": "EN",
+        "h4": "Maišykite kalbas laisvai",
+        "p": "Prisekite naudojamas kalbas arba leiskite Hlas atpažinti kalbą pačiam. Angliški terminai lietuviškame tekste lieka nepakitę."
+      },
+      {
+        "b": "Ab",
+        "h4": "Jūsų žodžiai, jūsų rašyba",
+        "p": "Kartą įrašykite vardus ir terminus į žodyną, ir Hlas nuo tada rašys juos taip, kaip norite."
+      }
+    ],
+    "note": "Pirmiausia buvo suderinta čekų kalba. Lietuvių kalba kol kas veikia per Whisper large-v3 be papildomo derinimo, tad jei lietuvių kalba jums gimtoji, papasakokite mums GitHub, kaip sekasi."
+  },
+  "pricing": {
+    "eyebrow": "Kainos",
+    "h2": "Nemokamai jūsų kompiuteryje.<br>35 € per metus, jei norite be jokio vargo.",
+    "free": {
+      "name": "Hlas",
+      "forever": "visam laikui",
+      "sub": "Visa programa. Veikia jūsų kompiuteryje arba su jūsų API raktu.",
+      "items": [
+        "Vietinis Whisper modelis, veikia be interneto",
+        "Arba savas raktas: Groq, OpenAI, Soniox, Fish Audio",
+        "Žodynas, istorija, teksto tvarkymas, garso failai",
+        "Mac ir Windows"
+      ],
+      "cta": "Atsisiųsti nemokamai"
+    },
+    "cloud": {
+      "per": "per metus + PVM",
+      "sub": "Tai 2,92 € per mėnesį, bent 54 % pigiau nei Superwhisper ar Wispr Flow. Neribotas diktavimas per mūsų API.",
+      "items": [
+        "Neribotas diktavimas, jokių API raktų nustatymo",
+        "Nereikia siųstis 547 MB modelio",
+        "Modelis niekada neįkeliamas į jūsų RAM, tausoja bateriją",
+        "Greitai veikia ir senesniuose bei silpnesniuose kompiuteriuose"
+      ],
+      "cta": "Užsisakyti iš anksto už 35 € per metus",
+      "manage": "Jau prenumeruojate? Sąskaitos ir atšaukimas",
+      "vat": "Vartotojai ES moka 42,35 €, įskaitant 21 % Čekijos PVM. ES įmonės su PVM kodu moka 35 € taikant atvirkštinį apmokestinimą."
+    },
+    "yearly": {
+      "title": "Kiek kainuoja metai diktavimo",
+      "big": "54-73 % pigiau nei konkurentai",
+      "foot": "Metiniai planai palyginti be PVM, 2026 m. lapkričio 14 d. duomenimis: Superwhisper Pro 84,99 $ per metus, Wispr Flow Pro ir Willow Pro 12 $ per mėnesį mokant už metus. Perskaičiuota pagal 2026 m. lapkričio 13 d. ECB kursą, 1 $ = 0,90481 €. Kai kurie konkurentai turi ir nemokamus planus ar vienkartines licencijas, žr. visą palyginimą."
+    },
+    "compareLink": "Visas palyginimas, įskaitant nemokamas ir vienkartinio pirkimo programas"
+  },
+  "faq": {
+    "eyebrow": "Klausimai",
+    "h2": "Prieš jums paklausiant.",
+    "items": [
+      {
+        "q": "Ar nemokama versija tikrai nemokama?",
+        "a": "Taip. Vietinis variklis veikia jūsų kompiuteryje ir nieko nekainuoja. Jei norite debesies variklio, galite įvesti savo API raktą ir mokėti tiesiai tiekėjui, paprastai nuo vieno iki trijų dolerių per mėnesį."
+      },
+      {
+        "q": "Ar Hlas veikia be interneto?",
+        "a": "Taip. Su vietiniu varikliu Whisper veikia jūsų Mac ir, vieną kartą atsisiuntus 547 MB modelį, interneto nebereikia."
+      },
+      {
+        "q": "Kaip gerai jis supranta lietuviškai?",
+        "a": "Hlas naudoja Whisper large-v3, kuris palaiko lietuvių kalbą. Kokybė priklauso nuo kalbos ir tarties, o lietuvių kalbos papildomai dar nederinome, tad išbandykite nemokamą versiją savo balsu. Įrašykite vardus ir terminus į žodyną, ir Hlas rašys juos taip, kaip norite."
+      },
+      {
+        "q": "Kiek RAM naudoja diktuojant?",
+        "a": "Ramybės būsenoje apie 60 MB. Kai įkeltas vietinis modelis, apie 1 GB, o po 3 minučių tylos modelis atlaisvinamas. Hlas Cloud jokio modelio neįkelia."
+      },
+      {
+        "q": "Ar veikia Mac su Intel procesoriumi?",
+        "a": "Ne. Programai Mac reikia Apple Silicon ir macOS 15 ar naujesnės. Windows 10 ir 11 x64 palaikomos beta versijoje."
+      },
+      {
+        "q": "Ar galiu diktuoti užklausas į Claude Code, Cursor ar ChatGPT?",
+        "a": "Taip. Hlas rašo bet kurioje programoje, kur galima rašyti, taip pat terminaluose ir kodo redaktoriuose. Įrašykite bibliotekų ir funkcijų pavadinimus į žodyną, kad jie būtų parašyti teisingai."
+      },
+      {
+        "q": "Kaip veikia sąskaitos ir atšaukimas?",
+        "a": "Po apmokėjimo Stripe atsiųs jums PVM sąskaitą faktūrą nuo Eden Makers s.r.o. ES įmonės apmokėdamos gali nurodyti PVM kodą. Kortelę pakeisite, sąskaitas atsisiųsite ar prenumeratą atšauksite klientų portale; prenumerata tada galioja iki apmokėtų metų pabaigos."
+      },
+      {
+        "q": "Kiek neribotas yra neribotas?",
+        "a": "Hlas Cloud neturi minučių skaitiklio ir planų lygių. Kad kaina išliktų 35 € per metus, sąžiningas naudojimas yra iki 3 valandų diktavimo per dieną, riba nunulinama UTC vidurnaktį."
+      },
+      {
+        "q": "Kur keliauja mano garsas?",
+        "a": "Su vietiniu varikliu niekur. Jis lieka jūsų kompiuteryje. Su Hlas Cloud jis per mūsų serverį keliauja į Groq tik perrašymui, o mūsų serveris jo nesaugo. Su savo raktu jis keliauja tiesiai jūsų pasirinktam tiekėjui."
+      }
+    ]
+  },
+  "final": {
+    "h2": "Nustokite rinkti. Pradėkite kalbėti.",
+    "p": "Dvi minutės nuo atsisiuntimo iki pirmo padiktuoto sakinio.",
+    "dlMac": "Atsisiųsti Mac"
+  },
+  "footer": {
+    "made": "Prahoje sukūrė",
+    "and": "ir",
+    "privacy": "Privatumas",
+    "compare": "Palyginimas",
+    "faq": "DUK",
+    "about": "Apie mus",
+    "press": "Žiniasklaidai",
+    "changelog": "Naujienos",
+    "languages": "Visos kalbos",
+    "trust": "Versija 0.5.0, 2026 m. lapkričio 4 d. Programa Mac pasirašyta Apple Developer ID ir patvirtinta Apple notarizacijos."
+  },
+  "toast": {
+    "soon": "Hlas Cloud netrukus startuoja. Kol kas atsisiųskite nemokamą versiją."
+  },
+  "suggest": "Hlas galima naudoti ir lietuviškai"
+}

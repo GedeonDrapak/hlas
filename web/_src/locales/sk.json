@@ -1,0 +1,340 @@
+{
+  "code": "sk",
+  "langName": "Slovenčina",
+  "langNameEn": "Slovak",
+  "dec": ",",
+  "meta": {
+    "title": "Hlas: diktovanie po slovensky pre Mac a Windows, aj offline",
+    "description": "Podrž Fn, hovor, pusť. Text pristane tam, kde máš kurzor, v akejkoľvek aplikácii. Má 4 MB, v pokoji berie 60 MB RAM a je vyladená na slovenčinu.",
+    "ogTitle": "Hlas: diktovanie pre Mac a Windows, ktoré vie po slovensky",
+    "ogDescription": "Podrž Fn, hovor, pusť. 4 MB aplikácia, 60 MB RAM v pokoji, vyladená na slovenčinu.",
+    "kw": "diktovanie po slovensky na Macu"
+  },
+  "nav": {
+    "features": "Funkcie",
+    "performance": "Výkon",
+    "languages": "Jazyky",
+    "pricing": "Cenník",
+    "download": "Stiahnuť",
+    "language": "Jazyk"
+  },
+  "hero": {
+    "badge": "Novinka: Hlas Cloud, neobmedzene za 35 € ročne",
+    "h1": "Diktovanie pre Mac a Windows, ktoré vie po slovensky.",
+    "sub": "Podrž <kbd>Fn</kbd>, hovor, pusť. Text pristane tam, kde máš kurzor, v akejkoľvek aplikácii. Appka má 4 MB a v pokoji berie 60 MB RAM.",
+    "dlMac": "Stiahnuť zadarmo pre Mac",
+    "dlWin": "Windows (beta)",
+    "note": "Apple Silicon, macOS 15+ · 4 MB · Windows 10 a 11 v bete, inštalátor zatiaľ bez podpisu",
+    "privacy": "V lokálnom režime nepotrebuješ účet a tvoj zvuk nikdy neopustí počítač."
+  },
+  "demo": {
+    "tabNotes": "Poznámky",
+    "idle": "Podrž Fn a hovor",
+    "busy": "Prepisujem",
+    "scenes": [
+      {
+        "ctx": [
+          [
+            "Zuzana",
+            "Ako to vyzerá s prezentáciou?"
+          ]
+        ],
+        "text": "Ahoj Zuzka, prezentácia je hotová. Večer pošlem finálnu verziu na schválenie."
+      },
+      {
+        "ctx": [
+          [
+            "Komu",
+            "martin@studio.sk"
+          ],
+          [
+            "Predmet",
+            "Ponuka"
+          ]
+        ],
+        "text": "Dobrý deň, ďakujem za správu. Ponuku vám pošlem zajtra dopoludnia."
+      },
+      {
+        "ctx": [
+          [
+            "Poznámka",
+            "dnes 18:07"
+          ]
+        ],
+        "text": "Kŕdeľ šťastných ďatľov učí pri ústí Váhu mĺkveho koňa obhrýzať kôru a žrať čerstvé mäso. Každý mäkčeň a dĺžeň na svojom mieste."
+      }
+    ]
+  },
+  "stats": {
+    "app": "celá aplikácia",
+    "ram": "RAM v pokoji",
+    "speed": "na prepis 11 s reči",
+    "langs": "jazykov, slovenčina medzi nimi"
+  },
+  "features": {
+    "eyebrow": "Čo je vnútri",
+    "h2": "Všetko, čo potrebuješ, aby si prestal písať.<br>Nič navyše.",
+    "offline": {
+      "chip": "Lokálny model beží",
+      "h3": "Funguje offline",
+      "p": "Whisper beží priamo v tvojom počítači. Zvuk ho nikdy neopustí.",
+      "strong": "Bez Wi-Fi, bez problému."
+    },
+    "vocab": {
+      "add": "Pridať",
+      "h3": "Vlastný slovník",
+      "p": "Mená, značky a odborné výrazy. Povedz Hlasu, ako ich počuje zle.",
+      "strong": "Odteraz ich napíše správne.",
+      "items": [
+        [
+          "GitHub",
+          "počuje: githab"
+        ],
+        [
+          "Notion",
+          "počuje: noušn"
+        ],
+        [
+          "EBITDA",
+          "počuje: ebitda"
+        ]
+      ],
+      "cycle": [
+        [
+          "Kubernetes",
+          "počuje: kubernetis"
+        ],
+        [
+          "Jira",
+          "počuje: džira"
+        ],
+        [
+          "GitHub",
+          "počuje: githab"
+        ],
+        [
+          "Notion",
+          "počuje: noušn"
+        ],
+        [
+          "EBITDA",
+          "počuje: ebitda"
+        ]
+      ]
+    },
+    "smart": {
+      "h3": "Inteligentný text",
+      "p": "Z hovoreného prúdu spraví čisté odseky alebo zoznamy, podľa toho, čo si myslel.",
+      "strong": "Originál vždy zostáva v Histórii.",
+      "raw": "ehm takže zajtra musím kúpiť mlieko a potom aj chlieb a eee zavolať Zuzke",
+      "title": "Zajtra",
+      "out": [
+        "kúpiť mlieko",
+        "kúpiť chlieb",
+        "zavolať Zuzke"
+      ]
+    },
+    "langs": {
+      "h3": "Vyladené na slovenčinu",
+      "p": "Mäkčene, dĺžne a veľké písmená tam, kde majú byť. Čeština a angličtina v cene.",
+      "strong": "K tomu 60+ ďalších jazykov."
+    }
+  },
+  "mini": [
+    {
+      "h4": "Zvukové súbory",
+      "p": "Nahraj záznam do 10 minút a dostaneš text."
+    },
+    {
+      "h4": "Drž, alebo ťukni",
+      "p": "Drž Fn a hovor. Ťukni raz pre voľné ruky, druhýkrát zastavíš."
+    },
+    {
+      "h4": "Tvoj kláves",
+      "p": "Fn, pravý Option, pravý Command, pravý Control alebo F13 až F19."
+    },
+    {
+      "h4": "História",
+      "p": "Prehľadávateľná, lokálna, vymazateľná. Posledný diktát vložíš znova jednou skratkou."
+    }
+  ],
+  "perf": {
+    "eyebrow": "Výkon",
+    "h2": "Ľahší než záložka, ktorú si zabudol zavrieť.",
+    "ram": {
+      "h3": "RAM v pokoji",
+      "p": "Model sa načíta, keď hovoríš, a po 3 minútach ticha sa zase uvoľní.",
+      "foot": "Hlas meraný na M1 Pro so skrytou aplikáciou. S načítaným lokálnym modelom berie asi 1 GB. Údaj konkurencie z nášho vlastného porovnania."
+    },
+    "size": {
+      "h3": "Veľkosť aplikácie",
+      "p": "Natívny Swift na Macu, natívny Rust na Windows. Žiadny Electron."
+    },
+    "speed": {
+      "h3": "Rýchlejší, než to po sebe prečítaš",
+      "speak": "Hovoríš",
+      "writes": "Hlas píše",
+      "p": "Lokálny model na Apple Silicon, akcelerovaný cez Metal."
+    },
+    "fill": {
+      "h3": "Vata zmizne",
+      "html": "<s>Ehm,</s> <span>pošli mi</span> <s>eee</s> <span>finálnu verziu</span> <s>hmm</s> <span>do piatku.</span>",
+      "p": "Ehm, eee a hmm sa odstránia lokálne, v každom režime."
+    },
+    "sym": {
+      "h3": "Povedz symbol",
+      "p": "Hovorené symboly a zalomenie riadkov, v angličtine a češtine. Funkcia z Labs.",
+      "morph": [
+        [
+          "at sign",
+          "@"
+        ],
+        [
+          "underscore",
+          "_"
+        ],
+        [
+          "new line",
+          "↵"
+        ],
+        [
+          "dot com",
+          ".com"
+        ]
+      ]
+    },
+    "priv": {
+      "h3": "Tvoje, nie naše",
+      "items": [
+        "Žiadny účet",
+        "Žiadna telemetria",
+        "Kľúče v systémovej kľúčenke",
+        "Zdrojový kód na GitHube"
+      ]
+    },
+    "apps": {
+      "h3": "Funguje v každej aplikácii",
+      "p": "Kde sa dá písať, tam sa dá diktovať."
+    }
+  },
+  "langs": {
+    "eyebrow": "Jazyky",
+    "h2": "Väčšina diktovacích aplikácií berie slovenčinu ako prílepok. Hlas ju má vyladenú od začiatku.",
+    "points": [
+      {
+        "b": "ľ ď ô",
+        "h4": "Diakritika bez chýb",
+        "p": "Úvodné prompty pre slovenčinu, češtinu a angličtinu držia mäkčene, dĺžne aj veľké písmená na mieste."
+      },
+      {
+        "b": "⌘V",
+        "h4": "Bezpečné na slovenskej klávesnici",
+        "p": "Vkladanie funguje aj na QWERTZ, kde iné aplikácie vložia zatúlané písmeno."
+      },
+      {
+        "b": "Ab",
+        "h4": "Tvoje slová, tvoj pravopis",
+        "p": "Nauč Hlas mená a odborné výrazy raz v slovníku a odvtedy ich píše po tvojom."
+      }
+    ],
+    "note": ""
+  },
+  "pricing": {
+    "eyebrow": "Cenník",
+    "h2": "Zadarmo na vlastnom stroji.<br>35 € ročne, keď to chceš bez starostí.",
+    "free": {
+      "name": "Hlas",
+      "forever": "navždy",
+      "sub": "Celá aplikácia. Beží na tvojom stroji, alebo na tvojom vlastnom API kľúči.",
+      "items": [
+        "Lokálny model Whisper, funguje offline",
+        "Alebo vlastný kľúč: Groq, OpenAI, Soniox, Fish Audio",
+        "Slovník, história, čistenie textu, zvukové súbory",
+        "Mac aj Windows"
+      ],
+      "cta": "Stiahnuť zadarmo"
+    },
+    "cloud": {
+      "per": "ročne + DPH",
+      "sub": "To je 2,92 € mesačne, najmenej o 54 % menej než Superwhisper alebo Wispr Flow. Neobmedzené diktovanie cez naše API.",
+      "items": [
+        "Neobmedzené diktovanie, žiadne API kľúče na nastavovanie",
+        "Žiadny 547 MB model na stiahnutie",
+        "Model sa ti nikdy nenačíta do RAM, šetrí batériu",
+        "Rýchle aj na starších a slabších strojoch"
+      ],
+      "cta": "Predplatiť za 35 € ročne",
+      "manage": "Už predplácaš? Faktúry a zrušenie",
+      "vat": "Spotrebiteľ v EÚ zaplatí 42,35 € vrátane 21 % českej DPH. Firma z EÚ s IČ DPH zaplatí 35 € v režime prenesenia daňovej povinnosti."
+    },
+    "yearly": {
+      "title": "Koľko stojí rok diktovania",
+      "big": "O 54 až 73 % lacnejší než konkurencia",
+      "foot": "Ročné tarify bez DPH, stav k 14. 11. 2026: Superwhisper Pro 84,99 $ ročne, Wispr Flow Pro a Willow Pro 12 $ mesačne pri ročnej platbe. Prepočítané kurzom ECB z 13. 11. 2026, 1 $ = 0,90481 €. Časť konkurencie má aj bezplatné tarify alebo jednorazové licencie, pozri celé porovnanie."
+    },
+    "compareLink": "Celé porovnanie vrátane bezplatných a jednorazových aplikácií"
+  },
+  "faq": {
+    "eyebrow": "Otázky",
+    "h2": "Skôr než sa opýtaš.",
+    "items": [
+      {
+        "q": "Je verzia zadarmo naozaj zadarmo?",
+        "a": "Áno. Lokálny engine beží v tvojom počítači a nestojí nič. Keď chceš cloudový engine, zadáš vlastný API kľúč a platíš priamo poskytovateľovi, zvyčajne jeden až tri doláre mesačne."
+      },
+      {
+        "q": "Funguje Hlas offline?",
+        "a": "Áno. S lokálnym enginom beží Whisper priamo na tvojom Macu a po jednorazovom stiahnutí modelu (547 MB) nepotrebuje internet."
+      },
+      {
+        "q": "Ako dobre rozumie slovenčine?",
+        "a": "Dobre. Slovenčina má rovnako ako čeština a angličtina vlastný úvodný prompt pre Whisper large-v3, ktorý drží diakritiku a interpunkciu. Mená a odborné výrazy si pridaj do slovníka a Hlas ich napíše po tvojom."
+      },
+      {
+        "q": "Koľko RAM berie pri diktovaní?",
+        "a": "V pokoji asi 60 MB. S načítaným lokálnym modelom asi 1 GB a po 3 minútach ticha sa model uvoľní. Hlas Cloud žiadny model nenačítava."
+      },
+      {
+        "q": "Beží na Macu s procesorom Intel?",
+        "a": "Nie. Aplikácia pre Mac potrebuje Apple Silicon a macOS 15 alebo novší. Windows 10 a 11 pre x64 sú v bete."
+      },
+      {
+        "q": "Môžem diktovať prompty do Claude Code, Cursoru alebo ChatGPT?",
+        "a": "Áno. Hlas píše do každej aplikácie, kde sa dá písať, aj do terminálu a editora kódu. Názvy knižníc a funkcií si pridaj do slovníka, nech vyjdú správne."
+      },
+      {
+        "q": "Ako funguje faktúra a zrušenie?",
+        "a": "Po zaplatení ti Stripe pošle e-mailom daňový doklad od Eden Makers s.r.o. Firma z EÚ môže pri platbe zadať IČ DPH. Kartu, faktúry aj zrušenie spravuješ v zákazníckom portáli, predplatné potom dobehne do konca zaplateného roka."
+      },
+      {
+        "q": "Aké neobmedzené je neobmedzené?",
+        "a": "Hlas Cloud nemá žiadne počítadlo minút ani tarify. Aby cena mohla zostať 35 € ročne, platí férové používanie do 3 hodín diktovania denne, limit sa nuluje o polnoci UTC."
+      },
+      {
+        "q": "Kam ide môj zvuk?",
+        "a": "S lokálnym enginom nikam, zostáva v tvojom počítači. S Hlas Cloud ide cez náš server do Groq len kvôli prepisu a náš server ho neukladá. S vlastným kľúčom ide priamo k poskytovateľovi, ktorého si si vybral."
+      }
+    ]
+  },
+  "final": {
+    "h2": "Prestaň písať. Začni hovoriť.",
+    "p": "Dve minúty od stiahnutia k prvej nadiktovanej vete.",
+    "dlMac": "Stiahnuť pre Mac"
+  },
+  "footer": {
+    "made": "V Prahe vyrobili",
+    "and": "a",
+    "privacy": "Súkromie",
+    "compare": "Porovnanie",
+    "faq": "Otázky",
+    "about": "O nás",
+    "press": "Pre médiá",
+    "changelog": "Novinky",
+    "languages": "Všetky jazyky",
+    "trust": "Verzia 0.5.0 zo 4. 11. 2026. Aplikácia pre Mac je podpísaná Apple Developer ID a notarizovaná Applom."
+  },
+  "toast": {
+    "soon": "Hlas Cloud spúšťame čoskoro. Zatiaľ si stiahni verziu zadarmo."
+  },
+  "suggest": "Hlas je dostupný aj v slovenčine"
+}

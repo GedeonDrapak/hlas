@@ -1,0 +1,340 @@
+{
+  "code": "ca",
+  "langName": "Català",
+  "langNameEn": "Catalan",
+  "dec": ",",
+  "meta": {
+    "kw": "aplicació de dictat per veu Mac en català",
+    "title": "Hlas: dictat per veu en català per a Mac i Windows",
+    "description": "Mantén Fn, parla i deixa anar. El text apareix al cursor, a qualsevol app. 4 MB, 60 MB de RAM en repòs, Whisper sense connexió. Gratis o il·limitat, 35 €/any.",
+    "ogTitle": "Hlas: dictat per a Mac i Windows que parla català",
+    "ogDescription": "Mantén Fn, parla i deixa anar. App de 4 MB, 60 MB de RAM en repòs, funciona sense connexió."
+  },
+  "nav": {
+    "features": "Funcions",
+    "performance": "Rendiment",
+    "languages": "Llengües",
+    "pricing": "Preus",
+    "download": "Baixa",
+    "language": "Llengua"
+  },
+  "hero": {
+    "badge": "Novetat: Hlas Cloud, il·limitat per 35 € l'any",
+    "h1": "Dictat per a Mac i Windows que parla català.",
+    "sub": "Mantén <kbd>Fn</kbd>, parla i deixa anar. El text apareix just on tens el cursor, a qualsevol app. Ocupa 4 MB i en repòs només fa servir 60 MB de RAM.",
+    "dlMac": "Baixa'l gratis per a Mac",
+    "dlWin": "Windows (beta)",
+    "note": "Apple Silicon, macOS 15+ · 4 MB · Windows 10 i 11 en beta, instal·lador encara sense signar",
+    "privacy": "En mode local no et cal cap compte i la teva veu no surt mai de l'ordinador."
+  },
+  "demo": {
+    "tabNotes": "Notes",
+    "idle": "Mantén Fn i parla",
+    "busy": "Transcrivint",
+    "scenes": [
+      {
+        "ctx": [
+          [
+            "Laia",
+            "Com va la presentació?"
+          ]
+        ],
+        "text": "Hola Laia, la presentació ja està feta. Aquest vespre t'envio la versió final perquè la revisis."
+      },
+      {
+        "ctx": [
+          [
+            "Per a",
+            "jordi.puig@estudi.cat"
+          ],
+          [
+            "Assumpte",
+            "Proposta"
+          ]
+        ],
+        "text": "Hola Jordi, gràcies pel missatge. Demà al matí t'envio la proposta."
+      },
+      {
+        "ctx": [
+          [
+            "Nota",
+            "avui 18:07"
+          ]
+        ],
+        "text": "Jove xef, porti whisky amb quinze glaçons d'hidrogen, coi! Cada accent i cada ela geminada al seu lloc."
+      }
+    ]
+  },
+  "stats": {
+    "app": "tota l'app",
+    "ram": "de RAM en repòs",
+    "speed": "per transcriure 11 s de veu",
+    "langs": "llengües, el català inclòs"
+  },
+  "features": {
+    "eyebrow": "Què hi ha a dins",
+    "h2": "Tot el que necessites per deixar de teclejar.<br>Res de més.",
+    "offline": {
+      "chip": "Model local actiu",
+      "h3": "Funciona sense connexió",
+      "p": "Whisper s'executa al teu propi ordinador. La veu no en surt mai.",
+      "strong": "Sense wifi? Cap problema."
+    },
+    "vocab": {
+      "add": "Afegeix",
+      "h3": "El teu propi vocabulari",
+      "p": "Noms, marques i argot. Explica a Hlas com els entén malament.",
+      "strong": "A partir d'aquí, els escriu bé.",
+      "items": [
+        [
+          "Kubernetes",
+          "sent: cuber nètis"
+        ],
+        [
+          "Figma",
+          "sent: fig ma"
+        ],
+        [
+          "EBITDA",
+          "sent: ebitda"
+        ]
+      ],
+      "cycle": [
+        [
+          "Notion",
+          "sent: nóuxon"
+        ],
+        [
+          "Nguyen",
+          "sent: nuien"
+        ],
+        [
+          "Kubernetes",
+          "sent: cuber nètis"
+        ],
+        [
+          "Figma",
+          "sent: fig ma"
+        ],
+        [
+          "EBITDA",
+          "sent: ebitda"
+        ]
+      ]
+    },
+    "smart": {
+      "h3": "Text intel·ligent",
+      "p": "Converteix el que dius a raig en paràgrafs o llistes nets, segons el que volies dir.",
+      "strong": "L'original sempre es queda a l'Historial.",
+      "raw": "eh doncs demà he de comprar llet i després també pa i mm trucar a la Núria",
+      "title": "Demà",
+      "out": [
+        "comprar llet",
+        "comprar pa",
+        "trucar a la Núria"
+      ]
+    },
+    "langs": {
+      "h3": "Parla català",
+      "p": "Whisper large-v3 escriu en català amb puntuació i majúscules.",
+      "strong": "I més de 60 llengües més."
+    }
+  },
+  "mini": [
+    {
+      "h4": "Fitxers d'àudio",
+      "p": "Arrossega una gravació de fins a 10 minuts i obtén el text."
+    },
+    {
+      "h4": "Mantén o toca",
+      "p": "Mantén Fn per parlar. Toca una vegada per a mans lliures i una altra per aturar."
+    },
+    {
+      "h4": "La teva drecera",
+      "p": "Fn, Opció dreta, Ordre dreta, Control dreta o de F13 a F19."
+    },
+    {
+      "h4": "Historial",
+      "p": "Amb cerca, local i esborrable. Torna a enganxar l'últim dictat amb una sola drecera."
+    }
+  ],
+  "perf": {
+    "eyebrow": "Rendiment",
+    "h2": "Més lleuger que la pestanya que et vas oblidar de tancar.",
+    "ram": {
+      "h3": "RAM en repòs",
+      "p": "El model es carrega quan parles i s'allibera després de 3 minuts de silenci.",
+      "foot": "Hlas mesurat en un M1 Pro amb l'app amagada. Amb el model local carregat fa servir 1 GB, aproximadament. Xifra de la competència segons la nostra pròpia comparativa."
+    },
+    "size": {
+      "h3": "Mida de l'app",
+      "p": "Swift natiu al Mac, Rust natiu al Windows. Sense Electron."
+    },
+    "speed": {
+      "h3": "Més ràpid del que trigues a rellegir-ho",
+      "speak": "Tu parles",
+      "writes": "Hlas escriu",
+      "p": "Model local en Apple Silicon, accelerat amb Metal."
+    },
+    "fill": {
+      "h3": "Adeu a les crosses",
+      "html": "<s>Eh,</s> <span>envia'm</span> <s>ehm</s> <span>la versió final</span> <s>mm</s> <span>abans de divendres.</span>",
+      "p": "Les vacil·lacions com eh, ehm i mm s'eliminen en local, en tots els modes."
+    },
+    "sym": {
+      "h3": "Digues el símbol",
+      "p": "Símbols i salts de línia dictats, en anglès i en txec. Una funció de Labs.",
+      "morph": [
+        [
+          "at sign",
+          "@"
+        ],
+        [
+          "underscore",
+          "_"
+        ],
+        [
+          "new line",
+          "↵"
+        ],
+        [
+          "dot com",
+          ".com"
+        ]
+      ]
+    },
+    "priv": {
+      "h3": "Teu, no nostre",
+      "items": [
+        "Sense compte",
+        "Sense telemetria",
+        "Claus al clauer del sistema",
+        "Codi font a GitHub"
+      ]
+    },
+    "apps": {
+      "h3": "Funciona a totes les apps",
+      "p": "Si hi pots escriure, hi pots dictar."
+    }
+  },
+  "langs": {
+    "eyebrow": "Llengües",
+    "h2": "Fet a Praga per a les llengües que les grans apps deixen per a després.",
+    "points": [
+      {
+        "b": "à ç l·l",
+        "h4": "Puntuació ben feta",
+        "p": "Whisper large-v3 escriu majúscules, comes i signes d'interrogació, no una llarga línia en minúscules."
+      },
+      {
+        "b": "EN",
+        "h4": "Barreja llengües",
+        "p": "Fixa les llengües que fas servir o deixa que Hlas les detecti sol. Els termes en anglès enmig d'una frase en català es queden intactes."
+      },
+      {
+        "b": "Ab",
+        "h4": "Les teves paraules, la teva grafia",
+        "p": "Ensenya a Hlas noms i argot una sola vegada al vocabulari i a partir d'aquí els escriurà com tu vols."
+      }
+    ],
+    "note": "El txec va ser la primera llengua que vam afinar. El català funciona de moment amb Whisper large-v3 sense cap ajust addicional, i si el parles ens agradarà que ens expliquis a GitHub com se'n surt."
+  },
+  "pricing": {
+    "eyebrow": "Preus",
+    "h2": "Gratis al teu propi ordinador.<br>35 € l'any si el vols sense maldecaps.",
+    "free": {
+      "name": "Hlas",
+      "forever": "per sempre",
+      "sub": "L'app completa. Funciona al teu ordinador o amb la teva pròpia clau d'API.",
+      "items": [
+        "Model Whisper local, funciona sense connexió",
+        "O amb la teva clau: Groq, OpenAI, Soniox, Fish Audio",
+        "Vocabulari, historial, neteja de text, fitxers d'àudio",
+        "Mac i Windows"
+      ],
+      "cta": "Baixa'l gratis"
+    },
+    "cloud": {
+      "per": "l'any + IVA",
+      "sub": "Són 2,92 € al mes, com a mínim un 54 % menys que Superwhisper o Wispr Flow. Dictat il·limitat a través de la nostra API.",
+      "items": [
+        "Dictat il·limitat, sense claus d'API per configurar",
+        "Sense baixar un model de 547 MB",
+        "El model no es carrega mai a la teva RAM, la bateria t'ho agraeix",
+        "Ràpid també en ordinadors antics o menys potents"
+      ],
+      "cta": "Reserva'l per 35 € l'any",
+      "manage": "Ja hi estàs subscrit? Factures i cancel·lació",
+      "vat": "Els particulars de la UE paguen 42,35 € amb el 21 % d'IVA txec inclòs. Les empreses de la UE amb NIF-IVA paguen 35 € per inversió del subjecte passiu."
+    },
+    "yearly": {
+      "title": "Quant costa un any de dictat",
+      "big": "Entre un 54 i un 73 % més barat que la competència",
+      "foot": "Plans anuals comparats sense IVA, a 14 de novembre de 2026: Superwhisper Pro 84,99 $ l'any, Wispr Flow Pro i Willow Pro 12 $ al mes amb facturació anual. Convertit al tipus del BCE del 13 de novembre de 2026, 1 $ = 0,90481 €. Alguns competidors també tenen plans gratuïts o llicències de pagament únic, consulta la comparativa completa."
+    },
+    "compareLink": "Comparativa completa, amb apps gratuïtes i de pagament únic"
+  },
+  "faq": {
+    "eyebrow": "Preguntes",
+    "h2": "Abans que ho preguntis.",
+    "items": [
+      {
+        "q": "La versió gratuïta és gratis de debò?",
+        "a": "Sí. El motor local s'executa al teu ordinador i no costa res. Si prefereixes un motor al núvol, hi poses la teva pròpia clau d'API i pagues directament el proveïdor, normalment entre un i tres dòlars al mes."
+      },
+      {
+        "q": "Hlas funciona sense connexió?",
+        "a": "Sí. Amb el motor local, Whisper s'executa al teu Mac i no necessita internet després de baixar una sola vegada el model de 547 MB."
+      },
+      {
+        "q": "Com entén el català?",
+        "a": "Hlas fa servir Whisper large-v3, que és compatible amb el català. Encara no té cap ajust específic per al català, i la qualitat varia segons la llengua i l'accent. El millor és provar la versió gratuïta. Afegeix noms i argot al vocabulari i Hlas els escriurà bé."
+      },
+      {
+        "q": "Quanta RAM fa servir mentre dicto?",
+        "a": "Uns 60 MB en repòs. Amb el model local carregat, aproximadament 1 GB, que s'allibera després de 3 minuts de silenci. Hlas Cloud no carrega cap model."
+      },
+      {
+        "q": "Funciona en Macs amb Intel?",
+        "a": "No. L'app per a Mac necessita Apple Silicon i macOS 15 o posterior. Windows 10 i 11 en x64 són compatibles en beta."
+      },
+      {
+        "q": "Puc dictar prompts a Claude Code, Cursor o ChatGPT?",
+        "a": "Sí. Hlas escriu a qualsevol app on puguis teclejar, terminals i editors de codi inclosos. Afegeix noms de biblioteques i funcions al vocabulari perquè surtin bé."
+      },
+      {
+        "q": "Com funcionen la factura i la cancel·lació?",
+        "a": "Després del pagament, Stripe t'envia per correu una factura amb IVA d'Eden Makers s.r.o. Les empreses de la UE poden introduir el seu NIF-IVA en pagar. Canvia la targeta, baixa factures o cancel·la des del portal de client; la subscripció continua fins al final de l'any pagat."
+      },
+      {
+        "q": "Fins a quin punt és il·limitat?",
+        "a": "Hlas Cloud no té comptador de minuts ni nivells. Per mantenir el preu a 35 € l'any, l'ús raonable arriba fins a 3 hores de dictat al dia, i es reinicia a mitjanit UTC."
+      },
+      {
+        "q": "On va la meva veu?",
+        "a": "Amb el motor local, enlloc: es queda al teu ordinador. Amb Hlas Cloud passa pel nostre servidor cap a Groq només per a la transcripció, i el nostre servidor no la desa. Amb la teva clau va directament al proveïdor que hagis triat."
+      }
+    ]
+  },
+  "final": {
+    "h2": "Deixa de teclejar. Comença a parlar.",
+    "p": "Dos minuts des de la baixada fins a la primera frase dictada.",
+    "dlMac": "Baixa'l per a Mac"
+  },
+  "footer": {
+    "made": "Fet a Praga per",
+    "and": "i",
+    "privacy": "Privadesa",
+    "compare": "Comparativa",
+    "faq": "Preguntes",
+    "about": "Qui som",
+    "press": "Premsa",
+    "changelog": "Novetats",
+    "languages": "Totes les llengües",
+    "trust": "Versió 0.5.0 del 4 de novembre de 2026. L'app per a Mac està signada amb un Apple Developer ID i notaritzada per Apple."
+  },
+  "toast": {
+    "soon": "Hlas Cloud arriba aviat. Mentrestant, baixa't la versió gratuïta."
+  },
+  "suggest": "Hlas també està disponible en català"
+}

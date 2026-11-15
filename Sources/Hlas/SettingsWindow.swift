@@ -70,7 +70,7 @@ struct SettingsView: View {
                         .font(DS.text(11)).foregroundStyle(DS.fg2)
                     if settings.outputMode == .smart {
                         Text(SmartTextProcessor.configured().map { "Text is sent to \($0.provider) for editing, including with Local transcription." }
-                             ?? "Add an OpenAI or Groq key below to use Smart text.")
+                             ?? "Add an OpenAI or Groq key below, or use Hlas Cloud, for Smart text.")
                             .font(DS.text(11)).foregroundStyle(DS.fg3)
                         if settings.engine == .local {
                             apiKeyField("OpenAI API key", text: $settings.openaiAPIKey, hint: "Used only for Smart text. Local audio stays on this Mac.")
@@ -103,6 +103,7 @@ struct SettingsView: View {
 
                     switch settings.engine {
                     case .local: localEngineControls
+                    case .hlasCloud: HlasCloudControls(settings: settings)
                     case .groq: apiKeyField("Groq API key", text: $settings.groqAPIKey, hint: "Your Groq key is stored in macOS Keychain.")
                     case .openai: apiKeyField("OpenAI API key", text: $settings.openaiAPIKey, hint: "Your OpenAI key is stored in macOS Keychain.")
                     case .soniox: apiKeyField("Soniox API key", text: $settings.sonioxAPIKey, hint: "stt-async-v5, ~$0.10 per hour of audio. Key at console.soniox.com.")

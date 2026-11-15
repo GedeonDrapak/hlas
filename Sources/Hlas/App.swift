@@ -32,6 +32,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         FontRegistrar.register()
+        // Visual QA: HLAS_PILL_DEMO=1 only loops the pill (recording, then
+        // transcribing). No microphone, hotkey or permission prompts.
+        if ProcessInfo.processInfo.environment["HLAS_PILL_DEMO"] != nil {
+            pillDemo()
+            return
+        }
         setupMainMenu()
         setupStatusItem()
         _ = History.shared
@@ -85,6 +91,27 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private var wakeObserver: NSObjectProtocol?
+    private var demoPanel: OverlayPanel?
+
+    private func pillDemo() {
+        let panel = OverlayPanel()
+        demoPanel = panel
+        Task { @MainActor in
+            var phase: Float = 0
+            while true {
+                panel.show(.recording)
+                for _ in 0..<70 {
+                    phase += 0.35
+                    panel.model.push(level: 0.15 + 0.6 * abs(sin(phase) * sin(phase * 0.43)))
+                    try? await Task.sleep(for: .milliseconds(50))
+                }
+                panel.show(.transcribing)
+                try? await Task.sleep(for: .seconds(2.5))
+                panel.hide()
+                try? await Task.sleep(for: .seconds(1))
+            }
+        }
+    }
 
     /// The event tap can only be created once Accessibility is granted.
     /// If the user grants it after launch, keep retrying until it works.
@@ -106,6 +133,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func rebuildTranscriber() {
         if Settings.shared.engine != .local { LocalTranscriberHolder.shared.unload() }
+    }
+
+    /// hlas://activate?key=... from the Hlas Cloud welcome page.
+    func application(_ application: NSApplication, open urls: [URL]) {
+        for url in urls where HlasCloud.handle(url) {
+            rebuildTranscriber()
+            SettingsWindow.shared.show(appDelegate: self)
+            return
+        }
     }
 
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {

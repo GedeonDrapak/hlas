@@ -72,8 +72,22 @@ pub fn main() -> i32 {
         return cli::run(&args);
     }
 
+    // `hlas://activate?key=...` from the page shown after payment. The key goes
+    // straight into Credential Manager, which both instances read.
+    let link_key = args
+        .iter()
+        .find_map(|a| crate::core::cloud::key_from_activation_url(a));
+    if let Some(key) = &link_key {
+        super::keystore::persist(super::keystore::HLAS_CLOUD, key);
+    }
+    let activated = link_key.is_some();
+
     let Some(_instance) = single_instance::acquire() else {
-        single_instance::signal_existing();
+        if activated {
+            single_instance::signal_activated();
+        } else {
+            single_instance::signal_existing();
+        }
         return 0;
     };
     init_logging();
@@ -84,7 +98,11 @@ pub fn main() -> i32 {
     state::init(config.clone());
     engine::model::migrate_legacy();
     // Persist the migrated 0.1.0 config in its new home.
-    state::update_config(|_| {});
+    state::update_config(|c| {
+        if activated {
+            c.engine = crate::core::config::Engine::HlasCloud;
+        }
+    });
     // Launch-at-login must point at this exe, wherever it was installed.
     if super::autostart::is_enabled() {
         let _ = super::autostart::set(true);
@@ -101,6 +119,10 @@ pub fn main() -> i32 {
         } else {
             0
         }));
+    }
+    if activated {
+        log::info!("Hlas Cloud licence activated from link");
+        ui::send(ui::Command::OpenSettings);
     }
     qa_hooks();
 

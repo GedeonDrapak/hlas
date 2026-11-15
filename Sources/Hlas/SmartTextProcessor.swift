@@ -9,6 +9,10 @@ struct SmartTextProcessor: Sendable {
 
     @MainActor static func configured() -> Self? {
         let settings = Settings.shared
+        if settings.engine == .hlasCloud, !settings.hlasCloudKey.isEmpty {
+            return Self(endpoint: HlasCloud.chatEndpoint, apiKey: settings.hlasCloudKey,
+                        model: "hlas-cloud", provider: "Hlas Cloud")
+        }
         if settings.engine == .groq, !settings.groqAPIKey.isEmpty {
             return groq(settings.groqAPIKey)
         }
@@ -30,6 +34,7 @@ struct SmartTextProcessor: Sendable {
         request.timeoutInterval = 25
         request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        HlasCloud.tag(&request)
         var body: [String: Any] = ["model": model, "temperature": 0,
             "max_completion_tokens": min(16_000, max(1024, text.utf8.count)),
             "messages": [["role": "system", "content": SmartTextRules.prompt], ["role": "user", "content": text]]]

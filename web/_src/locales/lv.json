@@ -1,0 +1,340 @@
+{
+  "code": "lv",
+  "langName": "Latviešu",
+  "langNameEn": "Latvian",
+  "dec": ",",
+  "meta": {
+    "kw": "diktēšanas programma Mac",
+    "title": "Hlas: diktēšanas programma Mac un Windows latviski",
+    "description": "Turiet Fn, runājiet, atlaidiet. Teksts parādās tur, kur ir kursors, jebkurā lietotnē. 4 MB, 60 MB RAM miera stāvoklī, darbojas bezsaistē. Bez maksas.",
+    "ogTitle": "Hlas: diktēšana Mac un Windows, kas runā latviski",
+    "ogDescription": "Turiet Fn, runājiet, atlaidiet. 4 MB lietotne, 60 MB RAM miera stāvoklī, darbojas bezsaistē."
+  },
+  "nav": {
+    "features": "Iespējas",
+    "performance": "Veiktspēja",
+    "languages": "Valodas",
+    "pricing": "Cenas",
+    "download": "Lejupielādēt",
+    "language": "Valoda"
+  },
+  "hero": {
+    "badge": "Jaunums: Hlas Cloud, neierobežoti par 35 € gadā",
+    "h1": "Diktēšana Mac un Windows, kas runā latviski.",
+    "sub": "Turiet <kbd>Fn</kbd>, runājiet, atlaidiet. Teksts parādās tur, kur ir kursors, jebkurā lietotnē. Lietotne aizņem 4 MB un miera stāvoklī izmanto 60 MB RAM.",
+    "dlMac": "Lejupielādēt bez maksas Mac",
+    "dlWin": "Windows (beta)",
+    "note": "Apple Silicon, macOS 15+ · 4 MB · Windows 10 un 11 beta versijā, instalētājs vēl nav parakstīts",
+    "privacy": "Lokālajā režīmā konts nav vajadzīgs, un jūsu audio nekad neatstāj datoru."
+  },
+  "demo": {
+    "tabNotes": "Piezīmes",
+    "idle": "Turiet Fn un runājiet",
+    "busy": "Pārrakstu",
+    "scenes": [
+      {
+        "ctx": [
+          [
+            "Anna",
+            "Kā sokas ar prezentāciju?"
+          ]
+        ],
+        "text": "Sveika, Anna, prezentācija ir gatava. Šovakar nosūtīšu gala versiju apskatei."
+      },
+      {
+        "ctx": [
+          [
+            "Kam",
+            "janis@studija.lv"
+          ],
+          [
+            "Temats",
+            "Piedāvājums"
+          ]
+        ],
+        "text": "Labdien, Jāni, paldies par ziņu. Piedāvājumu jums nosūtīšu rīt priekšpusdienā."
+      },
+      {
+        "ctx": [
+          [
+            "Piezīme",
+            "šodien 18:07"
+          ]
+        ],
+        "text": "Glāžšķūņa rūķīši dzērumā čiepj Baha koncertflīģeļu vākus. Katra garumzīme un mīkstinājuma zīme savā vietā."
+      }
+    ]
+  },
+  "stats": {
+    "app": "visa lietotne",
+    "ram": "RAM miera stāvoklī",
+    "speed": "lai pārrakstītu 11 s runas",
+    "langs": "valodas, tostarp latviešu"
+  },
+  "features": {
+    "eyebrow": "Kas iekšā",
+    "h2": "Viss, kas vajadzīgs, lai beigtu rakstīt uz tastatūras.<br>Nekā lieka.",
+    "offline": {
+      "chip": "Darbojas lokālais modelis",
+      "h3": "Darbojas bezsaistē",
+      "p": "Whisper darbojas tieši jūsu datorā. Audio to nekad neatstāj.",
+      "strong": "Nav Wi-Fi? Nav problēmu."
+    },
+    "vocab": {
+      "add": "Pievienot",
+      "h3": "Jūsu vārdnīca",
+      "p": "Vārdi, zīmoli un profesionālais žargons. Pasakiet Hlas, kā tas tos sadzird nepareizi.",
+      "strong": "No tā brīža tas tos rakstīs pareizi.",
+      "items": [
+        [
+          "Kubernetes",
+          "dzird: kuber netis"
+        ],
+        [
+          "Figma",
+          "dzird: fig ma"
+        ],
+        [
+          "EBITDA",
+          "dzird: ebit da"
+        ]
+      ],
+      "cycle": [
+        [
+          "Notion",
+          "dzird: noušens"
+        ],
+        [
+          "Salesforce",
+          "dzird: seilz fors"
+        ],
+        [
+          "Kubernetes",
+          "dzird: kuber netis"
+        ],
+        [
+          "Figma",
+          "dzird: fig ma"
+        ],
+        [
+          "EBITDA",
+          "dzird: ebit da"
+        ]
+      ]
+    },
+    "smart": {
+      "h3": "Gudrs teksts",
+      "p": "Pārvērš juceklīgu runu kārtīgās rindkopās vai sarakstos atkarībā no tā, ko domājāt.",
+      "strong": "Oriģināls vienmēr paliek Vēsturē.",
+      "raw": "ee nu rīt jānopērk piens un tad arī maize un ehm jāpiezvana Ilzei",
+      "title": "Rīt",
+      "out": [
+        "nopirkt pienu",
+        "nopirkt maizi",
+        "piezvanīt Ilzei"
+      ]
+    },
+    "langs": {
+      "h3": "Runā latviski",
+      "p": "Whisper large-v3 raksta latviski ar pieturzīmēm un lielajiem burtiem tur, kur tiem jābūt.",
+      "strong": "Un vēl vairāk nekā 60 valodas."
+    }
+  },
+  "mini": [
+    {
+      "h4": "Audio faili",
+      "p": "Ievelciet ierakstu līdz 10 minūtēm un saņemiet tekstu."
+    },
+    {
+      "h4": "Turiet vai pieskarieties",
+      "p": "Turiet Fn, lai runātu. Pieskarieties vienreiz brīvroku režīmam, vēlreiz, lai apturētu."
+    },
+    {
+      "h4": "Jūsu taustiņš",
+      "p": "Fn, labais Option, labais Command, labais Control vai F13 līdz F19."
+    },
+    {
+      "h4": "Vēsture",
+      "p": "Meklējama, lokāla, dzēšama. Pēdējo diktātu atkal ielīmēsiet ar vienu īsinājumtaustiņu."
+    }
+  ],
+  "perf": {
+    "eyebrow": "Veiktspēja",
+    "h2": "Vieglāka par cilni, ko aizmirsāt aizvērt.",
+    "ram": {
+      "h3": "RAM miera stāvoklī",
+      "p": "Modelis ielādējas, kad runājat, un atbrīvojas pēc 3 minūšu klusuma.",
+      "foot": "Hlas mērīts uz M1 Pro ar paslēptu lietotni. Ar ielādētu lokālo modeli tas izmanto aptuveni 1 GB. Konkurenta skaitlis no mūsu pašu salīdzinājuma."
+    },
+    "size": {
+      "h3": "Lietotnes izmērs",
+      "p": "Nativs Swift uz Mac, nativs Rust uz Windows. Bez Electron."
+    },
+    "speed": {
+      "h3": "Ātrāk, nekā paspēsiet to pārlasīt",
+      "speak": "Jūs runājat",
+      "writes": "Hlas raksta",
+      "p": "Lokālais modelis uz Apple Silicon, paātrināts ar Metal."
+    },
+    "fill": {
+      "h3": "Pildvārdi pazūd",
+      "html": "<s>Ee,</s> <span>atsūtiet man</span> <s>ehm</s> <span>gala versiju</span> <s>hmm</s> <span>līdz piektdienai.</span>",
+      "p": "Vilcināšanās skaņas, piemēram, ee, ehm un hmm, tiek noņemtas lokāli jebkurā režīmā."
+    },
+    "sym": {
+      "h3": "Pasakiet simbolu",
+      "p": "Izrunāti simboli un rindiņu pārnesumi darbojas angļu un čehu valodā. Labs funkcija.",
+      "morph": [
+        [
+          "at sign",
+          "@"
+        ],
+        [
+          "underscore",
+          "_"
+        ],
+        [
+          "new line",
+          "↵"
+        ],
+        [
+          "dot com",
+          ".com"
+        ]
+      ]
+    },
+    "priv": {
+      "h3": "Jūsu, nevis mūsu",
+      "items": [
+        "Bez konta",
+        "Bez telemetrijas",
+        "Atslēgas sistēmas atslēgu glabātuvē",
+        "Pirmkods GitHub"
+      ]
+    },
+    "apps": {
+      "h3": "Darbojas jebkurā lietotnē",
+      "p": "Ja tur var rakstīt, tur var arī diktēt."
+    }
+  },
+  "langs": {
+    "eyebrow": "Valodas",
+    "h2": "Radīts Prāgā valodām, ko lielās lietotnes atceras pēdējās.",
+    "points": [
+      {
+        "b": "ā č ē š",
+        "h4": "Pareiza interpunkcija",
+        "p": "Whisper large-v3 raksta garumzīmes, lielos burtus, komatus un jautājuma zīmes, nevis vienu garu rindu ar mazajiem burtiem."
+      },
+      {
+        "b": "EN",
+        "h4": "Jauciet valodas brīvi",
+        "p": "Piespraudiet izmantotās valodas vai ļaujiet Hlas pašam noteikt valodu. Angļu termini latviešu tekstā paliek neskarti."
+      },
+      {
+        "b": "Ab",
+        "h4": "Jūsu vārdi, jūsu pareizrakstība",
+        "p": "Vienreiz iemāciet Hlas vārdus un terminus vārdnīcā, un turpmāk tas tos rakstīs jūsu veidā."
+      }
+    ],
+    "note": "Vispirms tika pieskaņota čehu valoda. Latviešu valoda pagaidām darbojas ar Whisper large-v3 bez papildu pielāgošanas, tāpēc, ja latviešu valoda ir jūsu dzimtā, pastāstiet mums GitHub, kā tai veicas."
+  },
+  "pricing": {
+    "eyebrow": "Cenas",
+    "h2": "Bez maksas jūsu datorā.<br>35 € gadā, ja gribat bez rūpēm.",
+    "free": {
+      "name": "Hlas",
+      "forever": "uz visiem laikiem",
+      "sub": "Visa lietotne. Darbojas jūsu datorā vai ar jūsu API atslēgu.",
+      "items": [
+        "Lokāls Whisper modelis, darbojas bezsaistē",
+        "Vai sava atslēga: Groq, OpenAI, Soniox, Fish Audio",
+        "Vārdnīca, vēsture, teksta sakārtošana, audio faili",
+        "Mac un Windows"
+      ],
+      "cta": "Lejupielādēt bez maksas"
+    },
+    "cloud": {
+      "per": "gadā + PVN",
+      "sub": "Tie ir 2,92 € mēnesī, vismaz par 54 % mazāk nekā Superwhisper vai Wispr Flow. Neierobežota diktēšana caur mūsu API.",
+      "items": [
+        "Neierobežota diktēšana, nekādas API atslēgu iestatīšanas",
+        "Nav jālejupielādē 547 MB modelis",
+        "Modelis nekad netiek ielādēts jūsu RAM, saudzē akumulatoru",
+        "Ātrs arī vecākos un vājākos datoros"
+      ],
+      "cta": "Iepriekš pasūtīt par 35 € gadā",
+      "manage": "Jau abonējat? Rēķini un atcelšana",
+      "vat": "Patērētāji ES maksā 42,35 €, ieskaitot 21 % Čehijas PVN. ES uzņēmumi ar PVN numuru maksā 35 € apgrieztās maksāšanas kārtībā."
+    },
+    "yearly": {
+      "title": "Cik maksā gads diktēšanas",
+      "big": "Par 54 līdz 73 % lētāk nekā konkurenti",
+      "foot": "Gada plāni salīdzināti bez PVN, 2026. gada 14. novembrī: Superwhisper Pro 84,99 $ gadā, Wispr Flow Pro un Willow Pro 12 $ mēnesī, maksājot par gadu. Pārrēķināts pēc ECB 2026. gada 13. novembra kursa, 1 $ = 0,90481 €. Dažiem konkurentiem ir arī bezmaksas plāni vai vienreizējas licences, skatiet pilno salīdzinājumu."
+    },
+    "compareLink": "Pilns salīdzinājums, tostarp bezmaksas un vienreizēja pirkuma lietotnes"
+  },
+  "faq": {
+    "eyebrow": "Jautājumi",
+    "h2": "Pirms jautājat.",
+    "items": [
+      {
+        "q": "Vai bezmaksas versija tiešām ir bez maksas?",
+        "a": "Jā. Lokālais dzinējs darbojas jūsu datorā un neko nemaksā. Ja vēlaties mākoņa dzinēju, varat ievadīt savu API atslēgu un maksāt pakalpojuma sniedzējam tieši, parasti no viena līdz trim dolāriem mēnesī."
+      },
+      {
+        "q": "Vai Hlas darbojas bezsaistē?",
+        "a": "Jā. Ar lokālo dzinēju Whisper darbojas jūsu Mac un pēc vienreizējas 547 MB modeļa lejupielādes internets nav vajadzīgs."
+      },
+      {
+        "q": "Cik labi tas saprot latviski?",
+        "a": "Hlas izmanto Whisper large-v3, kas atbalsta latviešu valodu. Kvalitāte atšķiras atkarībā no valodas un izrunas, un latviešu valodu mēs vēl neesam papildus pielāgojuši, tāpēc izmēģiniet bezmaksas versiju ar savu balsi. Pievienojiet vārdus un terminus vārdnīcai, un Hlas tos rakstīs jūsu veidā."
+      },
+      {
+        "q": "Cik daudz RAM tas izmanto diktējot?",
+        "a": "Miera stāvoklī aptuveni 60 MB. Ar ielādētu lokālo modeli aptuveni 1 GB, un pēc 3 minūšu klusuma modelis tiek atbrīvots. Hlas Cloud modeli neielādē nemaz."
+      },
+      {
+        "q": "Vai tas darbojas uz Mac ar Intel?",
+        "a": "Nē. Mac lietotnei vajadzīgs Apple Silicon un macOS 15 vai jaunāka. Windows 10 un 11 uz x64 tiek atbalstīti beta versijā."
+      },
+      {
+        "q": "Vai varu diktēt uzvednes Claude Code, Cursor vai ChatGPT?",
+        "a": "Jā. Hlas raksta jebkurā lietotnē, kur var rakstīt, arī terminālos un koda redaktoros. Pievienojiet bibliotēku un funkciju nosaukumus vārdnīcai, lai tie būtu pareizi."
+      },
+      {
+        "q": "Kā darbojas rēķini un atcelšana?",
+        "a": "Pēc apmaksas Stripe jums e-pastā nosūtīs PVN rēķinu no Eden Makers s.r.o. ES uzņēmumi maksājot var norādīt savu PVN numuru. Karti nomainīsiet, rēķinus lejupielādēsiet vai abonementu atcelsiet klientu portālā; abonements tad darbojas līdz apmaksātā gada beigām."
+      },
+      {
+        "q": "Cik neierobežots ir neierobežots?",
+        "a": "Hlas Cloud nav minūšu skaitītāja un nav līmeņu. Lai cena paliktu 35 € gadā, godīga lietošana ir līdz 3 stundām diktēšanas dienā, un limits atjaunojas UTC pusnaktī."
+      },
+      {
+        "q": "Kur nonāk mans audio?",
+        "a": "Ar lokālo dzinēju nekur. Tas paliek jūsu datorā. Ar Hlas Cloud tas caur mūsu serveri nonāk pie Groq tikai pārrakstīšanai, un mūsu serveris to neglabā. Ar savu atslēgu tas nonāk tieši pie jūsu izvēlētā pakalpojuma sniedzēja."
+      }
+    ]
+  },
+  "final": {
+    "h2": "Beidziet rakstīt. Sāciet runāt.",
+    "p": "Divas minūtes no lejupielādes līdz pirmajam nodiktētajam teikumam.",
+    "dlMac": "Lejupielādēt Mac"
+  },
+  "footer": {
+    "made": "Prāgā radīja",
+    "and": "un",
+    "privacy": "Privātums",
+    "compare": "Salīdzinājums",
+    "faq": "BUJ",
+    "about": "Par mums",
+    "press": "Presei",
+    "changelog": "Jaunumi",
+    "languages": "Visas valodas",
+    "trust": "Versija 0.5.0 no 2026. gada 4. novembra. Mac lietotne ir parakstīta ar Apple Developer ID un notarizēta Apple."
+  },
+  "toast": {
+    "soon": "Hlas Cloud drīz sāks darbu. Pagaidām lejupielādējiet bezmaksas versiju."
+  },
+  "suggest": "Hlas ir pieejams arī latviski"
+}

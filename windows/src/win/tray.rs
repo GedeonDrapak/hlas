@@ -76,6 +76,7 @@ fn build_menu() -> Result<Items> {
     for engine in Engine::ALL {
         let label = match engine {
             Engine::Local => "On this PC (local)",
+            Engine::HlasCloud => "Hlas Cloud",
             Engine::Groq => "Groq cloud",
             Engine::OpenAI => "OpenAI cloud",
         };

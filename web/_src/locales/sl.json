@@ -1,0 +1,340 @@
+{
+  "code": "sl",
+  "langName": "Slovenščina",
+  "langNameEn": "Slovenian",
+  "dec": ",",
+  "meta": {
+    "kw": "narekovanje besedila Mac",
+    "title": "Hlas: narekovanje besedila v slovenščini, Mac in Windows",
+    "description": "Drži Fn, govori, spusti. Besedilo se pojavi tam, kjer je kazalec, v katerikoli aplikaciji. 4 MB, 60 MB RAM-a v mirovanju, deluje brez povezave. Brezplačno.",
+    "ogTitle": "Hlas: narekovanje za Mac in Windows, ki govori slovensko",
+    "ogDescription": "Drži Fn, govori, spusti. Aplikacija s 4 MB, 60 MB RAM-a v mirovanju, deluje brez povezave."
+  },
+  "nav": {
+    "features": "Funkcije",
+    "performance": "Zmogljivost",
+    "languages": "Jeziki",
+    "pricing": "Cenik",
+    "download": "Prenesi",
+    "language": "Jezik"
+  },
+  "hero": {
+    "badge": "Novo: Hlas Cloud, neomejeno za 35 € na leto",
+    "h1": "Narekovanje za Mac in Windows, ki govori slovensko.",
+    "sub": "Drži <kbd>Fn</kbd>, govori, spusti. Besedilo se pojavi tam, kjer je kazalec, v katerikoli aplikaciji. Aplikacija ima 4 MB in v mirovanju porabi 60 MB RAM-a.",
+    "dlMac": "Prenesi brezplačno za Mac",
+    "dlWin": "Windows (beta)",
+    "note": "Apple Silicon, macOS 15+ · 4 MB · Windows 10 in 11 v beti, namestitveni program še ni podpisan",
+    "privacy": "V lokalnem načinu ne potrebuješ računa in tvoj zvok nikoli ne zapusti računalnika."
+  },
+  "demo": {
+    "tabNotes": "Zapiski",
+    "idle": "Drži Fn in govori",
+    "busy": "Prepisujem",
+    "scenes": [
+      {
+        "ctx": [
+          [
+            "Nina",
+            "Kako kaže s predstavitvijo?"
+          ]
+        ],
+        "text": "Živjo Nina, predstavitev je končana. Zvečer pošljem končno različico v pregled."
+      },
+      {
+        "ctx": [
+          [
+            "Za",
+            "luka@studio.si"
+          ],
+          [
+            "Zadeva",
+            "Ponudba"
+          ]
+        ],
+        "text": "Pozdravljeni, Luka, hvala za sporočilo. Ponudbo vam pošljem jutri dopoldne."
+      },
+      {
+        "ctx": [
+          [
+            "Zapisek",
+            "danes 18:07"
+          ]
+        ],
+        "text": "Besni dirkač iz formule žuga cehu poštarjev. Vsaka strešica na svojem mestu."
+      }
+    ]
+  },
+  "stats": {
+    "app": "celotna aplikacija",
+    "ram": "RAM-a v mirovanju",
+    "speed": "za prepis 11 s govora",
+    "langs": "jezikov, tudi slovenščina"
+  },
+  "features": {
+    "eyebrow": "Kaj je v njej",
+    "h2": "Vse, kar potrebuješ, da nehaš tipkati.<br>Nič odvečnega.",
+    "offline": {
+      "chip": "Lokalni model teče",
+      "h3": "Deluje brez povezave",
+      "p": "Whisper teče neposredno na tvojem računalniku. Zvok ga nikoli ne zapusti.",
+      "strong": "Ni Wi-Fi-ja? Ni težav."
+    },
+    "vocab": {
+      "add": "Dodaj",
+      "h3": "Tvoj lasten slovar",
+      "p": "Imena, blagovne znamke in žargon. Povej Hlasu, kako jih sliši narobe.",
+      "strong": "Od takrat jih piše pravilno.",
+      "items": [
+        [
+          "Kubernetes",
+          "sliši: kubernetis"
+        ],
+        [
+          "Figma",
+          "sliši: fig ma"
+        ],
+        [
+          "EBITDA",
+          "sliši: ebit da"
+        ]
+      ],
+      "cycle": [
+        [
+          "Notion",
+          "sliši: noušn"
+        ],
+        [
+          "Salesforce",
+          "sliši: sejlsfors"
+        ],
+        [
+          "Kubernetes",
+          "sliši: kubernetis"
+        ],
+        [
+          "Figma",
+          "sliši: fig ma"
+        ],
+        [
+          "EBITDA",
+          "sliši: ebit da"
+        ]
+      ]
+    },
+    "smart": {
+      "h3": "Pametno besedilo",
+      "p": "Iz razvlečenega govora naredi urejene odstavke ali sezname, glede na to, kar si mislil.",
+      "strong": "Izvirnik vedno ostane v Zgodovini.",
+      "raw": "ee torej jutri moram kupiti mleko in potem še kruh in ehm poklicati Majo",
+      "title": "Jutri",
+      "out": [
+        "kupiti mleko",
+        "kupiti kruh",
+        "poklicati Majo"
+      ]
+    },
+    "langs": {
+      "h3": "Govori slovensko",
+      "p": "Whisper large-v3 piše slovensko z ločili in velikimi začetnicami tam, kjer sodijo.",
+      "strong": "In še več kot 60 drugih jezikov."
+    }
+  },
+  "mini": [
+    {
+      "h4": "Zvočne datoteke",
+      "p": "Povleci vanjo posnetek do 10 minut in dobiš besedilo."
+    },
+    {
+      "h4": "Drži ali tapni",
+      "p": "Drži Fn in govori. Tapni enkrat za prostoročno, tapni znova za konec."
+    },
+    {
+      "h4": "Tvoja tipka",
+      "p": "Fn, desni Option, desni Command, desni Control ali F13 do F19."
+    },
+    {
+      "h4": "Zgodovina",
+      "p": "Iskalna, lokalna, izbrisljiva. Zadnji narek znova prilepiš z eno bližnjico."
+    }
+  ],
+  "perf": {
+    "eyebrow": "Zmogljivost",
+    "h2": "Lažja od zavihka, ki si ga pozabil zapreti.",
+    "ram": {
+      "h3": "RAM-a v mirovanju",
+      "p": "Model se naloži, ko govoriš, in sprosti po 3 minutah tišine.",
+      "foot": "Hlas izmerjen na M1 Pro s skrito aplikacijo. Z naloženim lokalnim modelom porabi približno 1 GB. Podatek za konkurenco iz naše lastne primerjave."
+    },
+    "size": {
+      "h3": "Velikost aplikacije",
+      "p": "Nativni Swift na Macu, nativni Rust na Windowsih. Brez Electrona."
+    },
+    "speed": {
+      "h3": "Hitreje, kot to utegneš prebrati",
+      "speak": "Ti govoriš",
+      "writes": "Hlas piše",
+      "p": "Lokalni model na Apple Silicon, pospešen z Metal."
+    },
+    "fill": {
+      "h3": "Mašila izginejo",
+      "html": "<s>Ee,</s> <span>pošlji mi</span> <s>ehm</s> <span>končno različico</span> <s>hmm</s> <span>do petka.</span>",
+      "p": "Zvoki obotavljanja, kot so ee, ehm in hmm, se odstranijo lokalno, v vsakem načinu."
+    },
+    "sym": {
+      "h3": "Izgovori simbol",
+      "p": "Izgovorjeni simboli in prelomi vrstic delujejo v angleščini in češčini. Funkcija iz Labs.",
+      "morph": [
+        [
+          "at sign",
+          "@"
+        ],
+        [
+          "underscore",
+          "_"
+        ],
+        [
+          "new line",
+          "↵"
+        ],
+        [
+          "dot com",
+          ".com"
+        ]
+      ]
+    },
+    "priv": {
+      "h3": "Tvoje, ne naše",
+      "items": [
+        "Brez računa",
+        "Brez telemetrije",
+        "Ključi v sistemski verigi ključev",
+        "Izvorna koda na GitHubu"
+      ]
+    },
+    "apps": {
+      "h3": "Deluje v vsaki aplikaciji",
+      "p": "Kjer lahko tipkaš, lahko tudi narekuješ."
+    }
+  },
+  "langs": {
+    "eyebrow": "Jeziki",
+    "h2": "Narejeno v Pragi za jezike, na katere velike aplikacije pomislijo nazadnje.",
+    "points": [
+      {
+        "b": "č š ž",
+        "h4": "Ločila, kot je treba",
+        "p": "Whisper large-v3 piše strešice, velike začetnice, vejice in vprašaje, ne pa ene dolge vrstice z malimi črkami."
+      },
+      {
+        "b": "EN",
+        "h4": "Svobodno mešaj jezike",
+        "p": "Pripni jezike, ki jih uporabljaš, ali pa naj Hlas sam prepozna jezik. Angleški izrazi sredi slovenščine ostanejo nedotaknjeni."
+      },
+      {
+        "b": "Ab",
+        "h4": "Tvoje besede, tvoj zapis",
+        "p": "Enkrat nauči Hlas imena in strokovne izraze v slovarju in od takrat jih piše po tvoje."
+      }
+    ],
+    "note": "Češčina je bila uglašena prva. Slovenščina zaenkrat teče na Whisper large-v3 brez dodatnega uglaševanja, zato nam, če ti je slovenščina materni jezik, na GitHubu povej, kako se obnese."
+  },
+  "pricing": {
+    "eyebrow": "Cenik",
+    "h2": "Brezplačno na tvojem računalniku.<br>35 € na leto, če želiš brez skrbi.",
+    "free": {
+      "name": "Hlas",
+      "forever": "za vedno",
+      "sub": "Celotna aplikacija. Teče na tvojem računalniku ali s tvojim lastnim API ključem.",
+      "items": [
+        "Lokalni model Whisper, deluje brez povezave",
+        "Ali lasten ključ: Groq, OpenAI, Soniox, Fish Audio",
+        "Slovar, zgodovina, čiščenje besedila, zvočne datoteke",
+        "Mac in Windows"
+      ],
+      "cta": "Prenesi brezplačno"
+    },
+    "cloud": {
+      "per": "na leto + DDV",
+      "sub": "To je 2,92 € na mesec, vsaj 54 % manj kot Superwhisper ali Wispr Flow. Neomejeno narekovanje prek našega API-ja.",
+      "items": [
+        "Neomejeno narekovanje, brez nastavljanja API ključev",
+        "Brez prenosa 547 MB velikega modela",
+        "Model se nikoli ne naloži v tvoj RAM, varčuje z baterijo",
+        "Hitro tudi na starejših in šibkejših računalnikih"
+      ],
+      "cta": "Prednaroči za 35 € na leto",
+      "manage": "Si že naročnik? Računi in preklic",
+      "vat": "Potrošniki v EU plačajo 42,35 € z vključenim 21 % češkim DDV. Podjetja iz EU z ID za DDV plačajo 35 € po sistemu obrnjene davčne obveznosti."
+    },
+    "yearly": {
+      "title": "Koliko stane leto narekovanja",
+      "big": "Od 54 do 73 % ceneje od konkurence",
+      "foot": "Letni paketi primerjani brez DDV, stanje na dan 14. novembra 2026: Superwhisper Pro 84,99 $ na leto, Wispr Flow Pro in Willow Pro 12 $ na mesec pri letnem plačilu. Preračunano po tečaju ECB z dne 13. novembra 2026, 1 $ = 0,90481 €. Nekateri konkurenti imajo tudi brezplačne pakete ali enkratne licence, glej celotno primerjavo."
+    },
+    "compareLink": "Celotna primerjava, vključno z brezplačnimi in enkratnimi aplikacijami"
+  },
+  "faq": {
+    "eyebrow": "Vprašanja",
+    "h2": "Preden vprašaš.",
+    "items": [
+      {
+        "q": "Je brezplačna različica res brezplačna?",
+        "a": "Da. Lokalni pogon teče na tvojem računalniku in ne stane nič. Če ti je ljubši pogon v oblaku, lahko vneseš lasten API ključ in plačuješ neposredno ponudniku, običajno en do tri dolarje na mesec."
+      },
+      {
+        "q": "Ali Hlas deluje brez povezave?",
+        "a": "Da. Z lokalnim pogonom Whisper teče na tvojem Macu in po enkratnem prenosu 547 MB velikega modela ne potrebuje interneta."
+      },
+      {
+        "q": "Kako dobro razume slovensko?",
+        "a": "Hlas uporablja Whisper large-v3, ki podpira slovenščino. Kakovost se razlikuje glede na jezik in naglas, slovenščine pa še nismo dodatno uglasili, zato preizkusi brezplačno različico s svojim glasom. Dodaj imena in strokovne izraze v slovar in Hlas jih bo pisal po tvoje."
+      },
+      {
+        "q": "Koliko RAM-a porabi med narekovanjem?",
+        "a": "V mirovanju približno 60 MB. Z naloženim lokalnim modelom približno 1 GB, po 3 minutah tišine pa se model sprosti. Hlas Cloud modela sploh ne nalaga."
+      },
+      {
+        "q": "Ali deluje na Macu s procesorjem Intel?",
+        "a": "Ne. Aplikacija za Mac potrebuje Apple Silicon in macOS 15 ali novejši. Windows 10 in 11 na x64 sta podprta v beti."
+      },
+      {
+        "q": "Lahko narekujem pozive v Claude Code, Cursor ali ChatGPT?",
+        "a": "Da. Hlas piše v vsako aplikacijo, kjer lahko tipkaš, tudi v terminale in urejevalnike kode. Imena knjižnic in funkcij dodaj v slovar, da bodo zapisana pravilno."
+      },
+      {
+        "q": "Kako delujejo računi in preklic?",
+        "a": "Po plačilu ti Stripe po e-pošti pošlje račun z DDV, ki ga izda Eden Makers s.r.o. Podjetja iz EU lahko pri plačilu vnesejo svoj ID za DDV. Kartico zamenjaš, račune preneseš ali naročnino prekličeš v portalu za stranke; naročnina nato velja do konca plačanega leta."
+      },
+      {
+        "q": "Kako neomejeno je neomejeno?",
+        "a": "Hlas Cloud nima števca minut ne paketov. Da cena lahko ostane 35 € na leto, poštena raba pomeni do 3 ure narekovanja na dan, omejitev pa se ponastavi ob polnoči po UTC."
+      },
+      {
+        "q": "Kam gre moj zvok?",
+        "a": "Z lokalnim pogonom nikamor. Ostane na tvojem računalniku. S Hlas Cloud gre prek našega strežnika do Groqa samo za prepis, naš strežnik pa ga ne shranjuje. Z lastnim ključem gre neposredno k ponudniku, ki si ga izbral."
+      }
+    ]
+  },
+  "final": {
+    "h2": "Nehaj tipkati. Začni govoriti.",
+    "p": "Dve minuti od prenosa do tvojega prvega narekovanega stavka.",
+    "dlMac": "Prenesi za Mac"
+  },
+  "footer": {
+    "made": "V Pragi so ustvarili",
+    "and": "in",
+    "privacy": "Zasebnost",
+    "compare": "Primerjava",
+    "faq": "Pogosta vprašanja",
+    "about": "O nas",
+    "press": "Za medije",
+    "changelog": "Novosti",
+    "languages": "Vsi jeziki",
+    "trust": "Različica 0.5.0 z dne 4. novembra 2026. Aplikacija za Mac je podpisana z Apple Developer ID in overjena pri Applu."
+  },
+  "toast": {
+    "soon": "Hlas Cloud kmalu zaženemo. Do takrat prenesi brezplačno različico."
+  },
+  "suggest": "Hlas je na voljo tudi v slovenščini"
+}

@@ -1,0 +1,340 @@
+{
+  "code": "sr",
+  "langName": "Srpski",
+  "langNameEn": "Serbian",
+  "dec": ",",
+  "meta": {
+    "title": "Hlas: diktiranje na srpskom za Mac i Windows, i oflajn",
+    "description": "Drži Fn, pričaj, pusti. Tekst se pojavljuje tamo gde je kursor, u bilo kojoj aplikaciji. 4 MB, 60 MB RAM u mirovanju, Whisper oflajn. Besplatno.",
+    "ogTitle": "Hlas: diktiranje za Mac i Windows koje govori srpski",
+    "ogDescription": "Drži Fn, pričaj, pusti. Aplikacija od 4 MB, 60 MB RAM u mirovanju, radi oflajn.",
+    "kw": "diktiranje na srpskom na Macu"
+  },
+  "nav": {
+    "features": "Funkcije",
+    "performance": "Performanse",
+    "languages": "Jezici",
+    "pricing": "Cene",
+    "download": "Preuzmi",
+    "language": "Jezik"
+  },
+  "hero": {
+    "badge": "Novo: Hlas Cloud bez ograničenja za 35 € godišnje",
+    "h1": "Diktiranje za Mac i Windows koje govori srpski.",
+    "sub": "Drži <kbd>Fn</kbd>, pričaj, pusti. Tekst se pojavljuje tamo gde ti je kursor, u bilo kojoj aplikaciji. Aplikacija ima 4 MB i u mirovanju troši 60 MB RAM-a.",
+    "dlMac": "Preuzmi besplatno za Mac",
+    "dlWin": "Windows (beta)",
+    "note": "Apple Silicon, macOS 15+ · 4 MB · Windows 10 i 11 u beti, instaler još nije potpisan",
+    "privacy": "U lokalnom režimu ne treba ti nalog i tvoj glas nikad ne napušta računar."
+  },
+  "demo": {
+    "tabNotes": "Beleške",
+    "idle": "Drži Fn i pričaj",
+    "busy": "Prepisujem",
+    "scenes": [
+      {
+        "ctx": [
+          [
+            "Jelena",
+            "Kako napreduje prezentacija?"
+          ]
+        ],
+        "text": "Ćao Jelena, prezentacija je gotova. Večeras ti šaljem finalnu verziju na odobrenje."
+      },
+      {
+        "ctx": [
+          [
+            "Za",
+            "marko@studio.rs"
+          ],
+          [
+            "Tema",
+            "Ponuda"
+          ]
+        ],
+        "text": "Poštovani, hvala na poruci. Ponudu ću vam poslati sutra pre podne."
+      },
+      {
+        "ctx": [
+          [
+            "Beleška",
+            "danas 18:07"
+          ]
+        ],
+        "text": "Fijuče vetar u šiblju, ledi pasaže i kuće iza njih i gunđa u odžacima. Svako č, ć, đ i ž na svom mestu."
+      }
+    ]
+  },
+  "stats": {
+    "app": "cela aplikacija",
+    "ram": "RAM u mirovanju",
+    "speed": "za prepis 11 s govora",
+    "langs": "jezika, uključujući srpski"
+  },
+  "features": {
+    "eyebrow": "Šta je unutra",
+    "h2": "Sve što ti treba da prestaneš da kucaš.<br>Ništa suvišno.",
+    "offline": {
+      "chip": "Lokalni model radi",
+      "h3": "Radi oflajn",
+      "p": "Whisper radi direktno na tvom računaru. Zvuk ga nikad ne napušta.",
+      "strong": "Nema Wi-Fi-ja? Nema problema."
+    },
+    "vocab": {
+      "add": "Dodaj",
+      "h3": "Tvoj rečnik",
+      "p": "Imena, brendovi i žargon. Reci Hlasu kako ih pogrešno čuje.",
+      "strong": "Od tada ih piše tačno.",
+      "items": [
+        [
+          "GitHub",
+          "čuje: githab"
+        ],
+        [
+          "Notion",
+          "čuje: noušn"
+        ],
+        [
+          "EBITDA",
+          "čuje: ebitda"
+        ]
+      ],
+      "cycle": [
+        [
+          "Kubernetes",
+          "čuje: kubernetis"
+        ],
+        [
+          "Jira",
+          "čuje: džira"
+        ],
+        [
+          "GitHub",
+          "čuje: githab"
+        ],
+        [
+          "Notion",
+          "čuje: noušn"
+        ],
+        [
+          "EBITDA",
+          "čuje: ebitda"
+        ]
+      ]
+    },
+    "smart": {
+      "h3": "Pametan tekst",
+      "p": "Od nabacanih misli pravi čiste pasuse ili liste, u zavisnosti od toga šta si mislio.",
+      "strong": "Original uvek ostaje u Istoriji.",
+      "raw": "ovaj znači sutra treba da kupim mleko i onda i hleb i hmm da pozovem Jelenu",
+      "title": "Sutra",
+      "out": [
+        "kupiti mleko",
+        "kupiti hleb",
+        "pozvati Jelenu"
+      ]
+    },
+    "langs": {
+      "h3": "Govori srpski",
+      "p": "Whisper large-v3 piše srpski sa interpunkcijom i velikim slovima tamo gde treba.",
+      "strong": "Plus još 60+ jezika."
+    }
+  },
+  "mini": [
+    {
+      "h4": "Audio fajlovi",
+      "p": "Ubaci snimak do 10 minuta i dobij tekst."
+    },
+    {
+      "h4": "Drži ili kucni",
+      "p": "Drži Fn da pričaš. Kucni jednom za slobodne ruke, još jednom da zaustaviš."
+    },
+    {
+      "h4": "Tvoj taster",
+      "p": "Fn, desni Option, desni Command, desni Control ili F13 do F19."
+    },
+    {
+      "h4": "Istorija",
+      "p": "Pretraživa, lokalna, može da se obriše. Poslednje diktiranje ponovo nalepiš jednom prečicom."
+    }
+  ],
+  "perf": {
+    "eyebrow": "Performanse",
+    "h2": "Lakši od taba koji si zaboravio da zatvoriš.",
+    "ram": {
+      "h3": "RAM u mirovanju",
+      "p": "Model se učitava kad pričaš i oslobađa se posle 3 minuta tišine.",
+      "foot": "Hlas izmeren na M1 Pro sa skrivenom aplikacijom. Sa učitanim lokalnim modelom troši oko 1 GB. Podatak o konkurenciji iz našeg sopstvenog poređenja."
+    },
+    "size": {
+      "h3": "Veličina aplikacije",
+      "p": "Nativni Swift na Macu, nativni Rust na Windowsu. Bez Electrona."
+    },
+    "speed": {
+      "h3": "Brže nego što stigneš da pročitaš",
+      "speak": "Ti pričaš",
+      "writes": "Hlas piše",
+      "p": "Lokalni model na Apple Siliconu, ubrzan preko Metala."
+    },
+    "fill": {
+      "h3": "Poštapalice nestaju",
+      "html": "<s>Ee,</s> <span>pošalji mi</span> <s>hmm</s> <span>finalnu verziju</span> <s>mm</s> <span>do petka.</span>",
+      "p": "Oklevanja poput ee, hmm i mm uklanjaju se lokalno, u svakom režimu."
+    },
+    "sym": {
+      "h3": "Izgovori simbol",
+      "p": "Izgovoreni simboli i novi redovi, na engleskom i češkom. Funkcija iz Labs.",
+      "morph": [
+        [
+          "at sign",
+          "@"
+        ],
+        [
+          "underscore",
+          "_"
+        ],
+        [
+          "new line",
+          "↵"
+        ],
+        [
+          "dot com",
+          ".com"
+        ]
+      ]
+    },
+    "priv": {
+      "h3": "Tvoje, ne naše",
+      "items": [
+        "Bez naloga",
+        "Bez telemetrije",
+        "Ključevi u sistemskom keychainu",
+        "Izvorni kod na GitHubu"
+      ]
+    },
+    "apps": {
+      "h3": "Radi u svakoj aplikaciji",
+      "p": "Gde možeš da kucaš, tu možeš i da diktiraš."
+    }
+  },
+  "langs": {
+    "eyebrow": "Jezici",
+    "h2": "Napravljeno u Pragu za jezike kojih se velike aplikacije sete poslednjih.",
+    "points": [
+      {
+        "b": "č ć đ",
+        "h4": "Interpunkcija kako treba",
+        "p": "Whisper large-v3 piše velika slova, zareze i upitnike, a ne jedan dugačak red malim slovima."
+      },
+      {
+        "b": "EN",
+        "h4": "Slobodno mešaj jezike",
+        "p": "Zakači jezike koje koristiš ili ostavi Hlas na automatskom prepoznavanju. Engleski termini u srpskoj rečenici ostaju netaknuti."
+      },
+      {
+        "b": "Ab",
+        "h4": "Tvoje reči, tvoj pravopis",
+        "p": "Nauči Hlas imena i žargon jednom u rečniku i od tada ih piše kako ti želiš."
+      }
+    ],
+    "note": "Prvo smo podesili češki. Srpski za sada radi na Whisper large-v3, bez dodatnog podešavanja. Ako ti je srpski maternji, javi nam na GitHubu kako se snalazi."
+  },
+  "pricing": {
+    "eyebrow": "Cene",
+    "h2": "Besplatno na tvom računaru.<br>35 € godišnje ako želiš bez muke.",
+    "free": {
+      "name": "Hlas",
+      "forever": "zauvek",
+      "sub": "Cela aplikacija. Radi na tvom računaru ili sa tvojim API ključem.",
+      "items": [
+        "Lokalni Whisper model, radi oflajn",
+        "Ili tvoj ključ: Groq, OpenAI, Soniox, Fish Audio",
+        "Rečnik, istorija, čišćenje teksta, audio fajlovi",
+        "Mac i Windows"
+      ],
+      "cta": "Preuzmi besplatno"
+    },
+    "cloud": {
+      "per": "godišnje + PDV",
+      "sub": "To je 2,92 € mesečno, najmanje 54% manje od Superwhisper-a ili Wispr Flow-a. Neograničeno diktiranje preko našeg API-ja.",
+      "items": [
+        "Neograničeno diktiranje, bez podešavanja API ključeva",
+        "Bez preuzimanja modela od 547 MB",
+        "Model se nikad ne učitava u RAM, štedi bateriju",
+        "Brzo i na starijim i slabijim računarima"
+      ],
+      "cta": "Poruči za 35 € godišnje",
+      "manage": "Već si pretplaćen? Računi i otkazivanje",
+      "vat": "Potrošači u EU plaćaju 42,35 € sa uključenim češkim PDV-om od 21%. Firme iz EU sa PDV brojem plaćaju 35 € po principu obrnutog obračuna."
+    },
+    "yearly": {
+      "title": "Koliko košta godina diktiranja",
+      "big": "Od 54 do 73% jeftinije od konkurencije",
+      "foot": "Godišnji planovi bez PDV-a, stanje na dan 14. novembra 2026.: Superwhisper Pro 84,99 $ godišnje, Wispr Flow Pro i Willow Pro 12 $ mesečno uz godišnje plaćanje. Preračunato po kursu ECB od 13. novembra 2026., 1 $ = 0,90481 €. Deo konkurencije ima i besplatne planove ili jednokratne licence, pogledaj celo poređenje."
+    },
+    "compareLink": "Celo poređenje, uključujući besplatne aplikacije i jednokratne licence"
+  },
+  "faq": {
+    "eyebrow": "Pitanja",
+    "h2": "Pre nego što pitaš.",
+    "items": [
+      {
+        "q": "Da li je besplatna verzija stvarno besplatna?",
+        "a": "Da. Lokalni engine radi na tvom računaru i ne košta ništa. Ako ti više odgovara engine u oblaku, ubaciš svoj API ključ i plaćaš direktno provajderu, obično jedan do tri dolara mesečno."
+      },
+      {
+        "q": "Da li Hlas radi oflajn?",
+        "a": "Da. Sa lokalnim engineom Whisper radi na tvom Macu i posle jednokratnog preuzimanja modela (547 MB) ne treba mu internet."
+      },
+      {
+        "q": "Koliko dobro razume srpski?",
+        "a": "Hlas koristi Whisper large-v3, koji podržava srpski. Kvalitet zavisi od jezika i akcenta, a srpski još nismo dodatno podešavali, pa ga najbolje isprobaj u besplatnoj verziji. Imena i žargon dodaj u rečnik i Hlas će ih pisati kako ti želiš."
+      },
+      {
+        "q": "Koliko RAM-a troši dok diktiram?",
+        "a": "Oko 60 MB u mirovanju. Sa učitanim lokalnim modelom oko 1 GB, a posle 3 minuta tišine model se oslobađa. Hlas Cloud uopšte ne učitava model."
+      },
+      {
+        "q": "Da li radi na Macu sa Intel procesorom?",
+        "a": "Ne. Aplikaciji za Mac treba Apple Silicon i macOS 15 ili noviji. Windows 10 i 11 na x64 podržani su u beti."
+      },
+      {
+        "q": "Mogu li da diktiram promptove u Claude Code, Cursor ili ChatGPT?",
+        "a": "Da. Hlas kuca u svakoj aplikaciji u kojoj se može kucati, uključujući terminale i editore koda. Dodaj nazive biblioteka i funkcija u rečnik da bi izlazili tačno."
+      },
+      {
+        "q": "Kako funkcionišu računi i otkazivanje?",
+        "a": "Posle plaćanja Stripe ti mejlom šalje račun sa PDV-om od Eden Makers s.r.o. Firme iz EU mogu pri plaćanju da unesu PDV broj. Karticu, račune i otkazivanje menjaš u korisničkom portalu, a pretplata traje do kraja plaćene godine."
+      },
+      {
+        "q": "Koliko je neograničeno zaista neograničeno?",
+        "a": "Hlas Cloud nema brojač minuta ni nivoe. Da bi cena ostala 35 € godišnje, fer korišćenje znači do 3 sata diktiranja dnevno, a limit se resetuje u ponoć po UTC."
+      },
+      {
+        "q": "Gde ide moj glas?",
+        "a": "Sa lokalnim engineom nigde, ostaje na tvom računaru. Sa Hlas Cloud ide preko našeg servera do Groq-a samo radi prepisa i naš server ga ne čuva. Sa tvojim ključem ide pravo do provajdera koga si izabrao."
+      }
+    ]
+  },
+  "final": {
+    "h2": "Prestani da kucaš. Počni da pričaš.",
+    "p": "Dva minuta od preuzimanja do prve izdiktirane rečenice.",
+    "dlMac": "Preuzmi za Mac"
+  },
+  "footer": {
+    "made": "Napravili u Pragu",
+    "and": "i",
+    "privacy": "Privatnost",
+    "compare": "Poređenje",
+    "faq": "Pitanja",
+    "about": "O nama",
+    "press": "Za medije",
+    "changelog": "Novosti",
+    "languages": "Svi jezici",
+    "trust": "Verzija 0.5.0 od 4. novembra 2026. Aplikacija za Mac je potpisana Apple Developer ID-jem i notarizovana od strane Apple-a."
+  },
+  "toast": {
+    "soon": "Hlas Cloud uskoro kreće. Do tada preuzmi besplatnu verziju."
+  },
+  "suggest": "Hlas je dostupan i na srpskom"
+}

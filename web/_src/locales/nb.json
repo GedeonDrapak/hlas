@@ -1,0 +1,340 @@
+{
+  "code": "nb",
+  "langName": "Norsk bokmål",
+  "langNameEn": "Norwegian Bokmål",
+  "dec": ",",
+  "meta": {
+    "kw": "tale til tekst Mac",
+    "title": "Hlas: tale til tekst på norsk for Mac og Windows",
+    "description": "Hold inne Fn, snakk, slipp. Teksten havner der markøren står, i alle apper. 4 MB, 60 MB RAM i ro, virker offline. Gratis, eller Hlas Cloud for 35 € i året.",
+    "ogTitle": "Hlas: diktering for Mac og Windows som snakker norsk",
+    "ogDescription": "Hold inne Fn, snakk, slipp. 4 MB app, 60 MB RAM i ro, virker offline."
+  },
+  "nav": {
+    "features": "Funksjoner",
+    "performance": "Ytelse",
+    "languages": "Språk",
+    "pricing": "Priser",
+    "download": "Last ned",
+    "language": "Språk"
+  },
+  "hero": {
+    "badge": "Nyhet: Hlas Cloud, ubegrenset for 35 € i året",
+    "h1": "Diktering for Mac og Windows som snakker norsk.",
+    "sub": "Hold inne <kbd>Fn</kbd>, snakk, slipp. Teksten havner der markøren står, i hvilken som helst app. Appen er på 4 MB og bruker 60 MB RAM i ro.",
+    "dlMac": "Last ned gratis for Mac",
+    "dlWin": "Windows (beta)",
+    "note": "Apple Silicon, macOS 15+ · 4 MB · Windows 10 og 11 i beta, installasjonsfilen er ikke signert ennå",
+    "privacy": "I lokal modus trenger du ingen konto, og lyden din forlater aldri datamaskinen."
+  },
+  "demo": {
+    "tabNotes": "Notater",
+    "idle": "Hold inne Fn og snakk",
+    "busy": "Skriver ut",
+    "scenes": [
+      {
+        "ctx": [
+          [
+            "Ingrid",
+            "Hvordan går det med presentasjonen?"
+          ]
+        ],
+        "text": "Hei Ingrid, presentasjonen er ferdig. Jeg sender den endelige versjonen til gjennomlesing i kveld."
+      },
+      {
+        "ctx": [
+          [
+            "Til",
+            "lars@studio.no"
+          ],
+          [
+            "Emne",
+            "Tilbud"
+          ]
+        ],
+        "text": "Hei Lars, takk for meldingen. Jeg sender deg tilbudet i morgen formiddag."
+      },
+      {
+        "ctx": [
+          [
+            "Notat",
+            "i dag 18:07"
+          ]
+        ],
+        "text": "Vår sære Zulu fra badeøya spilte jo whist og quickstep i min taxi. Hver æ, ø og å på plass."
+      }
+    ]
+  },
+  "stats": {
+    "app": "hele appen",
+    "ram": "RAM i ro",
+    "speed": "for å skrive ut 11 s tale",
+    "langs": "språk, norsk inkludert"
+  },
+  "features": {
+    "eyebrow": "Dette får du",
+    "h2": "Alt du trenger for å slutte å taste.<br>Ingenting du ikke trenger.",
+    "offline": {
+      "chip": "Lokal modell kjører",
+      "h3": "Virker offline",
+      "p": "Whisper kjører rett på maskinen din. Lyden forlater den aldri.",
+      "strong": "Ingen wifi? Ikke noe problem."
+    },
+    "vocab": {
+      "add": "Legg til",
+      "h3": "Din egen ordliste",
+      "p": "Navn, merkevarer og fagsjargong. Fortell Hlas hvordan den hører dem feil.",
+      "strong": "Etter det blir de riktige hver gang.",
+      "items": [
+        [
+          "Kubernetes",
+          "hører: kuber nettis"
+        ],
+        [
+          "Figma",
+          "hører: fikk ma"
+        ],
+        [
+          "EBITDA",
+          "hører: e bitt da"
+        ]
+      ],
+      "cycle": [
+        [
+          "Notion",
+          "hører: nåsjen"
+        ],
+        [
+          "Salesforce",
+          "hører: seils fors"
+        ],
+        [
+          "Kubernetes",
+          "hører: kuber nettis"
+        ],
+        [
+          "Figma",
+          "hører: fikk ma"
+        ],
+        [
+          "EBITDA",
+          "hører: e bitt da"
+        ]
+      ]
+    },
+    "smart": {
+      "h3": "Smart tekst",
+      "p": "Gjør løst prat om til ryddige avsnitt eller lister, ut fra hva du mente.",
+      "strong": "Originalen ligger alltid i Historikk.",
+      "raw": "eh så i morgen må jeg kjøpe melk og så brød også og ehm ringe Kari",
+      "title": "I morgen",
+      "out": [
+        "kjøpe melk",
+        "kjøpe brød",
+        "ringe Kari"
+      ]
+    },
+    "langs": {
+      "h3": "Snakker norsk",
+      "p": "Whisper large-v3 skriver norsk med tegnsetting og store bokstaver der de hører hjemme.",
+      "strong": "Pluss 60+ andre språk."
+    }
+  },
+  "mini": [
+    {
+      "h4": "Lydfiler",
+      "p": "Slipp inn et opptak på opptil 10 minutter og få teksten."
+    },
+    {
+      "h4": "Hold eller trykk",
+      "p": "Hold inne Fn for å snakke. Trykk én gang for håndfri, trykk igjen for å stoppe."
+    },
+    {
+      "h4": "Din hurtigtast",
+      "p": "Fn, høyre Option, høyre Command, høyre Control eller F13 til F19."
+    },
+    {
+      "h4": "Historikk",
+      "p": "Søkbar, lokal og kan tømmes. Lim inn den siste dikteringen på nytt med én snarvei."
+    }
+  ],
+  "perf": {
+    "eyebrow": "Ytelse",
+    "h2": "Lettere enn fanen du glemte å lukke.",
+    "ram": {
+      "h3": "RAM i ro",
+      "p": "Modellen lastes når du snakker, og frigjøres etter 3 minutter med stillhet.",
+      "foot": "Hlas målt på en M1 Pro med appen skjult. Med den lokale modellen lastet bruker den rundt 1 GB. Konkurrentens tall er fra vår egen sammenligning."
+    },
+    "size": {
+      "h3": "Appstørrelse",
+      "p": "Native Swift på Mac, native Rust på Windows. Ingen Electron."
+    },
+    "speed": {
+      "h3": "Raskere enn du rekker å lese gjennom",
+      "speak": "Du snakker",
+      "writes": "Hlas skriver",
+      "p": "Lokal modell på Apple Silicon, akselerert med Metal."
+    },
+    "fill": {
+      "h3": "Fyllord forsvinner",
+      "html": "<s>Eh,</s> <span>send meg</span> <s>ehm</s> <span>den endelige versjonen</span> <s>hmm</s> <span>innen fredag.</span>",
+      "p": "Nølelyder som eh, ehm og hmm fjernes lokalt, i alle moduser."
+    },
+    "sym": {
+      "h3": "Si symbolet",
+      "p": "Uttalte symboler og linjeskift virker på engelsk og tsjekkisk. En funksjon fra Labs.",
+      "morph": [
+        [
+          "at sign",
+          "@"
+        ],
+        [
+          "underscore",
+          "_"
+        ],
+        [
+          "new line",
+          "↵"
+        ],
+        [
+          "dot com",
+          ".com"
+        ]
+      ]
+    },
+    "priv": {
+      "h3": "Ditt, ikke vårt",
+      "items": [
+        "Ingen konto",
+        "Ingen telemetri",
+        "Nøkler i systemets nøkkelring",
+        "Kildekoden på GitHub"
+      ]
+    },
+    "apps": {
+      "h3": "Virker i alle apper",
+      "p": "Kan du skrive der, kan du diktere der."
+    }
+  },
+  "langs": {
+    "eyebrow": "Språk",
+    "h2": "Bygget i Praha for språk de store appene tenker på til slutt.",
+    "points": [
+      {
+        "b": "æ ø å",
+        "h4": "Tegnsetting som sitter",
+        "p": "Whisper large-v3 skriver æ, ø og å, store bokstaver, komma og spørsmålstegn, ikke én lang linje med små bokstaver."
+      },
+      {
+        "b": "EN",
+        "h4": "Bland språk fritt",
+        "p": "Lås språkene du bruker, eller la Hlas finne språket selv. Engelske uttrykk midt i norsken forblir intakte."
+      },
+      {
+        "b": "Ab",
+        "h4": "Dine ord, din stavemåte",
+        "p": "Lær Hlas navn og fagord én gang i ordlisten, så skriver den dem på din måte fra da av."
+      }
+    ],
+    "note": "Tsjekkisk ble finjustert først. Norsk kjører på Whisper large-v3 uten ekstra finjustering foreløpig, så har du norsk som morsmål, si gjerne fra på GitHub hvordan det fungerer."
+  },
+  "pricing": {
+    "eyebrow": "Priser",
+    "h2": "Gratis på din egen maskin.<br>35 € i året hvis du vil ha det helt enkelt.",
+    "free": {
+      "name": "Hlas",
+      "forever": "for alltid",
+      "sub": "Hele appen. Kjører på maskinen din eller med din egen API-nøkkel.",
+      "items": [
+        "Lokal Whisper-modell, virker offline",
+        "Eller bruk din egen nøkkel: Groq, OpenAI, Soniox, Fish Audio",
+        "Ordliste, historikk, tekstopprydding, lydfiler",
+        "Mac og Windows"
+      ],
+      "cta": "Last ned gratis"
+    },
+    "cloud": {
+      "per": "per år + mva.",
+      "sub": "Det er 2,92 € i måneden, minst 54 % billigere enn Superwhisper eller Wispr Flow. Ubegrenset diktering via vårt API.",
+      "items": [
+        "Ubegrenset diktering, ingen API-nøkler å sette opp",
+        "Ingen modell på 547 MB å laste ned",
+        "Modellen lastes aldri inn i RAM-en din, skåner batteriet",
+        "Rask også på eldre og svakere maskiner"
+      ],
+      "cta": "Forhåndsbestill for 35 € i året",
+      "manage": "Abonnerer du allerede? Fakturaer og oppsigelse",
+      "vat": "Forbrukere i EU betaler 42,35 € inkludert 21 % tsjekkisk mva. Bedrifter i EU med mva-nummer betaler 35 € med omvendt avgiftsplikt."
+    },
+    "yearly": {
+      "title": "Hva et år med diktering koster",
+      "big": "54 til 73 % billigere enn konkurrentene",
+      "foot": "Årsabonnementer sammenlignet uten mva., per 14. november 2026: Superwhisper Pro 84,99 $ i året, Wispr Flow Pro og Willow Pro 12 $ i måneden ved årlig betaling. Omregnet med ECB-kursen fra 13. november 2026, 1 $ = 0,90481 €. Noen konkurrenter har også gratisplaner eller engangslisenser, se hele sammenligningen."
+    },
+    "compareLink": "Hele sammenligningen, inkludert gratisapper og engangskjøp"
+  },
+  "faq": {
+    "eyebrow": "Spørsmål",
+    "h2": "Før du spør.",
+    "items": [
+      {
+        "q": "Er gratisversjonen virkelig gratis?",
+        "a": "Ja. Den lokale motoren kjører på maskinen din og koster ingenting. Foretrekker du en skymotor, kan du legge inn din egen API-nøkkel og betale leverandøren direkte, vanligvis én til tre dollar i måneden."
+      },
+      {
+        "q": "Virker Hlas offline?",
+        "a": "Ja. Med den lokale motoren kjører Whisper på Macen din og trenger ingen internettilkobling etter at modellen på 547 MB er lastet ned én gang."
+      },
+      {
+        "q": "Hvor godt forstår den norsk?",
+        "a": "Hlas bruker Whisper large-v3, som støtter norsk. Kvaliteten varierer mellom språk, dialekter og aksenter, og vi har ikke finjustert norsk ennå, så prøv gratisversjonen med din egen stemme. Legg navn og fagord inn i ordlisten, så skriver Hlas dem på din måte."
+      },
+      {
+        "q": "Hvor mye RAM bruker den under diktering?",
+        "a": "Rundt 60 MB i ro. Med den lokale modellen lastet bruker den rundt 1 GB, og den frigjøres etter 3 minutter med stillhet. Hlas Cloud laster aldri noen modell."
+      },
+      {
+        "q": "Kjører den på Mac med Intel?",
+        "a": "Nei. Mac-appen krever Apple Silicon og macOS 15 eller nyere. Windows 10 og 11 på x64 støttes i beta."
+      },
+      {
+        "q": "Kan jeg diktere prompter i Claude Code, Cursor eller ChatGPT?",
+        "a": "Ja. Hlas skriver i alle apper der du kan skrive, også terminaler og kodeeditorer. Legg biblioteks- og funksjonsnavn inn i ordlisten, så blir de riktige."
+      },
+      {
+        "q": "Hvordan fungerer fakturaer og oppsigelse?",
+        "a": "Etter betaling sender Stripe deg en mva-faktura fra Eden Makers s.r.o. på e-post. Bedrifter i EU kan oppgi mva-nummeret sitt i kassen. Bytt kort, last ned fakturaer eller si opp i kundeportalen; abonnementet løper da ut det betalte året."
+      },
+      {
+        "q": "Hvor ubegrenset er ubegrenset?",
+        "a": "Hlas Cloud har ingen minutteller og ingen nivåer. For å holde prisen på 35 € i året gjelder rimelig bruk opptil 3 timer diktering per dag, som nullstilles ved midnatt UTC."
+      },
+      {
+        "q": "Hvor blir det av lyden min?",
+        "a": "Med den lokale motoren ingen steder. Den blir på maskinen din. Med Hlas Cloud går den via serveren vår til Groq kun for transkribering, og serveren vår lagrer den ikke. Med din egen nøkkel går den rett til leverandøren du har valgt."
+      }
+    ]
+  },
+  "final": {
+    "h2": "Slutt å taste. Begynn å snakke.",
+    "p": "To minutter fra nedlasting til din første dikterte setning.",
+    "dlMac": "Last ned for Mac"
+  },
+  "footer": {
+    "made": "Laget i Praha av",
+    "and": "og",
+    "privacy": "Personvern",
+    "compare": "Sammenligning",
+    "faq": "Vanlige spørsmål",
+    "about": "Om oss",
+    "press": "Presse",
+    "changelog": "Nyheter",
+    "languages": "Alle språk",
+    "trust": "Versjon 0.5.0 fra 4. november 2026. Mac-appen er signert med en Apple Developer ID og notarisert av Apple."
+  },
+  "toast": {
+    "soon": "Hlas Cloud lanseres snart. Last ned gratisversjonen i mellomtiden."
+  },
+  "suggest": "Hlas finnes også på norsk"
+}

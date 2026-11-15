@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.6.0 - 2026-11-15
+
+- Hlas Cloud: unlimited dictation and Smart text for EUR 35 a year with a licence key instead of an API key. Settings > Engine > Hlas Cloud shows the licence status, "Get Hlas Cloud" and "Manage subscription". The page after payment opens Hlas through `hlas://activate` and fills in the key.
+- Free 7-day Hlas Cloud trial without a card (30 minutes a day), one per install: "Try free for 7 days" in Settings.
+- One Hlas Cloud licence works on up to 5 computers. Hlas Cloud requests carry a random install id for that.
+- The status pill drops its hairline border and the "Transcript" label while recording. A dotted orb replaces the dot: green while listening, grey while transcribing (thinking-orbs by Jakub Antalik, MIT).
+
 ## 0.5.0 - 2026-11-04
 
 - Hlas for macOS and Hlas for Windows now live in one repository and ship in one GitHub release with one version number.

@@ -1,0 +1,340 @@
+{
+  "code": "es",
+  "langName": "Español",
+  "langNameEn": "Spanish",
+  "dec": ",",
+  "meta": {
+    "kw": "programa de dictado por voz para Mac en español",
+    "title": "Hlas: dictado por voz en español para Mac y Windows",
+    "description": "Mantén Fn, habla y suelta. El texto aparece en el cursor, en cualquier app. 4 MB, 60 MB de RAM en reposo, Whisper sin conexión. Gratis o ilimitado por 35 €/año.",
+    "ogTitle": "Hlas: dictado para Mac y Windows que habla español",
+    "ogDescription": "Mantén Fn, habla y suelta. App de 4 MB, 60 MB de RAM en reposo, funciona sin conexión."
+  },
+  "nav": {
+    "features": "Funciones",
+    "performance": "Rendimiento",
+    "languages": "Idiomas",
+    "pricing": "Precios",
+    "download": "Descargar",
+    "language": "Idioma"
+  },
+  "hero": {
+    "badge": "Nuevo: Hlas Cloud, ilimitado por 35 € al año",
+    "h1": "Dictado para Mac y Windows que habla español.",
+    "sub": "Mantén <kbd>Fn</kbd>, habla y suelta. El texto aparece justo donde está el cursor, en cualquier app. Pesa 4 MB y en reposo usa solo 60 MB de RAM.",
+    "dlMac": "Descargar gratis para Mac",
+    "dlWin": "Windows (beta)",
+    "note": "Apple Silicon, macOS 15+ · 4 MB · Windows 10 y 11 en beta, instalador aún sin firmar",
+    "privacy": "En modo local no necesitas cuenta y tu voz nunca sale de tu ordenador."
+  },
+  "demo": {
+    "tabNotes": "Notas",
+    "idle": "Mantén Fn y habla",
+    "busy": "Transcribiendo",
+    "scenes": [
+      {
+        "ctx": [
+          [
+            "Lucía",
+            "¿Cómo va la presentación?"
+          ]
+        ],
+        "text": "Hola Lucía, la presentación ya está lista. Esta noche te mando la versión final para que la revises."
+      },
+      {
+        "ctx": [
+          [
+            "Para",
+            "javier.garcia@estudio.es"
+          ],
+          [
+            "Asunto",
+            "Propuesta"
+          ]
+        ],
+        "text": "Hola, Javier, gracias por tu mensaje. Mañana por la mañana te envío la propuesta."
+      },
+      {
+        "ctx": [
+          [
+            "Nota",
+            "hoy 18:07"
+          ]
+        ],
+        "text": "La cigüeña tocaba el saxofón detrás del palenque de paja. Cada tilde y cada eñe en su sitio."
+      }
+    ]
+  },
+  "stats": {
+    "app": "toda la app",
+    "ram": "de RAM en reposo",
+    "speed": "para transcribir 11 s de voz",
+    "langs": "idiomas, español incluido"
+  },
+  "features": {
+    "eyebrow": "Qué incluye",
+    "h2": "Todo lo que necesitas para dejar de teclear.<br>Nada que sobre.",
+    "offline": {
+      "chip": "Modelo local activo",
+      "h3": "Funciona sin conexión",
+      "p": "Whisper se ejecuta en tu propio equipo. Tu voz nunca sale de él.",
+      "strong": "¿Sin wifi? Sin problema."
+    },
+    "vocab": {
+      "add": "Añadir",
+      "h3": "Tu propio vocabulario",
+      "p": "Nombres, marcas y jerga. Dile a Hlas cómo los entiende mal.",
+      "strong": "A partir de ahí, los escribe bien.",
+      "items": [
+        [
+          "Kubernetes",
+          "oye: cuber netis"
+        ],
+        [
+          "Figma",
+          "oye: fig ma"
+        ],
+        [
+          "EBITDA",
+          "oye: ebitda"
+        ]
+      ],
+      "cycle": [
+        [
+          "Notion",
+          "oye: nóushon"
+        ],
+        [
+          "Nguyen",
+          "oye: nuyen"
+        ],
+        [
+          "Kubernetes",
+          "oye: cuber netis"
+        ],
+        [
+          "Figma",
+          "oye: fig ma"
+        ],
+        [
+          "EBITDA",
+          "oye: ebitda"
+        ]
+      ]
+    },
+    "smart": {
+      "h3": "Texto inteligente",
+      "p": "Convierte lo que dices a trompicones en párrafos o listas limpias, según lo que querías decir.",
+      "strong": "El original siempre se queda en el Historial.",
+      "raw": "eh pues mañana tengo que comprar leche y luego también pan y mm llamar a Pablo",
+      "title": "Mañana",
+      "out": [
+        "comprar leche",
+        "comprar pan",
+        "llamar a Pablo"
+      ]
+    },
+    "langs": {
+      "h3": "Habla español",
+      "p": "Whisper large-v3 escribe en español con puntuación y mayúsculas.",
+      "strong": "Y más de 60 idiomas más."
+    }
+  },
+  "mini": [
+    {
+      "h4": "Archivos de audio",
+      "p": "Arrastra una grabación de hasta 10 minutos y obtén el texto."
+    },
+    {
+      "h4": "Mantén o toca",
+      "p": "Mantén Fn para hablar. Tócala una vez para manos libres y otra vez para parar."
+    },
+    {
+      "h4": "Tu atajo",
+      "p": "Fn, Opción derecha, Comando derecha, Control derecha o de F13 a F19."
+    },
+    {
+      "h4": "Historial",
+      "p": "Con búsqueda, local y borrable. Vuelve a pegar el último dictado con un solo atajo."
+    }
+  ],
+  "perf": {
+    "eyebrow": "Rendimiento",
+    "h2": "Más ligero que la pestaña que olvidaste cerrar.",
+    "ram": {
+      "h3": "RAM en reposo",
+      "p": "El modelo se carga cuando hablas y se descarga tras 3 minutos de silencio.",
+      "foot": "Hlas medido en un M1 Pro con la app oculta. Con el modelo local cargado usa alrededor de 1 GB. Dato de la competencia según nuestra propia comparativa."
+    },
+    "size": {
+      "h3": "Tamaño de la app",
+      "p": "Swift nativo en Mac, Rust nativo en Windows. Sin Electron."
+    },
+    "speed": {
+      "h3": "Más rápido de lo que tardas en releerlo",
+      "speak": "Tú hablas",
+      "writes": "Hlas escribe",
+      "p": "Modelo local en Apple Silicon, acelerado con Metal."
+    },
+    "fill": {
+      "h3": "Adiós a las muletillas",
+      "html": "<s>Eh,</s> <span>mándame</span> <s>mm</s> <span>la versión final</span> <s>hmm</s> <span>antes del viernes.</span>",
+      "p": "Los titubeos como eh, mm y hmm se eliminan en local, en todos los modos."
+    },
+    "sym": {
+      "h3": "Di el símbolo",
+      "p": "Símbolos y saltos de línea dictados, en inglés y en checo. Una función de Labs.",
+      "morph": [
+        [
+          "at sign",
+          "@"
+        ],
+        [
+          "underscore",
+          "_"
+        ],
+        [
+          "new line",
+          "↵"
+        ],
+        [
+          "dot com",
+          ".com"
+        ]
+      ]
+    },
+    "priv": {
+      "h3": "Tuyo, no nuestro",
+      "items": [
+        "Sin cuenta",
+        "Sin telemetría",
+        "Claves en el llavero del sistema",
+        "Código fuente en GitHub"
+      ]
+    },
+    "apps": {
+      "h3": "Funciona en cualquier app",
+      "p": "Si puedes escribir ahí, puedes dictar ahí."
+    }
+  },
+  "langs": {
+    "eyebrow": "Idiomas",
+    "h2": "Hecho en Praga para los idiomas que las grandes apps dejan para después.",
+    "points": [
+      {
+        "b": "ñ á ü ¿",
+        "h4": "Puntuación como debe ser",
+        "p": "Whisper large-v3 escribe mayúsculas, comas y signos de interrogación, no una larga línea en minúsculas."
+      },
+      {
+        "b": "EN",
+        "h4": "Mezcla idiomas sin miedo",
+        "p": "Fija los idiomas que usas o deja que Hlas los detecte solo. Los términos en inglés dentro de una frase en español se quedan intactos."
+      },
+      {
+        "b": "Ab",
+        "h4": "Tus palabras, tu ortografía",
+        "p": "Enséñale a Hlas nombres y jerga una sola vez en el vocabulario y a partir de ahí los escribirá a tu manera."
+      }
+    ],
+    "note": "Primero afinamos el checo. El español funciona por ahora con Whisper large-v3 sin ajustes adicionales, y nos encantará que nos cuentes en GitHub qué tal te va."
+  },
+  "pricing": {
+    "eyebrow": "Precios",
+    "h2": "Gratis en tu propio equipo.<br>35 € al año si lo quieres sin complicaciones.",
+    "free": {
+      "name": "Hlas",
+      "forever": "para siempre",
+      "sub": "La app completa. Funciona en tu equipo o con tu propia clave de API.",
+      "items": [
+        "Modelo Whisper local, funciona sin conexión",
+        "O con tu propia clave: Groq, OpenAI, Soniox, Fish Audio",
+        "Vocabulario, historial, limpieza de texto, archivos de audio",
+        "Mac y Windows"
+      ],
+      "cta": "Descargar gratis"
+    },
+    "cloud": {
+      "per": "al año + IVA",
+      "sub": "Son 2,92 € al mes, al menos un 54 % menos que Superwhisper o Wispr Flow. Dictado ilimitado a través de nuestra API.",
+      "items": [
+        "Dictado ilimitado, sin claves de API que configurar",
+        "Sin descargar un modelo de 547 MB",
+        "El modelo nunca se carga en tu RAM, tu batería lo agradece",
+        "Rápido también en equipos antiguos o menos potentes"
+      ],
+      "cta": "Reservar por 35 € al año",
+      "manage": "¿Ya estás suscrito? Facturas y cancelación",
+      "vat": "Los particulares en la UE pagan 42,35 € con el 21 % de IVA checo incluido. Las empresas de la UE con NIF-IVA pagan 35 € por inversión del sujeto pasivo."
+    },
+    "yearly": {
+      "title": "Lo que cuesta un año de dictado",
+      "big": "Entre un 54 y un 73 % más barato que la competencia",
+      "foot": "Planes anuales comparados sin IVA, a 14 de noviembre de 2026: Superwhisper Pro 84,99 $ al año, Wispr Flow Pro y Willow Pro 12 $ al mes con facturación anual. Convertido al tipo del BCE del 13 de noviembre de 2026, 1 $ = 0,90481 €. Algunos competidores también tienen planes gratuitos o licencias de pago único, consulta la comparativa completa."
+    },
+    "compareLink": "Comparativa completa, con apps gratuitas y de pago único"
+  },
+  "faq": {
+    "eyebrow": "Preguntas",
+    "h2": "Antes de que preguntes.",
+    "items": [
+      {
+        "q": "¿La versión gratuita es gratis de verdad?",
+        "a": "Sí. El motor local se ejecuta en tu ordenador y no cuesta nada. Si prefieres un motor en la nube, añades tu propia clave de API y pagas directamente al proveedor, normalmente entre uno y tres dólares al mes."
+      },
+      {
+        "q": "¿Hlas funciona sin conexión?",
+        "a": "Sí. Con el motor local, Whisper se ejecuta en tu Mac y no necesita internet tras descargar una sola vez el modelo de 547 MB."
+      },
+      {
+        "q": "¿Qué tal entiende el español?",
+        "a": "Hlas usa Whisper large-v3, que es compatible con el español. Todavía no tiene ajustes específicos para el español, y la calidad varía según el idioma y el acento. Lo mejor es probar la versión gratuita. Añade nombres y jerga al vocabulario y Hlas los escribirá bien."
+      },
+      {
+        "q": "¿Cuánta RAM usa mientras dicto?",
+        "a": "Unos 60 MB en reposo. Con el modelo local cargado usa alrededor de 1 GB, y se descarga tras 3 minutos de silencio. Hlas Cloud no carga ningún modelo."
+      },
+      {
+        "q": "¿Funciona en Mac con Intel?",
+        "a": "No. La app para Mac necesita Apple Silicon y macOS 15 o posterior. Windows 10 y 11 en x64 están disponibles en beta."
+      },
+      {
+        "q": "¿Puedo dictar prompts en Claude Code, Cursor o ChatGPT?",
+        "a": "Sí. Hlas escribe en cualquier app donde puedas teclear, incluidos terminales y editores de código. Añade nombres de librerías y funciones al vocabulario para que salgan bien."
+      },
+      {
+        "q": "¿Cómo funcionan la factura y la cancelación?",
+        "a": "Tras el pago, Stripe te envía por correo una factura con IVA de Eden Makers s.r.o. Las empresas de la UE pueden introducir su NIF-IVA al pagar. Cambia la tarjeta, descarga facturas o cancela desde el portal de cliente. La suscripción sigue activa hasta el final del año pagado."
+      },
+      {
+        "q": "¿Cómo de ilimitado es ilimitado?",
+        "a": "Hlas Cloud no tiene contador de minutos ni niveles. Para mantener el precio en 35 € al año, el uso razonable llega hasta 3 horas de dictado al día, y se reinicia a medianoche UTC."
+      },
+      {
+        "q": "¿Adónde va mi voz?",
+        "a": "Con el motor local, a ningún sitio: se queda en tu equipo. Con Hlas Cloud pasa por nuestro servidor hacia Groq solo para la transcripción, y nuestro servidor no la guarda. Con tu propia clave va directamente al proveedor que hayas elegido."
+      }
+    ]
+  },
+  "final": {
+    "h2": "Deja de teclear. Empieza a hablar.",
+    "p": "Dos minutos desde la descarga hasta tu primera frase dictada.",
+    "dlMac": "Descargar para Mac"
+  },
+  "footer": {
+    "made": "Hecho en Praga por",
+    "and": "y",
+    "privacy": "Privacidad",
+    "compare": "Comparativa",
+    "faq": "Preguntas",
+    "about": "Quiénes somos",
+    "press": "Prensa",
+    "changelog": "Novedades",
+    "languages": "Todos los idiomas",
+    "trust": "Versión 0.5.0 del 4 de noviembre de 2026. La app para Mac está firmada con un Apple Developer ID y notarizada por Apple."
+  },
+  "toast": {
+    "soon": "Hlas Cloud llega pronto. Mientras tanto, descarga la versión gratuita."
+  },
+  "suggest": "Hlas también está disponible en español"
+}

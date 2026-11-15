@@ -1,0 +1,340 @@
+{
+  "code": "tr",
+  "langName": "Türkçe",
+  "langNameEn": "Turkish",
+  "dec": ",",
+  "meta": {
+    "kw": "Mac sesle yazma programı",
+    "title": "Hlas: Mac ve Windows için sesle yazma, internetsiz de",
+    "description": "Fn'e basılı tut, konuş, bırak. Yazı imlecin olduğu yere düşer, her uygulamada. 4 MB uygulama, boşta 60 MB RAM, çevrimdışı Whisper. Ücretsiz ya da yılda 35 €.",
+    "ogTitle": "Hlas: Türkçe bilen, Mac ve Windows için dikte",
+    "ogDescription": "Fn'e basılı tut, konuş, bırak. 4 MB uygulama, boştayken 60 MB RAM, internetsiz çalışır."
+  },
+  "nav": {
+    "features": "Özellikler",
+    "performance": "Performans",
+    "languages": "Diller",
+    "pricing": "Fiyatlar",
+    "download": "İndir",
+    "language": "Dil"
+  },
+  "hero": {
+    "badge": "Yeni: Hlas Cloud, yılda 35 € ile sınırsız",
+    "h1": "Mac ve Windows için Türkçe konuşan dikte uygulaması.",
+    "sub": "<kbd>Fn</kbd>'e basılı tut, konuş, bırak. Yazı imlecin olduğu yere düşer, hangi uygulamada olursan ol. Uygulama 4 MB ve boştayken sadece 60 MB RAM kullanır.",
+    "dlMac": "Mac için ücretsiz indir",
+    "dlWin": "Windows (beta)",
+    "note": "Apple Silicon, macOS 15+ · 4 MB · Windows 10 ve 11 beta aşamasında, yükleyici henüz imzalı değil",
+    "privacy": "Yerel modda hesap gerekmez ve sesin bilgisayarından asla çıkmaz."
+  },
+  "demo": {
+    "tabNotes": "Notlar",
+    "idle": "Fn'e basılı tut ve konuş",
+    "busy": "Yazıya dökülüyor",
+    "scenes": [
+      {
+        "ctx": [
+          [
+            "Elif",
+            "Sunum ne durumda?"
+          ]
+        ],
+        "text": "Selam Elif, sunum hazır. Son hâlini bu akşam onaya gönderiyorum."
+      },
+      {
+        "ctx": [
+          [
+            "Kime",
+            "mert@studio.com.tr"
+          ],
+          [
+            "Konu",
+            "Teklif"
+          ]
+        ],
+        "text": "Merhaba Mert Bey, mesajınız için teşekkürler. Teklifi yarın sabah size gönderirim."
+      },
+      {
+        "ctx": [
+          [
+            "Not",
+            "bugün 18:07"
+          ]
+        ],
+        "text": "Pijamalı hasta yağız şoföre çabucak güvendi. Her harf yerli yerinde."
+      }
+    ]
+  },
+  "stats": {
+    "app": "uygulamanın tamamı",
+    "ram": "boştayken RAM",
+    "speed": "11 sn konuşmayı yazıya dökmek için",
+    "langs": "dil, Türkçe dahil"
+  },
+  "features": {
+    "eyebrow": "İçinde neler var",
+    "h2": "Yazmayı bırakman için gereken her şey.<br>Fazlası yok.",
+    "offline": {
+      "chip": "Yerel model çalışıyor",
+      "h3": "İnternetsiz çalışır",
+      "p": "Whisper doğrudan senin bilgisayarında çalışır. Ses oradan hiç çıkmaz.",
+      "strong": "Wi-Fi yok mu? Sorun değil."
+    },
+    "vocab": {
+      "add": "Ekle",
+      "h3": "Kendi sözlüğün",
+      "p": "İsimler, markalar ve jargon. Hlas'a onları nasıl yanlış duyduğunu söyle.",
+      "strong": "Bundan sonra doğru yazar.",
+      "items": [
+        [
+          "Trendyol",
+          "duyduğu: trend yol"
+        ],
+        [
+          "Kubernetes",
+          "duyduğu: kubernetis"
+        ],
+        [
+          "EBITDA",
+          "duyduğu: ebit da"
+        ]
+      ],
+      "cycle": [
+        [
+          "Notion",
+          "duyduğu: noşın"
+        ],
+        [
+          "Figma",
+          "duyduğu: fikma"
+        ],
+        [
+          "Trendyol",
+          "duyduğu: trend yol"
+        ],
+        [
+          "Kubernetes",
+          "duyduğu: kubernetis"
+        ],
+        [
+          "EBITDA",
+          "duyduğu: ebit da"
+        ]
+      ]
+    },
+    "smart": {
+      "h3": "Akıllı metin",
+      "p": "Dağınık konuşmayı, ne kastettiğine göre düzgün paragraflara ya da listelere çevirir.",
+      "strong": "Orijinal metin her zaman Geçmiş'te kalır.",
+      "raw": "eee yani yarın süt almam lazım sonra ekmek de hmm bir de Mert'i aramam lazım",
+      "title": "Yarın",
+      "out": [
+        "süt al",
+        "ekmek al",
+        "Mert'i ara"
+      ]
+    },
+    "langs": {
+      "h3": "Türkçe konuşur",
+      "p": "Whisper large-v3 Türkçeyi noktalama işaretleri ve büyük harflerle yazar.",
+      "strong": "Üstüne 60+ dil daha."
+    }
+  },
+  "mini": [
+    {
+      "h4": "Ses dosyaları",
+      "p": "10 dakikaya kadar bir kaydı bırak, metnini al."
+    },
+    {
+      "h4": "Basılı tut ya da dokun",
+      "p": "Konuşmak için Fn'e basılı tut. Eller serbest için bir kez dokun, durdurmak için tekrar dokun."
+    },
+    {
+      "h4": "Kısayol tuşun",
+      "p": "Fn, sağ Option, sağ Command, sağ Control ya da F13 ile F19 arası."
+    },
+    {
+      "h4": "Geçmiş",
+      "p": "Aranabilir, yerel, silinebilir. Son dikteyi tek kısayolla yeniden yapıştır."
+    }
+  ],
+  "perf": {
+    "eyebrow": "Performans",
+    "h2": "Kapatmayı unuttuğun sekmeden bile hafif.",
+    "ram": {
+      "h3": "Boştayken RAM",
+      "p": "Model sen konuşurken yüklenir, 3 dakika sessizlikten sonra bellekten çıkar.",
+      "foot": "Hlas, uygulama gizliyken bir M1 Pro üzerinde ölçüldü. Yerel model yüklüyken yaklaşık 1 GB kullanır. Rakip rakamı kendi karşılaştırmamızdan."
+    },
+    "size": {
+      "h3": "Uygulama boyutu",
+      "p": "Mac'te yerel Swift, Windows'ta yerel Rust. Electron yok."
+    },
+    "speed": {
+      "h3": "Sen tekrar okuyamadan yazılır",
+      "speak": "Sen konuşursun",
+      "writes": "Hlas yazar",
+      "p": "Apple Silicon üzerinde yerel model, Metal ile hızlandırılmış."
+    },
+    "fill": {
+      "h3": "Dolgu sesler kaybolur",
+      "html": "<s>Eee,</s> <span>son hâlini</span> <s>hmm</s> <span>cumaya kadar</span> <s>eh</s> <span>bana gönder.</span>",
+      "p": "eee, eh ve hmm gibi duraksamalar her modda, cihazında silinir."
+    },
+    "sym": {
+      "h3": "Sembolü söyle",
+      "p": "Sesle sembol ve satır sonu, İngilizce ve Çekçede. Bir Labs özelliği.",
+      "morph": [
+        [
+          "at sign",
+          "@"
+        ],
+        [
+          "underscore",
+          "_"
+        ],
+        [
+          "new line",
+          "↵"
+        ],
+        [
+          "dot com",
+          ".com"
+        ]
+      ]
+    },
+    "priv": {
+      "h3": "Senin, bizim değil",
+      "items": [
+        "Hesap yok",
+        "Telemetri yok",
+        "Anahtarlar sistem anahtar zincirinde",
+        "Kaynak kodu GitHub'da"
+      ]
+    },
+    "apps": {
+      "h3": "Her uygulamada çalışır",
+      "p": "Yazabildiğin her yerde dikte edebilirsin."
+    }
+  },
+  "langs": {
+    "eyebrow": "Diller",
+    "h2": "Prag'da, büyük uygulamaların sona bıraktığı diller için geliştirildi.",
+    "points": [
+      {
+        "b": "ğ ş ı",
+        "h4": "Doğru noktalama",
+        "p": "Whisper large-v3 büyük harfleri, virgülleri ve soru işaretlerini yazar; tek bir uzun, küçük harfli satır değil."
+      },
+      {
+        "b": "EN",
+        "h4": "Dilleri serbestçe karıştır",
+        "p": "Kullandığın dilleri sabitle ya da Hlas'ı otomatik algılamada bırak. Türkçe cümle içindeki İngilizce terimler bozulmaz."
+      },
+      {
+        "b": "Ab",
+        "h4": "Senin kelimelerin, senin yazımın",
+        "p": "İsimleri ve jargonu sözlükte Hlas'a bir kez öğret, bundan sonra senin istediğin gibi yazar."
+      }
+    ],
+    "note": "İlk ince ayarı Çekçe için yaptık. Türkçe şimdilik ek ayar olmadan Whisper large-v3 ile çalışıyor; anadili Türkçe olanlar nasıl gittiğini GitHub'da bize yazarsa seviniriz."
+  },
+  "pricing": {
+    "eyebrow": "Fiyatlar",
+    "h2": "Kendi bilgisayarında ücretsiz.<br>Zahmetsiz olsun istersen yılda 35 €.",
+    "free": {
+      "name": "Hlas",
+      "forever": "süresiz",
+      "sub": "Uygulamanın tamamı. Kendi bilgisayarında ya da kendi API anahtarınla çalışır.",
+      "items": [
+        "Yerel Whisper modeli, internetsiz çalışır",
+        "Ya da kendi anahtarın: Groq, OpenAI, Soniox, Fish Audio",
+        "Sözlük, geçmiş, metin temizleme, ses dosyaları",
+        "Mac ve Windows"
+      ],
+      "cta": "Ücretsiz indir"
+    },
+    "cloud": {
+      "per": "yıllık + KDV",
+      "sub": "Ayda 2,92 €, Superwhisper veya Wispr Flow'dan en az %54 daha ucuz. API'miz üzerinden sınırsız dikte.",
+      "items": [
+        "Sınırsız dikte, API anahtarı kurmak yok",
+        "547 MB model indirmek yok",
+        "Model asla RAM'ine yüklenmez, pili yormaz",
+        "Eski ve zayıf bilgisayarlarda da hızlı"
+      ],
+      "cta": "Yılda 35 € ile ön sipariş ver",
+      "manage": "Zaten abone misin? Faturalar ve iptal",
+      "vat": "AB'deki tüketiciler %21 Çek KDV'si dahil 42,35 € öder. KDV numarası olan AB şirketleri tersine vergilendirme (reverse charge) ile 35 € öder."
+    },
+    "yearly": {
+      "title": "Bir yıllık diktenin maliyeti",
+      "big": "Rakiplerden %54 ila %73 daha ucuz",
+      "foot": "Yıllık planlar KDV hariç karşılaştırıldı, 14 Kasım 2026 itibarıyla: Superwhisper Pro yılda 84,99 $, Wispr Flow Pro ve Willow Pro yıllık faturalandırmada ayda 12 $. 13 Kasım 2026 tarihli ECB kuruyla çevrildi, 1 $ = 0,90481 €. Bazı rakiplerin ücretsiz planları veya tek seferlik lisansları da var, tam karşılaştırmaya göz at."
+    },
+    "compareLink": "Ücretsiz ve tek seferlik uygulamalar dahil tam karşılaştırma"
+  },
+  "faq": {
+    "eyebrow": "Sorular",
+    "h2": "Sormadan önce.",
+    "items": [
+      {
+        "q": "Ücretsiz sürüm gerçekten ücretsiz mi?",
+        "a": "Evet. Yerel motor senin bilgisayarında çalışır ve hiçbir ücreti yoktur. Bulut motorunu tercih edersen kendi API anahtarını girer ve sağlayıcıya doğrudan ödersin, genelde ayda bir ila üç dolar."
+      },
+      {
+        "q": "Hlas internetsiz çalışır mı?",
+        "a": "Evet. Yerel motorla Whisper Mac'inde çalışır ve 547 MB'lık modeli bir kez indirdikten sonra internete ihtiyaç duymaz."
+      },
+      {
+        "q": "Türkçeyi ne kadar iyi anlıyor?",
+        "a": "Hlas, Türkçeyi destekleyen Whisper large-v3'ü kullanır. Türkçe için henüz özel bir ayar yapmadık ve kalite dile ve aksana göre değişir. Ücretsiz sürümü dene; isimleri ve terimleri sözlüğe eklersen Hlas onları senin istediğin gibi yazar."
+      },
+      {
+        "q": "Dikte sırasında ne kadar RAM kullanır?",
+        "a": "Boştayken yaklaşık 60 MB. Yerel model yüklüyken yaklaşık 1 GB kullanır ve 3 dakika sessizlikten sonra modeli bellekten çıkarır. Hlas Cloud hiç model yüklemez."
+      },
+      {
+        "q": "Intel işlemcili Mac'lerde çalışır mı?",
+        "a": "Hayır. Mac uygulaması Apple Silicon ve macOS 15 ya da üstünü gerektirir. x64 üzerinde Windows 10 ve 11 beta olarak destekleniyor."
+      },
+      {
+        "q": "Claude Code, Cursor ya da ChatGPT'ye prompt dikte edebilir miyim?",
+        "a": "Evet. Hlas, terminaller ve kod editörleri dahil yazı yazılabilen her uygulamaya yazar. Kütüphane ve fonksiyon adlarını sözlüğe ekle ki doğru çıksın."
+      },
+      {
+        "q": "Faturalar ve iptal nasıl işliyor?",
+        "a": "Ödemeden sonra Stripe, Eden Makers s.r.o. tarafından kesilen KDV'li faturayı e-postayla gönderir. AB şirketleri ödeme sırasında KDV numaralarını girebilir. Kartını değiştirmek, faturaları indirmek veya iptal etmek için müşteri portalını kullan; abonelik ödenen yılın sonuna kadar devam eder."
+      },
+      {
+        "q": "Sınırsız ne kadar sınırsız?",
+        "a": "Hlas Cloud'da dakika sayacı ya da kademe yok. Fiyatı yılda 35 € seviyesinde tutabilmek için adil kullanım sınırı günde 3 saat dikte; sınır UTC'ye göre gece yarısı sıfırlanır."
+      },
+      {
+        "q": "Sesim nereye gidiyor?",
+        "a": "Yerel motorla hiçbir yere. Bilgisayarında kalır. Hlas Cloud ile yalnızca yazıya dökülmek için sunucumuz üzerinden Groq'a gider ve sunucumuz onu saklamaz. Kendi anahtarınla doğrudan seçtiğin sağlayıcıya gider."
+      }
+    ]
+  },
+  "final": {
+    "h2": "Yazmayı bırak. Konuşmaya başla.",
+    "p": "İndirmeden ilk dikte ettiğin cümleye iki dakika.",
+    "dlMac": "Mac için indir"
+  },
+  "footer": {
+    "made": "Prag'da geliştirenler:",
+    "and": "ve",
+    "privacy": "Gizlilik",
+    "compare": "Karşılaştırma",
+    "faq": "SSS",
+    "about": "Hakkında",
+    "press": "Basın",
+    "changelog": "Sürüm notları",
+    "languages": "Tüm diller",
+    "trust": "4 Kasım 2026 tarihli 0.5.0 sürümü. Mac uygulaması Apple Developer ID ile imzalı ve Apple tarafından onaylı (notarized)."
+  },
+  "toast": {
+    "soon": "Hlas Cloud çok yakında. Şimdilik ücretsiz sürümü indir."
+  },
+  "suggest": "Hlas'ın Türkçe sürümü de var"
+}

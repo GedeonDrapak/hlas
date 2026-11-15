@@ -100,6 +100,7 @@ fn engine_note(engine: Engine) -> &'static str {
         Engine::Local => "Runs on this PC. Private, free and offline after a one-time download.",
         Engine::Groq => "Groq cloud. The fastest, about $3 a month with your own key.",
         Engine::OpenAI => "OpenAI cloud. Best accuracy, about $8 a month with your own key.",
+        Engine::HlasCloud => "Hlas Cloud. Unlimited dictation for EUR 35 a year, no keys.",
     }
 }
 

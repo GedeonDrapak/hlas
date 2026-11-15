@@ -1,0 +1,8 @@
+_src
+_deploy
+variants
+assets/gen
+wrangler.jsonc
+.assetsignore
+*.md
+.DS_Store

@@ -1,0 +1,64 @@
+# Hlas
+
+> Hlas is a small native dictation app for Mac and Windows, made in Prague by Gedeon Drapák and Eden Makers s.r.o. Hold Fn, speak, release, and the text is typed where the cursor is, in any app. Czech, Slovak and English have extra tuning; 60+ other languages work through Whisper large-v3.
+
+Key facts (as of 2026-11-15):
+- Version 0.5.0, released 4 November 2026. Mac: Apple Silicon, macOS 15 or later, signed with Apple Developer ID and notarized. Windows 10 and 11 (x64): beta, installer not code-signed yet.
+- App size 4 MB. RAM about 60 MB when idle, about 1 GB while the local model is loaded; the model unloads after 3 minutes of silence.
+- Local transcription with whisper.cpp (Whisper large-v3 turbo, 547 MB download) works offline; audio does not leave the computer.
+- Free forever for local use or with your own API key (Groq, OpenAI, Soniox, Fish Audio).
+- Hlas Cloud: EUR 35 a year without VAT (EUR 42.35 for EU consumers incl. 21 % Czech VAT), unlimited dictation with fair use up to 3 hours a day, Mac and Windows, 7-day free trial without a card in the app. Audio goes through the Hlas server to Groq for transcription and is not stored by Hlas.
+- Source code: https://github.com/GedeonDrapak/hlas
+
+## Pages
+- [Homepage, Czech](https://hlas.dev/)
+- [Homepage, English](https://hlas.dev/en/)
+- [Comparison with Superwhisper, Wispr Flow, MacWhisper and others](https://hlas.dev/en/compare/)
+- [FAQ](https://hlas.dev/en/faq/)
+- [Privacy](https://hlas.dev/en/privacy/)
+- [About](https://hlas.dev/en/about/)
+- [Press kit](https://hlas.dev/en/press/)
+- [Changelog](https://hlas.dev/changelog/)
+- [Dictation for smaller languages](https://hlas.dev/en/small-languages-dictation/)
+
+## Languages
+- [Čeština (Czech)](https://hlas.dev/)
+- [English (English)](https://hlas.dev/en/)
+- [Slovenčina (Slovak)](https://hlas.dev/sk/)
+- [Polski (Polish)](https://hlas.dev/pl/)
+- [Magyar (Hungarian)](https://hlas.dev/hu/)
+- [Deutsch (German)](https://hlas.dev/de/)
+- [Français (French)](https://hlas.dev/fr/)
+- [Español (Spanish)](https://hlas.dev/es/)
+- [Português (Portuguese)](https://hlas.dev/pt/)
+- [Italiano (Italian)](https://hlas.dev/it/)
+- [Nederlands (Dutch)](https://hlas.dev/nl/)
+- [Română (Romanian)](https://hlas.dev/ro/)
+- [Українська (Ukrainian)](https://hlas.dev/uk/)
+- [Русский (Russian)](https://hlas.dev/ru/)
+- [Български (Bulgarian)](https://hlas.dev/bg/)
+- [Srpski (Serbian)](https://hlas.dev/sr/)
+- [Hrvatski (Croatian)](https://hlas.dev/hr/)
+- [Slovenščina (Slovenian)](https://hlas.dev/sl/)
+- [Ελληνικά (Greek)](https://hlas.dev/el/)
+- [Türkçe (Turkish)](https://hlas.dev/tr/)
+- [Svenska (Swedish)](https://hlas.dev/sv/)
+- [Dansk (Danish)](https://hlas.dev/da/)
+- [Norsk bokmål (Norwegian Bokmål)](https://hlas.dev/nb/)
+- [Suomi (Finnish)](https://hlas.dev/fi/)
+- [Lietuvių (Lithuanian)](https://hlas.dev/lt/)
+- [Latviešu (Latvian)](https://hlas.dev/lv/)
+- [Eesti (Estonian)](https://hlas.dev/et/)
+- [Català (Catalan)](https://hlas.dev/ca/)
+- [日本語 (Japanese)](https://hlas.dev/ja/)
+- [한국어 (Korean)](https://hlas.dev/ko/)
+- [简体中文 (Chinese (Simplified))](https://hlas.dev/zh/)
+- [हिन्दी (Hindi)](https://hlas.dev/hi/)
+- [বাংলা (Bengali)](https://hlas.dev/bn/)
+- [ไทย (Thai)](https://hlas.dev/th/)
+- [Tiếng Việt (Vietnamese)](https://hlas.dev/vi/)
+- [Bahasa Indonesia (Indonesian)](https://hlas.dev/id/)
+- [Bahasa Melayu (Malay)](https://hlas.dev/ms/)
+- [العربية (Arabic)](https://hlas.dev/ar/)
+- [עברית (Hebrew)](https://hlas.dev/he/)
+- [فارسی (Persian)](https://hlas.dev/fa/)

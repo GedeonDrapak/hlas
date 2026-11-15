@@ -21,6 +21,21 @@ public enum TranscriptionNetworkError: LocalizedError {
 
     public var errorDescription: String? {
         switch self {
+        case .http(let statusCode, let provider) where provider == "Hlas Cloud":
+            switch statusCode {
+            case 401:
+                return "Your Hlas Cloud license key was not recognised. Check it in Settings."
+            case 402:
+                return "Your Hlas Cloud trial or subscription has ended. Get Hlas Cloud in Settings or choose another engine."
+            case 403:
+                return "This Hlas Cloud license is in use on more than 5 computers. Remove it from one you no longer use."
+            case 429:
+                return "You reached today's Hlas Cloud fair-use limit. It resets at midnight UTC."
+            case 413:
+                return "This recording is too large for Hlas Cloud."
+            default:
+                return "Hlas Cloud is temporarily unavailable. Try again shortly."
+            }
         case .http(let statusCode, let provider):
             switch statusCode {
             case 401, 403:

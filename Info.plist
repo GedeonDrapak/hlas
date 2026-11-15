@@ -26,6 +26,17 @@
 	<true/>
 	<key>NSHighResolutionCapable</key>
 	<true/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.gedeon.hlas</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>hlas</string>
+			</array>
+		</dict>
+	</array>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Hlas needs the microphone to transcribe your speech.</string>
 	<key>SUFeedURL</key>

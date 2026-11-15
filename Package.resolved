@@ -1,0 +1,14 @@
+{
+  "originHash" : "601cefac265ef5dd1279e5d2e382388dfb1cdc4842794c457da30dac582d450a",
+  "pins" : [
+    {
+      "identity" : "libraries.dev",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Jakubantalik/Libraries.dev",
+      "state" : {
+        "revision" : "387b049ca8fe97b5d72999b5bf61a19ab1ccff81"
+      }
+    }
+  ],
+  "version" : 3
+}

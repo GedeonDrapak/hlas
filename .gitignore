@@ -10,3 +10,9 @@ dist/
 # Local analysis, generated graphs and QA evidence
 graphify-out/
 docs/analysis/
+
+# Website working files: image variants, generation originals and logs (internal)
+web/variants/
+web/assets/gen/
+# Internal launch checklist (tax, legal, costs)
+docs/LAUNCH.md

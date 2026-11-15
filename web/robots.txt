@@ -1,0 +1,24 @@
+# Search engines and AI assistants are welcome to read and cite hlas.dev.
+User-agent: *
+Allow: /
+Disallow: /_src/
+Disallow: /variants/
+
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-User
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+
+Sitemap: https://hlas.dev/sitemap.xml

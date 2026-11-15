@@ -88,6 +88,11 @@ Section "Install"
   WriteRegStr HKCU "${UNINST_KEY}" "URLInfoAbout" "https://github.com/GedeonDrapak/hlas"
   WriteRegStr HKCU "${UNINST_KEY}" "InstallLocation" "$INSTDIR"
   WriteRegStr HKCU "${UNINST_KEY}" "UninstallString" '"$INSTDIR\uninstall.exe"'
+  ; hlas://activate?key=... links from the Hlas Cloud welcome page
+  WriteRegStr HKCU "Software\Classes\hlas" "" "URL:Hlas"
+  WriteRegStr HKCU "Software\Classes\hlas" "URL Protocol" ""
+  WriteRegStr HKCU "Software\Classes\hlas\DefaultIcon" "" "$INSTDIR\hlas.ico"
+  WriteRegStr HKCU "Software\Classes\hlas\shell\open\command" "" '"$INSTDIR\hlas.exe" "%1"'
   WriteRegDWORD HKCU "${UNINST_KEY}" "EstimatedSize" 8000
   WriteRegDWORD HKCU "${UNINST_KEY}" "NoModify" 1
   WriteRegDWORD HKCU "${UNINST_KEY}" "NoRepair" 1
@@ -111,11 +116,13 @@ Section "Uninstall"
   DeleteRegValue HKCU "Software\Microsoft\Windows\CurrentVersion\Run" "Hlas"
   DeleteRegKey HKCU "${UNINST_KEY}"
   DeleteRegKey HKCU "Software\${APPNAME}"
+  DeleteRegKey HKCU "Software\Classes\hlas"
 
   MessageBox MB_YESNO|MB_ICONQUESTION "Also remove your Hlas settings, dictation history, saved API keys and the downloaded model (about 550 MB)?" /SD IDNO IDNO keep_data
     RMDir /r "$LOCALAPPDATA\${APPNAME}"
     RMDir /r "$APPDATA\${APPNAME}"
     nsExec::Exec 'cmdkey /delete:groq-api-key.com.gedeon.hlas'
     nsExec::Exec 'cmdkey /delete:openai-api-key.com.gedeon.hlas'
+    nsExec::Exec 'cmdkey /delete:hlascloud-license.com.gedeon.hlas'
   keep_data:
 SectionEnd
