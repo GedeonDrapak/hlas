@@ -187,7 +187,7 @@ h2 { font-size:clamp(30px,4.200vw,54px); font-weight:500; line-height:1.08; lett
   background:rgba(255,255,255,.12); -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px); }
 .sw { display:block; flex:none; width:86px; height:50px; border-radius:999px; background:rgba(0,0,0,.35); position:relative; transition:background .5s; }
 .sw i { position:absolute; top:5px; left:5px; width:40px; height:40px; border-radius:50%; background:var(--fg); transition:transform .5s var(--ease); box-shadow:0 3px 10px rgba(0,0,0,.4); }
-.toggle-card.on .sw { background:rgba(230,160,255,.55); }
+.toggle-card.on .sw { background:rgba(143,227,255,.55); }
 .toggle-card.on .sw i { transform:translateX(36px); }
 .local-chip { display:inline-flex; align-items:center; gap:8px; padding:7px 14px; border-radius:999px; font-size:13px; background:rgba(0,0,0,.45); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); }
 
@@ -283,7 +283,8 @@ h2 { font-size:clamp(30px,4.200vw,54px); font-weight:500; line-height:1.08; lett
 .m-say { font-size:19px; color:var(--fg2); font-style:italic; }
 .m-get { font-size:44px; font-weight:700; color:var(--brand); min-width:1.2em; text-align:center; }
 .morph span { transition:opacity .35s, transform .35s var(--ease), filter .35s; }
-.morph.sw span { opacity:0; transform:translateY(8px); filter:blur(6px); }
+/* `.swap`, not `.sw`: .sw is the toggle switch and painted a dark disc here. */
+.morph.swap span { opacity:0; transform:translateY(8px); filter:blur(6px); }
 
 .checks { list-style:none; display:flex; flex-direction:column; gap:11px; font-size:15.5px; }
 .checks li { position:relative; padding-left:28px; color:rgba(237,237,237,.86); }

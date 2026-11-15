@@ -203,7 +203,7 @@
     const setMorph = () => { const [a, b] = t().morph[mi % t().morph.length]; say.textContent = `„${a}“`; get.textContent = b; };
     setMorph();
     onView(morph, () => setInterval(async () => {
-      morph.classList.add('sw'); await sleep(360); mi++; setMorph(); morph.classList.remove('sw');
+      morph.classList.add('swap'); await sleep(360); mi++; setMorph(); morph.classList.remove('swap');
     }, 2400));
 
     // speed race restarts each time it scrolls into view
