@@ -20,7 +20,7 @@
   },
   "hero": {
     "badge": "Nowość: Hlas Cloud bez limitu za 35 € rocznie",
-    "h1": "Dyktowanie na Maca i Windows, które mówi po polsku.",
+    "h1": "Dyktowanie na Maca i Windows,|które mówi po polsku.",
     "sub": "Przytrzymaj <kbd>Fn</kbd>, mów, puść. Tekst pojawia się tam, gdzie stoi kursor, w każdej aplikacji. Apka waży 4 MB i w spoczynku zajmuje 60 MB RAM.",
     "dlMac": "Pobierz za darmo na Maca",
     "dlWin": "Windows (beta)",

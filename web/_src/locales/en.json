@@ -19,7 +19,7 @@
   },
   "hero": {
     "badge": "New: Hlas Cloud, unlimited for €35 a year",
-    "h1": "Dictation for Mac and Windows that just works.",
+    "h1": "Dictation for Mac and Windows|that just works.",
     "sub": "Hold <kbd>Fn</kbd>, speak, release. The text lands where your cursor is, in any app. A 4 MB app that idles at 60 MB of RAM.",
     "dlMac": "Download free for Mac",
     "dlWin": "Windows (beta)",

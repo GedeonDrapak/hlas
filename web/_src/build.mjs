@@ -95,6 +95,30 @@ export function siteLinks(code) {
 // Site name "Hlas" above the result in Google comes from this.
 const WEBSITE_LD = { '@context': 'https://schema.org', '@type': 'WebSite', name: 'Hlas', alternateName: 'hlas.dev', url: 'https://hlas.dev/' };
 
+// Hero headline: "|" starts a new line, words are pre-split for the reveal
+// animation, and the last word gets a hand-drawn voice-wave underline.
+const SCRIBBLE = (() => {
+  const pts = [];
+  for (let x = 0; x <= 200; x += 2) {
+    const env = Math.pow(Math.sin((Math.PI * x) / 200), 0.6);
+    const jitter = 0.65 + 0.35 * Math.sin(x * 0.13) * Math.sin(x * 0.051);
+    pts.push(`${x},${(10 + Math.sin(x * 0.42) * 7 * env * jitter).toFixed(2)}`);
+  }
+  return `<svg class="scribble" viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M${pts.join(' L')}" pathLength="1"/></svg>`;
+})();
+function headline(text) {
+  if (!/\s/.test(text.replace(/\|/g, ' '))) return esc(text.replace(/\|/g, ''));
+  let i = 0;
+  const lines = text.split('|').map((l) => l.trim().split(/\s+/));
+  const total = lines.flat().length;
+  return lines.map((words) => words.map((w) => {
+    const n = i++;
+    if (n !== total - 1) return `<span class="w" style="--i:${n}">${esc(w)}</span>`;
+    const m = w.match(/^(.*?)([.!?。]?)$/);
+    return `<span class="w mark" style="--i:${n}">${esc(m[1])}${SCRIBBLE}</span>${m[2] ? `<span class="w" style="--i:${n}">${esc(m[2])}</span>` : ''}`;
+  }).join(' ')).join('<br>');
+}
+
 export function head({ code, hreflang, dir, title, description, path, alternates, ogTitle, ogDescription, jsonld = [] }) {
   const alt = (alternates || []).map(([h, p]) => `<link rel="alternate" hreflang="${h}" href="${SITE}${p}">`).join('\n');
   return `<!doctype html>
@@ -212,7 +236,7 @@ function home(t, code, hreflang, dir, locales) {
   <div class="hero-fade"></div>
   <div class="wrap hero-inner">
     <a class="badge reveal" href="#pricing"><span class="badge-dot"></span><span>${esc(t.hero.badge)}</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></a>
-    <h1 class="split">${t.hero.h1}</h1>
+    <h1 class="split">${headline(t.hero.h1)}</h1>
     <p class="hero-sub reveal">${t.hero.sub}</p>
     <div class="cta-row reveal" id="download">
       <a class="btn btn-light" href="${DMG}" data-ev="download-mac">${apple}<span>${esc(t.hero.dlMac)}</span></a>

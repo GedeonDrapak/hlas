@@ -12,6 +12,7 @@
 
   function splitWords(el) {
     // CJK and Thai have no spaces: the headline then animates as one block.
+    if (el.querySelector('.w')) return; // pre-split at build time (hero headline)
     const words = el.textContent.trim().split(/\s+/);
     if (words.length < 2) { el.classList.add('in'); return; }
     el.innerHTML = words.map((w, i) => `<span class="w" style="--i:${i}">${w}</span>`).join(' ');
