@@ -38,11 +38,13 @@ def og(path: Path, headline: list[str], sub: str) -> None:
     photo = Image.open(WEB / "assets" / "hero.jpg").convert("RGB")
     scale = W / photo.width
     photo = photo.resize((W, round(photo.height * scale)), Image.LANCZOS)
-    im = photo.crop((0, photo.height - H, W, photo.height))  # hills at the bottom
+    # Mostly sky: start near the top of the photo so only the hill crests show at the bottom.
+    top = 40
+    im = photo.crop((0, top, W, top + H))
     veil = Image.new("RGBA", (W, H))
     vd = ImageDraw.Draw(veil)
     for y in range(H):  # dark top for the text, photo shows below
-        a = int(235 * max(0.0, 1 - y / (H * 0.78)) ** 0.9)
+        a = int(235 * max(0.0, 1 - y / (H * 0.98)) ** 0.6)
         vd.line((0, y, W, y), fill=(14, 14, 14, a))
     im = Image.alpha_composite(im.convert("RGBA"), veil)
     d = ImageDraw.Draw(im)
