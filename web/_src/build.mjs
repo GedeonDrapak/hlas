@@ -16,7 +16,7 @@ const CSSV = hashOf('styles.css');
 const JSV = hashOf('app.js');
 const ORBV = hashOf('orb.js');
 const UPDATED = '2026-11-15';
-const VERSION = '0.5.0';
+const VERSION = '0.6.0';
 const DMG = 'https://github.com/GedeonDrapak/hlas/releases/latest/download/Hlas-mac-arm64.dmg';
 const EXE = 'https://github.com/GedeonDrapak/hlas/releases/latest/download/Hlas-windows-x64-setup.exe';
 const CHECKOUT = 'https://buy.stripe.com/5kQ8wIdAe58W1YB1zI3Je00';
@@ -402,7 +402,7 @@ Sitemap: ${SITE}/sitemap.xml
 > Hlas is a small native dictation app for Mac and Windows, made in Prague by Gedeon Drapák and Eden Makers s.r.o. Hold Fn, speak, release, and the text is typed where the cursor is, in any app. Czech, Slovak and English have extra tuning; 60+ other languages work through Whisper large-v3.
 
 Key facts (as of ${UPDATED}):
-- Version ${VERSION}, released 4 November 2026. Mac: Apple Silicon, macOS 15 or later, signed with Apple Developer ID and notarized. Windows 10 and 11 (x64): beta, installer not code-signed yet.
+- Version ${VERSION}, released 15 November 2026. Mac: Apple Silicon, macOS 15 or later, signed with Apple Developer ID and notarized. Windows 10 and 11 (x64): beta, installer not code-signed yet.
 - App size 4 MB. RAM about 60 MB when idle, about 1 GB while the local model is loaded; the model unloads after 3 minutes of silence.
 - Local transcription with whisper.cpp (Whisper large-v3 turbo, 547 MB download) works offline; audio does not leave the computer.
 - Free forever for local use or with your own API key (Groq, OpenAI, Soniox, Fish Audio).
