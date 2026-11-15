@@ -520,8 +520,9 @@ body.sysfont { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto San
 @media (prefers-reduced-motion: reduce) { .beam::before { animation:none; } .vglow.think i { animation:none; } }
 /* Phones: a tall hero would stretch the photo behind the text; keep it wide and anchored at the demo. */
 @media (max-width:720px) { .hero-bg { background-size:260% auto; background-position:center bottom;
-  /* The photo covers only the bottom ~650px here; fade its top edge so there is no hard line. */
-  -webkit-mask-image:linear-gradient(to top, #000 0, #000 360px, transparent 660px); mask-image:linear-gradient(to top, #000 0, #000 360px, transparent 660px); } }
+  /* The photo is 260% wide, so 174.5vw tall (2000x1342). Fade to fully transparent exactly at
+     its top edge, otherwise that edge shows as a hard line on narrow phones. */
+  -webkit-mask-image:linear-gradient(to top, #000 0, #000 calc(174vw - 300px), transparent 174vw); mask-image:linear-gradient(to top, #000 0, #000 calc(174vw - 300px), transparent 174vw); } }
 /* Small notes sit on the hill crest: darker halo so they stay legible. */
 .hero-note, .hero-privacy { color:rgba(237,237,237,.86); text-shadow:0 1px 2px rgba(0,0,0,.7), 0 0 18px rgba(0,0,0,.65); }
 
