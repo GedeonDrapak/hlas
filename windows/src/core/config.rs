@@ -22,7 +22,12 @@ pub enum Engine {
 }
 
 impl Engine {
-    pub const ALL: [Engine; 4] = [Engine::Local, Engine::HlasCloud, Engine::Groq, Engine::OpenAI];
+    pub const ALL: [Engine; 4] = [
+        Engine::Local,
+        Engine::HlasCloud,
+        Engine::Groq,
+        Engine::OpenAI,
+    ];
 
     pub fn id(self) -> &'static str {
         match self {

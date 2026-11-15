@@ -40,8 +40,9 @@ pub fn transcribe(cfg: &Config, samples: &[f32], cancel: &Arc<AtomicBool>) -> Re
             )
         }
         Engine::HlasCloud => {
-            let key = keystore::get_key(keystore::HLAS_CLOUD)
-                .ok_or(NetError::MissingKey { provider: "Hlas Cloud" })?;
+            let key = keystore::get_key(keystore::HLAS_CLOUD).ok_or(NetError::MissingKey {
+                provider: "Hlas Cloud",
+            })?;
             let prompt = text::vocabulary_prompt(&cfg.vocabulary);
             cloud::transcribe(
                 cloud::Provider::HlasCloud,

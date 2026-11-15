@@ -86,7 +86,10 @@ fn percent_decode(s: &str) -> String {
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum Status {
     /// Subscription active until `period_end` (Unix seconds), if known.
-    Active { email: Option<String>, period_end: Option<i64> },
+    Active {
+        email: Option<String>,
+        period_end: Option<i64>,
+    },
     /// Known key, but the subscription is not active (cancelled, unpaid).
     Inactive { email: Option<String> },
     /// Free trial running until `ends` (Unix seconds).
@@ -160,8 +163,14 @@ mod tests {
     #[test]
     fn normalizes_pasted_keys() {
         let want = "hlas_ABCDE-FGH12-34567-89ABC-DEFGH";
-        assert_eq!(normalize_key("hlas_ABCDE-FGH12-34567-89ABC-DEFGH").as_deref(), Some(want));
-        assert_eq!(normalize_key("  abcde fgh12 34567 89abc defgh ").as_deref(), Some(want));
+        assert_eq!(
+            normalize_key("hlas_ABCDE-FGH12-34567-89ABC-DEFGH").as_deref(),
+            Some(want)
+        );
+        assert_eq!(
+            normalize_key("  abcde fgh12 34567 89abc defgh ").as_deref(),
+            Some(want)
+        );
         assert_eq!(normalize_key("hlas_short"), None);
         assert_eq!(normalize_key(""), None);
     }
@@ -169,9 +178,20 @@ mod tests {
     #[test]
     fn reads_activation_links() {
         let want = Some("hlas_ABCDE-FGH12-34567-89ABC-DEFGH".to_string());
-        assert_eq!(key_from_activation_url("hlas://activate?key=hlas_ABCDE-FGH12-34567-89ABC-DEFGH"), want);
-        assert_eq!(key_from_activation_url("hlas://activate/?src=web&key=hlas%5FABCDE-FGH12-34567-89ABC-DEFGH"), want);
-        assert_eq!(key_from_activation_url("hlas://other?key=hlas_ABCDE-FGH12-34567-89ABC-DEFGH"), None);
+        assert_eq!(
+            key_from_activation_url("hlas://activate?key=hlas_ABCDE-FGH12-34567-89ABC-DEFGH"),
+            want
+        );
+        assert_eq!(
+            key_from_activation_url(
+                "hlas://activate/?src=web&key=hlas%5FABCDE-FGH12-34567-89ABC-DEFGH"
+            ),
+            want
+        );
+        assert_eq!(
+            key_from_activation_url("hlas://other?key=hlas_ABCDE-FGH12-34567-89ABC-DEFGH"),
+            None
+        );
         assert_eq!(key_from_activation_url("https://example.com"), None);
     }
 
@@ -180,20 +200,38 @@ mod tests {
         assert_eq!(parse_account(401, ""), Some(Status::Unknown));
         assert_eq!(parse_account(500, ""), None);
         assert_eq!(
-            parse_account(200, r#"{"email":"a@b.cz","active":true,"period_end":1800000000}"#),
-            Some(Status::Active { email: Some("a@b.cz".into()), period_end: Some(1800000000) })
+            parse_account(
+                200,
+                r#"{"email":"a@b.cz","active":true,"period_end":1800000000}"#
+            ),
+            Some(Status::Active {
+                email: Some("a@b.cz".into()),
+                period_end: Some(1800000000)
+            })
         );
         assert_eq!(
             parse_account(200, r#"{"email":null,"active":false,"period_end":null}"#),
             Some(Status::Inactive { email: None })
         );
-        assert!(describe(&Status::Active { email: None, period_end: Some(1800000000) }).starts_with("Active until 15 Jan 2027"));
+        assert!(describe(&Status::Active {
+            email: None,
+            period_end: Some(1800000000)
+        })
+        .starts_with("Active until 15 Jan 2027"));
         assert_eq!(
-            parse_account(200, r#"{"email":null,"active":true,"period_end":1800000000,"trial":true}"#),
-            Some(Status::Trial { ends: Some(1800000000) })
+            parse_account(
+                200,
+                r#"{"email":null,"active":true,"period_end":1800000000,"trial":true}"#
+            ),
+            Some(Status::Trial {
+                ends: Some(1800000000)
+            })
         );
         assert_eq!(
-            parse_account(200, r#"{"email":null,"active":false,"period_end":1,"trial":true}"#),
+            parse_account(
+                200,
+                r#"{"email":null,"active":false,"period_end":1,"trial":true}"#
+            ),
             Some(Status::TrialEnded)
         );
     }

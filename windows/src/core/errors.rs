@@ -196,7 +196,10 @@ mod tests {
         assert!(e(403).contains("more than 5 computers"));
         assert!(e(429).contains("fair-use limit"));
         assert_eq!(
-            NetError::MissingKey { provider: "Hlas Cloud" }.to_string(),
+            NetError::MissingKey {
+                provider: "Hlas Cloud"
+            }
+            .to_string(),
             "Add your Hlas Cloud licence key in Settings."
         );
     }

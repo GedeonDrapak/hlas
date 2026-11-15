@@ -4,6 +4,7 @@
 
 use super::controls::{self as c, Theme};
 use super::skin::{self, ds, Dropdown, Kind, Meter, Segmented, Skin, Text};
+use crate::core::cloud;
 use crate::core::config::{Engine, OutputMode};
 use crate::core::text::{format_replacements, parse_replacements};
 use crate::core::{hotkeys, languages};
@@ -14,7 +15,6 @@ use nwg::NwgError;
 use std::cell::{Cell, RefCell};
 use std::rc::Rc;
 use std::sync::{Arc, Mutex};
-use crate::core::cloud;
 
 const MEMORY: [(u64, &str); 3] = [
     (0, "Save memory - unload at once"),
@@ -27,7 +27,12 @@ const RETENTION: [(u32, &str); 4] = [
     (7, "7 days"),
     (30, "30 days"),
 ];
-const ENGINES: [Engine; 4] = [Engine::Local, Engine::HlasCloud, Engine::Groq, Engine::OpenAI];
+const ENGINES: [Engine; 4] = [
+    Engine::Local,
+    Engine::HlasCloud,
+    Engine::Groq,
+    Engine::OpenAI,
+];
 
 // Layout, in logical pixels.
 const WIDTH: i32 = 780;
@@ -700,7 +705,8 @@ impl SettingsWindow {
         self.openai_key
             .set_text(&keystore::get_key(keystore::OPENAI).unwrap_or_default());
         let cloud_key = keystore::get_key(keystore::HLAS_CLOUD);
-        self.cloud_key.set_text(cloud_key.as_deref().unwrap_or_default());
+        self.cloud_key
+            .set_text(cloud_key.as_deref().unwrap_or_default());
         self.cloud_trial.set_visible(cloud_key.is_none());
         self.cloud_status.set_color(ds::FG2);
         if cloud_key.is_some() {
@@ -737,11 +743,12 @@ impl SettingsWindow {
     fn check_cloud(&self) {
         let Some(key) = cloud::normalize_key(&self.cloud_key.text()) else {
             self.cloud_status.set_color(ds::DANGER);
-            self.cloud_status.set_text(if self.cloud_key.text().trim().is_empty() {
-                "No licence yet."
-            } else {
-                "That does not look like a licence key (hlas_XXXXX-...)."
-            });
+            self.cloud_status
+                .set_text(if self.cloud_key.text().trim().is_empty() {
+                    "No licence yet."
+                } else {
+                    "That does not look like a licence key (hlas_XXXXX-...)."
+                });
             return;
         };
         self.cloud_status.set_color(ds::FG2);
@@ -774,7 +781,10 @@ impl SettingsWindow {
                     self.cloud_key.set_text(&key);
                     self.skin.select(
                         &self.engine,
-                        ENGINES.iter().position(|e| *e == Engine::HlasCloud).unwrap_or(1),
+                        ENGINES
+                            .iter()
+                            .position(|e| *e == Engine::HlasCloud)
+                            .unwrap_or(1),
                     );
                     self.save();
                     self.check_cloud();
@@ -787,8 +797,10 @@ impl SettingsWindow {
         }
         if let Some(text) = self.cloud_result.lock().unwrap().take() {
             let ok = text.starts_with("Active");
-            self.cloud_trial.set_visible(self.cloud_key.text().trim().is_empty());
-            self.cloud_status.set_color(if ok { ds::BRAND } else { ds::DANGER });
+            self.cloud_trial
+                .set_visible(self.cloud_key.text().trim().is_empty());
+            self.cloud_status
+                .set_color(if ok { ds::BRAND } else { ds::DANGER });
             self.cloud_status.set_text(&text);
         }
     }

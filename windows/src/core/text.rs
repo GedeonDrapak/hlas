@@ -327,13 +327,34 @@ mod tests {
     #[test]
     fn smart_provider_preference_matches_mac() {
         use SmartProvider::*;
-        assert_eq!(choose_smart_provider(false, false, true, true, true), Some(Groq));
-        assert_eq!(choose_smart_provider(false, false, false, true, true), Some(OpenAI));
-        assert_eq!(choose_smart_provider(false, false, false, true, false), Some(Groq));
-        assert_eq!(choose_smart_provider(true, true, false, true, true), Some(HlasCloud));
-        assert_eq!(choose_smart_provider(true, false, false, false, true), Some(OpenAI));
-        assert_eq!(choose_smart_provider(false, false, true, false, true), Some(OpenAI));
-        assert_eq!(choose_smart_provider(false, false, false, false, false), None);
+        assert_eq!(
+            choose_smart_provider(false, false, true, true, true),
+            Some(Groq)
+        );
+        assert_eq!(
+            choose_smart_provider(false, false, false, true, true),
+            Some(OpenAI)
+        );
+        assert_eq!(
+            choose_smart_provider(false, false, false, true, false),
+            Some(Groq)
+        );
+        assert_eq!(
+            choose_smart_provider(true, true, false, true, true),
+            Some(HlasCloud)
+        );
+        assert_eq!(
+            choose_smart_provider(true, false, false, false, true),
+            Some(OpenAI)
+        );
+        assert_eq!(
+            choose_smart_provider(false, false, true, false, true),
+            Some(OpenAI)
+        );
+        assert_eq!(
+            choose_smart_provider(false, false, false, false, false),
+            None
+        );
     }
 
     #[test]

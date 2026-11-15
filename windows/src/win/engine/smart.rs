@@ -16,7 +16,10 @@ pub fn process(provider: SmartProvider, api_key: &str, input: &str) -> Result<St
         .build()?;
     let mut req = client.post(provider.endpoint()).bearer_auth(api_key);
     if matches!(provider, SmartProvider::HlasCloud) {
-        req = req.header(crate::core::cloud::DEVICE_HEADER, super::cloud::install_id());
+        req = req.header(
+            crate::core::cloud::DEVICE_HEADER,
+            super::cloud::install_id(),
+        );
     }
     let resp = req
         .json(&text::smart_request(provider, input))

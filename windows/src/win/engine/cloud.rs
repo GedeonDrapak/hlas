@@ -83,10 +83,7 @@ pub fn transcribe(
     if matches!(provider, Provider::HlasCloud) {
         req = req.header(crate::core::cloud::DEVICE_HEADER, install_id());
     }
-    let resp = req
-        .multipart(form)
-        .send()
-        .map_err(|e| classify(&e, name))?;
+    let resp = req.multipart(form).send().map_err(|e| classify(&e, name))?;
     let status = resp.status();
     if !status.is_success() {
         log::warn!("{name} transcription HTTP {}", status.as_u16());
@@ -210,5 +207,8 @@ pub fn start_trial() -> std::result::Result<(String, bool), String> {
         .and_then(|k| k.as_str())
         .and_then(crate::core::cloud::normalize_key)
         .ok_or_else(|| "Hlas Cloud could not start a trial. Try again later.".to_string())?;
-    Ok((key, v.get("active").and_then(|a| a.as_bool()).unwrap_or(false)))
+    Ok((
+        key,
+        v.get("active").and_then(|a| a.as_bool()).unwrap_or(false),
+    ))
 }
