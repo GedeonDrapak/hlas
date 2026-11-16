@@ -699,3 +699,12 @@ body { position:relative; }
 /* calculator: Hlas Cloud tile on forest */
 .calc-out > div.me { background:linear-gradient(160deg, rgba(10,22,16,.5), rgba(18,18,18,.85)), url('assets/card-forest.webp') center 40% / cover no-repeat; }
 @media (max-width:720px) { .doc-band { height:440px; } }
+
+/* mid-page download strip on text pages */
+.dlstrip { margin:22px 0 6px; padding:16px 18px 16px 22px; border-radius:20px; display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;
+  background:linear-gradient(90deg, rgba(14,20,16,.9), rgba(18,18,18,.75)), url('assets/card-forest.webp') center 45% / cover no-repeat; }
+.doc .dlstrip p { margin:0; color:var(--fg2); }
+.doc .dlstrip p b { color:var(--fg); }
+.dlstrip-b, .ctaband-b { display:flex; gap:10px; flex-wrap:wrap; }
+.doc .dlstrip .btn, .doc .ctaband .btn { gap:8px; }
+@media (max-width:560px) { .dlstrip-b, .ctaband-b { width:100%; } .dlstrip-b .btn, .ctaband-b .btn { flex:1; justify-content:center; } }

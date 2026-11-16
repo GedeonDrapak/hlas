@@ -74,7 +74,17 @@ export function keyCalculator(cs) {
 </div>`;
 }
 
-export const ctaBand = (cs, DMG) => `<div class="ctaband">
+const APPLE = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.8-3-.8c-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7 2-1.1 2.8-2.3c.9-1.3 1.2-2.5 1.3-2.6-.1 0-2.5-1-2.5-3.8zM14.1 5.8c.6-.8 1.1-1.9 1-3-1 0-2.1.6-2.8 1.4-.6.7-1.2 1.8-1 2.9 1.1.1 2.2-.5 2.8-1.3z"/></svg>';
+const WIN = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 5.5l7.5-1v7.2H3zM11.5 4.3L21 3v8.7h-9.5zM3 12.7h7.5v7.2L3 18.8zM11.5 12.7H21V21l-9.5-1.3z"/></svg>';
+const dlButtons = (cs, DMG, EXE) => `<a class="btn btn-light" href="${DMG}" data-ev="download-mac">${APPLE}<span>${T(cs, 'Stáhnout pro Mac', 'Download for Mac')}</span></a><a class="btn btn-glass" href="${EXE}" data-ev="download-win">${WIN}<span>${T(cs, 'Windows (beta)', 'Windows (beta)')}</span></a>`;
+
+/** Compact download strip for the middle of a page. */
+export const dlStrip = (cs, DMG, EXE) => `<div class="dlstrip">
+  <p><b>${T(cs, 'Vyzkoušej to hned.', 'Try it now.')}</b> ${T(cs, 'Zdarma, 4 MB, bez účtu.', 'Free, 4 MB, no account.')}</p>
+  <div class="dlstrip-b">${dlButtons(cs, DMG, EXE)}</div>
+</div>`;
+
+export const ctaBand = (cs, DMG, EXE) => `<div class="ctaband">
   <div><h2>${T(cs, 'Vyzkoušej Hlas zdarma', 'Try Hlas for free')}</h2><p>${T(cs, '4 MB, Mac i Windows. Hlas Cloud 7 dní zdarma bez karty.', '4 MB, Mac and Windows. Hlas Cloud 7 days free, no card.')}</p></div>
-  <div class="ctaband-b"><a class="btn btn-light" href="${DMG}" data-ev="download-mac">${T(cs, 'Stáhnout pro Mac', 'Download for Mac')}</a><a class="btn btn-glass" href="${cs ? '/#pricing' : '/en/#pricing'}">${T(cs, 'Ceník', 'Pricing')}</a></div>
+  <div class="ctaband-b">${dlButtons(cs, DMG, EXE)}</div>
 </div>`;

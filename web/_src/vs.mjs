@@ -1,4 +1,4 @@
-import { costChart, featureGrid, howItWorks, verdict, faqAccordion, keyCalculator, ctaBand, eur } from './visual.mjs';
+import { costChart, featureGrid, howItWorks, verdict, faqAccordion, keyCalculator, ctaBand, dlStrip, eur } from './visual.mjs';
 // "Hlas vs X" comparison pages and the "cheapest dictation app" page, Czech and English.
 // Prices come from COMPETITORS in pages.mjs (official pricing pages, checked 14-15 November 2026).
 // Only claims we can back up: prices and plans from that table, and the offline column only
@@ -96,7 +96,7 @@ export const VS = [
 ];
 
 export function vsPages(ctx) {
-  const { COMPETITORS, shell, qa, faqLd, pair, esc, DMG, CMPV } = ctx;
+  const { COMPETITORS, shell, qa, faqLd, pair, esc, DMG, EXE, CMPV } = ctx;
   const hlas = COMPETITORS.find((c) => c.name === 'Hlas');
   const fmt = (n, cs) => (cs ? n.toFixed(2).replace('.', ',') : n.toFixed(2));
   const csBase = '/srovnani/';
@@ -165,17 +165,19 @@ ${row(cs ? 'Poznámka' : 'Note', esc(hlas.note[code]), esc(c.note[code]))}
 ${saveYear > 0 ? `<p class="vs-save">${cs ? `S Hlas Cloud ušetříš <b>${eur(saveYear, cs)} € ročně</b>, za 3 roky <b>${eur(saveYear * 3, cs)} €</b>.` : `With Hlas Cloud you save <b>€${eur(saveYear, cs)} a year</b>, <b>€${eur(saveYear * 3, cs)}</b> over 3 years.`}</p>` : ''}
 <h2>${cs ? 'Kolik zaplatíš celkem' : 'What you pay in total'}</h2>
 ${costChart(rows, cs, { title: cs ? `Hlas a ${v.key}: celkové náklady` : `Hlas and ${v.key}: total cost` })}
+${dlStrip(cs, DMG, EXE)}
 <h2>${cs ? 'Co umí' : 'What you get'}</h2>
 ${featureGrid(v.key, feats, cs)}
 <h2>${cs ? 'Jak Hlas funguje' : 'How Hlas works'}</h2>
 ${howItWorks(cs)}
 <h2>${cs ? 'Kterou vybrat' : 'Which one to pick'}</h2>
 ${verdict(v.key, v.better[code], v.pickHlas[code], cs)}
+${dlStrip(cs, DMG, EXE)}
 <h2>${cs ? 'Časté otázky' : 'Questions'}</h2>
 ${faqAccordion(items)}
 <details class="more"><summary>${cs ? 'Podrobná tabulka a zdroje cen' : 'Detailed table and price sources'}</summary>${table}
 <p class="doc-note">${cs ? `Ceny bez DPH z oficiálních ceníků, ověřeno 14. a 15. 11. 2026. Přepočet kurzem ECB z 13. 11. 2026, 1 $ = 0,90481 €. <a href="${c.url}" rel="nofollow noopener">Ceník ${esc(v.key)}</a>.` : `Prices without VAT from the official pricing pages, checked 14-15 November 2026. Converted at the ECB rate of 13 November 2026, $1 = €0.90481. <a href="${c.url}" rel="nofollow noopener">${esc(v.key)} pricing</a>.`}</p></details>
-${ctaBand(cs, DMG)}
+${ctaBand(cs, DMG, EXE)}
 <h2>${cs ? 'Další srovnání' : 'More comparisons'}</h2>
 <div class="chips">${VS.filter((x) => x !== v).map((x) => `<a class="chip" href="${(cs ? csBase : enBase) + x.slug}/">Hlas vs ${esc(x.key)}</a>`).join('')}<a class="chip" href="${cs ? '/nejlevnejsi-diktovani/' : '/en/cheapest-dictation-app/'}">${cs ? 'Nejlevnější diktování' : 'Cheapest dictation'}</a><a class="chip" href="${cs ? csBase : enBase}">${cs ? 'Všechny aplikace' : 'All apps'}</a></div>
 <script src="/compare.js?v=${CMPV}" defer></script>`;
@@ -242,6 +244,7 @@ ${costChart([
   { name: cs ? 'Superwhisper doživotně' : 'Superwhisper lifetime', o: 226.19 }, { name: 'Superwhisper Pro', y: 76.9 },
   { name: 'Aqua Voice Pro', y: 108.58 }, { name: 'Wispr Flow', y: 130.29 }, { name: 'Willow Pro', y: 130.29 }, { name: 'Spokenly Pro', y: 130.29 },
 ], cs, { title: cs ? 'Celkové náklady podle aplikace' : 'Total cost by app', start: 3 })}
+${dlStrip(cs, DMG, EXE)}
 <h2>${cs ? 'Vlastní klíč, nebo Hlas Cloud?' : 'Own key or Hlas Cloud?'}</h2>
 <p>${cs ? 'Vlastní API klíč je při běžném diktování levnější než jakékoli předplatné. Hlas Cloud se vyplatí, když diktuješ hodně (od zhruba 2,7 hodiny denně je levnější) nebo nechceš řešit klíče.' : 'Your own API key is cheaper than any subscription for everyday dictation. Hlas Cloud pays off when you dictate a lot (from about 2.7 hours a day it is cheaper) or do not want to deal with keys.'}</p>
 ${keyCalculator(cs)}
@@ -251,7 +254,7 @@ ${howItWorks(cs)}
 ${faqAccordion(items)}
 <details class="more"><summary>${cs ? 'Tabulky podle typu licence a zdroje cen' : 'Tables by licence type and price sources'}</summary>${tables}
 <p class="doc-note">${cs ? 'Ceny bez DPH z oficiálních ceníků, ověřeno 14. a 15. 11. 2026, přepočet kurzem ECB z 13. 11. 2026 (1 $ = 0,90481 €).' : 'Prices without VAT from the official pricing pages, checked 14-15 November 2026, converted at the ECB rate of 13 November 2026 ($1 = €0.90481).'}</p></details>
-${ctaBand(cs, DMG)}
+${ctaBand(cs, DMG, EXE)}
 <h2>${cs ? 'Srovnání po jednom' : 'Head to head'}</h2>
 <div class="chips">${VS.map((v) => `<a class="chip" href="${(cs ? csBase : enBase) + v.slug}/">Hlas vs ${esc(v.key)}</a>`).join('')}</div>
 <script src="/compare.js?v=${CMPV}" defer></script>`,

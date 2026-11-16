@@ -1,5 +1,5 @@
 import { vsPages, vsLinks } from './vs.mjs';
-import { costChart } from './visual.mjs';
+import { costChart, dlStrip } from './visual.mjs';
 // Content pages (Czech and English). Every page answers its question in the
 // first sentence under each heading, so people and AI assistants can quote it.
 import { readFileSync } from 'node:fs';
@@ -24,7 +24,7 @@ const COMPETITORS = [
 const CSS_DOC = '';
 
 export function contentPages(ctx) {
-  const { locales, head, footer, langMenu, homePath, LANGS, SITE, UPDATED, GITHUB, DMG, esc, logo, CMPV } = ctx;
+  const { locales, head, footer, langMenu, homePath, LANGS, SITE, UPDATED, GITHUB, DMG, EXE, esc, logo, CMPV } = ctx;
   const pages = [];
 
   function shell({ code, path, title, description, h1, lead, body, alternates, jsonld = [] }) {
@@ -85,6 +85,7 @@ ${footer(t, code)}
   { name: 'Aqua Voice Pro', y: 108.58 }, { name: 'Wispr Flow', y: 130.29 }, { name: 'Willow Pro', y: 130.29 }, { name: 'Spokenly Pro', y: 130.29 },
 ], cs, { title: cs ? 'Celkové náklady podle aplikace' : 'Total cost by app', start: 3 })}
 <script src="/compare.js?v=${CMPV}" defer></script>
+${dlStrip(cs, DMG, EXE)}
 <div class="doc-table"><table><thead><tr><th>${cs ? 'Aplikace' : 'App'}</th><th>${cs ? 'Zdarma' : 'Free'}</th><th>${cs ? 'Placený tarif' : 'Paid plan'}</th><th>${cs ? 'Za rok v €' : 'Per year in €'}</th><th>${cs ? 'Poznámka' : 'Note'}</th></tr></thead><tbody>${rows}</tbody></table></div>
 <p class="doc-note">${cs ? 'Ceny bez DPH, načtené z oficiálních ceníků 15. 11. 2026 (Willow 14. 11. 2026). Přepočet kurzem ECB z 13. 11. 2026, 1 $ = 0,90481 €. Roční ekvivalent Wispr Flow a Spokenly Pro je 12 $ krát 12. Najdete-li chybu, napište nám na GitHub.' : 'Prices without VAT, taken from the official pricing pages on 15 November 2026 (Willow on 14 November 2026). Converted at the ECB rate of 13 November 2026, $1 = €0.90481. The yearly figure for Wispr Flow and Spokenly Pro is $12 times 12. Spot a mistake? Tell us on GitHub.'}</p>
 ${vsLinks(cs)}
@@ -298,6 +299,6 @@ ${footer(t, 'sk')}
     pages.push({ path: '/sk/diktovanie-slovensky-mac/', html, alternates: [['sk', '/sk/diktovanie-slovensky-mac/']] });
   }
 
-  vsPages({ COMPETITORS, shell, qa, faqLd, pair, esc, DMG, CMPV });
+  vsPages({ COMPETITORS, shell, qa, faqLd, pair, esc, DMG, EXE, CMPV });
   return pages;
 }
