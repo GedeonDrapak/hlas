@@ -25,7 +25,7 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" as="font" type="font/otf" href="/assets/fonts/Satoshi-Medium.otf" crossorigin>
-<link rel="stylesheet" href="/styles.css?v=f042bfad">
+<link rel="stylesheet" href="/styles.css?v=46bb6b03">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Hlas","alternateName":"hlas.dev","url":"https://hlas.dev/"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Hlas","item":"https://hlas.dev/"},{"@type":"ListItem","position":2,"name":"Hlas vs Willow","item":"https://hlas.dev/srovnani/hlas-vs-willow/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Je Hlas levnější než Willow?","acceptedAnswer":{"@type":"Answer","text":"Ano. Hlas Cloud stojí 35 € ročně bez DPH, Willow vychází na 130,29 € ročně (Pro 12 $ měsíčně při roční platbě). To je zhruba o 73 % méně. Lokální přepis v Hlasu je navíc zdarma bez limitu."}},{"@type":"Question","name":"Kdy je lepší Willow?","acceptedAnswer":{"@type":"Answer","text":"Willow je cloudová diktovací služba se zkušební verzí a tarifem Pro. Pokud vám vyhovuje její styl a nevadí 12 $ měsíčně při roční platbě, zůstaňte u ní."}},{"@type":"Question","name":"Proč přejít na Hlas?","acceptedAnswer":{"@type":"Answer","text":"Hlas Cloud stojí 35 € ročně, asi o 73 % méně než Willow Pro při roční platbě. K tomu Hlas umí diktovat offline zdarma a zvuk pak neopustí počítač."}},{"@type":"Question","name":"Umí Hlas česky?","acceptedAnswer":{"@type":"Answer","text":"Ano. Čeština, slovenština a angličtina mají v Hlasu vlastní ladění (slovník, mluvené symboly, zalomení řádků). Dalších 60+ jazyků běží přes Whisper large-v3 bez dalšího ladění."}}]}</script>
@@ -43,20 +43,67 @@
   <p class="doc-crumb"><a href="/">Hlas</a> / Hlas vs Willow</p>
   <h1>Hlas vs Willow</h1>
   <p class="doc-lead">Hlas Cloud stojí <b>35 € ročně</b>, Willow vychází na <b>130,29 € ročně</b>. To je zhruba o 73 % méně, a lokální diktování v Hlasu je navíc zdarma. Níž je férové srovnání včetně toho, kdy je lepší Willow.</p>
-  <div class="doc-table"><table><thead><tr><th></th><th>Hlas</th><th>Willow</th></tr></thead><tbody>
+  <div class="vs-cards">
+  <div class="vs-card me"><p class="vs-k">Hlas</p><p class="vs-big">0 €</p><p class="vs-sub">lokálně, navždy</p><p class="vs-alt">Hlas Cloud <b>35 €</b> ročně</p></div>
+  <span class="vs-badge">VS</span>
+  <div class="vs-card"><p class="vs-k">Willow</p><p class="vs-big">130,29 €</p><p class="vs-sub">ročně</p><p class="vs-alt">Zkušební verze</p></div>
+</div>
+<p class="vs-save">S Hlas Cloud ušetříš <b>95,29 € ročně</b>, za 3 roky <b>285,87 €</b>.</p>
+<h2>Kolik zaplatíš celkem</h2>
+<figure class="costchart" data-cs="1" aria-label="Hlas a Willow: celkové náklady">
+  <figcaption><span>Hlas a Willow: celkové náklady</span><span class="cc-toggle" role="group" aria-label="Období"><button type="button" data-n="1" aria-pressed="true">1 rok</button><button type="button" data-n="3">3 roky</button><button type="button" data-n="5">5 let</button></span></figcaption>
+  <div class="cc-rows"><div class="cc-row me" data-y="0" data-o="">
+  <span class="cc-name">Hlas lokálně<small>zdarma</small></span>
+  <span class="cc-track"><i style="--w:0.0%"></i></span>
+  <b class="cc-val">zdarma</b>
+</div><div class="cc-row me" data-y="35" data-o="">
+  <span class="cc-name">Hlas Cloud<small>předplatné</small></span>
+  <span class="cc-track"><i style="--w:26.9%"></i></span>
+  <b class="cc-val">35 €</b>
+</div><div class="cc-row" data-y="130.29" data-o="">
+  <span class="cc-name">Willow Pro<small>předplatné</small></span>
+  <span class="cc-track"><i style="--w:100.0%"></i></span>
+  <b class="cc-val">130,29 €</b>
+</div></div>
+  <p class="cc-foot">Ceny bez DPH. Předplatné násobíme počtem let, jednorázová licence se platí jednou.</p>
+</figure>
+<h2>Co umí</h2>
+<div class="fgrid" role="table" aria-label="Srovnání funkcí">
+  <div class="fg-head" role="row"><span role="columnheader"></span><span role="columnheader" class="fg-me">Hlas</span><span role="columnheader">Willow</span></div>
+  <div class="fg-row" role="row"><span class="fg-label" role="rowheader">Přepis offline, zvuk neopustí počítač</span><div class="fg-cell yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Ano, whisper.cpp</span></div><div class="fg-cell dash"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 12h10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><span>Výrobce neuvádí</span></div></div>
+  <div class="fg-row" role="row"><span class="fg-label" role="rowheader">Bezplatná verze</span><div class="fg-cell yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Ano, bez limitu</span></div><div class="fg-cell yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Zkušební verze</span></div></div>
+  <div class="fg-row" role="row"><span class="fg-label" role="rowheader">Jednorázová licence</span><div class="fg-cell dash"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 12h10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><span>Není potřeba, lokálně zdarma</span></div><div class="fg-cell dash"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 12h10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><span>Jen předplatné</span></div></div>
+  <div class="fg-row" role="row"><span class="fg-label" role="rowheader">Cloud za rok</span><div class="fg-cell yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>35 €</span></div><div class="fg-cell yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>130,29 €</span></div></div>
+  <div class="fg-row" role="row"><span class="fg-label" role="rowheader">Ladění pro češtinu a slovenštinu</span><div class="fg-cell yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Slovník, symboly, zalomení</span></div><div class="fg-cell dash"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 12h10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><span>Obecný model</span></div></div>
+</div>
+<h2>Jak Hlas funguje</h2>
+<div class="how">
+  <div class="how-step"><div class="how-vis"><span class="kc">fn</span></div><h3>1. Podrž Fn</h3><p>V jakékoli aplikaci: Slack, Mail, Word, prohlížeč.</p></div>
+  <div class="how-step"><div class="how-vis"><span class="wavebars" aria-hidden="true"><i style="--d:0.00s"></i><i style="--d:0.07s"></i><i style="--d:0.14s"></i><i style="--d:0.21s"></i><i style="--d:0.28s"></i><i style="--d:0.35s"></i><i style="--d:0.42s"></i><i style="--d:0.49s"></i><i style="--d:0.56s"></i><i style="--d:0.63s"></i><i style="--d:0.70s"></i><i style="--d:0.77s"></i><i style="--d:0.84s"></i></span></div><h3>2. Mluv</h3><p>Normálně, česky, slovensky nebo v 60+ dalších jazycích.</p></div>
+  <div class="how-step"><div class="how-vis"><span class="typed">Ahoj Petře, posílám finální verzi.<i></i></span></div><h3>3. Pusť a je to</h3><p>Text se napíše tam, kde máš kurzor. S tečkami a čárkami.</p></div>
+</div>
+<h2>Kterou vybrat</h2>
+<div class="verdict">
+  <div class="vd"><p class="vd-k">Vyber Willow, když</p><p>Willow je cloudová diktovací služba se zkušební verzí a tarifem Pro. Pokud vám vyhovuje její styl a nevadí 12 $ měsíčně při roční platbě, zůstaňte u ní.</p></div>
+  <div class="vd me"><p class="vd-k">Vyber Hlas, když</p><p>Hlas Cloud stojí 35 € ročně, asi o 73 % méně než Willow Pro při roční platbě. K tomu Hlas umí diktovat offline zdarma a zvuk pak neopustí počítač.</p></div>
+</div>
+<h2>Časté otázky</h2>
+<div class="faqx"><details open><summary>Je Hlas levnější než Willow?</summary><p>Ano. Hlas Cloud stojí 35 € ročně bez DPH, Willow vychází na 130,29 € ročně (Pro 12 $ měsíčně při roční platbě). To je zhruba o 73 % méně. Lokální přepis v Hlasu je navíc zdarma bez limitu.</p></details><details><summary>Kdy je lepší Willow?</summary><p>Willow je cloudová diktovací služba se zkušební verzí a tarifem Pro. Pokud vám vyhovuje její styl a nevadí 12 $ měsíčně při roční platbě, zůstaňte u ní.</p></details><details><summary>Proč přejít na Hlas?</summary><p>Hlas Cloud stojí 35 € ročně, asi o 73 % méně než Willow Pro při roční platbě. K tomu Hlas umí diktovat offline zdarma a zvuk pak neopustí počítač.</p></details><details><summary>Umí Hlas česky?</summary><p>Ano. Čeština, slovenština a angličtina mají v Hlasu vlastní ladění (slovník, mluvené symboly, zalomení řádků). Dalších 60+ jazyků běží přes Whisper large-v3 bez dalšího ladění.</p></details></div>
+<details class="more"><summary>Podrobná tabulka a zdroje cen</summary><div class="doc-table"><table><thead><tr><th></th><th>Hlas</th><th>Willow</th></tr></thead><tbody>
 <tr><th scope="row">Zdarma</th><td>Lokální přepis i vlastní klíče, bez limitu</td><td>Zkušební verze</td></tr>
 <tr><th scope="row">Placený tarif</th><td>Hlas Cloud 35 € ročně + DPH</td><td>Pro 12 $ měsíčně při roční platbě</td></tr>
 <tr><th scope="row">Za rok v € bez DPH</th><td>35,00</td><td>130,29</td></tr>
 
 <tr><th scope="row">Poznámka</th><td>Bez klíčů a stahování modelu, férové užívání 3 h denně. Mac a Windows (beta).</td><td>Cena ověřena 14. 11. 2026.</td></tr>
 </tbody></table></div>
-<p class="doc-note">Ceny bez DPH z oficiálních ceníků, ověřeno 14. a 15. 11. 2026. Přepočet kurzem ECB z 13. 11. 2026, 1 $ = 0,90481 €. <a href="https://willowvoice.com" rel="nofollow noopener">Ceník Willow</a>.</p>
-<h2>Je Hlas levnější než Willow?</h2><p>Ano. Hlas Cloud stojí 35 € ročně bez DPH, Willow vychází na 130,29 € ročně (Pro 12 $ měsíčně při roční platbě). To je zhruba o 73 % méně. Lokální přepis v Hlasu je navíc zdarma bez limitu.</p>
-<h2>Kdy je lepší Willow?</h2><p>Willow je cloudová diktovací služba se zkušební verzí a tarifem Pro. Pokud vám vyhovuje její styl a nevadí 12 $ měsíčně při roční platbě, zůstaňte u ní.</p>
-<h2>Proč přejít na Hlas?</h2><p>Hlas Cloud stojí 35 € ročně, asi o 73 % méně než Willow Pro při roční platbě. K tomu Hlas umí diktovat offline zdarma a zvuk pak neopustí počítač.</p>
-<h2>Umí Hlas česky?</h2><p>Ano. Čeština, slovenština a angličtina mají v Hlasu vlastní ladění (slovník, mluvené symboly, zalomení řádků). Dalších 60+ jazyků běží přes Whisper large-v3 bez dalšího ladění.</p>
-<p class="doc-cta"><a class="btn btn-light" href="https://github.com/GedeonDrapak/hlas/releases/latest/download/Hlas-mac-arm64.dmg" data-ev="download-mac">Stáhnout Hlas zdarma</a> <a class="btn btn-glass" href="/#pricing">Hlas Cloud za 35 € ročně</a></p>
-<p><a href="/srovnani/">Srovnání všech diktovacích aplikací</a> · <a href="/nejlevnejsi-diktovani/">Nejlevnější aplikace na diktování</a></p>
+<p class="doc-note">Ceny bez DPH z oficiálních ceníků, ověřeno 14. a 15. 11. 2026. Přepočet kurzem ECB z 13. 11. 2026, 1 $ = 0,90481 €. <a href="https://willowvoice.com" rel="nofollow noopener">Ceník Willow</a>.</p></details>
+<div class="ctaband">
+  <div><h2>Vyzkoušej Hlas zdarma</h2><p>4 MB, Mac i Windows. Hlas Cloud 7 dní zdarma bez karty.</p></div>
+  <div class="ctaband-b"><a class="btn btn-light" href="https://github.com/GedeonDrapak/hlas/releases/latest/download/Hlas-mac-arm64.dmg" data-ev="download-mac">Stáhnout pro Mac</a><a class="btn btn-glass" href="/#pricing">Ceník</a></div>
+</div>
+<h2>Další srovnání</h2>
+<div class="chips"><a class="chip" href="/srovnani/hlas-vs-wispr-flow/">Hlas vs Wispr Flow</a><a class="chip" href="/srovnani/hlas-vs-superwhisper/">Hlas vs Superwhisper</a><a class="chip" href="/srovnani/hlas-vs-aqua-voice/">Hlas vs Aqua Voice</a><a class="chip" href="/srovnani/hlas-vs-macwhisper/">Hlas vs MacWhisper</a><a class="chip" href="/srovnani/hlas-vs-voiceink/">Hlas vs VoiceInk</a><a class="chip" href="/srovnani/hlas-vs-spokenly/">Hlas vs Spokenly</a><a class="chip" href="/nejlevnejsi-diktovani/">Nejlevnější diktování</a><a class="chip" href="/srovnani/">Všechny aplikace</a></div>
+<script src="/compare.js?v=4984efd1" defer></script>
   <p class="doc-updated">Aktualizováno 15. 11. 2026</p>
 </main>
 <footer class="wrap footer">

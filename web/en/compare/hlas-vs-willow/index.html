@@ -25,7 +25,7 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" as="font" type="font/otf" href="/assets/fonts/Satoshi-Medium.otf" crossorigin>
-<link rel="stylesheet" href="/styles.css?v=f042bfad">
+<link rel="stylesheet" href="/styles.css?v=46bb6b03">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Hlas","alternateName":"hlas.dev","url":"https://hlas.dev/"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Hlas","item":"https://hlas.dev/en/"},{"@type":"ListItem","position":2,"name":"Hlas vs Willow","item":"https://hlas.dev/en/compare/hlas-vs-willow/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is Hlas cheaper than Willow?","acceptedAnswer":{"@type":"Answer","text":"Yes. Hlas Cloud is €35 a year without VAT, Willow comes to €130.29 a year (Pro $12 a month billed yearly). That is about 73 % less. Local transcription in Hlas is free with no limit on top."}},{"@type":"Question","name":"When is Willow the better pick?","acceptedAnswer":{"@type":"Answer","text":"Willow is a cloud dictation service with a trial and a Pro plan. If you like how it works and $12 a month billed yearly is fine, stay with it."}},{"@type":"Question","name":"Why switch to Hlas?","acceptedAnswer":{"@type":"Answer","text":"Hlas Cloud is €35 a year, about 73 % less than Willow Pro billed yearly. On top of that Hlas dictates offline for free, and the audio then never leaves your computer."}},{"@type":"Question","name":"Which languages does Hlas support?","acceptedAnswer":{"@type":"Answer","text":"Czech, Slovak and English get extra tuning (vocabulary, spoken symbols, line breaks). 60+ more languages run through Whisper large-v3 without extra tuning."}}]}</script>
@@ -43,20 +43,67 @@
   <p class="doc-crumb"><a href="/en/">Hlas</a> / Hlas vs Willow</p>
   <h1>Hlas vs Willow</h1>
   <p class="doc-lead">Hlas Cloud costs <b>€35 a year</b>, Willow comes to <b>€130.29 a year</b>. That is about 73 % less, and local dictation in Hlas is free on top. Below is a fair comparison, including when Willow is the better pick.</p>
-  <div class="doc-table"><table><thead><tr><th></th><th>Hlas</th><th>Willow</th></tr></thead><tbody>
+  <div class="vs-cards">
+  <div class="vs-card me"><p class="vs-k">Hlas</p><p class="vs-big">0 €</p><p class="vs-sub">locally, forever</p><p class="vs-alt">Hlas Cloud <b>35 €</b> a year</p></div>
+  <span class="vs-badge">VS</span>
+  <div class="vs-card"><p class="vs-k">Willow</p><p class="vs-big">130.29 €</p><p class="vs-sub">a year</p><p class="vs-alt">Trial</p></div>
+</div>
+<p class="vs-save">With Hlas Cloud you save <b>€95.29 a year</b>, <b>€285.87</b> over 3 years.</p>
+<h2>What you pay in total</h2>
+<figure class="costchart" data-cs="0" aria-label="Hlas and Willow: total cost">
+  <figcaption><span>Hlas and Willow: total cost</span><span class="cc-toggle" role="group" aria-label="Period"><button type="button" data-n="1" aria-pressed="true">1 year</button><button type="button" data-n="3">3 years</button><button type="button" data-n="5">5 years</button></span></figcaption>
+  <div class="cc-rows"><div class="cc-row me" data-y="0" data-o="">
+  <span class="cc-name">Hlas local<small>free</small></span>
+  <span class="cc-track"><i style="--w:0.0%"></i></span>
+  <b class="cc-val">free</b>
+</div><div class="cc-row me" data-y="35" data-o="">
+  <span class="cc-name">Hlas Cloud<small>subscription</small></span>
+  <span class="cc-track"><i style="--w:26.9%"></i></span>
+  <b class="cc-val">35 €</b>
+</div><div class="cc-row" data-y="130.29" data-o="">
+  <span class="cc-name">Willow Pro<small>subscription</small></span>
+  <span class="cc-track"><i style="--w:100.0%"></i></span>
+  <b class="cc-val">130.29 €</b>
+</div></div>
+  <p class="cc-foot">Prices without VAT. Subscriptions are multiplied by the years, a one-time licence is paid once.</p>
+</figure>
+<h2>What you get</h2>
+<div class="fgrid" role="table" aria-label="Feature comparison">
+  <div class="fg-head" role="row"><span role="columnheader"></span><span role="columnheader" class="fg-me">Hlas</span><span role="columnheader">Willow</span></div>
+  <div class="fg-row" role="row"><span class="fg-label" role="rowheader">Offline, audio stays on your computer</span><div class="fg-cell yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Yes, whisper.cpp</span></div><div class="fg-cell dash"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 12h10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><span>Not stated by the maker</span></div></div>
+  <div class="fg-row" role="row"><span class="fg-label" role="rowheader">Free version</span><div class="fg-cell yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Yes, no limit</span></div><div class="fg-cell yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Trial</span></div></div>
+  <div class="fg-row" role="row"><span class="fg-label" role="rowheader">One-time licence</span><div class="fg-cell dash"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 12h10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><span>Not needed, free locally</span></div><div class="fg-cell dash"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 12h10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><span>Subscription only</span></div></div>
+  <div class="fg-row" role="row"><span class="fg-label" role="rowheader">Cloud per year</span><div class="fg-cell yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>35 €</span></div><div class="fg-cell yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>130.29 €</span></div></div>
+  <div class="fg-row" role="row"><span class="fg-label" role="rowheader">Tuned for Czech and Slovak</span><div class="fg-cell yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Vocabulary, symbols, line breaks</span></div><div class="fg-cell dash"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 12h10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><span>General model</span></div></div>
+</div>
+<h2>How Hlas works</h2>
+<div class="how">
+  <div class="how-step"><div class="how-vis"><span class="kc">fn</span></div><h3>1. Hold Fn</h3><p>In any app: Slack, Mail, Word, the browser.</p></div>
+  <div class="how-step"><div class="how-vis"><span class="wavebars" aria-hidden="true"><i style="--d:0.00s"></i><i style="--d:0.07s"></i><i style="--d:0.14s"></i><i style="--d:0.21s"></i><i style="--d:0.28s"></i><i style="--d:0.35s"></i><i style="--d:0.42s"></i><i style="--d:0.49s"></i><i style="--d:0.56s"></i><i style="--d:0.63s"></i><i style="--d:0.70s"></i><i style="--d:0.77s"></i><i style="--d:0.84s"></i></span></div><h3>2. Speak</h3><p>Naturally, in Czech, English or 60+ other languages.</p></div>
+  <div class="how-step"><div class="how-vis"><span class="typed">Hi Peter, sending the final version.<i></i></span></div><h3>3. Let go, done</h3><p>The text lands where your cursor is, with full punctuation.</p></div>
+</div>
+<h2>Which one to pick</h2>
+<div class="verdict">
+  <div class="vd"><p class="vd-k">Pick Willow if</p><p>Willow is a cloud dictation service with a trial and a Pro plan. If you like how it works and $12 a month billed yearly is fine, stay with it.</p></div>
+  <div class="vd me"><p class="vd-k">Pick Hlas if</p><p>Hlas Cloud is €35 a year, about 73 % less than Willow Pro billed yearly. On top of that Hlas dictates offline for free, and the audio then never leaves your computer.</p></div>
+</div>
+<h2>Questions</h2>
+<div class="faqx"><details open><summary>Is Hlas cheaper than Willow?</summary><p>Yes. Hlas Cloud is €35 a year without VAT, Willow comes to €130.29 a year (Pro $12 a month billed yearly). That is about 73 % less. Local transcription in Hlas is free with no limit on top.</p></details><details><summary>When is Willow the better pick?</summary><p>Willow is a cloud dictation service with a trial and a Pro plan. If you like how it works and $12 a month billed yearly is fine, stay with it.</p></details><details><summary>Why switch to Hlas?</summary><p>Hlas Cloud is €35 a year, about 73 % less than Willow Pro billed yearly. On top of that Hlas dictates offline for free, and the audio then never leaves your computer.</p></details><details><summary>Which languages does Hlas support?</summary><p>Czech, Slovak and English get extra tuning (vocabulary, spoken symbols, line breaks). 60+ more languages run through Whisper large-v3 without extra tuning.</p></details></div>
+<details class="more"><summary>Detailed table and price sources</summary><div class="doc-table"><table><thead><tr><th></th><th>Hlas</th><th>Willow</th></tr></thead><tbody>
 <tr><th scope="row">Free</th><td>Local transcription and your own keys, no limit</td><td>Trial</td></tr>
 <tr><th scope="row">Paid plan</th><td>Hlas Cloud €35 a year + VAT</td><td>Pro $12 a month billed yearly</td></tr>
 <tr><th scope="row">Per year in € without VAT</th><td>35.00</td><td>130.29</td></tr>
 
 <tr><th scope="row">Note</th><td>No keys or model download, fair use 3 h a day. Mac and Windows (beta).</td><td>Price checked 14 November 2026.</td></tr>
 </tbody></table></div>
-<p class="doc-note">Prices without VAT from the official pricing pages, checked 14-15 November 2026. Converted at the ECB rate of 13 November 2026, $1 = €0.90481. <a href="https://willowvoice.com" rel="nofollow noopener">Willow pricing</a>.</p>
-<h2>Is Hlas cheaper than Willow?</h2><p>Yes. Hlas Cloud is €35 a year without VAT, Willow comes to €130.29 a year (Pro $12 a month billed yearly). That is about 73 % less. Local transcription in Hlas is free with no limit on top.</p>
-<h2>When is Willow the better pick?</h2><p>Willow is a cloud dictation service with a trial and a Pro plan. If you like how it works and $12 a month billed yearly is fine, stay with it.</p>
-<h2>Why switch to Hlas?</h2><p>Hlas Cloud is €35 a year, about 73 % less than Willow Pro billed yearly. On top of that Hlas dictates offline for free, and the audio then never leaves your computer.</p>
-<h2>Which languages does Hlas support?</h2><p>Czech, Slovak and English get extra tuning (vocabulary, spoken symbols, line breaks). 60+ more languages run through Whisper large-v3 without extra tuning.</p>
-<p class="doc-cta"><a class="btn btn-light" href="https://github.com/GedeonDrapak/hlas/releases/latest/download/Hlas-mac-arm64.dmg" data-ev="download-mac">Download Hlas for free</a> <a class="btn btn-glass" href="/en/#pricing">Hlas Cloud, €35 a year</a></p>
-<p><a href="/en/compare/">All dictation apps compared</a> · <a href="/en/cheapest-dictation-app/">Cheapest dictation app</a></p>
+<p class="doc-note">Prices without VAT from the official pricing pages, checked 14-15 November 2026. Converted at the ECB rate of 13 November 2026, $1 = €0.90481. <a href="https://willowvoice.com" rel="nofollow noopener">Willow pricing</a>.</p></details>
+<div class="ctaband">
+  <div><h2>Try Hlas for free</h2><p>4 MB, Mac and Windows. Hlas Cloud 7 days free, no card.</p></div>
+  <div class="ctaband-b"><a class="btn btn-light" href="https://github.com/GedeonDrapak/hlas/releases/latest/download/Hlas-mac-arm64.dmg" data-ev="download-mac">Download for Mac</a><a class="btn btn-glass" href="/en/#pricing">Pricing</a></div>
+</div>
+<h2>More comparisons</h2>
+<div class="chips"><a class="chip" href="/en/compare/hlas-vs-wispr-flow/">Hlas vs Wispr Flow</a><a class="chip" href="/en/compare/hlas-vs-superwhisper/">Hlas vs Superwhisper</a><a class="chip" href="/en/compare/hlas-vs-aqua-voice/">Hlas vs Aqua Voice</a><a class="chip" href="/en/compare/hlas-vs-macwhisper/">Hlas vs MacWhisper</a><a class="chip" href="/en/compare/hlas-vs-voiceink/">Hlas vs VoiceInk</a><a class="chip" href="/en/compare/hlas-vs-spokenly/">Hlas vs Spokenly</a><a class="chip" href="/en/cheapest-dictation-app/">Cheapest dictation</a><a class="chip" href="/en/compare/">All apps</a></div>
+<script src="/compare.js?v=4984efd1" defer></script>
   <p class="doc-updated">Updated 15 November 2026</p>
 </main>
 <footer class="wrap footer">

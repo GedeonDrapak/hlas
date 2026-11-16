@@ -1,4 +1,5 @@
 import { vsPages, vsLinks } from './vs.mjs';
+import { costChart } from './visual.mjs';
 // Content pages (Czech and English). Every page answers its question in the
 // first sentence under each heading, so people and AI assistants can quote it.
 import { readFileSync } from 'node:fs';
@@ -23,7 +24,7 @@ const COMPETITORS = [
 const CSS_DOC = '';
 
 export function contentPages(ctx) {
-  const { locales, head, footer, langMenu, homePath, LANGS, SITE, UPDATED, GITHUB, DMG, esc, logo } = ctx;
+  const { locales, head, footer, langMenu, homePath, LANGS, SITE, UPDATED, GITHUB, DMG, esc, logo, CMPV } = ctx;
   const pages = [];
 
   function shell({ code, path, title, description, h1, lead, body, alternates, jsonld = [] }) {
@@ -76,7 +77,14 @@ ${footer(t, code)}
       description: cs ? 'Hlas, Superwhisper, Wispr Flow, Willow, Aqua Voice, Spokenly, VoiceInk, MacWhisper a Šeptem: ceny, bezplatné verze a v čem je která lepší. Ověřeno 15. 11. 2026.' : 'Hlas, Superwhisper, Wispr Flow, Willow, Aqua Voice, Spokenly, VoiceInk, MacWhisper and Šeptem: prices, free plans and where each one wins. Checked 15 November 2026.',
       h1: cs ? 'Srovnání diktovacích aplikací pro Mac' : 'Mac dictation apps compared',
       lead: cs ? 'Hlas Cloud za 35 € ročně je o 54 až 73 % levnější než roční předplatné Superwhisperu, Wispr Flow a Willow. Jednorázové licence a bezplatné aplikace ale existují taky, proto je tu máme všechny.' : 'Hlas Cloud at €35 a year is 54 to 73 % cheaper than the yearly plans of Superwhisper, Wispr Flow and Willow. One-time licences and free apps exist too, so they are all listed here.',
-      body: `<div class="doc-table"><table><thead><tr><th>${cs ? 'Aplikace' : 'App'}</th><th>${cs ? 'Zdarma' : 'Free'}</th><th>${cs ? 'Placený tarif' : 'Paid plan'}</th><th>${cs ? 'Za rok v €' : 'Per year in €'}</th><th>${cs ? 'Poznámka' : 'Note'}</th></tr></thead><tbody>${rows}</tbody></table></div>
+      body: `${costChart([
+  { name: cs ? 'Hlas lokálně' : 'Hlas local', me: true, y: 0 }, { name: 'Hlas Cloud', me: true, y: 35 },
+  { name: 'VoiceInk', o: 22.62 }, { name: 'Spokenly Local+', o: 26.24 }, { name: 'MacWhisper Pro', o: 64 },
+  { name: cs ? 'Superwhisper doživotně' : 'Superwhisper lifetime', o: 226.19 }, { name: 'Superwhisper Pro', y: 76.9 },
+  { name: 'Aqua Voice Pro', y: 108.58 }, { name: 'Wispr Flow', y: 130.29 }, { name: 'Willow Pro', y: 130.29 }, { name: 'Spokenly Pro', y: 130.29 },
+], cs, { title: cs ? 'Celkové náklady podle aplikace' : 'Total cost by app', start: 3 })}
+<script src="/compare.js?v=${CMPV}" defer></script>
+<div class="doc-table"><table><thead><tr><th>${cs ? 'Aplikace' : 'App'}</th><th>${cs ? 'Zdarma' : 'Free'}</th><th>${cs ? 'Placený tarif' : 'Paid plan'}</th><th>${cs ? 'Za rok v €' : 'Per year in €'}</th><th>${cs ? 'Poznámka' : 'Note'}</th></tr></thead><tbody>${rows}</tbody></table></div>
 <p class="doc-note">${cs ? 'Ceny bez DPH, načtené z oficiálních ceníků 15. 11. 2026 (Willow 14. 11. 2026). Přepočet kurzem ECB z 13. 11. 2026, 1 $ = 0,90481 €. Roční ekvivalent Wispr Flow a Spokenly Pro je 12 $ krát 12. Najdete-li chybu, napište nám na GitHub.' : 'Prices without VAT, taken from the official pricing pages on 15 November 2026 (Willow on 14 November 2026). Converted at the ECB rate of 13 November 2026, $1 = €0.90481. The yearly figure for Wispr Flow and Spokenly Pro is $12 times 12. Spot a mistake? Tell us on GitHub.'}</p>
 ${vsLinks(cs)}
 ${qa(items)}`,
@@ -288,6 +296,6 @@ ${footer(t, 'sk')}
     pages.push({ path: '/sk/diktovanie-slovensky-mac/', html, alternates: [['sk', '/sk/diktovanie-slovensky-mac/']] });
   }
 
-  vsPages({ COMPETITORS, shell, qa, faqLd, pair, esc, DMG });
+  vsPages({ COMPETITORS, shell, qa, faqLd, pair, esc, DMG, CMPV });
   return pages;
 }

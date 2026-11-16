@@ -25,7 +25,7 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" as="font" type="font/otf" href="/assets/fonts/Satoshi-Medium.otf" crossorigin>
-<link rel="stylesheet" href="/styles.css?v=f042bfad">
+<link rel="stylesheet" href="/styles.css?v=46bb6b03">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Hlas","alternateName":"hlas.dev","url":"https://hlas.dev/"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Hlas","item":"https://hlas.dev/"},{"@type":"ListItem","position":2,"name":"Nejlevnější aplikace na diktování","item":"https://hlas.dev/nejlevnejsi-diktovani/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Jaká je nejlevnější aplikace na diktování?","acceptedAnswer":{"@type":"Answer","text":"Úplně zdarma je lokální diktování: Hlas (Mac a Windows) přepisuje přes Whisper přímo v počítači bez limitu a bez účtu. Nejlevnější neomezené předplatné bez API klíčů je Hlas Cloud za 35 € ročně. Z jednorázových licencí je nejlevnější VoiceInk za 25 $."}},{"@type":"Question","name":"Jde diktovat česky zdarma?","acceptedAnswer":{"@type":"Answer","text":"Ano. Hlas je zdarma a čeština v něm má vlastní ladění: primovací prompty, slovník, mluvené symboly a zalomení řádků. Lokální model funguje i bez internetu."}},{"@type":"Question","name":"Kolik stojí přepis přes vlastní API klíč?","acceptedAnswer":{"@type":"Answer","text":"Groq účtuje model whisper-large-v3-turbo asi 0,04 $ za hodinu zvuku. Hodina diktování denně tak vyjde zhruba na 1,20 $ měsíčně. Hlas vlastní klíč Groq i OpenAI podporuje zdarma."}},{"@type":"Question","name":"Proč je Hlas Cloud tak levný?","acceptedAnswer":{"@type":"Answer","text":"Hlas je malá nativní aplikace bez vlastní infrastruktury navíc: zvuk jde přes náš server na Cloudflare rovnou ke Groq. Nic neukládáme a neplatíme za drahé vlastní modely, takže cena může zůstat nízko."}}]}</script>
@@ -43,17 +43,92 @@
   <p class="doc-crumb"><a href="/">Hlas</a> / Nejlevnější aplikace na diktování</p>
   <h1>Nejlevnější aplikace na diktování</h1>
   <p class="doc-lead">Diktovat jde <b>úplně zdarma</b> (lokální Whisper), <b>jednou za licenci</b>, nebo <b>předplatným</b>. Nejlevnější neomezený cloud bez API klíčů je Hlas Cloud za 35 € ročně. Tady jsou všechny možnosti seřazené podle ceny.</p>
-  <h2>Zdarma</h2><div class="doc-table"><table><thead><tr><th>Aplikace</th><th>Co dostanete</th><th>€ bez DPH</th></tr></thead><tbody><tr class="me"><th scope="row">Hlas</th><td>Lokální přepis bez limitu, nebo vlastní API klíč. Mac a Windows.</td><td>0</td></tr><tr><th scope="row">Šeptem</th><td>Zdarma, platíte jen Groqu za vlastní klíč. Česká, beta, Mac.</td><td>0</td></tr><tr><th scope="row">VoiceInk</th><td>Open source, když si ho sestavíte sami.</td><td>0</td></tr></tbody></table></div>
+  <div class="stats3">
+  <div class="st me"><b>0 €</b><span>Nejlevnější vůbec: lokální diktování v Hlasu, bez limitu</span></div>
+  <div class="st"><b>22,62 €</b><span>Nejlevnější jednorázová licence: VoiceInk (25 $)</span></div>
+  <div class="st me"><b>35 € / rok</b><span>Nejlevnější neomezený cloud bez API klíčů: Hlas Cloud</span></div>
+</div>
+<h2>Všechny aplikace podle ceny</h2>
+<figure class="costchart" data-cs="1" aria-label="Celkové náklady podle aplikace">
+  <figcaption><span>Celkové náklady podle aplikace</span><span class="cc-toggle" role="group" aria-label="Období"><button type="button" data-n="1">1 rok</button><button type="button" data-n="3" aria-pressed="true">3 roky</button><button type="button" data-n="5">5 let</button></span></figcaption>
+  <div class="cc-rows"><div class="cc-row me" data-y="0" data-o="">
+  <span class="cc-name">Hlas lokálně<small>zdarma</small></span>
+  <span class="cc-track"><i style="--w:0.0%"></i></span>
+  <b class="cc-val">zdarma</b>
+</div><div class="cc-row" data-y="0" data-o="22.62">
+  <span class="cc-name">VoiceInk<small>jednorázově</small></span>
+  <span class="cc-track"><i style="--w:5.8%"></i></span>
+  <b class="cc-val">22,62 €</b>
+</div><div class="cc-row" data-y="0" data-o="26.24">
+  <span class="cc-name">Spokenly Local+<small>jednorázově</small></span>
+  <span class="cc-track"><i style="--w:6.7%"></i></span>
+  <b class="cc-val">26,24 €</b>
+</div><div class="cc-row" data-y="0" data-o="64">
+  <span class="cc-name">MacWhisper Pro<small>jednorázově</small></span>
+  <span class="cc-track"><i style="--w:16.4%"></i></span>
+  <b class="cc-val">64 €</b>
+</div><div class="cc-row me" data-y="35" data-o="">
+  <span class="cc-name">Hlas Cloud<small>předplatné</small></span>
+  <span class="cc-track"><i style="--w:26.9%"></i></span>
+  <b class="cc-val">105 €</b>
+</div><div class="cc-row" data-y="0" data-o="226.19">
+  <span class="cc-name">Superwhisper doživotně<small>jednorázově</small></span>
+  <span class="cc-track"><i style="--w:57.9%"></i></span>
+  <b class="cc-val">226,19 €</b>
+</div><div class="cc-row" data-y="76.9" data-o="">
+  <span class="cc-name">Superwhisper Pro<small>předplatné</small></span>
+  <span class="cc-track"><i style="--w:59.0%"></i></span>
+  <b class="cc-val">230,70 €</b>
+</div><div class="cc-row" data-y="108.58" data-o="">
+  <span class="cc-name">Aqua Voice Pro<small>předplatné</small></span>
+  <span class="cc-track"><i style="--w:83.3%"></i></span>
+  <b class="cc-val">325,74 €</b>
+</div><div class="cc-row" data-y="130.29" data-o="">
+  <span class="cc-name">Wispr Flow<small>předplatné</small></span>
+  <span class="cc-track"><i style="--w:100.0%"></i></span>
+  <b class="cc-val">390,87 €</b>
+</div><div class="cc-row" data-y="130.29" data-o="">
+  <span class="cc-name">Willow Pro<small>předplatné</small></span>
+  <span class="cc-track"><i style="--w:100.0%"></i></span>
+  <b class="cc-val">390,87 €</b>
+</div><div class="cc-row" data-y="130.29" data-o="">
+  <span class="cc-name">Spokenly Pro<small>předplatné</small></span>
+  <span class="cc-track"><i style="--w:100.0%"></i></span>
+  <b class="cc-val">390,87 €</b>
+</div></div>
+  <p class="cc-foot">Ceny bez DPH. Předplatné násobíme počtem let, jednorázová licence se platí jednou.</p>
+</figure>
+<h2>Vlastní klíč, nebo Hlas Cloud?</h2>
+<p>Vlastní API klíč je při běžném diktování levnější než jakékoli předplatné. Hlas Cloud se vyplatí, když diktuješ hodně (od zhruba 2,7 hodiny denně je levnější) nebo nechceš řešit klíče.</p>
+<div class="calc" data-cs="1">
+  <label for="calc-min">Kolik diktuješ denně? <b class="calc-min-out">30 min</b></label>
+  <input id="calc-min" type="range" min="5" max="240" step="5" value="30">
+  <div class="calc-out">
+    <div><small>Vlastní klíč Groq</small><b class="calc-key">0,54 €</b><span>měsíčně, platíš Groqu</span></div>
+    <div class="me"><small>Hlas Cloud</small><b>2,92 €</b><span>měsíčně, bez klíčů a limitu slov</span></div>
+    <div><small>Lokálně v Hlasu</small><b>0 €</b><span>zdarma, offline, potřebuje model 547 MB</span></div>
+  </div>
+  <p class="cc-foot">Groq účtuje whisper-large-v3-turbo 0,04 $ za hodinu zvuku (1 $ = 0,90481 €), 30 dní v měsíci. Hlas Cloud je 35 € ročně bez DPH.</p>
+</div>
+<h2>Jak Hlas funguje</h2>
+<div class="how">
+  <div class="how-step"><div class="how-vis"><span class="kc">fn</span></div><h3>1. Podrž Fn</h3><p>V jakékoli aplikaci: Slack, Mail, Word, prohlížeč.</p></div>
+  <div class="how-step"><div class="how-vis"><span class="wavebars" aria-hidden="true"><i style="--d:0.00s"></i><i style="--d:0.07s"></i><i style="--d:0.14s"></i><i style="--d:0.21s"></i><i style="--d:0.28s"></i><i style="--d:0.35s"></i><i style="--d:0.42s"></i><i style="--d:0.49s"></i><i style="--d:0.56s"></i><i style="--d:0.63s"></i><i style="--d:0.70s"></i><i style="--d:0.77s"></i><i style="--d:0.84s"></i></span></div><h3>2. Mluv</h3><p>Normálně, česky, slovensky nebo v 60+ dalších jazycích.</p></div>
+  <div class="how-step"><div class="how-vis"><span class="typed">Ahoj Petře, posílám finální verzi.<i></i></span></div><h3>3. Pusť a je to</h3><p>Text se napíše tam, kde máš kurzor. S tečkami a čárkami.</p></div>
+</div>
+<h2>Časté otázky</h2>
+<div class="faqx"><details open><summary>Jaká je nejlevnější aplikace na diktování?</summary><p>Úplně zdarma je lokální diktování: Hlas (Mac a Windows) přepisuje přes Whisper přímo v počítači bez limitu a bez účtu. Nejlevnější neomezené předplatné bez API klíčů je Hlas Cloud za 35 € ročně. Z jednorázových licencí je nejlevnější VoiceInk za 25 $.</p></details><details><summary>Jde diktovat česky zdarma?</summary><p>Ano. Hlas je zdarma a čeština v něm má vlastní ladění: primovací prompty, slovník, mluvené symboly a zalomení řádků. Lokální model funguje i bez internetu.</p></details><details><summary>Kolik stojí přepis přes vlastní API klíč?</summary><p>Groq účtuje model whisper-large-v3-turbo asi 0,04 $ za hodinu zvuku. Hodina diktování denně tak vyjde zhruba na 1,20 $ měsíčně. Hlas vlastní klíč Groq i OpenAI podporuje zdarma.</p></details><details><summary>Proč je Hlas Cloud tak levný?</summary><p>Hlas je malá nativní aplikace bez vlastní infrastruktury navíc: zvuk jde přes náš server na Cloudflare rovnou ke Groq. Nic neukládáme a neplatíme za drahé vlastní modely, takže cena může zůstat nízko.</p></details></div>
+<details class="more"><summary>Tabulky podle typu licence a zdroje cen</summary><h2>Zdarma</h2><div class="doc-table"><table><thead><tr><th>Aplikace</th><th>Co dostanete</th><th>€ bez DPH</th></tr></thead><tbody><tr class="me"><th scope="row">Hlas</th><td>Lokální přepis bez limitu, nebo vlastní API klíč. Mac a Windows.</td><td>0</td></tr><tr><th scope="row">Šeptem</th><td>Zdarma, platíte jen Groqu za vlastní klíč. Česká, beta, Mac.</td><td>0</td></tr><tr><th scope="row">VoiceInk</th><td>Open source, když si ho sestavíte sami.</td><td>0</td></tr></tbody></table></div>
 <h2>Jednorázově</h2><div class="doc-table"><table><thead><tr><th>Aplikace</th><th>Co dostanete</th><th>€ bez DPH</th></tr></thead><tbody><tr><th scope="row">VoiceInk</th><td>25 $ za 1 Mac</td><td>22,62</td></tr><tr><th scope="row">Spokenly Local+</th><td>29 $ jednou</td><td>26,24</td></tr><tr><th scope="row">MacWhisper Pro</th><td>64 € jednou, hlavně přepis souborů</td><td>64,00</td></tr><tr><th scope="row">Superwhisper</th><td>249,99 $ doživotně</td><td>226,19</td></tr></tbody></table></div>
 <h2>Předplatné za rok</h2><div class="doc-table"><table><thead><tr><th>Aplikace</th><th>Co dostanete</th><th>€ bez DPH</th></tr></thead><tbody><tr class="me"><th scope="row">Hlas Cloud</th><td>Neomezeně (férově 3 h denně), bez klíčů a modelu</td><td>35,00</td></tr><tr><th scope="row">Superwhisper Pro</th><td>84,99 $</td><td>76,90</td></tr><tr><th scope="row">Aqua Voice Pro</th><td>10 $ měsíčně ročně</td><td>108,58</td></tr><tr><th scope="row">Wispr Flow</th><td>12 $ měsíčně ročně</td><td>130,29</td></tr><tr><th scope="row">Willow Pro</th><td>12 $ měsíčně ročně</td><td>130,29</td></tr><tr><th scope="row">Spokenly Pro</th><td>144 $ ročně</td><td>130,29</td></tr></tbody></table></div>
-<p class="doc-note">Ceny bez DPH z oficiálních ceníků, ověřeno 14. a 15. 11. 2026, přepočet kurzem ECB z 13. 11. 2026 (1 $ = 0,90481 €).</p>
-<h2>Jaká je nejlevnější aplikace na diktování?</h2><p>Úplně zdarma je lokální diktování: Hlas (Mac a Windows) přepisuje přes Whisper přímo v počítači bez limitu a bez účtu. Nejlevnější neomezené předplatné bez API klíčů je Hlas Cloud za 35 € ročně. Z jednorázových licencí je nejlevnější VoiceInk za 25 $.</p>
-<h2>Jde diktovat česky zdarma?</h2><p>Ano. Hlas je zdarma a čeština v něm má vlastní ladění: primovací prompty, slovník, mluvené symboly a zalomení řádků. Lokální model funguje i bez internetu.</p>
-<h2>Kolik stojí přepis přes vlastní API klíč?</h2><p>Groq účtuje model whisper-large-v3-turbo asi 0,04 $ za hodinu zvuku. Hodina diktování denně tak vyjde zhruba na 1,20 $ měsíčně. Hlas vlastní klíč Groq i OpenAI podporuje zdarma.</p>
-<h2>Proč je Hlas Cloud tak levný?</h2><p>Hlas je malá nativní aplikace bez vlastní infrastruktury navíc: zvuk jde přes náš server na Cloudflare rovnou ke Groq. Nic neukládáme a neplatíme za drahé vlastní modely, takže cena může zůstat nízko.</p>
-<p class="doc-cta"><a class="btn btn-light" href="https://github.com/GedeonDrapak/hlas/releases/latest/download/Hlas-mac-arm64.dmg" data-ev="download-mac">Stáhnout Hlas zdarma</a> <a class="btn btn-glass" href="/#pricing">Hlas Cloud za 35 € ročně</a></p>
+<p class="doc-note">Ceny bez DPH z oficiálních ceníků, ověřeno 14. a 15. 11. 2026, přepočet kurzem ECB z 13. 11. 2026 (1 $ = 0,90481 €).</p></details>
+<div class="ctaband">
+  <div><h2>Vyzkoušej Hlas zdarma</h2><p>4 MB, Mac i Windows. Hlas Cloud 7 dní zdarma bez karty.</p></div>
+  <div class="ctaband-b"><a class="btn btn-light" href="https://github.com/GedeonDrapak/hlas/releases/latest/download/Hlas-mac-arm64.dmg" data-ev="download-mac">Stáhnout pro Mac</a><a class="btn btn-glass" href="/#pricing">Ceník</a></div>
+</div>
 <h2>Srovnání po jednom</h2>
-<ul><li><a href="/srovnani/hlas-vs-wispr-flow/">Hlas vs Wispr Flow</a></li><li><a href="/srovnani/hlas-vs-superwhisper/">Hlas vs Superwhisper</a></li><li><a href="/srovnani/hlas-vs-willow/">Hlas vs Willow</a></li><li><a href="/srovnani/hlas-vs-aqua-voice/">Hlas vs Aqua Voice</a></li><li><a href="/srovnani/hlas-vs-macwhisper/">Hlas vs MacWhisper</a></li><li><a href="/srovnani/hlas-vs-voiceink/">Hlas vs VoiceInk</a></li><li><a href="/srovnani/hlas-vs-spokenly/">Hlas vs Spokenly</a></li></ul>
+<div class="chips"><a class="chip" href="/srovnani/hlas-vs-wispr-flow/">Hlas vs Wispr Flow</a><a class="chip" href="/srovnani/hlas-vs-superwhisper/">Hlas vs Superwhisper</a><a class="chip" href="/srovnani/hlas-vs-willow/">Hlas vs Willow</a><a class="chip" href="/srovnani/hlas-vs-aqua-voice/">Hlas vs Aqua Voice</a><a class="chip" href="/srovnani/hlas-vs-macwhisper/">Hlas vs MacWhisper</a><a class="chip" href="/srovnani/hlas-vs-voiceink/">Hlas vs VoiceInk</a><a class="chip" href="/srovnani/hlas-vs-spokenly/">Hlas vs Spokenly</a></div>
+<script src="/compare.js?v=4984efd1" defer></script>
   <p class="doc-updated">Aktualizováno 15. 11. 2026</p>
 </main>
 <footer class="wrap footer">

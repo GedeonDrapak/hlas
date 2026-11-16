@@ -1,3 +1,4 @@
+import { costChart, featureGrid, howItWorks, verdict, faqAccordion, keyCalculator, ctaBand, eur } from './visual.mjs';
 // "Hlas vs X" comparison pages and the "cheapest dictation app" page, Czech and English.
 // Prices come from COMPETITORS in pages.mjs (official pricing pages, checked 14-15 November 2026).
 // Only claims we can back up: prices and plans from that table, and the offline column only
@@ -9,7 +10,7 @@ const num = (s) => parseFloat(String(s).replace(',', '.'));
 // slug, display name, offline mode (null = not stated by us), and what the other app does better.
 export const VS = [
   {
-    key: 'Wispr Flow', slug: 'hlas-vs-wispr-flow',
+    key: 'Wispr Flow', plans: [{ n: 'Wispr Flow', y: 130.29 }], slug: 'hlas-vs-wispr-flow',
     offline: { cs: 'Ne, cloudová služba', en: 'No, cloud service' },
     better: {
       cs: 'Wispr Flow je hotová cloudová služba s propracovaným přepisováním do čistého textu a s bezplatným tarifem s týdenními limity. Pokud vám nevadí 12 až 15 $ měsíčně a chcete jednu službu na všech zařízeních, dává smysl.',
@@ -21,7 +22,7 @@ export const VS = [
     },
   },
   {
-    key: 'Superwhisper', slug: 'hlas-vs-superwhisper',
+    key: 'Superwhisper', plans: [{ n: 'Superwhisper Pro', y: 76.90 }, { n: { cs: 'Superwhisper doživotně', en: 'Superwhisper lifetime' }, o: 226.19 }], slug: 'hlas-vs-superwhisper',
     offline: { cs: 'Ano, lokální Whisper', en: 'Yes, local Whisper' },
     better: {
       cs: 'Superwhisper má jednorázovou doživotní licenci (249,99 $), hodně režimů a nastavení a dlouhou historii na Macu. Pokud chcete platit jen jednou a hrát si s režimy, je to silná volba.',
@@ -33,7 +34,7 @@ export const VS = [
     },
   },
   {
-    key: 'Willow', slug: 'hlas-vs-willow',
+    key: 'Willow', plans: [{ n: 'Willow Pro', y: 130.29 }], slug: 'hlas-vs-willow',
     offline: null,
     better: {
       cs: 'Willow je cloudová diktovací služba se zkušební verzí a tarifem Pro. Pokud vám vyhovuje její styl a nevadí 12 $ měsíčně při roční platbě, zůstaňte u ní.',
@@ -45,7 +46,7 @@ export const VS = [
     },
   },
   {
-    key: 'Aqua Voice', slug: 'hlas-vs-aqua-voice',
+    key: 'Aqua Voice', plans: [{ n: 'Aqua Voice Pro', y: 108.58 }], slug: 'hlas-vs-aqua-voice',
     offline: null,
     better: {
       cs: 'Aqua Voice má bezplatných 2 000 slov, tarify Pro a Max a 70% slevu pro studenty. Pro studenta může vyjít levně.',
@@ -57,7 +58,7 @@ export const VS = [
     },
   },
   {
-    key: 'MacWhisper', slug: 'hlas-vs-macwhisper',
+    key: 'MacWhisper', plans: [{ n: 'MacWhisper Pro', o: 64.00 }], slug: 'hlas-vs-macwhisper',
     offline: { cs: 'Ano, lokální Whisper', en: 'Yes, local Whisper' },
     better: {
       cs: 'MacWhisper je zaměřený na přepis souborů a schůzek: nahrávky, titulky, export. Pokud přepisujete hlavně hotové nahrávky, je pro to stavěný. Pro jednou zaplatíte 64 €.',
@@ -69,7 +70,7 @@ export const VS = [
     },
   },
   {
-    key: 'VoiceInk', slug: 'hlas-vs-voiceink',
+    key: 'VoiceInk', plans: [{ n: 'VoiceInk', o: 22.62 }], slug: 'hlas-vs-voiceink',
     offline: { cs: 'Ano, lokální modely', en: 'Yes, local models' },
     better: {
       cs: 'VoiceInk je open source a placená verze stojí 25 $ jednou za jeden Mac. Pokud chcete jednorázovou platbu a lokální přepis, je to férová nabídka.',
@@ -81,7 +82,7 @@ export const VS = [
     },
   },
   {
-    key: 'Spokenly', slug: 'hlas-vs-spokenly',
+    key: 'Spokenly', plans: [{ n: 'Spokenly Pro', y: 130.29 }, { n: 'Spokenly Local+', o: 26.24 }], slug: 'hlas-vs-spokenly',
     offline: { cs: 'Ano, lokální modely', en: 'Yes, local models' },
     better: {
       cs: 'Spokenly běží na Macu, Windows, Linuxu, iOS i Androidu a má jednorázovou licenci Local+ za 29 $. Pokud diktujete i z telefonu, pokryje víc zařízení.',
@@ -95,7 +96,7 @@ export const VS = [
 ];
 
 export function vsPages(ctx) {
-  const { COMPETITORS, shell, qa, faqLd, pair, esc, DMG } = ctx;
+  const { COMPETITORS, shell, qa, faqLd, pair, esc, DMG, CMPV } = ctx;
   const hlas = COMPETITORS.find((c) => c.name === 'Hlas');
   const fmt = (n, cs) => (cs ? n.toFixed(2).replace('.', ',') : n.toFixed(2));
   const csBase = '/srovnani/';
@@ -136,11 +137,49 @@ ${row(cs ? 'Poznámka' : 'Note', esc(hlas.note[code]), esc(c.note[code]))}
         description: once ? (cs ? `${v.key} za ${c.paid.cs}, nebo Hlas zdarma pro lokální diktování a Hlas Cloud za 35 € ročně. Srovnání ceny, offline režimu a kdy je lepší která aplikace.` : `${v.key} at ${c.paid.en}, or Hlas free for local dictation and Hlas Cloud at €35 a year. Price, offline mode and when each app is the better pick.`) : (cs ? `${v.key} za ${c.year} € ročně, nebo Hlas Cloud za 35 € (o ${save} % méně) a lokální diktování zdarma. Srovnání ceny, offline režimu a kdy je lepší která aplikace.` : `${v.key} at €${c.yearEn} a year, or Hlas Cloud at €35 (${save} % less) plus free local dictation. Price, offline mode and when each app is the better pick.`),
         h1: `Hlas vs ${v.key}`,
         lead: once ? (cs ? `${esc(v.key)} stojí <b>${esc(c.paid.cs)}</b>. Hlas je pro lokální diktování <b>zdarma</b> a neomezený cloud bez klíčů stojí 35 € ročně. Níž je férové srovnání včetně toho, kdy je lepší ${esc(v.key)}.` : `${esc(v.key)} costs <b>${esc(c.paid.en)}</b>. Hlas is <b>free</b> for local dictation, and unlimited cloud without keys is €35 a year. Below is a fair comparison, including when ${esc(v.key)} is the better pick.`) : cs ? `Hlas Cloud stojí <b>35 € ročně</b>, ${esc(v.key)} vychází na <b>${esc(c.year)} € ročně</b>. To je zhruba o ${save} % méně, a lokální diktování v Hlasu je navíc zdarma. Níž je férové srovnání včetně toho, kdy je lepší ${esc(v.key)}.` : `Hlas Cloud costs <b>€35 a year</b>, ${esc(v.key)} comes to <b>€${esc(c.yearEn)} a year</b>. That is about ${save} % less, and local dictation in Hlas is free on top. Below is a fair comparison, including when ${esc(v.key)} is the better pick.`,
-        body: `${table}
-<p class="doc-note">${cs ? `Ceny bez DPH z oficiálních ceníků, ověřeno 14. a 15. 11. 2026. Přepočet kurzem ECB z 13. 11. 2026, 1 $ = 0,90481 €. <a href="${c.url}" rel="nofollow noopener">Ceník ${esc(v.key)}</a>.` : `Prices without VAT from the official pricing pages, checked 14-15 November 2026. Converted at the ECB rate of 13 November 2026, $1 = €0.90481. <a href="${c.url}" rel="nofollow noopener">${esc(v.key)} pricing</a>.`}</p>
-${qa(items)}
-${cta(cs)}
-<p><a href="${cs ? csBase : enBase}">${cs ? 'Srovnání všech diktovacích aplikací' : 'All dictation apps compared'}</a> · <a href="${cs ? '/nejlevnejsi-diktovani/' : '/en/cheapest-dictation-app/'}">${cs ? 'Nejlevnější aplikace na diktování' : 'Cheapest dictation app'}</a></p>`,
+        body: (() => {
+          const nm = (x) => (typeof x === 'string' ? x : x[code]);
+          const rows = [
+            { name: cs ? 'Hlas lokálně' : 'Hlas local', me: true, y: 0 },
+            { name: 'Hlas Cloud', me: true, y: HLAS_YEAR },
+            ...v.plans.map((pl) => ({ name: nm(pl.n), y: pl.y, o: pl.o })),
+          ];
+          const main = v.plans[0];
+          const otherBig = main.o != null ? `${eur(main.o, cs)} €` : `${eur(main.y, cs)} €`;
+          const otherSub = main.o != null ? (cs ? 'jednou za licenci' : 'once, for a licence') : (cs ? 'ročně' : 'a year');
+          const saveYear = main.y ? main.y - HLAS_YEAR : 0;
+          const hasOnce = v.plans.some((pl) => pl.o != null);
+          const off = v.offline ? (/^(Ano|Yes)/.test(v.offline[code]) ? ['yes', v.offline[code]] : ['no', v.offline[code]]) : ['dash', cs ? 'Výrobce neuvádí' : 'Not stated by the maker'];
+          const feats = [
+            [cs ? 'Přepis offline, zvuk neopustí počítač' : 'Offline, audio stays on your computer', ['yes', cs ? 'Ano, whisper.cpp' : 'Yes, whisper.cpp'], off],
+            [cs ? 'Bezplatná verze' : 'Free version', ['yes', cs ? 'Ano, bez limitu' : 'Yes, no limit'], ['yes', c.free[code]]],
+            [cs ? 'Jednorázová licence' : 'One-time licence', ['dash', cs ? 'Není potřeba, lokálně zdarma' : 'Not needed, free locally'], hasOnce ? ['yes', v.plans.filter((pl) => pl.o != null).map((pl) => eur(pl.o, cs) + ' €').join(', ')] : ['dash', cs ? 'Jen předplatné' : 'Subscription only']],
+            [cs ? 'Cloud za rok' : 'Cloud per year', ['yes', '35 €'], v.plans.some((pl) => pl.y) ? ['yes', eur(v.plans.find((pl) => pl.y).y, cs) + ' €'] : ['dash', cs ? 'Nenabízí předplatné' : 'No subscription']],
+            [cs ? 'Ladění pro češtinu a slovenštinu' : 'Tuned for Czech and Slovak', ['yes', cs ? 'Slovník, symboly, zalomení' : 'Vocabulary, symbols, line breaks'], ['dash', cs ? 'Obecný model' : 'General model']],
+          ];
+          return `<div class="vs-cards">
+  <div class="vs-card me"><p class="vs-k">Hlas</p><p class="vs-big">0 €</p><p class="vs-sub">${cs ? 'lokálně, navždy' : 'locally, forever'}</p><p class="vs-alt">Hlas Cloud <b>35 €</b> ${cs ? 'ročně' : 'a year'}</p></div>
+  <span class="vs-badge">VS</span>
+  <div class="vs-card"><p class="vs-k">${esc(v.key)}</p><p class="vs-big">${otherBig}</p><p class="vs-sub">${otherSub}</p><p class="vs-alt">${esc(c.free[code])}</p></div>
+</div>
+${saveYear > 0 ? `<p class="vs-save">${cs ? `S Hlas Cloud ušetříš <b>${eur(saveYear, cs)} € ročně</b>, za 3 roky <b>${eur(saveYear * 3, cs)} €</b>.` : `With Hlas Cloud you save <b>€${eur(saveYear, cs)} a year</b>, <b>€${eur(saveYear * 3, cs)}</b> over 3 years.`}</p>` : ''}
+<h2>${cs ? 'Kolik zaplatíš celkem' : 'What you pay in total'}</h2>
+${costChart(rows, cs, { title: cs ? `Hlas a ${v.key}: celkové náklady` : `Hlas and ${v.key}: total cost` })}
+<h2>${cs ? 'Co umí' : 'What you get'}</h2>
+${featureGrid(v.key, feats, cs)}
+<h2>${cs ? 'Jak Hlas funguje' : 'How Hlas works'}</h2>
+${howItWorks(cs)}
+<h2>${cs ? 'Kterou vybrat' : 'Which one to pick'}</h2>
+${verdict(v.key, v.better[code], v.pickHlas[code], cs)}
+<h2>${cs ? 'Časté otázky' : 'Questions'}</h2>
+${faqAccordion(items)}
+<details class="more"><summary>${cs ? 'Podrobná tabulka a zdroje cen' : 'Detailed table and price sources'}</summary>${table}
+<p class="doc-note">${cs ? `Ceny bez DPH z oficiálních ceníků, ověřeno 14. a 15. 11. 2026. Přepočet kurzem ECB z 13. 11. 2026, 1 $ = 0,90481 €. <a href="${c.url}" rel="nofollow noopener">Ceník ${esc(v.key)}</a>.` : `Prices without VAT from the official pricing pages, checked 14-15 November 2026. Converted at the ECB rate of 13 November 2026, $1 = €0.90481. <a href="${c.url}" rel="nofollow noopener">${esc(v.key)} pricing</a>.`}</p></details>
+${ctaBand(cs, DMG)}
+<h2>${cs ? 'Další srovnání' : 'More comparisons'}</h2>
+<div class="chips">${VS.filter((x) => x !== v).map((x) => `<a class="chip" href="${(cs ? csBase : enBase) + x.slug}/">Hlas vs ${esc(x.key)}</a>`).join('')}<a class="chip" href="${cs ? '/nejlevnejsi-diktovani/' : '/en/cheapest-dictation-app/'}">${cs ? 'Nejlevnější diktování' : 'Cheapest dictation'}</a><a class="chip" href="${cs ? csBase : enBase}">${cs ? 'Všechny aplikace' : 'All apps'}</a></div>
+<script src="/compare.js?v=${CMPV}" defer></script>`;
+        })(),
         jsonld: [faqLd(items)],
       });
     }
@@ -190,12 +229,32 @@ ${cta(cs)}
       description: cs ? 'Diktování zdarma, jednorázově, nebo předplatné? Srovnání cen Hlas, Superwhisper, Wispr Flow, VoiceInk, MacWhisper a dalších. Nejlevnější neomezený cloud: 35 € ročně.' : 'Free, one-time or subscription? Prices of Hlas, Superwhisper, Wispr Flow, VoiceInk, MacWhisper and others. Cheapest unlimited cloud: €35 a year.',
       h1: cs ? 'Nejlevnější aplikace na diktování' : 'The cheapest dictation app',
       lead: cs ? 'Diktovat jde <b>úplně zdarma</b> (lokální Whisper), <b>jednou za licenci</b>, nebo <b>předplatným</b>. Nejlevnější neomezený cloud bez API klíčů je Hlas Cloud za 35 € ročně. Tady jsou všechny možnosti seřazené podle ceny.' : 'You can dictate <b>for free</b> (local Whisper), <b>with a one-time licence</b> or <b>on a subscription</b>. The cheapest unlimited cloud without API keys is Hlas Cloud at €35 a year. Here are all the options, sorted by price.',
-      body: `${tables}
-<p class="doc-note">${cs ? 'Ceny bez DPH z oficiálních ceníků, ověřeno 14. a 15. 11. 2026, přepočet kurzem ECB z 13. 11. 2026 (1 $ = 0,90481 €).' : 'Prices without VAT from the official pricing pages, checked 14-15 November 2026, converted at the ECB rate of 13 November 2026 ($1 = €0.90481).'}</p>
-${qa(items)}
-${cta(cs)}
+      body: `<div class="stats3">
+  <div class="st me"><b>0 €</b><span>${cs ? 'Nejlevnější vůbec: lokální diktování v Hlasu, bez limitu' : 'Cheapest of all: local dictation in Hlas, no limit'}</span></div>
+  <div class="st"><b>${cs ? '22,62 €' : '€22.62'}</b><span>${cs ? 'Nejlevnější jednorázová licence: VoiceInk (25 $)' : 'Cheapest one-time licence: VoiceInk ($25)'}</span></div>
+  <div class="st me"><b>${cs ? '35 € / rok' : '€35 / year'}</b><span>${cs ? 'Nejlevnější neomezený cloud bez API klíčů: Hlas Cloud' : 'Cheapest unlimited cloud without API keys: Hlas Cloud'}</span></div>
+</div>
+<h2>${cs ? 'Všechny aplikace podle ceny' : 'Every app by price'}</h2>
+${costChart([
+  { name: cs ? 'Hlas lokálně' : 'Hlas local', me: true, y: 0 },
+  { name: 'Hlas Cloud', me: true, y: 35 },
+  { name: 'VoiceInk', o: 22.62 }, { name: 'Spokenly Local+', o: 26.24 }, { name: 'MacWhisper Pro', o: 64 },
+  { name: cs ? 'Superwhisper doživotně' : 'Superwhisper lifetime', o: 226.19 }, { name: 'Superwhisper Pro', y: 76.9 },
+  { name: 'Aqua Voice Pro', y: 108.58 }, { name: 'Wispr Flow', y: 130.29 }, { name: 'Willow Pro', y: 130.29 }, { name: 'Spokenly Pro', y: 130.29 },
+], cs, { title: cs ? 'Celkové náklady podle aplikace' : 'Total cost by app', start: 3 })}
+<h2>${cs ? 'Vlastní klíč, nebo Hlas Cloud?' : 'Own key or Hlas Cloud?'}</h2>
+<p>${cs ? 'Vlastní API klíč je při běžném diktování levnější než jakékoli předplatné. Hlas Cloud se vyplatí, když diktuješ hodně (od zhruba 2,7 hodiny denně je levnější) nebo nechceš řešit klíče.' : 'Your own API key is cheaper than any subscription for everyday dictation. Hlas Cloud pays off when you dictate a lot (from about 2.7 hours a day it is cheaper) or do not want to deal with keys.'}</p>
+${keyCalculator(cs)}
+<h2>${cs ? 'Jak Hlas funguje' : 'How Hlas works'}</h2>
+${howItWorks(cs)}
+<h2>${cs ? 'Časté otázky' : 'Questions'}</h2>
+${faqAccordion(items)}
+<details class="more"><summary>${cs ? 'Tabulky podle typu licence a zdroje cen' : 'Tables by licence type and price sources'}</summary>${tables}
+<p class="doc-note">${cs ? 'Ceny bez DPH z oficiálních ceníků, ověřeno 14. a 15. 11. 2026, přepočet kurzem ECB z 13. 11. 2026 (1 $ = 0,90481 €).' : 'Prices without VAT from the official pricing pages, checked 14-15 November 2026, converted at the ECB rate of 13 November 2026 ($1 = €0.90481).'}</p></details>
+${ctaBand(cs, DMG)}
 <h2>${cs ? 'Srovnání po jednom' : 'Head to head'}</h2>
-<ul>${VS.map((v) => `<li><a href="${(cs ? csBase : enBase) + v.slug}/">Hlas vs ${esc(v.key)}</a></li>`).join('')}</ul>`,
+<div class="chips">${VS.map((v) => `<a class="chip" href="${(cs ? csBase : enBase) + v.slug}/">Hlas vs ${esc(v.key)}</a>`).join('')}</div>
+<script src="/compare.js?v=${CMPV}" defer></script>`,
       jsonld: [faqLd(items)],
     });
   }

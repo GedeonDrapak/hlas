@@ -25,7 +25,7 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" as="font" type="font/otf" href="/assets/fonts/Satoshi-Medium.otf" crossorigin>
-<link rel="stylesheet" href="/styles.css?v=f042bfad">
+<link rel="stylesheet" href="/styles.css?v=46bb6b03">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Hlas","alternateName":"hlas.dev","url":"https://hlas.dev/"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Hlas","item":"https://hlas.dev/en/"},{"@type":"ListItem","position":2,"name":"The cheapest dictation app","item":"https://hlas.dev/en/cheapest-dictation-app/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the cheapest dictation app?","acceptedAnswer":{"@type":"Answer","text":"Fully free is local dictation: Hlas (Mac and Windows) transcribes with Whisper on your computer, with no limit and no account. The cheapest unlimited subscription without API keys is Hlas Cloud at €35 a year. The cheapest one-time licence is VoiceInk at $25."}},{"@type":"Question","name":"Is there free speech to text for Mac and Windows?","acceptedAnswer":{"@type":"Answer","text":"Yes. Hlas is free for local use on Mac and Windows and works offline. Czech, Slovak and English get extra tuning; 60+ more languages run through Whisper large-v3."}},{"@type":"Question","name":"How much does transcription with my own API key cost?","acceptedAnswer":{"@type":"Answer","text":"Groq charges about $0.04 per hour of audio for whisper-large-v3-turbo. An hour of dictation a day comes to roughly $1.20 a month. Hlas supports your own Groq or OpenAI key for free."}},{"@type":"Question","name":"Why is Hlas Cloud so cheap?","acceptedAnswer":{"@type":"Answer","text":"Hlas is a small native app with no extra infrastructure: audio goes through our server on Cloudflare straight to Groq. We store nothing and do not pay for expensive custom models, so the price can stay low."}}]}</script>
@@ -43,17 +43,92 @@
   <p class="doc-crumb"><a href="/en/">Hlas</a> / The cheapest dictation app</p>
   <h1>The cheapest dictation app</h1>
   <p class="doc-lead">You can dictate <b>for free</b> (local Whisper), <b>with a one-time licence</b> or <b>on a subscription</b>. The cheapest unlimited cloud without API keys is Hlas Cloud at €35 a year. Here are all the options, sorted by price.</p>
-  <h2>Free</h2><div class="doc-table"><table><thead><tr><th>App</th><th>What you get</th><th>€ without VAT</th></tr></thead><tbody><tr class="me"><th scope="row">Hlas</th><td>Local transcription with no limit, or your own API key. Mac and Windows.</td><td>0</td></tr><tr><th scope="row">Šeptem</th><td>Free, you only pay Groq for your own key. Czech, beta, Mac.</td><td>0</td></tr><tr><th scope="row">VoiceInk</th><td>Open source if you build it yourself.</td><td>0</td></tr></tbody></table></div>
+  <div class="stats3">
+  <div class="st me"><b>0 €</b><span>Cheapest of all: local dictation in Hlas, no limit</span></div>
+  <div class="st"><b>€22.62</b><span>Cheapest one-time licence: VoiceInk ($25)</span></div>
+  <div class="st me"><b>€35 / year</b><span>Cheapest unlimited cloud without API keys: Hlas Cloud</span></div>
+</div>
+<h2>Every app by price</h2>
+<figure class="costchart" data-cs="0" aria-label="Total cost by app">
+  <figcaption><span>Total cost by app</span><span class="cc-toggle" role="group" aria-label="Period"><button type="button" data-n="1">1 year</button><button type="button" data-n="3" aria-pressed="true">3 years</button><button type="button" data-n="5">5 years</button></span></figcaption>
+  <div class="cc-rows"><div class="cc-row me" data-y="0" data-o="">
+  <span class="cc-name">Hlas local<small>free</small></span>
+  <span class="cc-track"><i style="--w:0.0%"></i></span>
+  <b class="cc-val">free</b>
+</div><div class="cc-row" data-y="0" data-o="22.62">
+  <span class="cc-name">VoiceInk<small>one-time</small></span>
+  <span class="cc-track"><i style="--w:5.8%"></i></span>
+  <b class="cc-val">22.62 €</b>
+</div><div class="cc-row" data-y="0" data-o="26.24">
+  <span class="cc-name">Spokenly Local+<small>one-time</small></span>
+  <span class="cc-track"><i style="--w:6.7%"></i></span>
+  <b class="cc-val">26.24 €</b>
+</div><div class="cc-row" data-y="0" data-o="64">
+  <span class="cc-name">MacWhisper Pro<small>one-time</small></span>
+  <span class="cc-track"><i style="--w:16.4%"></i></span>
+  <b class="cc-val">64 €</b>
+</div><div class="cc-row me" data-y="35" data-o="">
+  <span class="cc-name">Hlas Cloud<small>subscription</small></span>
+  <span class="cc-track"><i style="--w:26.9%"></i></span>
+  <b class="cc-val">105 €</b>
+</div><div class="cc-row" data-y="0" data-o="226.19">
+  <span class="cc-name">Superwhisper lifetime<small>one-time</small></span>
+  <span class="cc-track"><i style="--w:57.9%"></i></span>
+  <b class="cc-val">226.19 €</b>
+</div><div class="cc-row" data-y="76.9" data-o="">
+  <span class="cc-name">Superwhisper Pro<small>subscription</small></span>
+  <span class="cc-track"><i style="--w:59.0%"></i></span>
+  <b class="cc-val">230.70 €</b>
+</div><div class="cc-row" data-y="108.58" data-o="">
+  <span class="cc-name">Aqua Voice Pro<small>subscription</small></span>
+  <span class="cc-track"><i style="--w:83.3%"></i></span>
+  <b class="cc-val">325.74 €</b>
+</div><div class="cc-row" data-y="130.29" data-o="">
+  <span class="cc-name">Wispr Flow<small>subscription</small></span>
+  <span class="cc-track"><i style="--w:100.0%"></i></span>
+  <b class="cc-val">390.87 €</b>
+</div><div class="cc-row" data-y="130.29" data-o="">
+  <span class="cc-name">Willow Pro<small>subscription</small></span>
+  <span class="cc-track"><i style="--w:100.0%"></i></span>
+  <b class="cc-val">390.87 €</b>
+</div><div class="cc-row" data-y="130.29" data-o="">
+  <span class="cc-name">Spokenly Pro<small>subscription</small></span>
+  <span class="cc-track"><i style="--w:100.0%"></i></span>
+  <b class="cc-val">390.87 €</b>
+</div></div>
+  <p class="cc-foot">Prices without VAT. Subscriptions are multiplied by the years, a one-time licence is paid once.</p>
+</figure>
+<h2>Own key or Hlas Cloud?</h2>
+<p>Your own API key is cheaper than any subscription for everyday dictation. Hlas Cloud pays off when you dictate a lot (from about 2.7 hours a day it is cheaper) or do not want to deal with keys.</p>
+<div class="calc" data-cs="0">
+  <label for="calc-min">How much do you dictate a day? <b class="calc-min-out">30 min</b></label>
+  <input id="calc-min" type="range" min="5" max="240" step="5" value="30">
+  <div class="calc-out">
+    <div><small>Your own Groq key</small><b class="calc-key">0,54 €</b><span>a month, paid to Groq</span></div>
+    <div class="me"><small>Hlas Cloud</small><b>2,92 €</b><span>a month, no keys, no word limit</span></div>
+    <div><small>Locally in Hlas</small><b>0 €</b><span>free, offline, needs a 547 MB model</span></div>
+  </div>
+  <p class="cc-foot">Groq charges $0.04 per hour of audio for whisper-large-v3-turbo ($1 = €0.90481), 30 days a month. Hlas Cloud is €35 a year without VAT.</p>
+</div>
+<h2>How Hlas works</h2>
+<div class="how">
+  <div class="how-step"><div class="how-vis"><span class="kc">fn</span></div><h3>1. Hold Fn</h3><p>In any app: Slack, Mail, Word, the browser.</p></div>
+  <div class="how-step"><div class="how-vis"><span class="wavebars" aria-hidden="true"><i style="--d:0.00s"></i><i style="--d:0.07s"></i><i style="--d:0.14s"></i><i style="--d:0.21s"></i><i style="--d:0.28s"></i><i style="--d:0.35s"></i><i style="--d:0.42s"></i><i style="--d:0.49s"></i><i style="--d:0.56s"></i><i style="--d:0.63s"></i><i style="--d:0.70s"></i><i style="--d:0.77s"></i><i style="--d:0.84s"></i></span></div><h3>2. Speak</h3><p>Naturally, in Czech, English or 60+ other languages.</p></div>
+  <div class="how-step"><div class="how-vis"><span class="typed">Hi Peter, sending the final version.<i></i></span></div><h3>3. Let go, done</h3><p>The text lands where your cursor is, with full punctuation.</p></div>
+</div>
+<h2>Questions</h2>
+<div class="faqx"><details open><summary>What is the cheapest dictation app?</summary><p>Fully free is local dictation: Hlas (Mac and Windows) transcribes with Whisper on your computer, with no limit and no account. The cheapest unlimited subscription without API keys is Hlas Cloud at €35 a year. The cheapest one-time licence is VoiceInk at $25.</p></details><details><summary>Is there free speech to text for Mac and Windows?</summary><p>Yes. Hlas is free for local use on Mac and Windows and works offline. Czech, Slovak and English get extra tuning; 60+ more languages run through Whisper large-v3.</p></details><details><summary>How much does transcription with my own API key cost?</summary><p>Groq charges about $0.04 per hour of audio for whisper-large-v3-turbo. An hour of dictation a day comes to roughly $1.20 a month. Hlas supports your own Groq or OpenAI key for free.</p></details><details><summary>Why is Hlas Cloud so cheap?</summary><p>Hlas is a small native app with no extra infrastructure: audio goes through our server on Cloudflare straight to Groq. We store nothing and do not pay for expensive custom models, so the price can stay low.</p></details></div>
+<details class="more"><summary>Tables by licence type and price sources</summary><h2>Free</h2><div class="doc-table"><table><thead><tr><th>App</th><th>What you get</th><th>€ without VAT</th></tr></thead><tbody><tr class="me"><th scope="row">Hlas</th><td>Local transcription with no limit, or your own API key. Mac and Windows.</td><td>0</td></tr><tr><th scope="row">Šeptem</th><td>Free, you only pay Groq for your own key. Czech, beta, Mac.</td><td>0</td></tr><tr><th scope="row">VoiceInk</th><td>Open source if you build it yourself.</td><td>0</td></tr></tbody></table></div>
 <h2>One-time</h2><div class="doc-table"><table><thead><tr><th>App</th><th>What you get</th><th>€ without VAT</th></tr></thead><tbody><tr><th scope="row">VoiceInk</th><td>$25 for 1 Mac</td><td>22.62</td></tr><tr><th scope="row">Spokenly Local+</th><td>$29 once</td><td>26.24</td></tr><tr><th scope="row">MacWhisper Pro</th><td>€64 once, mainly file transcription</td><td>64.00</td></tr><tr><th scope="row">Superwhisper</th><td>$249.99 lifetime</td><td>226.19</td></tr></tbody></table></div>
 <h2>Subscription per year</h2><div class="doc-table"><table><thead><tr><th>App</th><th>What you get</th><th>€ without VAT</th></tr></thead><tbody><tr class="me"><th scope="row">Hlas Cloud</th><td>Unlimited (fair use 3 h a day), no keys or model</td><td>35.00</td></tr><tr><th scope="row">Superwhisper Pro</th><td>84,99 $</td><td>76.90</td></tr><tr><th scope="row">Aqua Voice Pro</th><td>$10 a month yearly</td><td>108.58</td></tr><tr><th scope="row">Wispr Flow</th><td>$12 a month yearly</td><td>130.29</td></tr><tr><th scope="row">Willow Pro</th><td>$12 a month yearly</td><td>130.29</td></tr><tr><th scope="row">Spokenly Pro</th><td>$144 a year</td><td>130.29</td></tr></tbody></table></div>
-<p class="doc-note">Prices without VAT from the official pricing pages, checked 14-15 November 2026, converted at the ECB rate of 13 November 2026 ($1 = €0.90481).</p>
-<h2>What is the cheapest dictation app?</h2><p>Fully free is local dictation: Hlas (Mac and Windows) transcribes with Whisper on your computer, with no limit and no account. The cheapest unlimited subscription without API keys is Hlas Cloud at €35 a year. The cheapest one-time licence is VoiceInk at $25.</p>
-<h2>Is there free speech to text for Mac and Windows?</h2><p>Yes. Hlas is free for local use on Mac and Windows and works offline. Czech, Slovak and English get extra tuning; 60+ more languages run through Whisper large-v3.</p>
-<h2>How much does transcription with my own API key cost?</h2><p>Groq charges about $0.04 per hour of audio for whisper-large-v3-turbo. An hour of dictation a day comes to roughly $1.20 a month. Hlas supports your own Groq or OpenAI key for free.</p>
-<h2>Why is Hlas Cloud so cheap?</h2><p>Hlas is a small native app with no extra infrastructure: audio goes through our server on Cloudflare straight to Groq. We store nothing and do not pay for expensive custom models, so the price can stay low.</p>
-<p class="doc-cta"><a class="btn btn-light" href="https://github.com/GedeonDrapak/hlas/releases/latest/download/Hlas-mac-arm64.dmg" data-ev="download-mac">Download Hlas for free</a> <a class="btn btn-glass" href="/en/#pricing">Hlas Cloud, €35 a year</a></p>
+<p class="doc-note">Prices without VAT from the official pricing pages, checked 14-15 November 2026, converted at the ECB rate of 13 November 2026 ($1 = €0.90481).</p></details>
+<div class="ctaband">
+  <div><h2>Try Hlas for free</h2><p>4 MB, Mac and Windows. Hlas Cloud 7 days free, no card.</p></div>
+  <div class="ctaband-b"><a class="btn btn-light" href="https://github.com/GedeonDrapak/hlas/releases/latest/download/Hlas-mac-arm64.dmg" data-ev="download-mac">Download for Mac</a><a class="btn btn-glass" href="/en/#pricing">Pricing</a></div>
+</div>
 <h2>Head to head</h2>
-<ul><li><a href="/en/compare/hlas-vs-wispr-flow/">Hlas vs Wispr Flow</a></li><li><a href="/en/compare/hlas-vs-superwhisper/">Hlas vs Superwhisper</a></li><li><a href="/en/compare/hlas-vs-willow/">Hlas vs Willow</a></li><li><a href="/en/compare/hlas-vs-aqua-voice/">Hlas vs Aqua Voice</a></li><li><a href="/en/compare/hlas-vs-macwhisper/">Hlas vs MacWhisper</a></li><li><a href="/en/compare/hlas-vs-voiceink/">Hlas vs VoiceInk</a></li><li><a href="/en/compare/hlas-vs-spokenly/">Hlas vs Spokenly</a></li></ul>
+<div class="chips"><a class="chip" href="/en/compare/hlas-vs-wispr-flow/">Hlas vs Wispr Flow</a><a class="chip" href="/en/compare/hlas-vs-superwhisper/">Hlas vs Superwhisper</a><a class="chip" href="/en/compare/hlas-vs-willow/">Hlas vs Willow</a><a class="chip" href="/en/compare/hlas-vs-aqua-voice/">Hlas vs Aqua Voice</a><a class="chip" href="/en/compare/hlas-vs-macwhisper/">Hlas vs MacWhisper</a><a class="chip" href="/en/compare/hlas-vs-voiceink/">Hlas vs VoiceInk</a><a class="chip" href="/en/compare/hlas-vs-spokenly/">Hlas vs Spokenly</a></div>
+<script src="/compare.js?v=4984efd1" defer></script>
   <p class="doc-updated">Updated 15 November 2026</p>
 </main>
 <footer class="wrap footer">

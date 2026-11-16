@@ -16,6 +16,7 @@ const CSSV = hashOf('styles.css');
 const JSV = hashOf('app.js');
 const ORBV = hashOf('orb.js');
 const TRV = hashOf('track.js');
+const CMPV = hashOf('compare.js');
 
 // Analytics and ad pixels (see track.js). Empty ID = that tag is not loaded.
 // Cloudflare Web Analytics is cookieless and runs without a consent banner;
@@ -406,7 +407,7 @@ function main() {
     write(homePath(code), home(t, code, hreflang, dir, locales));
     built.push(homePath(code));
   }
-  const pages = contentPages({ locales, head, footer, langMenu, siteLinks, homePath, LANGS, SITE, UPDATED, VERSION, DMG, EXE, GITHUB, esc, logo });
+  const pages = contentPages({ locales, head, footer, langMenu, siteLinks, homePath, LANGS, SITE, UPDATED, VERSION, DMG, EXE, GITHUB, esc, logo, CMPV });
   for (const pg of pages) { write(pg.path, pg.html); built.push(pg.path); }
 
   // sitemap with hreflang clusters for the homepages and the cs/en page pairs
