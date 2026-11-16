@@ -34,8 +34,8 @@ const CONSENT_TEXT = {
   sk: { msg: 'Aby sme vedeli, ktoré reklamy fungujú, radi by sme použili Google Analytics a reklamné pixely. Súhlasíš?', yes: 'Povoliť', no: 'Odmietnuť', more: 'Súkromie' },
   en: { msg: 'To see which ads work, we would like to use Google Analytics and ad pixels. Is that OK?', yes: 'Allow', no: 'Decline', more: 'Privacy' },
 };
-const UPDATED = '2026-11-15';
-const VERSION = '0.6.0';
+const UPDATED = '2026-11-16';
+const VERSION = '0.6.1';
 const DMG = 'https://hlas.dev/download/Hlas-mac-arm64.dmg';
 const EXE = 'https://hlas.dev/download/Hlas-windows-x64-setup.exe';
 const CHECKOUT = 'https://buy.stripe.com/5kQ8wIdAe58W1YB1zI3Je00';

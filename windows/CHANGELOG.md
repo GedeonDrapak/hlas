@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.6.1 - 2026-11-16
 
 - "Check for updates" reads `https://hlas.dev/download/latest.json` instead of the GitHub releases API, and the privacy link opens hlas.dev.
 

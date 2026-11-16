@@ -1,6 +1,6 @@
 [package]
 name = "hlas"
-version = "0.6.0"
+version = "0.6.1"
 edition = "2021"
 description = "Ultra-minimal dictation for Windows. Hold a key, speak, release."
 authors = ["Gedeon Drapak"]
