@@ -667,3 +667,35 @@ h1 .mark .scribble path { fill:none; stroke:var(--brand); stroke-width:3.6; stro
   .how, .verdict, .stats3, .calc-out { grid-template-columns:1fr; }
 }
 @media (prefers-reduced-motion: reduce) { .kc, .wavebars i, .typed i, .cc-track i { animation:none; transition:none; } }
+
+/* ================= imagery on text pages ================= */
+/* Hills photo behind the page title, fading into the page. Absolute to the body, so no sideways overflow. */
+body { position:relative; }
+.doc-band { position:absolute; top:0; left:0; right:0; height:560px; z-index:-1; pointer-events:none;
+  background:linear-gradient(180deg, rgba(18,18,18,.78) 0%, rgba(18,18,18,.55) 45%, var(--bg) 100%), url('assets/hero.webp') center 62% / cover no-repeat; }
+.doc-crumb, .doc > h1, .doc-lead { position:relative; text-shadow:0 1px 18px rgba(0,0,0,.45); }
+
+/* Hlas price card on misty forest, competitor card plain */
+.vs-card.me { background:linear-gradient(160deg, rgba(10,22,16,.55), rgba(18,18,18,.88) 70%), url('assets/card-forest.webp') center 30% / cover no-repeat; }
+.vs-card:not(.me) { background:linear-gradient(160deg, rgba(25,25,25,.82), rgba(25,25,25,.94)), url('assets/card-mountain.webp') center 20% / cover no-repeat; }
+
+/* how-it-works: each step on its own landscape */
+.how-step:nth-child(1) .how-vis { background:linear-gradient(180deg, rgba(18,18,18,.15), rgba(18,18,18,.55)), url('assets/card-mountain.webp') center 25% / cover no-repeat; }
+.how-step:nth-child(2) .how-vis { background:linear-gradient(180deg, rgba(18,18,18,.1), rgba(18,18,18,.5)), url('assets/card-forest.webp') center 35% / cover no-repeat; }
+.how-step:nth-child(3) .how-vis { background:linear-gradient(180deg, rgba(18,18,18,.1), rgba(18,18,18,.5)), url('assets/card-sea.webp') center 30% / cover no-repeat; }
+.how-vis { height:130px; }
+
+/* verdict: Hlas side on forest */
+.vd.me { background:linear-gradient(160deg, rgba(10,22,16,.6), rgba(18,18,18,.9) 75%), url('assets/card-forest.webp') center 40% / cover no-repeat; }
+
+/* stat tiles on cheapest page */
+.stats3 .st:nth-child(1) { background:linear-gradient(160deg, rgba(10,22,16,.55), rgba(18,18,18,.9) 75%), url('assets/card-forest.webp') center 30% / cover no-repeat; }
+.stats3 .st:nth-child(2) { background:linear-gradient(160deg, rgba(25,25,25,.7), rgba(25,25,25,.92) 75%), url('assets/card-dunes.webp') center 30% / cover no-repeat; }
+.stats3 .st:nth-child(3) { background:linear-gradient(160deg, rgba(10,22,16,.55), rgba(18,18,18,.9) 75%), url('assets/card-sea.webp') center 30% / cover no-repeat; }
+
+/* CTA band on the black-and-white waves */
+.ctaband { position:relative; overflow:hidden; padding:34px 28px; background:linear-gradient(90deg, rgba(14,14,14,.92) 0%, rgba(14,14,14,.6) 55%, rgba(14,14,14,.25) 100%), url('assets/cta.webp') center 62% / cover no-repeat; }
+
+/* calculator: Hlas Cloud tile on forest */
+.calc-out > div.me { background:linear-gradient(160deg, rgba(10,22,16,.5), rgba(18,18,18,.85)), url('assets/card-forest.webp') center 40% / cover no-repeat; }
+@media (max-width:720px) { .doc-band { height:440px; } }

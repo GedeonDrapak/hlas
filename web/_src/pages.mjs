@@ -38,6 +38,7 @@ export function contentPages(ctx) {
   ${langMenu(code, locales, t.nav.language)}
   <a class="btn btn-light btn-sm" href="${DMG}">${esc(t.nav.download)}</a>
 </header>
+<div class="doc-band" aria-hidden="true"></div>
 <main class="doc wrap">
   <p class="doc-crumb"><a href="${homePath(code)}">Hlas</a> / ${esc(h1)}</p>
   <h1>${esc(h1)}</h1>
@@ -280,6 +281,7 @@ ${qa(items)}`,
     const t = locales.sk;
     const html = `${head({ code: 'sk', hreflang: 'sk', dir: 'ltr', title: 'Diktovanie po slovensky na Macu: návod | Hlas', description: 'Ako diktovať po slovensky na Macu: vstavané diktovanie v macOS alebo Hlas s modelom Whisper, ktorý funguje offline a má ladenie pre slovenčinu.', path: '/sk/diktovanie-slovensky-mac/', alternates: [['sk', '/sk/diktovanie-slovensky-mac/'], ['x-default', '/en/czech-dictation-mac/']] })}
 <header class="nav scrolled" id="nav"><a class="brand" href="/sk/" aria-label="Hlas">${logo()}<span>HLAS</span></a><nav class="nav-links"><a href="/sk/#features">${esc(t.nav.features)}</a><a href="/sk/#pricing">${esc(t.nav.pricing)}</a></nav>${langMenu('sk', locales, t.nav.language)}<a class="btn btn-light btn-sm" href="${DMG}">${esc(t.nav.download)}</a></header>
+<div class="doc-band" aria-hidden="true"></div>
 <main class="doc wrap">
 <p class="doc-crumb"><a href="/sk/">Hlas</a> / Diktovanie po slovensky na Macu</p>
 <h1>Ako diktovať po slovensky na Macu</h1>
