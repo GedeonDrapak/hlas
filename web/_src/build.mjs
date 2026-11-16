@@ -23,10 +23,10 @@ const CMPV = hashOf('compare.js');
 // the others load only after the visitor allows them.
 const TRACKING = {
   cf: '586b59f2a7b045148c0891288b0a3b46', // Cloudflare Web Analytics, site hlas.dev
-  ga4: '', // Google Analytics 4 measurement ID, G-XXXXXXXXXX
+  ga4: 'G-QQKYKWLJBP', // Google Analytics 4 measurement ID, G-XXXXXXXXXX
   gads: '', // Google Ads tag, AW-XXXXXXXXXX
   gadsLabels: {}, // Google Ads conversion labels by data-ev name, e.g. { checkout: 'AbC-123' }
-  meta: '', // Meta pixel (dataset) ID
+  meta: '886821251143864', // Meta pixel (dataset) ID
 };
 const CONSENT_TAGS = !!(TRACKING.ga4 || TRACKING.gads || TRACKING.meta);
 const CONSENT_TEXT = {
