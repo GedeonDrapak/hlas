@@ -40,7 +40,7 @@
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Hlas needs the microphone to transcribe your speech.</string>
 	<key>SUFeedURL</key>
-	<string>https://github.com/GedeonDrapak/hlas/releases/latest/download/appcast.xml</string>
+	<string>https://hlas.dev/download/appcast.xml</string>
 	<key>SUPublicEDKey</key>
 	<string>6Ab9JNiS3L8luwAnSEoH2BrHAOQNKaE57ChtjHagWuI=</string>
 </dict>
