@@ -551,3 +551,8 @@ h1 .mark .scribble path { fill:none; stroke:var(--brand); stroke-width:3.6; stro
 @keyframes scribble { to { stroke-dashoffset:0; } }
 @media (prefers-reduced-motion: reduce) { h1 .mark .scribble path { stroke-dashoffset:0; animation:none; } }
 @media (max-width:560px) { h1 br { display:none; } }
+.doc-cta { display:flex; gap:10px; flex-wrap:wrap; margin:34px 0 10px; }
+.doc tr.me th, .doc tr.me td { color:var(--fg); }
+/* Buttons inside text pages keep their own colours over the .doc link style. */
+.doc .btn-light, .doc .btn-light:hover { color:#111; text-decoration:none; }
+.doc .btn-glass { text-decoration:none; }

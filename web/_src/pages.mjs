@@ -1,3 +1,4 @@
+import { vsPages, vsLinks } from './vs.mjs';
 // Content pages (Czech and English). Every page answers its question in the
 // first sentence under each heading, so people and AI assistants can quote it.
 import { readFileSync } from 'node:fs';
@@ -77,6 +78,7 @@ ${footer(t, code)}
       lead: cs ? 'Hlas Cloud za 35 € ročně je o 54 až 73 % levnější než roční předplatné Superwhisperu, Wispr Flow a Willow. Jednorázové licence a bezplatné aplikace ale existují taky, proto je tu máme všechny.' : 'Hlas Cloud at €35 a year is 54 to 73 % cheaper than the yearly plans of Superwhisper, Wispr Flow and Willow. One-time licences and free apps exist too, so they are all listed here.',
       body: `<div class="doc-table"><table><thead><tr><th>${cs ? 'Aplikace' : 'App'}</th><th>${cs ? 'Zdarma' : 'Free'}</th><th>${cs ? 'Placený tarif' : 'Paid plan'}</th><th>${cs ? 'Za rok v €' : 'Per year in €'}</th><th>${cs ? 'Poznámka' : 'Note'}</th></tr></thead><tbody>${rows}</tbody></table></div>
 <p class="doc-note">${cs ? 'Ceny bez DPH, načtené z oficiálních ceníků 15. 11. 2026 (Willow 14. 11. 2026). Přepočet kurzem ECB z 13. 11. 2026, 1 $ = 0,90481 €. Roční ekvivalent Wispr Flow a Spokenly Pro je 12 $ krát 12. Najdete-li chybu, napište nám na GitHub.' : 'Prices without VAT, taken from the official pricing pages on 15 November 2026 (Willow on 14 November 2026). Converted at the ECB rate of 13 November 2026, $1 = €0.90481. The yearly figure for Wispr Flow and Spokenly Pro is $12 times 12. Spot a mistake? Tell us on GitHub.'}</p>
+${vsLinks(cs)}
 ${qa(items)}`,
       jsonld: [faqLd(items)],
     });
@@ -91,14 +93,14 @@ ${qa(items)}`,
       ['Co se děje s Hlas Cloud?', 'Zvuk jde z aplikace přes náš server na Cloudflare ke Groq, který ho přepíše a vrátí text. Náš server zvuk ani text neukládá. Ukládáme jen to, co je nutné pro předplatné: identifikátor zákazníka ve Stripe, e-mail, šifrovaný licenční klíč a počet sekund zvuku za den kvůli férovému užívání.'],
       ['Měříte návštěvnost?', 'Návštěvnost měří Cloudflare Web Analytics. Neukládá cookies ani IP adresu a nesleduje tě napříč weby. Navíc, když na webu klikneš na stažení nebo předplatné, náš server přičte jedničku k počítadlu tlačítka a jazyka stránky, bez jakéhokoli identifikátoru. Google Analytics a reklamní pixely (Google, Meta) se načtou jen tehdy, když jim v liště dole na stránce dáš souhlas; volbu změníš odkazem Cookies v patičce. U zkušební verze Hlas Cloud si aplikace vytvoří náhodné ID instalace, aby šla zkouška spustit jen jednou; ukládáme z něj jen otisk (hash). Stejný otisk slouží k limitu 5 počítačů na jedno předplatné.'],
       ['Kdo zpracovává údaje?', 'Správcem je Eden Makers s.r.o., IČO 24518344, Plzeňská 3352/156, 150 00 Praha. Zpracovateli jsou Stripe (platby a faktury), Cloudflare (server, databáze a měření návštěvnosti bez cookies) a Groq (přepis zvuku v Hlas Cloud). S tvým souhlasem také Google (Analytics, Ads) a Meta (reklamní pixel).'],
-      ['Používá web cookies?', 'Ne. Web nepoužívá analytiku s cookies ani sledovací skripty. Platební stránka Stripe má vlastní podmínky.'],
+      ['Používá web cookies?', 'Bez tvého souhlasu ne: měření návštěvnosti přes Cloudflare cookies nepoužívá. Google Analytics a reklamní pixely, které cookies používají, se načtou jen se souhlasem. Platební stránka Stripe má vlastní podmínky.'],
     ] : [
       ['What does Hlas send from my computer in local mode?', 'Nothing. Transcription runs through whisper.cpp on your computer, with no account and no telemetry. The only network actions are the one-time model download and the Sparkle update check, which the app asks about once.'],
       ['What happens with my own API key?', 'Audio goes straight to the provider you picked (Groq, OpenAI, Soniox or Fish Audio) under their terms. The key is stored in the system keychain and never passes through our servers.'],
       ['What happens with Hlas Cloud?', 'Audio goes from the app through our server on Cloudflare to Groq, which transcribes it and returns the text. Our server stores neither the audio nor the text. We only keep what the subscription needs: the Stripe customer ID, your email, an encrypted licence key and the seconds of audio per day for fair use.'],
       ['Do you track visitors?', 'Visits are measured with Cloudflare Web Analytics. It sets no cookies, stores no IP address and does not follow you across sites. When you click download or subscribe, our server also adds one to a counter for that button and the page language, with no identifier. Google Analytics and ad pixels (Google, Meta) load only if you allow them in the bar at the bottom of the page; change your choice with the Cookies link in the footer. For the Hlas Cloud trial the app creates a random install ID so a trial can start only once; we keep only a hash of it. The same hash enforces the limit of 5 computers per subscription.'],
       ['Who processes the data?', 'The controller is Eden Makers s.r.o., company ID 24518344, Plzeňská 3352/156, 150 00 Prague, Czech Republic. Processors are Stripe (payments and invoices), Cloudflare (server, database and cookieless visit measurement) and Groq (audio transcription in Hlas Cloud). With your consent also Google (Analytics, Ads) and Meta (ad pixel).'],
-      ['Does the website use cookies?', 'No. The site uses no cookie-based analytics or tracking scripts. The Stripe checkout page has its own terms.'],
+      ['Does the website use cookies?', 'Not without your consent: the Cloudflare visit measurement uses no cookies. Google Analytics and ad pixels, which do use cookies, load only if you allow them. The Stripe checkout page has its own terms.'],
     ];
     shell({
       code, path: cs ? '/soukromi/' : '/en/privacy/', alternates: pair('/soukromi/', '/en/privacy/'),
@@ -286,5 +288,6 @@ ${footer(t, 'sk')}
     pages.push({ path: '/sk/diktovanie-slovensky-mac/', html, alternates: [['sk', '/sk/diktovanie-slovensky-mac/']] });
   }
 
+  vsPages({ COMPETITORS, shell, qa, faqLd, pair, esc, DMG });
   return pages;
 }
