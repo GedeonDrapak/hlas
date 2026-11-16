@@ -3,7 +3,7 @@ import AppKit
 #if canImport(Sparkle)
 import Sparkle
 
-/// Sparkle updates from the GitHub release feed (SUFeedURL in project.yml).
+/// Sparkle updates from the feed on hlas.dev (SUFeedURL in project.yml).
 /// Sparkle asks once, on the second launch, before it checks on its own; the
 /// check is a plain download of appcast.xml and sends no system profile.
 @MainActor final class Updater: ObservableObject {

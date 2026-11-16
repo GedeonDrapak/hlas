@@ -25,8 +25,8 @@ trap 'rm -f "$NOTES"' EXIT
 {
   print "## Download\n"
   print "| | |\n|---|---|"
-  print "| **macOS** (Apple Silicon, macOS 15+) | [Hlas-mac-arm64.dmg](https://github.com/GedeonDrapak/hlas/releases/download/v$VERSION/Hlas-mac-arm64.dmg) |"
-  print "| **Windows** (x64, 10 and 11) | [Hlas-windows-x64-setup.exe](https://github.com/GedeonDrapak/hlas/releases/download/v$VERSION/Hlas-windows-x64-setup.exe) (attached by CI a few minutes after publishing) |\n"
+  print "| **macOS** (Apple Silicon, macOS 15+) | [Hlas-mac-arm64.dmg](https://hlas.dev/download/Hlas-mac-arm64.dmg) |"
+  print "| **Windows** (x64, 10 and 11) | [Hlas-windows-x64-setup.exe](https://hlas.dev/download/Hlas-windows-x64-setup.exe) (on hlas.dev a few minutes after publishing) |\n"
   print "## macOS\n"
   section CHANGELOG.md "$VERSION"
   WIN="$(section windows/CHANGELOG.md "$VERSION")"
@@ -36,3 +36,4 @@ trap 'rm -f "$NOTES"' EXIT
 gh release create "v$VERSION" --target "$(git rev-parse HEAD)" --title "Hlas $VERSION" --notes-file "$NOTES" \
   "$DMG" "$DMG.sha256" dist/Hlas-mac-arm64.dmg dist/appcast.xml
 print "Published v$VERSION. Windows files follow from GitHub Actions."
+print "Once the Windows installer is attached, run tools/site-downloads.sh to put both installers and the update feeds on hlas.dev."

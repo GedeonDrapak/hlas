@@ -1,5 +1,5 @@
 //! Manual "Check for updates". Hlas never phones home on its own: this runs
-//! only when the user clicks it, and talks only to the GitHub releases API.
+//! only when the user clicks it, and reads one small file from hlas.dev.
 
 use super::wide;
 use crate::core::version;
@@ -9,38 +9,22 @@ use windows::Win32::UI::WindowsAndMessaging::{
     MessageBoxW, IDYES, MB_ICONINFORMATION, MB_OK, MB_SETFOREGROUND, MB_TOPMOST, MB_YESNO,
 };
 
-/// One repository ships both apps. A release counts for Windows only once its
-/// Windows installer is attached (CI adds it a few minutes after publishing).
-const API: &str = "https://api.github.com/repos/GedeonDrapak/hlas/releases?per_page=10";
-const WINDOWS_ASSET: &str = "Hlas-windows-x64-setup.exe";
+/// Written by tools/site-downloads.sh next to the installers:
+/// `{"version": "0.6.0", "page": "https://hlas.dev/#download"}`. The version is
+/// the newest one whose Windows installer is on hlas.dev.
+const LATEST: &str = "https://hlas.dev/download/latest.json";
 
 fn latest() -> anyhow::Result<(String, String)> {
     let client = reqwest::blocking::Client::builder()
         .timeout(Duration::from_secs(15))
         .user_agent(concat!("Hlas-Windows/", env!("CARGO_PKG_VERSION")))
         .build()?;
-    let releases: serde_json::Value = client.get(API).send()?.error_for_status()?.json()?;
-    let newest = releases
-        .as_array()
-        .into_iter()
-        .flatten()
-        .filter(|r| !r["draft"].as_bool().unwrap_or(false))
-        .filter(|r| {
-            r["assets"]
-                .as_array()
-                .into_iter()
-                .flatten()
-                .any(|a| a["name"].as_str() == Some(WINDOWS_ASSET))
-        })
-        .filter_map(|r| {
-            Some((
-                r["tag_name"].as_str()?.to_string(),
-                r["html_url"].as_str()?.to_string(),
-            ))
-        })
-        .max_by_key(|(tag, _)| version::parse(tag).unwrap_or((0, 0, 0)))
-        .ok_or_else(|| anyhow::anyhow!("no releases"))?;
-    Ok(newest)
+    let latest: serde_json::Value = client.get(LATEST).send()?.error_for_status()?.json()?;
+    let version = latest["version"]
+        .as_str()
+        .ok_or_else(|| anyhow::anyhow!("no version in latest.json"))?;
+    let page = latest["page"].as_str().unwrap_or("https://hlas.dev/");
+    Ok((version.to_string(), page.to_string()))
 }
 
 fn message(text: &str, ask: bool) -> bool {

@@ -63,7 +63,7 @@ targets:
           - CFBundleURLName: com.gedeon.hlas
             CFBundleURLSchemes: [hlas]
         # Sparkle: one feed for every release, attached by tools/publish.sh.
-        SUFeedURL: https://github.com/GedeonDrapak/hlas/releases/latest/download/appcast.xml
+        SUFeedURL: https://hlas.dev/download/appcast.xml
         SUPublicEDKey: 6Ab9JNiS3L8luwAnSEoH2BrHAOQNKaE57ChtjHagWuI=
     settings:
       base:

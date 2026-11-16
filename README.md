@@ -141,7 +141,13 @@ Then publish one release for both apps:
 tools/publish.sh
 ```
 
-It checks that `project.yml` and `windows/Cargo.toml` carry the same version, creates the GitHub release with the DMG, its checksum, the stable-named `Hlas-mac-arm64.dmg` and `appcast.xml`, and takes the notes from both changelogs. Publishing triggers the Windows workflow, which builds the same tag and attaches `Hlas-windows-x64-setup.exe` a few minutes later.
+Once CI has attached the Windows installer, put both installers and the update feeds on hlas.dev, which is where the website, Sparkle and the Windows update check look:
+
+```bash
+tools/site-downloads.sh
+```
+
+`publish.sh` checks that `project.yml` and `windows/Cargo.toml` carry the same version, creates the GitHub release with the DMG, its checksum, the stable-named `Hlas-mac-arm64.dmg` and `appcast.xml`, and takes the notes from both changelogs. Publishing triggers the Windows workflow, which builds the same tag and attaches `Hlas-windows-x64-setup.exe` a few minutes later.
 
 ## Design
 

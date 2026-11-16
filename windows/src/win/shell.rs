@@ -21,4 +21,4 @@ pub fn open(target: &str) {
 }
 
 pub const MIC_PRIVACY: &str = "ms-settings:privacy-microphone";
-pub const PRIVACY: &str = "https://github.com/GedeonDrapak/hlas/blob/master/docs/PRIVACY.md";
+pub const PRIVACY: &str = "https://hlas.dev/en/privacy/";

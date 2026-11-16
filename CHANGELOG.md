@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Updates come from hlas.dev instead of GitHub (`https://hlas.dev/download/appcast.xml`), so they keep working when GitHub is unreachable.
+
 ## 0.6.0 - 2026-11-15
 
 - Hlas Cloud: unlimited dictation and Smart text for EUR 35 a year with a licence key instead of an API key. Settings > Engine > Hlas Cloud shows the licence status, "Get Hlas Cloud" and "Manage subscription". The page after payment opens Hlas through `hlas://activate` and fills in the key.

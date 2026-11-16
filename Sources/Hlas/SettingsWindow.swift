@@ -222,7 +222,7 @@ struct SettingsView: View {
                     .toggleStyle(.switch)
                     .tint(DS.brand)
                     if Updater.shared.isAvailable {
-                        toggle("Check for updates automatically", detail: "Once a day, from GitHub. Nothing about you is sent.",
+                        toggle("Check for updates automatically", detail: "Once a day, from hlas.dev. Nothing about you is sent.",
                                isOn: Binding(get: { updater.automaticallyChecks }, set: { updater.automaticallyChecks = $0 }))
                     }
                     if let launchAtLoginError {

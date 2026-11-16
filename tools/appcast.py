@@ -13,6 +13,9 @@ from email.utils import formatdate
 from pathlib import Path
 
 REPO = "https://github.com/GedeonDrapak/hlas"
+# Installers and the feed are served from hlas.dev (web/download/), so updates
+# keep working when GitHub is unreachable.
+DOWNLOADS = "https://hlas.dev/download"
 ROOT = Path(__file__).resolve().parent.parent
 
 
@@ -34,7 +37,7 @@ def main() -> None:
 <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
   <channel>
     <title>Hlas</title>
-    <link>{REPO}</link>
+    <link>https://hlas.dev</link>
     <item>
       <title>Hlas {version}</title>
       <pubDate>{formatdate(usegmt=True)}</pubDate>
@@ -42,7 +45,7 @@ def main() -> None:
       <sparkle:shortVersionString>{version}</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
       <description><![CDATA[{changelog_html(version)}]]></description>
-      <enclosure url="{REPO}/releases/download/v{version}/{dmg}" type="application/octet-stream" {signature.strip()}/>
+      <enclosure url="{DOWNLOADS}/{dmg}" type="application/octet-stream" {signature.strip()}/>
     </item>
   </channel>
 </rss>""")

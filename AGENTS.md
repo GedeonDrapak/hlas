@@ -10,7 +10,8 @@ Hlas for macOS lives at the root; Hlas for Windows (Rust) lives in `windows/` wi
 `AGENTS.md`. One version number for both: `project.yml` and `windows/Cargo.toml` must match,
 `tools/publish.sh` refuses otherwise. Release flow: `make release` (signed, notarized DMG +
 Sparkle `appcast.xml`) -> `tools/publish.sh` (one GitHub release) -> the Windows workflow attaches
-the Windows installer. The macOS sources are the source of truth for shared text rules:
+the Windows installer -> `tools/site-downloads.sh` (installers, `appcast.xml` and
+`latest.json` onto hlas.dev, which the site and both update checks use). The macOS sources are the source of truth for shared text rules:
 after changing them run `python3 windows/tools/shared_from_mac.py .` and commit the JSON.
 
 ## Read first

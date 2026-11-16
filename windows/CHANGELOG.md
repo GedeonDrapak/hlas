@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- "Check for updates" reads `https://hlas.dev/download/latest.json` instead of the GitHub releases API, and the privacy link opens hlas.dev.
+
 ## 0.6.0 - 2026-11-15
 
 - Hlas Cloud on Windows: a fourth engine that dictates through the Hlas Cloud subscription (EUR 35 a year) with a licence key instead of an API key. Smart text goes through Hlas Cloud too when it is the engine.
