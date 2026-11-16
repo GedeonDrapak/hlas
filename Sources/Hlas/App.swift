@@ -43,14 +43,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         _ = History.shared
         _ = Updater.shared
         let env = ProcessInfo.processInfo.environment
-        if env["HLAS_OPEN"] == nil, OnboardingWindow.shouldShow || env["HLAS_STEP"] != nil {
+        if env["HLAS_OPEN"] == "onboarding" || (env["HLAS_OPEN"] == nil && (OnboardingWindow.shouldShow || env["HLAS_STEP"] != nil)) {
             OnboardingWindow.shared.show()
         } else if env["HLAS_OPEN"] == nil {
             Task { await requestPermissions() }
         }
 
         _ = coordinator
-        // Visual QA: HLAS_OPEN=settings opens Settings at launch.
+        // Visual QA: HLAS_OPEN=settings opens Settings at launch, HLAS_OPEN=onboarding
+        // the welcome tour (with HLAS_STEP), both without the hotkey.
         if ProcessInfo.processInfo.environment["HLAS_OPEN"] == "settings" { openSettings() }
         hotkey.onPress = { [weak self] in self?.coordinator.press() }
         hotkey.onRelease = { [weak self] in self?.coordinator.release() }

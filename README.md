@@ -1,36 +1,36 @@
 <div align="center">
 
-![Hlas - Dictation. Not typing.](docs/assets/hero.png)
+![Hlas: dictation for Mac and Windows that just works](docs/assets/hero.jpg)
 
 # Hlas
 
-**Dictation. Not typing.**
+**Dictation for Mac and Windows that just works.**
 
-Hold **Fn** · speak Czech or English · release - text lands at your cursor, in any app.
-No subscription. No account. No telemetry. No cloud unless you ask for it.
+Hold **Fn**, speak, release. The text lands where your cursor is, in any app.
+A 4 MB app that idles at 60 MB of RAM. Local mode is free, offline and needs no account.
 
-### [⬇︎ Download for macOS](https://github.com/GedeonDrapak/hlas/releases/latest/download/Hlas-mac-arm64.dmg) &nbsp;·&nbsp; Apple Silicon, macOS 15+
+### [⬇︎ Download for Mac](https://github.com/GedeonDrapak/hlas/releases/latest/download/Hlas-mac-arm64.dmg) &nbsp;·&nbsp; [Windows (beta)](https://github.com/GedeonDrapak/hlas/releases/latest/download/Hlas-windows-x64-setup.exe)
 
-[Windows (beta)](https://github.com/GedeonDrapak/hlas/releases/latest/download/Hlas-windows-x64-setup.exe) &nbsp;·&nbsp; x64, Windows 10 and 11, not code-signed yet
+Apple Silicon, macOS 15+ · Windows 10 and 11 (x64, installer not code-signed yet)
 
-**[Website](https://gedeondrapak.github.io/hlas/)** · [First run](#first-run) · [Build from source](#build) · [Privacy](docs/PRIVACY.md)
+**[hlas.dev](https://hlas.dev)** · [Hlas Cloud](https://hlas.dev/en/#pricing) · [Compare](https://hlas.dev/en/compare/) · [First run](#first-run) · [Build from source](#build) · [Privacy](docs/PRIVACY.md)
 
 </div>
 
 ---
 
-Built in Prague as a personal replacement for the $8-15/month dictation apps - because every one of them treats Czech as an afterthought, and none of them should cost more than your music streaming.
+Built in Prague as a replacement for the $8-15 a month dictation apps, because every one of them treats Czech as an afterthought. Hlas speaks Czech, Slovak, English and the rest of the 60+ Whisper languages, and the website is in 40 of them.
 
 ## First run
 
-1. Open the DMG, drag **Hlas** onto **Applications** and open it. macOS asks once whether to open an app downloaded from the internet: click **Open**.
-2. Grant **Microphone** (to hear you) and **Accessibility** (for the Fn hotkey and the paste). The welcome tour walks you through both.
-3. Hold **Fn**, speak, release.
+1. **Mac:** open the DMG, drag **Hlas** onto **Applications** and open it. Grant **Microphone** (to hear you) and **Accessibility** (for the Fn key and the paste). The welcome tour walks you through both.
+2. **Windows:** run the installer. Windows SmartScreen warns because the installer is not code-signed yet: click **More info**, then **Run anyway**. The default key is **Right Ctrl**.
+3. Hold the key, speak, release.
 
-Hlas is signed with the Developer ID certificate of Eden Makers s.r.o. and notarized by Apple. Every line of source is in this repo, and you can [build it yourself](#build) in two minutes.
+Hlas for Mac is signed with the Developer ID certificate of Eden Makers s.r.o. and notarized by Apple. Every line of source is in this repo, and you can [build it yourself](#build).
 
 <details>
-<summary>Updating from a build before October 2026?</summary>
+<summary>Updating from a Mac build before October 2026?</summary>
 
 Earlier builds were signed with a personal development certificate. The new signature makes macOS treat Hlas as a new app for permissions, so it asks for Microphone and Accessibility once more. If the Fn key does nothing after updating, remove Hlas from **System Settings → Privacy & Security → Accessibility** with the minus button and grant it again, or run:
 
@@ -39,49 +39,44 @@ tccutil reset Accessibility com.gedeon.hlas
 ```
 </details>
 
+<p align="center"><img src="docs/assets/pill.jpg" alt="The Hlas recording pill" width="800"></p>
+
+## Three ways to transcribe
+
+- **Local (default, free):** whisper.cpp `large-v3-turbo` on your computer (Metal on Mac). One-time 547 MB download, works offline, audio never leaves your computer. The model loads when you dictate and unloads after 3 minutes idle.
+- **Hlas Cloud (35 € a year):** no keys, no model download, no word limit. 7 days free, no card. [Details on hlas.dev](https://hlas.dev/en/#pricing).
+- **Your own key:** Groq (~$0.04 per hour of audio), OpenAI, Soniox or Fish Audio. Keys stay in the macOS Keychain or Windows Credential Manager.
+
 ## Stop renting your own voice
 
-| | **Hlas** | Superwhisper | Wispr Flow | Willow |
-|---|---|---|---|---|
-| Price | **free / ~$3/mo API** | $8.49/mo | $15/mo | $15/mo |
-| Local + private | **yes** | yes | no (cloud + screenshots) | partial |
-| Czech quality | **Whisper large-v3 class** | good | uncontrollable | weak |
-| App size | **~4 MB** | ~1 GB+ | heavy | heavy |
-| Idle RAM | **~60 MB** (model auto-unloads) | ~800 MB | heavy | ? |
-| Account required | **no** | yes | yes | yes |
+<p align="center"><img src="docs/assets/cost.png" alt="Total cost over three years: Hlas local free, Hlas Cloud 105 €, Superwhisper Pro 230.70 €, Wispr Flow 390.87 €" width="720"></p>
+
+Prices without VAT, as listed by each vendor. Side-by-side pages for [Wispr Flow](https://hlas.dev/en/compare/hlas-vs-wispr-flow/), [Superwhisper](https://hlas.dev/en/compare/hlas-vs-superwhisper/), [MacWhisper](https://hlas.dev/en/compare/hlas-vs-macwhisper/), [VoiceInk](https://hlas.dev/en/compare/hlas-vs-voiceink/) and others, plus [the cheapest dictation app](https://hlas.dev/en/cheapest-dictation-app/), are on hlas.dev.
 
 ## One key. That's the whole UI.
 
-- **Hold Fn** → speak → release: text pastes into the focused app.
-- **Quick-tap Fn**: latches hands-free recording; tap again to stop.
-- Menu bar Hlas icon → **Settings**, custom **Vocabulary**, searchable **History**.
+- **Hold Fn** (Right Ctrl on Windows), speak, release: the text pastes into the focused app.
+- **Quick-tap** the key to latch hands-free recording; tap again to stop. **Esc** cancels.
+- **Ctrl+Option+V** (Mac) pastes your last dictation again.
+- Tray or menu bar icon: **Settings**, **Vocabulary** and a searchable **History**.
 
-![Onboarding](docs/assets/screens.png)
+| Mac | Windows |
+|---|---|
+| ![Hlas for Mac, welcome tour](docs/assets/mac-welcome.png) | ![Hlas for Windows, welcome tour](docs/assets/windows-welcome.png) |
+| ![Hlas for Mac, Transcript or Smart text](docs/assets/mac-your-text.png) | ![Hlas for Windows, settings](docs/assets/windows-settings.png) |
 
 ## Transcript or Smart text
 
-Choose **Transcript** to insert speech recognition output directly, or **Smart text** to automatically clean up dictation and choose readable paragraphs or lists. No style presets to manage. Smart text uses your OpenAI or Groq key and sends text to that provider, including when audio transcription is Local. Hold Option when pressing Fn to use Transcript for one dictation.
+Choose **Transcript** to insert exactly what you said, with punctuation, or **Smart text** to clean up the dictation and pick readable paragraphs or lists. No style presets to manage. Smart text sends the text to OpenAI or Groq with your key, or runs through Hlas Cloud. Hold Option (Shift on Windows) when you start to get a plain transcript once.
 
-Originals remain available in History. You can reprocess an entry, define exact text replacements, disable new history or choose its expiration. The menu also imports audio files up to 10 minutes long. Dictation pastes automatically at the current caret. If you switch to another application during processing, Hlas keeps the result available for copying.
-
-## Your engine, your call
-
-- **Local (default):** whisper.cpp `large-v3-turbo-q5_0` on Metal. One-time 547 MB download, ~1 GB RAM while loaded, auto-unloads after 3 min idle. Works offline. Audio never leaves your Mac.
-- **Groq API:** whisper-large-v3-turbo - ~$0.04/hr of audio (≈ $1-3/mo at heavy use). BYOK.
-- **OpenAI API:** gpt-transcribe - ~$0.27/hr, best accuracy + vocabulary support. BYOK.
-- **Soniox API:** stt-async-v5 - ~$0.10/hr, vocabulary as context terms. Upload is deleted right after transcription. BYOK.
-- **Fish Audio API:** transcribe-1-pro - ~$0.36/hr, automatic language detection, no vocabulary support. BYOK.
-
-![Engine and language selection](docs/assets/engines.png)
+Filler sounds (ehm, eee, hmm, um) and spoken line breaks ("nový řádek", "nový odstavec") are handled offline, in both modes. Originals stay in History. You can reprocess an entry, define exact text replacements, turn history off or set it to expire. The Mac menu also imports audio files up to 10 minutes long.
 
 ## A whole dictation app. Four megabytes.
 
-![Settings and recording pill](docs/assets/settings-pill.png)
-
-- **~60 MB idle RAM** - Whisper loads on demand, unloads after 3 minutes of silence.
-- **Keys live in macOS Keychain** - history stays local and is clearable anytime.
-- **Bluetooth-safe** - pin the built-in mic so AirPods never wreck dictation quality.
-- **Czech-first** - priming prompts for cs/sk/en, Czech-QWERTZ-safe paste.
+- **~60 MB idle RAM:** Whisper loads on demand and unloads after 3 minutes of silence.
+- **Keys stay in the system keychain:** history stays local and can be cleared anytime.
+- **Bluetooth-safe:** pin the built-in mic so AirPods never wreck dictation quality.
+- **Czech-first:** priming prompts for cs/sk/en, Czech-QWERTZ-safe paste.
 
 ## Repository layout
 
@@ -115,7 +110,8 @@ Hlas supports Apple Silicon Macs running macOS 15 or later. Intel Macs are inten
 
 ## Privacy
 
-- **Local:** audio stays on the Mac and is processed by the downloaded Whisper model.
+- **Local:** audio stays on the computer and is processed by the downloaded Whisper model.
+- **Hlas Cloud:** audio goes to api.hlas.dev, which passes it to Groq for transcription. Audio is not stored. Details in [Privacy](https://hlas.dev/en/privacy/).
 - **Groq / OpenAI / Soniox / Fish Audio:** audio is sent directly to the provider selected in Settings for transcription.
 - API keys are stored in macOS Keychain. History stays local and can be cleared in Settings.
 
