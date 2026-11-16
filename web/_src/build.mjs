@@ -111,11 +111,15 @@ const SCRIBBLE = (() => {
 // Thai or Japanese) gets the scribble. Each space-separated token animates in.
 function headline(text) {
   let i = 0;
-  return text.split('|').map((line) => (line.trim().match(/[^\s*]*\*[^*]+\*\S*|\S+/g) || []).map((tok) => {
+  const lines = text.split('|');
+  // On phones the <br> is hidden and the lines reflow, so keep a space at the
+  // break, except after Chinese or Japanese where words are not space separated.
+  const join = (a) => (/[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\u3000-\u303f]$/u.test(a.trim()) ? '<br>' : ' <br>');
+  return lines.map((line) => (line.trim().match(/[^\s*]*\*[^*]+\*\S*|\S+/g) || []).map((tok) => {
     const m = tok.match(/^([^*]*)\*([^*]+)\*(.*)$/);
     const inner = m ? `${esc(m[1])}<span class="mark">${esc(m[2])}${SCRIBBLE}</span>${esc(m[3])}` : esc(tok);
     return `<span class="w" style="--i:${i++}">${inner}</span>`;
-  }).join(' ')).join('<br>');
+  }).join(' ')).map((html, k) => (k < lines.length - 1 ? html + join(lines[k]) : html)).join('');
 }
 
 export function head({ code, hreflang, dir, title, description, path, alternates, ogTitle, ogDescription, jsonld = [] }) {
