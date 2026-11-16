@@ -36,8 +36,8 @@ const CONSENT_TEXT = {
 };
 const UPDATED = '2026-11-15';
 const VERSION = '0.6.0';
-const DMG = 'https://github.com/GedeonDrapak/hlas/releases/latest/download/Hlas-mac-arm64.dmg';
-const EXE = 'https://github.com/GedeonDrapak/hlas/releases/latest/download/Hlas-windows-x64-setup.exe';
+const DMG = 'https://hlas.dev/download/Hlas-mac-arm64.dmg';
+const EXE = 'https://hlas.dev/download/Hlas-windows-x64-setup.exe';
 const CHECKOUT = 'https://buy.stripe.com/5kQ8wIdAe58W1YB1zI3Je00';
 const EVENTS = 'https://api.hlas.dev/v1/event';
 const PORTAL = 'https://billing.stripe.com/p/login/5kQ8wIdAe58W1YB1zI3Je00';

@@ -16,3 +16,6 @@ web/variants/
 web/assets/gen/
 # Internal launch checklist (tax, legal, costs)
 docs/LAUNCH.md
+
+# Installers served from hlas.dev, copied in at deploy time (not in git)
+web/download/

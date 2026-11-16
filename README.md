@@ -9,7 +9,7 @@
 Hold **Fn**, speak, release. The text lands where your cursor is, in any app.
 A 4 MB app that idles at 60 MB of RAM. Local mode is free, offline and needs no account.
 
-### [⬇︎ Download for Mac](https://github.com/GedeonDrapak/hlas/releases/latest/download/Hlas-mac-arm64.dmg) &nbsp;·&nbsp; [Windows (beta)](https://github.com/GedeonDrapak/hlas/releases/latest/download/Hlas-windows-x64-setup.exe)
+### [⬇︎ Download for Mac](https://hlas.dev/download/Hlas-mac-arm64.dmg) &nbsp;·&nbsp; [Windows (beta)](https://hlas.dev/download/Hlas-windows-x64-setup.exe)
 
 Apple Silicon, macOS 15+ · Windows 10 and 11 (x64, installer not code-signed yet)
 
