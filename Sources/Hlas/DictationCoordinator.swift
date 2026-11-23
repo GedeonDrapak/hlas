@@ -52,7 +52,9 @@ import HlasCore
         start()
     }
     func release() {
-        guard let pressedAt, Date().timeIntervalSince(pressedAt) >= 0.35 else { return }
+        guard let pressedAt else { return }
+        // A short tap latches hands-free recording, unless quick-tap is off.
+        if Settings.shared.quickTapEnabled, Date().timeIntervalSince(pressedAt) < 0.35 { return }
         self.pressedAt = nil
         stop()
     }

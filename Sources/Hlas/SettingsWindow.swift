@@ -54,7 +54,9 @@ struct SettingsView: View {
 
                 section("HOTKEY") {
                     HotkeyPicker()
-                    Text("Hold to dictate, quick-tap for hands-free. No Fn key on your keyboard? Pick a right-side modifier.")
+                    toggle("Quick-tap for hands-free", detail: "Tap \(settings.hotkey.shortName) briefly to keep recording without holding it. Tap again to stop.",
+                           isOn: $settings.quickTapEnabled)
+                    Text("Hold to dictate. No Fn key on your keyboard? Pick a right-side modifier.")
                         .font(DS.text(11)).foregroundStyle(DS.fg2)
                     Text("Ctrl+Option+V pastes your last dictation again.")
                         .font(DS.text(10)).foregroundStyle(DS.fg3)
