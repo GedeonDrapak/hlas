@@ -115,6 +115,11 @@ final class Settings: ObservableObject {
     @Published var hotkey: HotkeyChoice {
         didSet { d.set(hotkey.rawValue, forKey: "hotkey") }
     }
+    /// Quick-tap the hotkey to latch hands-free recording; tap again to stop.
+    /// Off: every release stops, however short the press.
+    @Published var quickTapEnabled: Bool {
+        didSet { d.set(quickTapEnabled, forKey: "quickTapEnabled") }
+    }
 
     @Published var outputMode: OutputMode {
         didSet { d.set(outputMode.rawValue, forKey: "outputMode") }
@@ -145,6 +150,7 @@ final class Settings: ObservableObject {
 
     private init() {
         hotkey = HotkeyChoice(rawValue: d.string(forKey: "hotkey") ?? "") ?? .fn
+        quickTapEnabled = d.object(forKey: "quickTapEnabled") as? Bool ?? true
         outputMode = OutputMode(rawValue: d.string(forKey: "outputMode") ?? "") ?? .transcript
         historyEnabled = d.object(forKey: "historyEnabled") as? Bool ?? true
         historyRetentionDays = d.object(forKey: "historyRetentionDays") as? Int ?? 0

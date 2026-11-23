@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- New hotkey choice: Fn + Control. Hold both to dictate, release either to stop. Pick it in Settings or the welcome tour.
+
 ## 0.6.1 - 2026-11-16
 
 - Updates come from hlas.dev instead of GitHub (`https://hlas.dev/download/appcast.xml`), so they keep working when GitHub is unreachable.

@@ -326,7 +326,9 @@ struct OnboardingView: View {
         VStack(alignment: .leading, spacing: 16) {
             stepHeader("Welcome to Hlas", "Your own dictation app. No subscription, no account, no cloud unless you ask for it.")
             featureRow("waveform", "**Hold \(settings.hotkey.shortName)** and speak Czech or English. Release - the text pastes at your cursor, in any app.")
-            featureRow("hand.tap", "**Quick-tap \(settings.hotkey.shortName)** to latch hands-free mode. Tap again to stop.")
+            if settings.quickTapEnabled {
+                featureRow("hand.tap", "**Quick-tap \(settings.hotkey.shortName)** to latch hands-free mode. Tap again to stop.")
+            }
             featureRow("lock", "Local by default - audio never leaves this Mac. Cloud engines are opt-in.")
             featureRow("bolt", "A small app that idles at ~60 MB RAM. The model loads on demand and unloads after inactivity.")
         }

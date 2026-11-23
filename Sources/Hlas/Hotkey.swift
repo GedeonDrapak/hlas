@@ -3,11 +3,12 @@ import AppKit
 /// User-selectable hold-to-talk key. Modifiers and F13-F19 only: they work on
 /// keyboards without Fn/Globe and never swallow a typing key.
 enum HotkeyChoice: String, CaseIterable {
-    case fn, rightOption, rightCommand, rightControl, f13, f14, f15, f16, f17, f18, f19
+    case fn, fnControl, rightOption, rightCommand, rightControl, f13, f14, f15, f16, f17, f18, f19
 
     var title: String {
         switch self {
         case .fn: return "Fn / Globe"
+        case .fnControl: return "Fn + Control"
         case .rightOption: return "Right Option"
         case .rightCommand: return "Right Command"
         case .rightControl: return "Right Control"
@@ -16,12 +17,19 @@ enum HotkeyChoice: String, CaseIterable {
     }
 
     /// Short name for inline copy ("Hold Fn and speak").
-    var shortName: String { self == .fn ? "Fn" : title }
+    var shortName: String {
+        switch self {
+        case .fn: return "Fn"
+        case .fnControl: return "Fn + Control"
+        default: return title
+        }
+    }
 
     var trigger: Hotkey.Trigger {
         // Device-dependent flag masks (NX_DEVICER*KEYMASK) tell right from left.
         switch self {
         case .fn: return .fnKey
+        case .fnControl: return .fnControl
         case .rightOption: return .modifier(keyCode: 61, deviceMask: 0x40)
         case .rightCommand: return .modifier(keyCode: 54, deviceMask: 0x10)
         case .rightControl: return .modifier(keyCode: 62, deviceMask: 0x2000)
@@ -42,6 +50,7 @@ enum HotkeyChoice: String, CaseIterable {
 final class Hotkey {
     enum Trigger {
         case fnKey                                      // flagsChanged, keycode 63
+        case fnControl                                  // Fn and either Control held together
         case modifier(keyCode: Int64, deviceMask: UInt64) // one side of a modifier pair
         case keyCode(Int64)                             // plain key hold (e.g. F13)
     }
@@ -127,6 +136,22 @@ final class Hotkey {
                 isDown = true
                 DispatchQueue.main.async { self.onPress?() }
             } else if !fnActive && isDown {
+                isDown = false
+                DispatchQueue.main.async { self.onRelease?() }
+            }
+        case .fnControl:
+            if type == .keyDown, isDown {
+                DispatchQueue.main.async { self.onChord?() }
+                break
+            }
+            // Fn (63), Left Control (59), Right Control (62). Other flagsChanged
+            // events are ignored so e.g. Shift can't start or stop a dictation.
+            guard type == .flagsChanged, [63, 59, 62].contains(keycode) else { break }
+            let active = event.flags.contains(.maskSecondaryFn) && event.flags.contains(.maskControl)
+            if active && !isDown {
+                isDown = true
+                DispatchQueue.main.async { self.onPress?() }
+            } else if !active && isDown {
                 isDown = false
                 DispatchQueue.main.async { self.onRelease?() }
             }

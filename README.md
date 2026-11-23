@@ -56,7 +56,7 @@ Prices without VAT, as listed by each vendor. Side-by-side pages for [Wispr Flow
 ## One key. That's the whole UI.
 
 - **Hold Fn** (Right Ctrl on Windows), speak, release: the text pastes into the focused app.
-- **Quick-tap** the key to latch hands-free recording; tap again to stop. **Esc** cancels.
+- **Quick-tap** the key to latch hands-free recording; tap again to stop (can be turned off in Settings). **Esc** cancels.
 - **Ctrl+Option+V** (Mac) pastes your last dictation again.
 - Tray or menu bar icon: **Settings**, **Vocabulary** and a searchable **History**.
 
